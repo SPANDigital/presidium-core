@@ -1,3 +1,7 @@
+---
+---
+
+
 ### Technical Competencies
 
 Before starting to use this solution you are advised to be familiar with the following technologies 
