@@ -1,24 +1,27 @@
 ---
+
 ---
 
+# Prerequisites
 
 ### Technical Competencies
 
-Before starting to use this solution you are advised to be familiar with the following technologies 
+Before starting to use this product you are advised to have the following . These technologies and skills are either used by, or commonly used with, the product.
 
 Competency | Description | Level of Competency
 ---------- | ----------- | -------------------
-[GitHub Markdown](https://help.github.com/articles/github-flavored-markdown/) | GitHub Flavored Markdown differs from standard Markdown in a few significant ways, and adds some additional functionality. | Proficient
+[GitHub Flavored Markdown](https://help.github.com/articles/github-flavored-markdown/) | GitHub Flavored Markdown differs from standard Markdown in a few significant ways, and adds some additional functionality. | Proficient
 
-### Technical Competencies
+### Component Dependencies
 
-Before starting to use this solution you are advised to be familiar with the following technologies. These technologies are either used by, or commonly used with, the solution.
+The following products and components are used by this product.
 
-Competency | Description | Level of Competency
----------- | ----------- | -------------------
-[GitHub Markdown](https://help.github.com/articles/github-flavored-markdown/) | GitHub Flavored Markdown differs from standard Markdown in a few significant ways, and adds some additional functionality. | Proficient
+Component | Description 
+--------- | ----------- 
+[GitHub](https://www.github.com/) | GitHub; the world's largest code host.
+[Jekyll](http://jekyllrb.com/) | Transform your plain text into static websites and blogs.
 
-### Relevent Standards
+### Relevant Standards
 
 Standard | Description | Citation
 -------- | ----------- | --------
