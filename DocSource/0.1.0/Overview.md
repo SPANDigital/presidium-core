@@ -13,11 +13,13 @@ This section provides a short business level overview of what this solution does
  
 This solution is really good and you should use it. 
 
-[Concepts]( Concepts.html )
+[Key Concepts]( Concepts.html )
 
 [Prerequisites]( Prerequisites.html )
 
-[Scenarios]( Scenarios.html )
+[Typical Usage Scenarios]( Scenarios.html )
+
+[Best Practices]( Best_Practices.html )
 
 [Reference]( ./Reference/Concept.html )
 
