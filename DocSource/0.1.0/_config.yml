@@ -1,7 +1,11 @@
+# Yaml config file for the solution documentation system 
+#
+# Declare the collections we will be using to store content articles 
 collections:
  - best-practices
  - recipies
  - typical-scenarios
  - updates
  
+# Define the code highlighter we are using, this requires python! 
 highlighter: pygments
