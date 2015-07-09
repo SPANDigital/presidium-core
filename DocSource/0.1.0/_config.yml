@@ -1,0 +1,7 @@
+collections:
+ - best-practices
+ - recipies
+ - typical-scenarios
+ - updates
+ 
+highlighter: pygments
