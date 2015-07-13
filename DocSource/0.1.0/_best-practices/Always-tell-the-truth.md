@@ -1,12 +1,8 @@
 ---
-layout: basic-page
 title: "Always tell the truth"
+label-id: "always-tell-the-truth"
 author: virtualtraveler
-version: 0.1.0
-categories: [best-practice]
 ---
-
-## Always tell the truth  
 
 ```python
 def readints(prompt):

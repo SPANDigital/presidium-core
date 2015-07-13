@@ -1,21 +1,33 @@
 ---
-layout: basic-page
-title: Cookbook
+title: "Cookbook" 
+author: "virtualtraveler"
 ---
 
-# Cookbook
+<div class="article-index">
 
-## Index
 <ul>
-  {% for post in site.recipies %}
+  {% for recipie in site.recipies %}
     <li>
-      <a href="{{ post.url }}">{{ post.title }}</a>
+      <a href="#{{ recipie.label-id }}">{{ recipie.title }}</a>
     </li>
   {% endfor %}
 </ul>
+</div>
 
-##Recipies 
+# {{ page.title }}
 
-{% for post in site.recipies %}
-  {% include article.html %}
+{% for recipie in site.recipies %}
+<article>
+  <hr>
+  <h2 id="{{recipie.label-id}}">{{ recipie.title }}</h2>
+  <div class="article-meta">
+    <a href="{{ page.github-url }}{{ recipie.author }}" class="post-author">
+      <img src="{{ page.github-url }}{{ recipie.author }}.png" class="avatar" alt="{{ recipie.author }} avatar" width="24" height="24">
+      {{ recipie.author }}</a>	
+	<span class="date">{{recipie.publication-date}}</span>
+  </div>
+  <div class="article-content">
+    {{ recipie.content }}
+  </div>
+</article>
 {% endfor %}

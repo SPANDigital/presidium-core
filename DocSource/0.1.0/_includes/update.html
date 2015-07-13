@@ -1,12 +1,12 @@
 <article>
-  <h2 id="{{post.id}}">{{ post.title }}</h2>
+  <h2 id="{{update.id}}">{{ update.title }}</h2>
   <div class="post-meta">
     <a href="https://github.com/{{ post.author }}" class="post-author">
       <img src="https://github.com/{{ post.author }}.png" class="avatar" alt="{{ post.author }} avatar" width="24" height="24">
-      {{ post.author }}
+      {{ update.author }}
     </a>
   </div>
   <div class="post-content">
-    {{ post.content }}
+    {{ update.content }}
   </div>
 </article>

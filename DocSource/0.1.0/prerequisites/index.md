@@ -1,5 +1,4 @@
 ---
-layout: basic-page
 title: Prerequisites
 ---
 

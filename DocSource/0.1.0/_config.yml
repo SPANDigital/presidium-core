@@ -1,11 +1,20 @@
-# Yaml config file for the solution documentation system 
+# Configuration for a solution documentation system 
 #
-# Declare the collections we will be using to store content articles 
+# Collections for content articles 
 collections:
- - best-practices
- - recipies
- - typical-scenarios
- - updates
- 
-# Define the code highlighter we are using, this requires python! 
+    - best-practices
+    - recipies
+    - typical-scenarios
+    - updates
+    
+# Code highlighter pygments requires python
 highlighter: pygments
+
+defaults:
+    -
+        scope:
+            path: "" # site wide 
+        values:
+            layout: "documentation-page"
+            github-url: "https://github.com/"
+            label-id: "overide-in-each-article" #this is a workarround because nether label or id are in scope of a collection
