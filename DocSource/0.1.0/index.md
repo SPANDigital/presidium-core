@@ -15,7 +15,7 @@ The Overview section provides a short business level overview of what this solut
 		<ul>
 	    {% for article in site[section.collection] %}
 	      <li>
-	        <a href="{{ article.label-id}}">{{ article.title }}</a>
+	        <a href="{{ section.path }}/#{{ article.label-id}}">{{ article.title }}</a>
 	      </li>
 	    {% endfor %}
 		</ul>
