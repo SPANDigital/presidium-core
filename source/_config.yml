@@ -1,0 +1,21 @@
+#
+# Configuration for a solution documentation system
+#
+# Collections for content articles 
+collections:
+    - best-practices
+    - recipies
+    - typical-scenarios
+    - updates
+
+# Code highlighter pygments requires python
+highlighter: pygments
+
+defaults:
+    -
+        scope:
+            path: "" # site wide 
+        values:
+            layout: "documentation-page"
+            github-url: "https://github.com/"
+            label-id: "overide-in-each-article"  # This is a workaround because nether label or id are in scope of a collection

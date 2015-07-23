@@ -1,0 +1,16 @@
+<div class="navigation-items">
+    <ul>
+        {% for section in site.data.sections %}
+        <li>
+            <a href="{{ section.path }}">{{ section.name }}</a>
+            <ul>
+                {% for article in site[section.collection] %}
+                <li>
+                    <a href="{{ section.path }}/#{{ article.label-id}}">{{ article.title }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </li>
+        {% endfor %}
+    </ul>
+</div>

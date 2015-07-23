@@ -1,3 +1,9 @@
+---
+title: "Testing README"
+label-id: "test-readme"
+publication-date: "2015-07-14 14:00:00"
+---
+
 # Solution Documentation Systems
 
 A lightweight, easily maintained and updated, documentation framework for software components, systems, and solutions. 

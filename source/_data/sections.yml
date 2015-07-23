@@ -1,0 +1,39 @@
+- name: "Overview"
+  path: "/"
+
+- name: "Key Concepts"
+  path: "/key-concepts"
+
+- name: "Prerequisites"
+  path: "/prerequisites"   
+
+- name: "Getting started"
+  path: "/getting-started"
+
+- name: "Typical Usage Scenarios"
+  collection: "typical-scenarios"
+  path: "/typical-scenarios"
+
+- name: "Best Practices"
+  collection: "best-practices"
+  path: "/best-practices"
+  
+- name: "Reference"
+  path: "/reference"
+
+- name: "Cookbook"
+  collection: "recipies"
+  path: "/cookbook"
+
+- name: "Tools"
+  path: "/tools"
+
+- name: "Testing & Debugging"
+  path: "/testing"
+
+- name: "Updates"
+  collection: "updates"
+  path: "/updates"
+
+- name: "Contribution"
+  path: "/contribution"
