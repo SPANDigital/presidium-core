@@ -1,0 +1,186 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+	<link rel="stylesheet" type="text/css" media="all" href="./css/style.css" />
+    <title>Cookbook</title>
+  </head>
+  <body>
+	<hr>
+	<div class="article-index">
+
+<ul>
+  
+    <li>
+      <a href="#fixing-broken-things">Fixing Broken Things</a>
+    </li>
+  
+    <li>
+      <a href="#fixing-even-more-broken-things">Fixing Even More Broken Things</a>
+    </li>
+  
+    <li>
+      <a href="#fixing-it-better">Fixing It Better</a>
+    </li>
+  
+    <li>
+      <a href="#fixing-more-broken-things">Fixing More Broken Things</a>
+    </li>
+  
+</ul>
+</div>
+
+<h1 id="cookbook">Cookbook</h1>
+
+<article>
+  <hr />
+  <h2 id="fixing-broken-things">Fixing Broken Things</h2>
+  <div class="article-meta">
+    <a href="https://github.com/virtualtraveler" class="post-author">
+      <img src="https://github.com/virtualtraveler.png" class="avatar" alt="virtualtraveler avatar" width="24" height="24" />
+      virtualtraveler</a>	
+	<span class="date">2015-07-14 14:00:00</span>
+  </div>
+  <div class="article-content">
+    <h3 id="solution">Solution</h3>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">readints</span><span class="p">(</span><span class="n">prompt</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Read a line of integers and return the list of integers.&#39;&#39;&#39;</span>
+
+    <span class="c"># Read a line</span>
+    <span class="n">line</span> <span class="o">=</span> <span class="nb">raw_input</span><span class="p">(</span><span class="n">prompt</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">line</span> <span class="o">==</span> <span class="s">&#39;quit&#39;</span><span class="p">:</span> <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            
+    <span class="c"># Go through each item on the line, converting each one and adding it</span>
+    <span class="c"># to retval.</span>
+    <span class="n">retval</span> <span class="o">=</span> <span class="p">[</span> <span class="p">];</span>
+    <span class="k">for</span> <span class="nb">str</span> <span class="ow">in</span> <span class="n">string</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">retval</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="nb">str</span><span class="p">))</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="c"># On conversion failure, whine and return empty list.</span>
+            <span class="k">print</span> <span class="s">&#39;Conversion of&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="s">&#39;failed.&#39;</span>
+            <span class="k">return</span> <span class="p">[]</span>
+
+    <span class="k">return</span> <span class="n">retval</span></code></pre></div>
+
+<h3 id="discusion">Discusion</h3>
+
+<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, rema ining essen tially uncha nged. It was popularised in the 1960s with the release of Let raset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker inclu ding versions of Lorem Ipsum.</p>
+
+<h3 id="see-also">See Also</h3>
+
+<ul>
+  <li>A</li>
+  <li>B</li>
+  <li>C</li>
+</ul>
+
+  </div>
+</article>
+
+<article>
+  <hr />
+  <h2 id="fixing-even-more-broken-things">Fixing Even More Broken Things</h2>
+  <div class="article-meta">
+    <a href="https://github.com/virtualtraveler" class="post-author">
+      <img src="https://github.com/virtualtraveler.png" class="avatar" alt="virtualtraveler avatar" width="24" height="24" />
+      virtualtraveler</a>	
+	<span class="date">2015-07-15 14:00:00</span>
+  </div>
+  <div class="article-content">
+    <h3 id="solution">Solution</h3>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">readints</span><span class="p">(</span><span class="n">prompt</span><span class="p">):</span>
+    <span class="c"># Read a line</span></code></pre></div>
+
+<h3 id="discusion">Discusion</h3>
+
+<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+
+<p>It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+
+<h3 id="see-also">See Also</h3>
+
+<ul>
+  <li><a href="http://www.google.com">This is a link</a></li>
+  <li>Y</li>
+  <li>Z</li>
+</ul>
+
+  </div>
+</article>
+
+<article>
+  <hr />
+  <h2 id="fixing-it-better">Fixing It Better</h2>
+  <div class="article-meta">
+    <a href="https://github.com/virtualtraveler" class="post-author">
+      <img src="https://github.com/virtualtraveler.png" class="avatar" alt="virtualtraveler avatar" width="24" height="24" />
+      virtualtraveler</a>	
+	<span class="date">2015-07-14 14:00:00</span>
+  </div>
+  <div class="article-content">
+    <h3 id="solution">Solution</h3>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">readints</span><span class="p">(</span><span class="n">prompt</span><span class="p">):</span>
+    <span class="c"># Read a line</span>
+    <span class="k">if</span> <span class="n">line</span> <span class="o">==</span> <span class="s">&#39;quit&#39;</span><span class="p">:</span> <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span></code></pre></div>
+
+<h3 id="discusion">Discusion</h3>
+
+<p>it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+
+<h3 id="see-also">See Also</h3>
+
+<ul>
+  <li>D</li>
+  <li>E</li>
+  <li>F</li>
+  <li>G</li>
+</ul>
+
+  </div>
+</article>
+
+<article>
+  <hr />
+  <h2 id="fixing-more-broken-things">Fixing More Broken Things</h2>
+  <div class="article-meta">
+    <a href="https://github.com/virtualtraveler" class="post-author">
+      <img src="https://github.com/virtualtraveler.png" class="avatar" alt="virtualtraveler avatar" width="24" height="24" />
+      virtualtraveler</a>	
+	<span class="date">2015-07-14 14:00:00</span>
+  </div>
+  <div class="article-content">
+    <h3 id="solution">Solution</h3>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">readints</span><span class="p">(</span><span class="n">prompt</span><span class="p">):</span>
+    <span class="c"># Read a line</span>
+    <span class="n">line</span> <span class="o">=</span> <span class="nb">raw_input</span><span class="p">(</span><span class="n">prompt</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">line</span> <span class="o">==</span> <span class="s">&#39;quit&#39;</span><span class="p">:</span> <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span></code></pre></div>
+
+<h3 id="discusion">Discusion</h3>
+
+<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+
+<p>It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
+
+<p>It was popularised in the 1960s with the release of Letraset sheets containing</p>
+
+<p>Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+
+<h3 id="see-also">See Also</h3>
+
+<ul>
+  <li>D</li>
+  <li>E</li>
+  <li>F</li>
+</ul>
+
+  </div>
+</article>
+
+	<hr>	
+  </body>
+</html>
+
