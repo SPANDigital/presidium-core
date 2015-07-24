@@ -30,4 +30,5 @@ author: "virtualtraveler"
             {{ recipe.content }}
         </div>
     </article>
+
 {% endfor %}
