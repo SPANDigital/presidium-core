@@ -25,8 +25,12 @@ Pellentesque id maximus quam, vel feugiat mi. Suspendisse vulputate eros eget ma
 Vivamus a odio mattis nisl egestas feugiat. Aenean convallis magna at lobortis pulvinar. Nam ligula lacus, blandit vitae quam sagittis, mattis elementum elit. Nulla ut lacinia diam.
 
 
-## Setup & Configuration
+## Setup and Configuration
 
 Proin fringilla pellentesque augue faucibus congue. Phasellus eu nisi ut lorem lacinia posuere. Quisque eget sagittis turpis. Etiam elementum arcu ut posuere tempor. 
+
+Nullam fermentum ac est vitae sollicitudin. Fusce faucibus ullamcorper nibh sit amet molestie. Sed pharetra leo vitae tellus elementum rhoncus id in leo. Suspendisse semper nisl sed felis lobortis efficitur. In at vestibulum ex.
+
+## Confirming it Works
 
 Nullam fermentum ac est vitae sollicitudin. Fusce faucibus ullamcorper nibh sit amet molestie. Sed pharetra leo vitae tellus elementum rhoncus id in leo. Suspendisse semper nisl sed felis lobortis efficitur. In at vestibulum ex.
