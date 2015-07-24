@@ -22,7 +22,7 @@
   path: "/reference"
 
 - name: "Cookbook"
-  collection: "recipies"
+  collection: "recipes"
   path: "/cookbook"
 
 - name: "Tools"
