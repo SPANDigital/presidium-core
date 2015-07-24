@@ -42,7 +42,7 @@ A single page describing how to get started using the solution
 ### Typical Usage Scenarios Section
 Index File: `/typical-scenarios/index.md`
 
-Article Directory: `_typical-scenarios` 
+Article Directory: `/_typical-scenarios` 
 
 Each article explains how the components of the solution work together to enable commonly implemented scenarios, with code examples. These scenarios should provide a good place to start for new users of the system and should guide them to use best practices and avoid common problems. 
 
@@ -55,7 +55,7 @@ Each article explains how the components of the solution work together to enable
 ### Best Practices Section
 File: `/best-practices/index.md`
 
-Article Directory: `_best-practices` 
+Article Directory: `/_best-practices` 
 
 Each article defines one practice you should follow when using this solution. 
 
@@ -72,7 +72,7 @@ Detailed descriptions with code snippets illustrating usage of each part of the 
 ### Cookbook Section 
 File: `/cookbook/index.md`
 
-Article Directory: `_recipes` 
+Article Directory: `/_recipes` 
 
 Each article is a "Recipe" that solves a specific problem or achieves a specific objective 
 
@@ -97,7 +97,7 @@ A single page that explains how to test the solution and debug problems
 ### Updates Section 
 File: `/updates/index.md`
 
-Article Directory: `_updates` 
+Article Directory: `/_updates` 
 
 Each article is a "Update" that describes a new release, patch or other announcements of interest to the user community
 
