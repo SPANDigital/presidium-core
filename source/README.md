@@ -46,7 +46,9 @@ Detailed descriptions with code snippets illustrating usage of each part of the 
 
 ### Cookbook
 File: `cookbook/index.md`
+
 Article Directory: `_recipes` 
+
 A list of Recipes that each solve a problem or achieve a specific objective, in the format: Problem/Objective, Solution, Discussion, See Also
 
 ### Tools
