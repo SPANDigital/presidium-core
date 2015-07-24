@@ -6,7 +6,7 @@
             <ul>
                 {% for article in site[section.collection] %}
                 <li>
-                    <a href="{{ section.path }}/#{{ article.label-id}}">{{ article.title }}</a>
+                    <a href="{{ site.url }}/{{ section.path }}/#{{ article.label-id}}">{{ article.title }}</a>
                 </li>
                 {% endfor %}
             </ul>
