@@ -99,7 +99,7 @@ File: `/updates/index.md`
 
 Article Directory: `/_updates` 
 
-Each article is a "Update" that describes a new release, patch or other announcements of interest to the user community
+Each article is an "Update" that describes a new release, patch or other announcement of interest to the user community. Update file names should be in the form `YYYY-MM-DD-The-Article-Title` This will cause them to be sorted in chronological order not alphabetical order. If multiple updates are posted on the same day then the format `YYYY-MM-DD-HH:MM-The-Article-Title` should be used. If you want to post multiple updates in the same minute - type slower.
 
 ### Contribution Section 
 File: `/contribution/index.md`
