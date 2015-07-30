@@ -1,29 +1,19 @@
 ---
-title: "Typical Scenarios"
+title: "Tools"
 author: "virtualtraveler"
+permalink: /tools/
 ---
 
 {% comment %}
-    Things you should do when using the solution. A list of Best practices in the format: Recommended Practice, Discussion, See Also
+    A list of tools commonly used with the solution
 {% endcomment %}
-
-<div class="article-index">
-<ul>
-    {% for scenario in site.typical-scenarios %}
-        <li>
-            <a href="#{{ scenario.label-id }}">{{ scenario.title }}</a>
-        </li>
-    {% endfor %}
-</ul>
-</div>
-
 
 # {{ page.title }}
 
-{% for scenario in site.typical-scenarios %}
+{% for tool in site.tools %}
   <article>
       <hr>
-      <h2 id="{{scenario.label-id}}">{{ scenario.title }}</h2>
+      <h2 id="{{ tool.label-id }}">{{ tool.title }}</h2>
       <div class="article-meta">
           <a href="{{ page.github-url }}{{ scenario.author }}" class="post-author">
               <img src="{{ page.github-url }}{{ scenario.author }}.png" class="avatar" alt="{{ scenario.author }} avatar" width="24" height="24">
@@ -31,7 +21,7 @@ author: "virtualtraveler"
           <span class="date">{{scenario.publication-date}}</span>
       </div>
       <div class="article-content">
-          {{ scenario.content }}
+          {{ tool.content }}
       </div>
-  </article>
+  </article>  
 {% endfor %}

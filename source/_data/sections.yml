@@ -5,20 +5,22 @@
   path: "/key-concepts"
 
 - name: "Prerequisites"
-  path: "/prerequisites"   
+  path: "/prerequisites"
 
 - name: "Getting started"
+  collection: "getting_started"
   path: "/getting-started"
 
 - name: "Typical Usage Scenarios"
-  collection: "typical-scenarios"
+  collection: "typical_scenarios"
   path: "/typical-scenarios"
 
 - name: "Best Practices"
-  collection: "best-practices"
+  collection: "best_practices"
   path: "/best-practices"
   
 - name: "Reference"
+  collection: "reference"
   path: "/reference"
 
 - name: "Cookbook"
@@ -26,9 +28,11 @@
   path: "/cookbook"
 
 - name: "Tools"
+  collection: "tools"
   path: "/tools"
 
 - name: "Testing & Debugging"
+  collection: "testing"
   path: "/testing"
 
 - name: "Updates"
@@ -36,4 +40,5 @@
   path: "/updates"
 
 - name: "Contribution"
+  collection: "contributions"
   path: "/contribution"

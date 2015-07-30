@@ -1,6 +1,7 @@
 ---
 title: "Cookbook" 
 author: "virtualtraveler"
+permalink: /cookbook/
 ---
 
 <div class="article-index">

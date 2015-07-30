@@ -1,5 +1,6 @@
 ---
 title: Prerequisites
+permalink: /prerequisites/
 ---
 
 # Prerequisites

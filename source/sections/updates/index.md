@@ -1,6 +1,7 @@
 ---
 title: "Updates" 
 author: "virtualtraveler"
+permalink: /updates/
 ---
 
 <div class="article-index">

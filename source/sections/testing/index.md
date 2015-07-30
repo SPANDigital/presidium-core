@@ -1,6 +1,7 @@
 ---
 title: "Testing and Debugging"
 author: "virtualtraveler"
+permalink: /testing/
 ---
 
 {% comment %}

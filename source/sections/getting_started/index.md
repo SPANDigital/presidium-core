@@ -1,5 +1,6 @@
 ---
 title: Getting Started
+permalink: /getting-started/
 ---
 
 {% comment %}
@@ -18,7 +19,7 @@ Pellentesque nisl purus, auctor eget lobortis eget, tincidunt porta lorem. Phase
 Fusce elementum, quam pulvinar commodo facilisis, diam mauris scelerisque quam, commodo bibendum sem ligula accumsan elit. Suspendisse potenti. Mauris tincidunt varius maximus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam dictum nec nisi lobortis dignissim. Ut feugiat lorem tortor, convallis iaculis diam molestie a.
 
 
-## Instalation
+## Installation
 
 Pellentesque id maximus quam, vel feugiat mi. Suspendisse vulputate eros eget mattis varius. Pellentesque faucibus nulla lectus, vitae mattis purus pulvinar non. Ut vel imperdiet diam. 
 

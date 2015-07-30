@@ -1,6 +1,7 @@
 ---
 title: "Contribution"
 author: "virtualtraveler"
+permalink: /contribution/
 ---
 
 {% comment %}

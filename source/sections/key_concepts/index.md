@@ -1,5 +1,6 @@
 ---
 title: "Key Concepts"
+permalink: /key-concepts/
 ---
 
 {% comment %}

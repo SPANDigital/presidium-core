@@ -2,11 +2,11 @@
     <ul>
         {% for section in site.data.sections %}
         <li>
-            <a href="{{ section.path }}">{{ section.name }}</a>
+            <a href="{{ baseurl }}{{ section.path }}">{{ section.name }}</a>
             <ul>
                 {% for article in site[section.collection] %}
                 <li>
-                    <a href="{{ site.url }}/{{ section.path }}/#{{ article.label-id}}">{{ article.title }}</a>
+                    <a href="{{ baseurl }}{{ section.path }}#{{ article.label-id}}">{{ article.title }}</a>
                 </li>
                 {% endfor %}
             </ul>

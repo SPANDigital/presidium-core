@@ -1,16 +1,16 @@
 ---
-title: "Best Practices"
-author: "virtualtraveler"
-path: "/best-practices"
+title: Best Practices
+author: virtualtraveler
+permalink: /best-practices/
 ---
 
 {% comment %}
-    Things you should do when using the solution. A list of Best practices in the format: Recommended Practice, Discussion, See Also
+Things you should do when using the solution. A list of Best practices in the format: Recommended Practice, Discussion, See Also
 {% endcomment %}
 
 <div class="article-index">
     <ul>
-        {% for practice in site.best-practices %}
+        {% for practice in site.best_practices %}
             <li>
                 <a href="#{{ practice.label-id }}">{{ practice.title }}</a>
             </li>
@@ -21,7 +21,7 @@ path: "/best-practices"
 
 # {{ page.title }}
 
-{% for practice in site.best-practices %}
+{% for practice in site.best_practices %}
 <article>
     <hr>
     <h2 id="{{practice.label-id}}">{{ practice.title }}</h2>

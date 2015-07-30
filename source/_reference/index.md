@@ -1,7 +1,7 @@
 ---
-title: Concept Section
+title: Reference
 ---
 
-### Concept Section 
-
 ![Architecture Diagram]({{ site.url }}/assets/diagrams/architecture.svg)
+
+I'm a reference.
