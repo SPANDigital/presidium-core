@@ -10,12 +10,12 @@ collections:
     - recipes
     - tools
     - typical_scenarios
-    - reference
+    - reference_articles
     - updates
 
 baseurl:
 #url: http://localhost:4000/
-
+exclude: ["README.md", "LICENSE", ".gitignore"]
 #
 # Code highlighter pygments requires python
 #
