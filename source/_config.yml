@@ -1,11 +1,11 @@
-# -------------------------------------------------
+# =============================================================================
 # Configuration for a solution documentation system
-# -------------------------------------------------
+# =============================================================================
 
-#
-# Collections for content articles
-#
+
+# ------------------------------------------------------------[ Collections ]--
 collections:
+    contribution:
     best_practices:
     getting_started:
     key_concepts:
@@ -19,26 +19,25 @@ collections:
     typical_scenarios:
     updates:
 
+
+# ------------------------------------------------------[ URL Configuration ]--
 baseurl:
 #url: http://localhost:4000/
 
-#
-# Exclude the following files from the generated site
-#
+
+# ---------------------------------------------------------------[ Excludes ]--
 exclude: [
     "README.md",
     "LICENSE",
     ".gitignore"
 ]
 
-#
-# Code highlighter pygments requires python
-#
+
+# ------------------------------------------------------[ Code Highlighting ]--
 highlighter: pygments
 
-#
-# System wide defaults
-#
+
+# ---------------------------------------------------------------[ Defaults ]--
 defaults:
     -
         scope:
@@ -46,4 +45,3 @@ defaults:
         values:
             layout: "default"
             github-url: "https://github.com/"
-            label-id: "overide-in-each-article"  # This is a workaround because nether label or id are in scope of a collection

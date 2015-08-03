@@ -12,7 +12,7 @@ permalink: /typical-scenarios/
 <ul>
     {% for scenario in site.typical_scenarios %}
         <li>
-            <a href="#{{ scenario.label-id }}">{{ scenario.title }}</a>
+            <a href="#{{ scenario.id }}">{{ scenario.title }}</a>
         </li>
     {% endfor %}
 </ul>
@@ -24,7 +24,7 @@ permalink: /typical-scenarios/
 {% for scenario in site.typical_scenarios %}
 <article>
   <hr>
-  <h2 id="{{scenario.label-id}}">{{ scenario.title }}</h2>
+  <h2 id="{{scenario.id}}">{{ scenario.title }}</h2>
   <div class="article-meta">
       <a href="{{ page.github-url }}{{ scenario.author }}" class="post-author">
           <img src="{{ page.github-url }}{{ scenario.author }}.png" class="avatar" alt="{{ scenario.author }} avatar" width="24" height="24">

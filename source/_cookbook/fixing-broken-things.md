@@ -1,6 +1,6 @@
 ---
+id: "fixing-broken-things"
 title: "Fixing Broken Things"
-label-id: "fixing-broken-things"
 publication-date: "2015-07-14 14:00:00"
 author: "virtualtraveler"
 ---
