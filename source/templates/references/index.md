@@ -1,12 +1,21 @@
 ---
-title: "Reference" 
-author: "virtualtraveler"
+title: Reference
+author: virtualtraveler
 permalink: /references/
 ---
 
+
 # {{ page.title }}
 
-{% for reference in site.references %}
-{{ reference.category }}:
-<a href="{{ reference.url }}">{{ reference.title }} {{ reference.type }} {{ reference.categories }}</a>
-{% endfor %}
+
+{% assign groups = site.references | group_by: "category" | sort_by: "name" %}
+
+{% for group in groups %}
+
+## {{ group.name }}
+
+{% for item in group.items %}
+<a href="{{ item.url }}">{{item.title}}</a>
+{%endfor%}
+  
+{%endfor%}

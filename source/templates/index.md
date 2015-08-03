@@ -6,4 +6,6 @@ permalink: /
 
 # {{ page.title }}
 
-{{ site.overview.content }}
+{% for article in site.overview %}
+{{ article.content }}
+{% endfor %}
