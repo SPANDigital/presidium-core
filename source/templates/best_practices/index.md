@@ -6,17 +6,6 @@ permalink: /best-practices/
 <div class="page-header">
     <h1>{{ page.title }}</h1>
 </div>
-<div class="row">
-    <div class="article-index">
-        <ul>
-            {% for practice in site.best_practices %}
-                <li>
-                    <a href="#{{ practice.id }}">{{ practice.title }}</a>
-                </li>
-            {% endfor %}
-        </ul>
-    </div>
-</div>
 
 {% for practice in site.best_practices %}
 <div class="row">

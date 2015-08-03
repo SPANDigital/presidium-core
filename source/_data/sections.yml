@@ -19,7 +19,7 @@
   path: "/best-practices"
   
 - name: "Reference"
-  collection: "reference_articles"
+  collection: "references"
   path: "/references"
 
 - name: "Cookbook"

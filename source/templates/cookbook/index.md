@@ -4,6 +4,7 @@ author: "virtualtraveler"
 permalink: /cookbook/
 ---
 
+<<<<<<< Updated upstream:source/templates/cookbook/index.md
 <div class="article-index">
     <ul>
         {% for recipe in site.cookbook %}
@@ -15,6 +16,8 @@ permalink: /cookbook/
 </div>
 
 
+=======
+>>>>>>> Stashed changes:source/sections/cookbook/index.md
 # {{ page.title }}
 
 {% for recipe in site.cookbook %}
