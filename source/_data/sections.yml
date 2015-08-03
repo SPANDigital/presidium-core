@@ -8,7 +8,6 @@
   path: "/prerequisites"
 
 - name: "Getting started"
-  collection: "getting_started"
   path: "/getting-started"
 
 - name: "Typical Usage Scenarios"
@@ -21,7 +20,7 @@
   
 - name: "Reference"
   collection: "reference_articles"
-  path: "/reference"
+  path: "/references"
 
 - name: "Cookbook"
   collection: "recipes"

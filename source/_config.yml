@@ -6,26 +6,44 @@
 # Collections for content articles
 #
 collections:
-    - best_practices
-    - recipes
-    - tools
-    - typical_scenarios
-    - reference_articles
-    - updates
+    best_practices:
+    getting_started:
+    key_concepts:
+    overview:
+    prerequisites:
+    recipes:
+    references:
+        output: true
+        permalink: /reference/:path/
+    tools:
+    typical_scenarios:
+    updates:
 
 baseurl:
 #url: http://localhost:4000/
-exclude: ["README.md", "LICENSE", ".gitignore"]
+
+#
+# Exclude the following files from the generated site
+#
+exclude: [
+    "README.md",
+    "LICENSE",
+    ".gitignore"
+]
+
 #
 # Code highlighter pygments requires python
 #
 highlighter: pygments
 
+#
+# System wide defaults
+#
 defaults:
     -
         scope:
-            path: "" # site wide
+            path: ""
         values:
-            layout: "documentation-page"
+            layout: "default"
             github-url: "https://github.com/"
             label-id: "overide-in-each-article"  # This is a workaround because nether label or id are in scope of a collection

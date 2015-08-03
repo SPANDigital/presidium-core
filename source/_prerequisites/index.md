@@ -1,9 +1,7 @@
 ---
 title: Prerequisites
-permalink: /prerequisites/
 ---
 
-# Prerequisites
 
 ### Technical Competencies
 
