@@ -6,7 +6,7 @@ permalink: /cookbook/
 
 <div class="article-index">
     <ul>
-        {% for recipe in site.recipes %}
+        {% for recipe in site.cookbook %}
             <li>
                 <a href="#{{ recipe.label-id }}">{{ recipe.title }}</a>
             </li>
@@ -17,7 +17,7 @@ permalink: /cookbook/
 
 # {{ page.title }}
 
-{% for recipe in site.recipes %}
+{% for recipe in site.cookbook %}
 <article>
     <hr>
     <h2 id="{{recipe.label-id}}">{{ recipe.title }}</h2>

@@ -11,7 +11,7 @@ collections:
     key_concepts:
     overview:
     prerequisites:
-    recipes:
+    cookbook:
     references:
         output: true
         permalink: /reference/:path/
