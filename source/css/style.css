@@ -26,10 +26,7 @@
     background-color: #f3f3ef;
 }
 
-h1 {
-    color: navy;
-    margin-left: 20px;
-}.hll { background-color: #ffffcc }
+.hll { background-color: #ffffcc }
 .c { color: #408080; font-style: italic } /* Comment */
 .err { border: 1px solid #FF0000 } /* Error */
 .k { color: #008000; font-weight: bold } /* Keyword */

@@ -4,20 +4,11 @@ author: "virtualtraveler"
 permalink: /updates/
 ---
 
-<div class="article-index">
-<ul>
-  {% for update in site.updates %}
-    <li>
-      <a href="# {{ update.id }}">{{ update.title }}</a>
-    </li>
-  {% endfor %}
-</ul>
-</div>
-
 # {{ page.title }}
 
-{% for update in site.updates %}
+{% for update in site.updates reversed %}
 <article>
+  <hr>
   <h2 id="{{update.id}}">{{ update.title }}</h2>
   <div class="article-meta">
     <a href="{{ page.github-url }}{{ update.author }}" class="post-author">
