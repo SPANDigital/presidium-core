@@ -1,7 +1,7 @@
 ---
-id: code-highligthing
-title: Code Highlighting
-author: torabisu
+title: "Code Highlighting"
+label-id: "code-highligthing"
+author: "torabisu"
 ---
 
 When highlighting code, wrap it in a liquid highlight tag:

@@ -1,7 +1,7 @@
 ---
-id: naming-conventions
-title: Naming Conventions
-author: torabisu
+title: "Naming Conventions"
+label-id: "naming-conventions"
+author: "torabisu"
 ---
 
 When highlighting code, wrap it in a liquid highlight tag:

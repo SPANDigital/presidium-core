@@ -1,7 +1,7 @@
 ---
-id: structure
-title: Structure
-author: torabisu
+title: "Structure"
+label-id: "structure"
+author: "torabisu"
 ---
 
 I like structure.
@@ -10,6 +10,6 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
 
 ### See Also
 
-- D
-- E
-- F 
+- [Link D](http://www.google.com)
+- [Link E](http://www.google.com)
+- [Link F](http://www.google.com)
