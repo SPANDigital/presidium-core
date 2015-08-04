@@ -3,6 +3,7 @@ title: "Contribution"
 author: "virtualtraveler"
 permalink: /contribution/
 ---
+
 # {{ page.title }}
 
 <Introductory paragraph on this project's approach to contributions. "We welcome feedback", or "Our code is publicly available on github." Or something in between.>

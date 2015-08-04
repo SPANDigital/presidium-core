@@ -1,14 +1,15 @@
 # Template Instructions
-# 1) Copy and rename this file. Don't forget to remove the leading "_" 
+# ---------------------
+# 1) Copy and rename this file to "YYYY-MM-DD-scenario-title.md". Don't forget to remove the leading "_" 
 # 2) Replace <Instructional text> with appropriate content
-# 3) Un-commment the front matter section starting and ending with "---" 
-# 4) Delete this line and all lines above. 
-#---
-#title: "<Scenario Title>"
-#label-id: "<scenario-title>" 
-#author: "<github-username>"
-#publication-date: "<YYYY-MM-DD>"
-#---
+# 3) Delete this line and all lines above so that the below front matter is at the top of the file.
+
+---
+id: "<scenario-title>" 
+title: "<Scenario Title>"
+author: "<github-username>"
+publication-date: "<YYYY-MM-DD>"
+---
 
 ### Release <0.1.0>
 

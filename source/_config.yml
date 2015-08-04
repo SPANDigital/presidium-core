@@ -28,7 +28,8 @@ baseurl:
 exclude: [
     "README.md",
     "LICENSE",
-    ".gitignore"
+    "_TEMPLATE.md",
+    ".gitignore",
 ]
 
 #
@@ -46,4 +47,3 @@ defaults:
         values:
             layout: "default"
             github-url: "https://github.com/"
-            label-id: "overide-in-each-article"  # This is a workaround because nether label or id are in scope of a collection
