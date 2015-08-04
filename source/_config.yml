@@ -15,6 +15,7 @@ collections:
     references:
         output: true
         permalink: /reference/:path/
+    testing:
     tools:
     typical_scenarios:
     updates:

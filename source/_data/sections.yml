@@ -31,7 +31,6 @@
   path: "/tools"
 
 - name: "Testing & Debugging"
-  collection: "testing"
   path: "/testing"
 
 - name: "Updates"

@@ -6,6 +6,6 @@ permalink: /prerequisites/
 # {{ page.title }}
 
 
-{% for prerequisite in site.prerequisites %}
-{{ prerequisite.content }}
+{% for article in site.prerequisites %}
+{{ article.content }}
 {% endfor %}
