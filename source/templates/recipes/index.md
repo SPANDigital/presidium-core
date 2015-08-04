@@ -4,23 +4,9 @@ author: "virtualtraveler"
 permalink: /cookbook/
 ---
 
-<<<<<<< Updated upstream:source/templates/cookbook/index.md
-<div class="article-index">
-    <ul>
-        {% for recipe in site.cookbook %}
-            <li>
-                <a href="#{{ recipe.label-id }}">{{ recipe.title }}</a>
-            </li>
-        {% endfor %}
-    </ul>
-</div>
+<h1>{{ page.title }}</h1>
 
-
-=======
->>>>>>> Stashed changes:source/sections/cookbook/index.md
-# {{ page.title }}
-
-{% for recipe in site.cookbook %}
+{% for recipe in site.recipes %}
 <article>
     <hr>
     <h2 id="{{recipe.label-id}}">{{ recipe.title }}</h2>

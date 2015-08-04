@@ -4,7 +4,7 @@ author: "virtualtraveler"
 permalink: /best-practices/
 ---
 
-{{ page.title }}
+<h1>{{ page.title }}</h1>
 
 {% for practice in site.best_practices %}
 <article>

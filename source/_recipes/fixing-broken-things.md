@@ -7,6 +7,8 @@ author: "virtualtraveler"
 
 ### Solution
 
+Fix broken things using python and duct tape
+
 {% highlight python lineos %}
     def readints(prompt):
     '''Read a line of integers and return the list of integers.'''
