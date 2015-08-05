@@ -1,6 +1,6 @@
 ---
 title: "Naming Conventions"
-label-id: "naming-conventions"
+id: "naming-conventions"
 author: "torabisu"
 ---
 

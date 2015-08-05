@@ -13,7 +13,7 @@
                     {% else %}
                         {% for item in group.items %}
                             <li>
-                                <a href="{{ baseurl }}{{ section.path }}#{{ item.label-id }}">{{ item.title }}</a>
+                                <a href="{{ baseurl }}{{ section.path }}#{{ item.id }}">{{ item.title }}</a>
                             </li>
                         {% endfor %}
                     {% endif %}

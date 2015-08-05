@@ -1,6 +1,6 @@
 ---
 title: "The Basic Scenario"
-label-id: "the-basic-scenario"
+id: "the-basic-scenario"
 author: "virtualtraveler"
 ---
 

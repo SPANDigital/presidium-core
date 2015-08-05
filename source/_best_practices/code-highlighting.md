@@ -1,6 +1,6 @@
 ---
 title: "Code Highlighting"
-label-id: "code-highligthing"
+id: "code-highligthing"
 author: "torabisu"
 ---
 

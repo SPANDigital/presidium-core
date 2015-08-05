@@ -1,6 +1,6 @@
 ---
 title: "Fixing More Broken Things"
-label-id: "fixing-more-broken-things"
+id: "fixing-more-broken-things"
 publication-date: "2015-07-14 14:00:00"
 author: "virtualtraveler"
 ---

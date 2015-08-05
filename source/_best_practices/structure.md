@@ -1,6 +1,6 @@
 ---
 title: "Structure"
-label-id: "structure"
+id: "structure"
 author: "torabisu"
 ---
 

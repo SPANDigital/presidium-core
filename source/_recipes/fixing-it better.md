@@ -1,6 +1,6 @@
 ---
 title: "Fixing It Better"
-label-id: "fixing-it-better"
+id: "fixing-it-better"
 publication-date: "2015-07-14 14:00:00"
 author: "virtualtraveler"
 ---
