@@ -20,4 +20,6 @@ permalink: /updates/
     {{ update.content }}
   </div>
 </article>
+{% else %}
+{% include empty-article.html %}
 {% endfor %}

@@ -4,15 +4,15 @@
 # 2) Replace content placeholders with appropriate content, search for "REPLACE WITH"
 # 3) Delete this line and all lines above so that the below front matter is at the top of the file.
 ---
-title: "Testing and Debugging"
-id: "testing-and-debugging" 
+title: "REPLACE WITH Reference Title"
+id: "REPLACE WITH reference-title" 
 author: "REPLACE WITH github-username"
 ---
 
-## Testing
+REPLACE WITH a brief description of the content 
 
-REPLACE WITH guidance on testing and debugging
+{% highlight python lineos %}
+    '''REPLACE WITH a code snippet. update the code language as required.'''
+{% endhighlight %}
 
-## Debugging
-
-REPLACE WITH an explanation of how best to debug the solutions built using the product 
+REPLACE WITH tables, links to diagrams and any other required content. 

@@ -20,4 +20,6 @@ permalink: /cookbook/
         {{ recipe.content }}
     </div>
 </article>
+{% else %}
+{% include empty-article.html %}
 {% endfor %}
