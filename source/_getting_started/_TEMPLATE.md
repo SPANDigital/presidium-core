@@ -9,8 +9,6 @@ id: "getting-started"
 author: "REPLACE WITH github-username"
 ---
 
-# {{ page.title }}
-
 ## Downloading the Code
 
 REPLACE WITH Instructions on where to download the product.
