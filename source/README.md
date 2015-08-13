@@ -65,7 +65,7 @@ Each article explains how the components of the solution work together to enable
 
 ### Best Practices Section
 
-Article Directory: `/_best-practices/
+Article Directory: `/_best-practices/`
 
 Each article defines one practice you should follow when using this solution. 
 
@@ -118,7 +118,7 @@ Each article is a "Update" that describes a new release, patch or other announce
 
 ### Contribution Section 
 
-File: `/contribution/index
+File: `/contribution/index`
 
 * Providing Feedback and Reporting Issues - How to report bugs, issues and provide feedback 
 * Contributing to Development - Access to source code, if available. 

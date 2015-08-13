@@ -20,7 +20,7 @@ REPLACE WITH A brief description of conditions that indicate use of the scenario
     '''A code snippet implementing the scenario'''
 {% endhighlight %}
 
-### Discusion
+### Discussion
 
 REPLACE WITH a discussion of the solution including pros and cons of the approach>
 

@@ -10,7 +10,7 @@ author: "REPLACE WITH github-username"
 publication-date: "<YYYY-MM-DD>"
 ---
 
-### Release REPLACE WITH the latest semantic version number 0.1.0
+## Release REPLACE WITH the latest semantic version number 0.1.0
 
 REPLACE WITH A brief description of the release
 

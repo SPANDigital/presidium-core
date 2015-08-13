@@ -17,7 +17,7 @@ REPLACE WITH a brief description of the solution
     '''REPLACE WITH a code snippet illustrating the solution to the problem. update the code language as required.'''
 {% endhighlight %}
 
-### Discusion
+### Discussion
 
 REPLACE WITH A discussion of the solution including pros and cons of the approach
 

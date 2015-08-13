@@ -15,7 +15,7 @@ REPLACE WITH Instructions on where to download the product.
 
 ## Installation
 
-REPLACE WITH Instructions on how to correctly instal the product
+REPLACE WITH Instructions on how to correctly install the product
 
 ## Setup and Configuration
 
