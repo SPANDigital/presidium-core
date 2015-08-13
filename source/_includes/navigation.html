@@ -1,13 +1,22 @@
 <div class="navigation-items">
     <ul>
         {% for section in site.data.sections %}
+        {% assign groups = site[section.collection] | group_by: "category" %}
         <li>
             <a href="{{ baseurl }}{{ section.path }}">{{ section.name }}</a>
             <ul>
-                {% for article in site[section.collection] %}
-                <li>
-                    <a href="{{ baseurl }}{{ section.path }}#{{ article.id}}">{{ article.title }}</a>
-                </li>
+                {% for group in groups %}
+                    {% if group.name.size > 0 %}
+                        <li>
+                            <a href="{{ baseurl }}{{ section.path }}">{{ group.name }}</a>
+                        </li>
+                    {% else %}
+                        {% for item in group.items %}
+                            <li>
+                                <a href="{{ baseurl }}{{ section.path }}#{{ item.id }}">{{ item.title }}</a>
+                            </li>
+                        {% endfor %}
+                    {% endif %}
                 {% endfor %}
             </ul>
         </li>

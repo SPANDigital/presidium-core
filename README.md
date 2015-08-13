@@ -26,7 +26,7 @@ The system requires or uses the following technologies
 2. Clone the respository 
 3. Run jekyll in the repositories root directory 
 ```
-$ jekyll serve -s source -d snapshots/latest
+$ jekyll serve -s source -d versions/latest
 ```
 4. View the site locally in a browser at http://127.0.0.1:4000/ 
 5. Edit the site using [Github flavored markdown](https://help.github.com/articles/github-flavored-markdown/) as needed

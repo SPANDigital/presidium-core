@@ -10,14 +10,14 @@ Each XXX site is based on a standard directory structure. Each subsection of the
 
 ### Overview Section 
 
-Index File: `/index.md` 
+Index File: `/_overview/index.md` 
 
 This is the first page a user coming to the site will see. It should contain a brief business-level overview of the solution with an explanation of the main benefits vs alternative solutions.
 
 
 ### Key Concepts Section
 
-Index File: `/key-concepts/index.md`
+Index File: `/_key-concepts/index.md`
 
 A single page containing a conceptual description of how the solution works. A description of the key concepts, components, and structures of the solution that detail each component's role and responsibilities. For example; Events, Models and Collections, or, Endpoints, Data-structures and Errors. Each of these concepts may have a sub section in the Reference section where all the details are listed.
 
@@ -28,7 +28,7 @@ A single page containing a conceptual description of how the solution works. A d
 
 ### Prerequisites Section
 
-Index File: `/prerequisites/index.md`
+Index File: `/_prerequisites/index.md`
 
 A single page description of the knowledge, skills and components needed to successfully use the solution.
  
@@ -39,7 +39,7 @@ A single page description of the knowledge, skills and components needed to succ
 
 ### Getting Started Section
 
-Index File: `/getting-started/index.md`
+Index File: `/_getting-started/index.md`
 
 A single page describing how to get started using the solution
 
@@ -51,8 +51,8 @@ A single page describing how to get started using the solution
 
 ### Typical Usage Scenarios Section
 
-Index File: `/typical-scenarios/index.md`
-Article Directory: `/_typical-scenarios` 
+Article Directory: `/_typical-scenarios/`
+
 
 Each article explains how the components of the solution work together to enable commonly implemented scenarios, with code examples. These scenarios should provide a good place to start for new users of the system and should guide them to use best practices and avoid common problems. 
 
@@ -65,8 +65,7 @@ Each article explains how the components of the solution work together to enable
 
 ### Best Practices Section
 
-File: `/best-practices/index.md`
-Article Directory: `/_best-practices` 
+Article Directory: `/_best-practices/`
 
 Each article defines one practice you should follow when using this solution. 
 
@@ -77,15 +76,14 @@ Each article defines one practice you should follow when using this solution.
 
 ### Reference Section 
 
-File: `/references/`
+Article Directory: `/_references/`
 
 Detailed descriptions with code snippets illustrating usage of each part of the solution. Usually arranged by conceptual area. For example; Events, Models and Collections, or, Endpoints, Data-structures and Errors. This is the main technical content of the site.
 
 
 ### Cookbook Section 
 
-File: `/cookbook/index.md`
-Article Directory: `/_recipes` 
+Article Directory: `/_recipes/` 
 
 Each article is a "Recipe" that solves a specific problem or achieves a specific objective 
 
@@ -97,7 +95,7 @@ Each article is a "Recipe" that solves a specific problem or achieves a specific
 
 ### Tools Section 
 
-File: `/tools/index.md`
+Article Directory: `/_tools/`
 
 A single page containing a list of supporting tools and services that can be used with this solution 
 
@@ -114,15 +112,13 @@ A single page that explains how to test the solution and debug problems
 
 ### Updates Section 
 
-File: `/updates/index.md`
-Article Directory: `/_updates` 
+Article Directory: `/_updates/` 
 
-Each article is an "Update" that describes a new release, patch or other announcement of interest to the user community. Update file names should be in the form `YYYY-MM-DD-The-Article-Title` This will cause them to be sorted in chronological order not alphabetical order. If multiple updates are posted on the same day then the format `YYYY-MM-DD-HH:MM-The-Article-Title` should be used. If you want to post multiple updates in the same minute - type slower.
-
+Each article is a "Update" that describes a new release, patch or other announcements of interest to the user community. All filenames should begin with the date in the form YYYY-MM-DD to ensure they are sorted in chronological order.
 
 ### Contribution Section 
 
-File: `/contribution/index.md`r
+File: `/contribution/index`
 
 * Providing Feedback and Reporting Issues - How to report bugs, issues and provide feedback 
 * Contributing to Development - Access to source code, if available. 

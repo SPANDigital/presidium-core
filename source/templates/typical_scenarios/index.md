@@ -5,19 +5,8 @@ permalink: /typical-scenarios/
 ---
 
 {% comment %}
-    Things you should do when using the solution. A list of Best practices in the format: Recommended Practice, Discussion, See Also
+ Things you should do when using the solution. A list of Best practices in the format: Recommended Practice, Discussion, See Also
 {% endcomment %}
-
-<div class="article-index">
-<ul>
-    {% for scenario in site.typical_scenarios %}
-        <li>
-            <a href="#{{ scenario.id }}">{{ scenario.title }}</a>
-        </li>
-    {% endfor %}
-</ul>
-</div>
-
 
 # {{ page.title }}
 
@@ -35,4 +24,6 @@ permalink: /typical-scenarios/
       {{ scenario.content }}
   </div>
 </article>
+{% else %}
+{% include empty-article.html %}
 {% endfor %}
