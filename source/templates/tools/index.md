@@ -23,5 +23,7 @@ permalink: /tools/
       <div class="article-content">
           {{ tool.content }}
       </div>
-  </article>  
+  </article>
+{% else %}
+{% include empty-article.html %}
 {% endfor %}

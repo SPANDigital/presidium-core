@@ -21,5 +21,8 @@ permalink: /best-practices/
        {{ practice.content }}
     </div>
 </article>
-
+{% else %}
+{% include empty-article.html %}
 {% endfor %}
+
+

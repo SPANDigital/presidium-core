@@ -24,4 +24,6 @@ permalink: /typical-scenarios/
       {{ scenario.content }}
   </div>
 </article>
+{% else %}
+{% include empty-article.html %}
 {% endfor %}

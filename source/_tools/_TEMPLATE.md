@@ -1,31 +1,21 @@
 # Template Instructions
 # ---------------------
 # 1) Copy and rename this file. Don't forget to remove the leading "_" 
-# 2) Replace <Instructional text> with appropriate content
+# 2) Replace content placeholders with appropriate content, search for "REPLACE WITH"
 # 3) Delete this line and all lines above so that the below front matter is at the top of the file.
-
 ---
-title: "<Tool Title>"
-id: "<tool-title>" 
-author: "<github-username>"
+title: "REPLACE WITH Tool Title"
+id: "REPLACE WITH tool-title" 
+author: "REPLACE WITH github-username"
 ---
 
-<Summary paragraph of the tool>
-
-{% highlight python %}
-    """
-    A code snippet, if required, that illustrates the recommended practice.
-    """
-{% endhighlight %}
-
+REPLACE WITH a summary paragraph of the tool
 
 ### Discussion 
 
-<A discussion of the recommended practice>
+REPLACE WITH a discussion of the tool and why it is useful.
 
 
 ### See Also
 
-- [Link D](http://www.google.com)
-- [Link E](http://www.google.com)
-- [Link F](http://www.google.com)
+- [REPLACE WITH a description of the link](http://www.google.com)

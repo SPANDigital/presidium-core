@@ -4,12 +4,9 @@ author: virtualtraveler
 permalink: /references/
 ---
 
-
 # {{ page.title }}
 
-
 {% assign groups = site.references | group_by: "category" | sort_by: "name" %}
-
 {% for group in groups %}
 
 ## {{ group.name }}
@@ -17,5 +14,6 @@ permalink: /references/
 {% for item in group.items %}
 <a href="{{ item.url }}">{{item.title}}</a>
 {%endfor%}
-  
+{% else %}
+{% include empty-article.html %}
 {%endfor%}
