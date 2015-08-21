@@ -46,5 +46,5 @@ defaults:
         scope:
             path: ""
         values:
-            layout: "default"
+            layout: "walmart"
             github-url: "https://github.com/"
