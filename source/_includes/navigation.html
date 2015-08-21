@@ -1,27 +1,28 @@
-<nav class="navigation-items">
-		<h2>Version</h2>
-		<div id="bar-select"><select><option>V2</option></select></div>
+<!--left sub navigation-->
+<nav id="sidenav">
     <h2>DOCUMENTATION</h2>
     <ul>
         {% for section in site.data.sections %}
         {% assign groups = site[section.collection] | group_by: "category" %}
+	
         <li>
             <a href="{{ baseurl }}{{ section.path }}">{{ section.name }}</a>
             <ul>
-                {% for group in groups %}
-                    {% if group.name.size > 0 %}
-                        <li>
-                            <a href="{{ baseurl }}{{ section.path }}">{{ group.name }}</a>
-                        </li>
-                    {% else %}
-                        {% for item in group.items %}
-                            <li>
-                                <a href="{{ baseurl }}{{ section.path }}#{{ item.id }}">{{ item.title }}</a>
-                            </li>
-                        {% endfor %}
-                    {% endif %}
+                {% for group in groups %}	
+				{% assign articles = site[section.collection] | where: "category" , group.name %}
+                    <li>
+                        <a href="{{ baseurl }}{{ section.path }}#{{ group.name | slugify }}">{{ group.name }}</a>
+						<ul>
+			    			{% for article in articles %}
+				    			<li>
+				         			<a href="{{ baseurl }}{{ section.path }}#{{ article.title | slugify}}">{{ article.title }}</a>
+			      				</li>
+				 			{% endfor %}
+						</ul>
+                    </li>
                 {% endfor %}
-            </ul>
+            </ul>	
+			
         </li>
         {% endfor %}
     </ul>

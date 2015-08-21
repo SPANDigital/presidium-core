@@ -1,45 +1,48 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Electrode</title>
+        <link rel="stylesheet" href="/assets/css/reset.css" type="text/css" media="screen" />
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/bootstrap.min.css">
 
-    <title>{{ page.title }}</title>
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="/assets/css/style.css" type="text/css" media="screen" />
+        <link href='http://fonts.googleapis.com/css?family=Roboto:300,500' rel='stylesheet' type='text/css'>
+		
+        <script src="/assets/js/jquery-1.7.2.min.js"></script>
+		<script src="/assets/js/respond.min.js"></script>
+		 
+		<!--[if lt IE 9]>
+		<script src="/assets/js/html5.js"></script>
+		<![endif]-->
 
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/bootstrap.min.css">
-
-    <!-- Optional theme -->
-    <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/bootstrap-theme.min.css">
-
-    <link rel="stylesheet" type="text/css" media="all" href="/assets/css/style.css"/>
-</head>
+	</head>
 <body>
-    {% capture baseurl %}{{ site.baseurl }}{% endcapture %}
-    <div class="container-fluid">
-        <div id="header" class="row">
-            {% include header.html %}
-        </div>
-        <div class="row">
-            <div id="section-navigation" class="col-md-2">
-                {% include navigation.html %}
-            </div>
-            <div class="col-md-10">
-                {{ content }}
-            </div>
-        </div>
-        <div class="row">
-            {% include footer.html %}
-        </div>
-    </div>
+{% capture portalurl %}{{ site.portalurl }}{% endcapture %}
+<div id="holder" class="mainholder">
 
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+{% include header.html %}
 
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<!--CONTENT with sidebar left-->
+<section id="onebar" class="leftbar">
+<!--CONTENT right-->
 
+	<section id="rightpage">
+		<article>
+            {{ content }}
+        </article>
+	</section>
+<!--CONTENT sidebar left-->
+	<aside>
+        {% include navigation.html %}
+	</aside>
+</section>
+
+{% include footer.html %}
+
+</div>
 </body>
-</html>
-

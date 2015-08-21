@@ -1,6 +1,6 @@
-# XXX - A Solution Documentation Framework
+# CORPUS - A Solution Documentation Framework
 
-XXX is a lightweight documentation framework for software components, systems, and solutions. The framework uses technologies already familiar to most developers and is open to extension and enhancement.  
+CORPUS is a lightweight documentation framework for software components, systems, and solutions. The framework uses technologies already familiar to most developers and is open to extension and enhancement.  
 
 The framework provides a directory structure containing markdown templates configured for processing with Jekyll. This combination produces software documentation that is logically structured, follows industry best practices and is easily maintained and extended by developers. You may pick which sections you wish to complete and may add more sections if required. 
 
