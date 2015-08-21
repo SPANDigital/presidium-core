@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Walmart - flat Templates</title>
+        <link rel="stylesheet" href="/assets/css/reset.css" type="text/css" media="screen" />
+        <link rel="stylesheet" href="/assets/css/style.css" type="text/css" media="screen" />
+        <link href='http://fonts.googleapis.com/css?family=Roboto:300,500' rel='stylesheet' type='text/css'>
+		
+        <script src="/assets/js/jquery-1.7.2.min.js"></script>
+		<script src="/assets/js/vendor/respond.min.js"></script>
+		 
+		<!--[if lt IE 9]>
+		<script src="/assets/js/html5.js"></script>
+		<![endif]-->
+
+	</head>
+<body>
+<div id="holder" class="mainholder">
+
+{% include header.html %}
+
+
+<!--CONTENT with sidebar left-->
+<section id="onebar" class="leftbar">
+<!--CONTENT right-->
+	<section id="rightpage">
+        {{ content }}
+	</section>
+<!--CONTENT sidebar left-->
+	<aside>
+        {% include navigation.html %}
+	</aside>
+</section>
+
+{% include footer.html %}
+
+</div>
+</body>

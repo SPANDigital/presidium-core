@@ -1,4 +1,7 @@
-<div class="navigation-items">
+<nav class="navigation-items">
+		<h2>Version</h2>
+		<div id="bar-select"><select><option>V2</option></select></div>
+    <h2>DOCUMENTATION</h2>
     <ul>
         {% for section in site.data.sections %}
         {% assign groups = site[section.collection] | group_by: "category" %}
@@ -22,4 +25,4 @@
         </li>
         {% endfor %}
     </ul>
-</div>
+</nav>

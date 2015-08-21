@@ -1,91 +1,245 @@
-#header-navigation {
-    background-color: #5075be;
-     color: #ffffff;
+/* Created by Pixelzoo: www.pixelzoo.co.za */
+/* Generic Styles */
+
+body, p , li, a , input{
+	font-family: 'Roboto', sans-serif; 
+	font-weight: 300; 
+	color: #4d4d4d; 
+	line-height: 1.7em;
+	font-size: 14px; 
+}
+h1, h2, h3, h4,  nav#topnav li a, #page-image p  {
+	font-family: 'Roboto', sans-serif; 
+	font-weight: 500; 
 }
 
-.navbar-default .navbar-brand {
-    color: #ffffff;
+h1{font-size: 20px; margin-bottom: 0.5em; }
+h2 {font-size: 14px; margin-bottom: 0.5em; }
+h3 {font-size: 16px; }
+h4 {font-size: 12px; text-transform: uppercase;}
+
+b { font-weight: 700; }
+a { color: #108ac0; }
+.blue {color: #108ac0; }
+.dark { color: #133d57; }
+.yellow { color: #fdb728; }
+.light { color: #8fd3f4; }
+
+/* Structure ---------------------------------------------------------- */
+/* Structure */
+#holder { 
+	max-width: 1116px;
+	margin: 0 auto;
+	width: auto;
+}
+	.mainholder{ min-width: 960px; background: #faf9f7; }
+
+/* Structure: header nav and top */
+#page-head{
+		max-height: 50px;
+		background: #2774ba;
+		overflow: hidden;
+}
+#logo {
+		margin: auto 0; 
+		float: left;
+		margin: 1em 2.5em 1em 2em;
 }
 
-.navbar-brand, .navbar-nav>li>a {
-    text-shadow: none;
-    font-size: 14px;
+nav#topnav {
+		width: auto;
+		margin: 1em ;
+}
+	nav#topnav ul {list-style: none;}
+	nav#topnav ul li {
+		display: inline;
+		line-height: 2em;
+		height: 50px;
+	}
+	nav#topnav ul li a {
+		text-decoration: none;
+		color: #7abfff;		
+		margin: 0 0.8em;	
+		font-size: 15px;
+	}
+	nav#topnav ul li a:hover, nav#topnav ul li.current a   { color: #fff; border-bottom: 3px solid #fff; padding-bottom: 10px; }
+	
+	/* Variations: of header image  */
+	#page-image.header01 { background: #10ace8 url(../images/header_01.jpg) no-repeat; }
+	#page-image.header02 { background: #10ace8 url(../images/header_02.jpg) no-repeat; }
+	#page-image.header03 { background: #10ace8 url(../images/header_03.jpg) no-repeat; }
+	#page-image.header04 { background: #10ace8 url(../images/header_04.jpg) no-repeat; }
+
+	#page-image.high { height: 260px; }
+	#page-image.short { height: 160px; }
+	
+	#page-image h1 { color: #fff; font-size: 44px; padding: 115px 0 0 60px; text-transform: uppercase; }
+	#page-image.high h1 { text-transform: none; padding: 60px 0 0 60px; }
+	#page-image p { color: #fff;  padding: 30px 0 0 60px; width: 400px;}
+	
+/* Structure: no bar */	
+#nobar { clear: both; padding: 0 20px 0 50px;}
+#nobar article {
+	float: left;
+	padding: 1em;
 }
 
-.navbar-default .navbar-nav>li>a {
-    color: #9dc8fd;
-    font-weight: normal;
-    font-size: 12px;
-}
+/* Structure: one bar on right*/	
+#onebar {clear: both; padding: 0 20px 0 50px;}
+	#onebar.leftbar {clear: both; padding: 0;}
+#onebar article { padding:1em; }
 
-.navbar-default .navbar-nav>li>a:hover {
-    color: #ffffff;
+#leftpage {
+	width: 65%;
+	float: left;
 }
-
-#section-navigation {
-    background-color: #f3f3ef;
+#onebar.rightbar aside {
+	width: 30%;
+	float: right;
+	color:#f9f8f6;
 }
+	#onebar.rightbar aside .notebox { background: #2774ba url(../images/icon_star_light.png) no-repeat 150px center; margin-bottom:30px; }
+	#onebar.rightbar aside .newsbox { background: #394145; margin-bottom: 30px;}
+	#onebar.rightbar aside .infobox { background: #f2f1ed; color:#4c4c4c; margin-bottom:30px;}
 
-h1 {
-}.hll { background-color: #ffffcc }
-.c { color: #408080; font-style: italic } /* Comment */
-.err { border: 1px solid #FF0000 } /* Error */
-.k { color: #008000; font-weight: bold } /* Keyword */
-.o { color: #666666 } /* Operator */
-.cm { color: #408080; font-style: italic } /* Comment.Multiline */
-.cp { color: #BC7A00 } /* Comment.Preproc */
-.c1 { color: #408080; font-style: italic } /* Comment.Single */
-.cs { color: #408080; font-style: italic } /* Comment.Special */
-.gd { color: #A00000 } /* Generic.Deleted */
-.ge { font-style: italic } /* Generic.Emph */
-.gr { color: #FF0000 } /* Generic.Error */
-.gh { color: #000080; font-weight: bold } /* Generic.Heading */
-.gi { color: #00A000 } /* Generic.Inserted */
-.go { color: #888888 } /* Generic.Output */
-.gp { color: #000080; font-weight: bold } /* Generic.Prompt */
-.gs { font-weight: bold } /* Generic.Strong */
-.gu { color: #800080; font-weight: bold } /* Generic.Subheading */
-.gt { color: #0044DD } /* Generic.Traceback */
-.kc { color: #008000; font-weight: bold } /* Keyword.Constant */
-.kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
-.kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
-.kp { color: #008000 } /* Keyword.Pseudo */
-.kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
-.kt { color: #B00040 } /* Keyword.Type */
-.m { color: #666666 } /* Literal.Number */
-.s { color: #BA2121 } /* Literal.String */
-.na { color: #7D9029 } /* Name.Attribute */
-.nb { color: #008000 } /* Name.Builtin */
-.nc { color: #0000FF; font-weight: bold } /* Name.Class */
-.no { color: #880000 } /* Name.Constant */
-.nd { color: #AA22FF } /* Name.Decorator */
-.ni { color: #999999; font-weight: bold } /* Name.Entity */
-.ne { color: #D2413A; font-weight: bold } /* Name.Exception */
-.nf { color: #0000FF } /* Name.Function */
-.nl { color: #A0A000 } /* Name.Label */
-.nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
-.nt { color: #008000; font-weight: bold } /* Name.Tag */
-.nv { color: #19177C } /* Name.Variable */
-.ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
-.w { color: #bbbbbb } /* Text.Whitespace */
-.mb { color: #666666 } /* Literal.Number.Bin */
-.mf { color: #666666 } /* Literal.Number.Float */
-.mh { color: #666666 } /* Literal.Number.Hex */
-.mi { color: #666666 } /* Literal.Number.Integer */
-.mo { color: #666666 } /* Literal.Number.Oct */
-.sb { color: #BA2121 } /* Literal.String.Backtick */
-.sc { color: #BA2121 } /* Literal.String.Char */
-.sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
-.s2 { color: #BA2121 } /* Literal.String.Double */
-.se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
-.sh { color: #BA2121 } /* Literal.String.Heredoc */
-.si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
-.sx { color: #008000 } /* Literal.String.Other */
-.sr { color: #BB6688 } /* Literal.String.Regex */
-.s1 { color: #BA2121 } /* Literal.String.Single */
-.ss { color: #19177C } /* Literal.String.Symbol */
-.bp { color: #008000 } /* Name.Builtin.Pseudo */
-.vc { color: #19177C } /* Name.Variable.Class */
-.vg { color: #19177C } /* Name.Variable.Global */
-.vi { color: #19177C } /* Name.Variable.Instance */
-.il { color: #666666 } /* Literal.Number.Integer.Long */
+/* Structure: one bar on left */	
+#rightpage {
+	width: 80%;
+	float: right;
+	background: #fff;
+}
+#onebar.leftbar aside {
+	width: 20%;
+	float: left;
+	color:#f9f8f6; 
+}
+		
+/* Structure: two bar */	
+
+/* Structure: footer */
+
+#page-foot {
+clear: both;
+height: 200px;
+background: #10ace8 url(../images/icon_star.png) no-repeat right 55px; }
+
+footer p, footer a {
+font-size: 9px;
+text-align: center;
+}
+	footer h2 { color: #fff; font-size: 32px;  padding: 35px 0 100px 60px; }
+
+/* Content Types layout & Styles ---------------------------------------------------------- */
+
+.divider { height: 1px; border-bottom: solid 1px #ddd; padding: 10px 0; }
+
+/* Styles: notebox in onebar */	
+.notebox h1 { color: #f9f8f6; }
+.notebox p { color: #f9f8f6; }
+.notebox a { color: #fdb728; font-weight: 500; text-decoration: none; }
+
+/* Styles: newsbox in onebar */	
+.newsbox h1 { color: #f9f8f6; }
+.newsbox h2 { color: #8fd3f4; text-transform: uppercase; font-size:12px;}
+.newsbox h3 { color: #fdb728; }
+.newsbox h3 span { float: right; }
+.newsbox p { color: #f9f8f6; }
+.newsbox a { color: #f9f8f6; font-weight: 500; text-decoration: none; }
+	.newsbox .more a{ color: #8fd3f4; }
+.newsbox .divider { border-bottom: solid 1px #666;}
+
+/* Styles: infobox in onebar*/	
+.infobox h2 { color: #108ac0; clear:both;}
+.infobox  h2 span, .infobox  h1 span  { float: right; width:50%;  color: #4d4d4d; font-weight:300;}
+.infobox h3 { color: #108ac0; }
+.infobox h4{ color: #4d4d4d;}
+.infobox p { clear:both;}
+.infobox a, .infobox .more{ color: color: #108ac0;  font-weight: 500; text-decoration: none; }
+
+/* Styles: cardgrid for nobar */	
+.cardgrid { 	padding: 0 20px 0 50px;}
+.cardgrid article{	
+	width: 30%;/* check check 30% minus margin/padding */	
+	float: left;
+	margin:10px;
+	background: #fff;
+}	
+	.cardgrid .color01{ border-top:2px solid #f6891d;margin-left:-30px;margin-right:20px;}
+	.cardgrid .color02{ border-top:2px solid #bb56ac;margin-right:20px;}
+	.cardgrid .color03{ border-top:2px solid #07a247;margin-right:-20px;}
+	.cardgrid .color04{ border-top:2px solid #0fc1c3;margin-left:-30px;margin-right:20px;}
+	.cardgrid .color05{ border-top:2px solid #ffb12f;margin-right:20px;}
+	.cardgrid .color06{ border-top:2px solid #6f55af;margin-right:-20px;}
+		
+	.cardgrid p { line-height:1.7em; }
+	.cardgrid h2 { color: #108ac0; font-size: 20px; }
+	.cardgrid h3 { font-size: 16px; margin-bottom:0.7em; }
+	.cardgrid .more a { color: #108ac0; font-weight: 500; text-decoration: none; }
+	.cardgrid span { float: right; }
+	.button{ color:#fff; text-transform: uppercase; font-size: 10px; background: #108ac0; max-height: 20px; padding: 0 10px; margin: 0; border-radius: 7px; } /* webkit friendly version of border adius*/	
+		
+
+/* Content Layouts:  intro text page */	
+.intro p { font-size: 20px; }
+
+/* Content Layouts:  Search input and selects */	
+#page-search input { width: 95%; height: 2em; border: 1px solid #ccc; background: #fff url(../images/icon_search_box.png) no-repeat; padding-left: 30px; margin: 0 -30px 15px 0; font-size: 16px; }
+
+#bar-search input { width: 85%; height: 1.7em; border: 1px solid #ccc; background: #fff url(../images/icon_search_box.png) no-repeat; padding-left: 30px; margin: 0 -30px 15px 0; font-size: 14px; }
+
+#bar-select select { width: 100%; height: 1.7em; border: 1px solid #ccc;  margin: 0 0 15px 0; font-size: 14px; padding-left:0;}
+
+/* Content Layouts:  list boxes */	
+.list-row, .list-row-header{ width:100%; }
+.list-row-header div{ 
+	float: left; 
+	min-height: 30px; 
+	margin-bottom: 15px; 
+	background: none; 
+	border: 0; border-bottom: 1px solid #ccc; 
+	border-radius: 0;
+}
+.list-row div { float: left; min-height: 30px; margin-bottom: 15px; background: #fff;}
+
+.list-col1{ clear:both;text-align: left; width: 40%; border-left: 2px solid #ccc; border-radius: 7px 0 0 7px; margin-left: -2px; }
+.list-col2 { text-align: left; width: 40%; background: #fff; }
+.list-col3 { text-align: right; width: 20%; border-radius: 0 7px 7px 0; }
+
+.list-row div p{ padding: 10px; }
+.list-row div a { color: #108ac0; text-decoration: none; font-size: 16px; font-weight: 500; padding: 10px; }
+
+.list-row-header div p{ padding: 10px; font-size: 10px; text-transform: uppercase; }
+.list-row-header div a{ text-decoration: none;  font-size:10px; color: #4d4d4d; }
+
+
+/* Styles: left onebar */	
+.leftbar h1 { color: #4d4d4d; margin-bottom:0;}
+.leftbar h2 { color: #4d4d4d; text-transform: uppercase; }
+.leftbar h3 a {font-size:16px; text-decoration:none; font-weight:500; }
+.leftbar h4 { color: #4d4d4d; text-transform: uppercase; }
+nav#sidenav h2, nav#sidenav li { padding: 0 1em;}
+
+nav#sidenav li a { text-decoration:none; color:#4d4d4d; }
+nav#sidenav li:hover, nav#sidenav li.current { background: #e4ecf0 url(../images/subnav_bg.png) right center no-repeat; }
+nav#sidenav li a:hover , nav#sidenav li.current a { font-weight:500; }
+	nav#sidenav ul ul { margin-left:0.5em; }
+	nav#sidenav ul ul li:hover {background:#e4ecf0;}
+
+/* Content Layouts:  Main text - for one bar (rightpage content)*/
+
+#rightpage h1{color:#4d4d4d; font-size:24px; }
+#rightpage h2{color:#4d4d4d; font-size:16px; text-transform: none;}
+#rightpage h3{color:#4d4d4d; font-size:14px; font-weight:500;}
+#rightpage h4{color:#4d4d4d; }
+#rightpage p{}
+#rightpage ul li{list-style: inside disc; }
+#rightpage ul li a{text-decoration:none; }
+#rightpage ul ul{list-style: inside disc; margin-left:1em;}
+
+/* Content Layouts:  News / events page- for one bar (rightpage content)*/
+#rightpage .news p{}
+#rightpage .news h1{font-size:24px; color:#108ac0; margin-bottom:0.5em;}
+#rightpage .news h2{color:#fdb728; text-transform:uppercase;}
+#rightpage .news h2 span{color:#d6d6d6; }
+#rightpage .actions a{ text-decoration:none;}
+
