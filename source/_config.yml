@@ -22,6 +22,7 @@ collections:
 
 baseurl:
 #url: http://localhost:4000/
+portalurl: http://localhost:4000
 
 #
 # Exclude the following files from the generated site
