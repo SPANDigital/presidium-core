@@ -4,7 +4,7 @@ author: "virtualtraveler"
 permalink: /contribution/
 --- 
 
-# {{ page.title }}
+# {{ page.title | upcase }}
 
 {% for article in site.contribution %}
 {{ article.content }}

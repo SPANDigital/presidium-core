@@ -3,7 +3,7 @@ title: "Key Concepts"
 permalink: /key-concepts/
 ---
 
-# {{ page.title }}
+# {{ page.title | upcase }}
 
 {% for key_concept in site.key_concepts %}
     {{ key_concept.content }}

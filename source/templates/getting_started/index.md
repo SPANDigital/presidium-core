@@ -3,7 +3,7 @@ title: Getting Started
 permalink: /getting-started/
 ---
 
-# {{ page.title }}
+# {{ page.title | upcase }}
 
 {% for article in site.getting_started %}
 {{ article.content }}

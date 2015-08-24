@@ -4,7 +4,7 @@ author: "virtualtraveler"
 permalink: /testing/
 ---
 
-# {{ page.title }}
+# {{ page.title | upcase }}
 
 {% for article in site.testing %}
 {{ article.content }}

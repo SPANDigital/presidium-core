@@ -8,7 +8,7 @@ permalink: /tools/
     A list of tools commonly used with the solution
 {% endcomment %}
 
-# {{ page.title }}
+# {{ page.title | upcase }}
 
 {% for tool in site.tools %}
   <article>

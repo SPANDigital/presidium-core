@@ -4,7 +4,7 @@ author: "virtualtraveler"
 permalink: /updates/
 ---
 
-# {{ page.title }}
+# {{ page.title | upcase }}
 
 {% for update in site.updates reversed %}
 <article>

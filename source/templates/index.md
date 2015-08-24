@@ -3,10 +3,8 @@ title: Overview
 permalink: /
 ---
 
-<article>
-<h1>{{ page.title }}</h1>
+# {{ page.title | upcase }}
 
 {% for article in site.overview %}
 {{ article.content }}
 {% endfor %}
-</article>

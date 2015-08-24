@@ -3,7 +3,7 @@ title: Prerequisites
 permalink: /prerequisites/
 ---
 
-# {{ page.title }}
+# {{ page.title | upcase }}
 
 {% for article in site.prerequisites %}
 {{ article.content }}

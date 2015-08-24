@@ -8,7 +8,7 @@ permalink: /typical-scenarios/
  Things you should do when using the solution. A list of Best practices in the format: Recommended Practice, Discussion, See Also
 {% endcomment %}
 
-# {{ page.title }}
+# {{ page.title | upcase }}
 
 {% for scenario in site.typical_scenarios %}
 <article>
