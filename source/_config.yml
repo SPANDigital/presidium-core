@@ -29,14 +29,9 @@ baseurl:
 exclude: [
     "README.md",
     "LICENSE",
-    "_TEMPLATE.md",
+    "poop.md",
     ".gitignore",
 ]
-
-#
-# Code highlighter pygments requires python
-#
-highlighter: pygments
 
 #
 # System wide defaults
