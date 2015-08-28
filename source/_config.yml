@@ -30,7 +30,6 @@ portalurl: http://localhost:4000
 exclude: [
     "README.md",
     "LICENSE",
-    "poop.md",
     ".gitignore",
 ]
 
