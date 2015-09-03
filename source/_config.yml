@@ -24,6 +24,9 @@ baseurl:
 #url: http://localhost:4000/
 portalurl: http://localhost:4000
 
+markdown: redcarpet
+highlighter: null
+
 #
 # Exclude the following files from the generated site
 #
