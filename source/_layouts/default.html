@@ -3,23 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Electrode</title>
-    <link rel="stylesheet" href="/assets/css/reset.css" type="text/css" media="screen"/>
+    <title>Corpus</title>
+    <link rel="stylesheet" href="/assets/shared/css/reset.css" type="text/css" media="screen"/>
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ site.baseurl }}/assets/shared/css/bootstrap.min.css">
 
     <!-- Optional theme -->
-    <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="/assets/css/style.css" type="text/css" media="screen"/>
-    <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/prism.css">
+    <link rel="stylesheet" href="{{ site.baseurl }}/assets/shared/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="{{ site.baseurl }}/assets/shared/css/style.css" type="text/css" media="screen"/>
+    <link rel="stylesheet" href="{{ site.baseurl }}/assets/shared/css/prism.css">
     <link href='http://fonts.googleapis.com/css?family=Roboto:300,500' rel='stylesheet' type='text/css'>
 
-    <script src="/assets/js/jquery-1.7.2.min.js"></script>
-    <script src="/assets/js/respond.min.js"></script>
-    <script src="/assets/js/prism.js"></script>
+    <script src="{{ site.baseurl }}/assets/shared/js/jquery-1.7.2.min.js"></script>
+    <script src="{{ site.baseurl }}/assets/shared/js/respond.min.js"></script>
+    <script src="{{ site.baseurl }}/assets/shared/js/prism.js"></script>
 
     <!--[if lt IE 9]>
-    <script src="/assets/js/html5.js"></script>
+    <script src="{{ site.baseurl }}/assets/shared/js/html5.js"></script>
     <![endif]-->
 
 </head>
@@ -42,7 +42,7 @@
         <aside>
             <!--Product Logo-->
             <article>
-                <a href="index.html" class="sublogo"><img src="/assets/images/sub-logo_electrode.png" alt=""></a>
+                <a href="index.html" class="sublogo"><img src="/assets/images/sub-logo_corpus.png" alt=""></a>
                 <h4>Version</h4>
 
                 <div id="bar-select"><select>
@@ -51,12 +51,6 @@
             </article>
             <div id="nav-container" data-spy="affix" data-offset-top="200" data-offset-bottom="0">
                 {% include navigation.html %}
-                <article>
-                    <h4>Endpoints</h4>
-
-                    <p><span class="tag"><a href="">post</a></span> /orders<br>
-                        <span class="tag"><a href="" class="orange">get</a></span> /orders/3d</p>
-                </article>
                 <article>
                     <h4>Contact the team</h4>
                 </article>
