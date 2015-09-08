@@ -5,7 +5,6 @@
 # 3) Delete this line and all lines above so that the below front matter is at the top of the file.
 ---
 title: "REPLACE WITH Recipe Title"
-id: "REPLACE WITH recipe-title" 
 author: "REPLACE WITH github-username"
 ---
 

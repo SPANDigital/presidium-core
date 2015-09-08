@@ -5,7 +5,6 @@
 # 3) Delete this line and all lines above so that the below front matter is at the top of the file.
 ---
 title: "REPLACE WITH Scenario Title"
-id: "REPLACE WITH scenario-title" 
 author: "REPLACE WITH github-username"
 publication-date: "<YYYY-MM-DD>"
 ---

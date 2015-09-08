@@ -4,7 +4,6 @@
 # 2) Replace content placeholders with appropriate content, search for "REPLACE WITH"
 # 3) Delete this line and all lines above so that the below front matter is at the top of the file.
 ---
-id: "REPLACE WITH scenario-title" 
 title: "REPLACE WITH Scenario Title"
 author: "REPLACE WITH github-username"
 ---

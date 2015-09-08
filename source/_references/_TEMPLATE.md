@@ -5,7 +5,6 @@
 # 3) Delete this line and all lines above so that the below front matter is at the top of the file.
 ---
 title: "REPLACE WITH Reference Title"
-id: "REPLACE WITH reference-title" 
 category: "REPLACE WITH api / classes / models / views / controllers etc"
 author: "REPLACE WITH github-username"
 ---
