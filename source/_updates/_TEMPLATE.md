@@ -4,31 +4,31 @@
 # 2) Replace content placeholders with appropriate content, search for "REPLACE WITH"
 # 3) Delete this line and all lines above so that the below front matter is at the top of the file.
 ---
-title: "REPLACE WITH Scenario Title"
+title: "REPLACE WITH Update Title"
 author: "REPLACE WITH github-username"
 publication-date: "<YYYY-MM-DD>"
 ---
 
-## Release REPLACE WITH the latest semantic version number 0.1.0
+# Release REPLACE WITH the latest semantic version number 0.1.0
 
 REPLACE WITH A brief description of the release
 
-### New Features
+## New Features
 
 - REPLACE WITH Feature 1
 - REPLACE WITH Feature 2
 
-### Enhancements
+## Enhancements
 
 - REPLACE WITH Enhancements 1
 - REPLACE WITH Enhancements 2
 
-### Fixes
+## Fixes
 
 - REPLACE WITH Defect 01 - A description of the fix
 - REPLACE WITH Defect 02 - A description of the fix
 
-### Known Issues and Problems
+## Known Issues and Problems
 
 - REPLACE WITH Issue 1
 - REPLACE WITH Issue 2

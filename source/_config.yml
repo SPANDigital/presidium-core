@@ -23,9 +23,15 @@ collections:
 baseurl:
 #url: http://localhost:4000/
 portalurl: http://localhost:4000
-
+#
+# use redcarpet as the Markdown processor. Make it like GFM - Github Flavored Markdwn
+# redcarpet must be installed locally for this to work "$sudo gem install redcarpet"
+# set highlighter to whatever you want...
+#
 markdown: redcarpet
-highlighter: null
+redcarpet:
+    extensions: [ fenced_code_blocks, no_intra_emphasis, tables, autolink, strikethrough ]
+highlighter: pygments
 
 #
 # Exclude the following files from the generated site
