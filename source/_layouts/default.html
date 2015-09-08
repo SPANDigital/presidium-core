@@ -4,73 +4,86 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Corpus</title>
-    <link rel="stylesheet" href="/assets/shared/css/reset.css" type="text/css" media="screen"/>
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="{{ site.baseurl }}/assets/shared/css/bootstrap.min.css">
 
-    <!-- Optional theme -->
-    <link rel="stylesheet" href="{{ site.baseurl }}/assets/shared/css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="{{ site.baseurl }}/assets/shared/css/style.css" type="text/css" media="screen"/>
-    <link rel="stylesheet" href="{{ site.baseurl }}/assets/shared/css/prism.css">
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/reset.css" type="text/css" media="screen"/>
+    <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/style.css" type="text/css" media="screen"/>
+
+    <!-- Fonts -->
     <link href='http://fonts.googleapis.com/css?family=Roboto:300,500' rel='stylesheet' type='text/css'>
 
-    <script src="{{ site.baseurl }}/assets/shared/js/jquery-1.7.2.min.js"></script>
-    <script src="{{ site.baseurl }}/assets/shared/js/respond.min.js"></script>
-    <script src="{{ site.baseurl }}/assets/shared/js/prism.js"></script>
+    <!-- JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="{{ site.baseurl }}/assets/js/respond.min.js"></script>
 
     <!--[if lt IE 9]>
-    <script src="{{ site.baseurl }}/assets/shared/js/html5.js"></script>
+    <script src="{{ site.baseurl }}/assets/js/html5.js"></script>
     <![endif]-->
 
 </head>
 <body class="products">
-{% capture portalurl %}{{ site.portalurl }}{% endcapture %}
-<div id="holder" class="mainholder">
 
-    {% include header.html %}
+    {% capture portalurl %}{{ site.portalurl }}{% endcapture %}
 
-    <!--CONTENT with sidebar left-->
-    <section id="onebar" class="leftbar">
-        <!--CONTENT right-->
+    <div id="holder" class="mainholder">
 
-        <section id="rightpage">
-            <article>
-                {{ content }}
-            </article>
+        {% include header.html %}
+
+        <!--CONTENT with sidebar left-->
+        <section id="onebar" class="leftbar">
+            <!--CONTENT right-->
+
+            <section id="rightpage">
+                <article>
+                    {{ content }}
+                </article>
+            </section>
+            <!--CONTENT sidebar left-->
+            <aside>
+                <!--Product Logo-->
+                <article>
+                    <a href="index.html" class="sublogo"><img src="/assets/images/sub-logo_corpus.png" alt=""></a>
+                    <h4>Version</h4>
+
+                    <div id="bar-select"><select>
+                        <option>V2</option>
+                    </select></div>
+                </article>
+                <div id="nav-container">
+                    {% include navigation.html %}
+                    <article>
+                        <h4>Contact the team</h4>
+                    </article>
+                    <article>
+                        <h4>Is this Useful?</h4>
+                        <span class="button"><a href="">yes</a></span>
+                        <span class="button"><a href="" class="orange">no</a></span>
+                    </article>
+                </div>
+            </aside>
         </section>
-        <!--CONTENT sidebar left-->
-        <aside>
-            <!--Product Logo-->
-            <article>
-                <a href="index.html" class="sublogo"><img src="/assets/images/sub-logo_corpus.png" alt=""></a>
-                <h4>Version</h4>
 
-                <div id="bar-select"><select>
-                    <option>V2</option>
-                </select></div>
-            </article>
-            <div id="nav-container" data-spy="affix" data-offset-top="200" data-offset-bottom="0">
-                {% include navigation.html %}
-                <article>
-                    <h4>Contact the team</h4>
-                </article>
-                <article>
-                    <h4>Is this Useful?</h4>
-                    <span class="button"><a href="">yes</a></span>
-                    <span class="button"><a href="" class="orange">no</a></span>
-                </article>
-            </div>
-        </aside>
-    </section>
+        {% include footer.html %}
+    </div>
 
-    {% include footer.html %}
+    <script>
+        $(document).ready(function() {
+            $('#nav-container').affix({
+                offset: {
+                    top: 200,
+                    bottom: function () {
+                        this.bottom = $('.footer').outerHeight(true);
+                        return this.bottom;
+                    }
+                }
+            });
 
-</div>
-
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-
+            $('#nav-container').on('affix.bs.affix', function() {
+                $('#nav-container').removeAttr('style');
+            });
+        })
+    </script>
 </body>

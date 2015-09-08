@@ -20,9 +20,10 @@ collections:
     typical_scenarios:
     updates:
 
-baseurl:
-#url: http://localhost:4000/
 portalurl: http://localhost:4000
+name: My Project
+logo:
+
 #
 # use redcarpet as the Markdown processor. Make it like GFM - Github Flavored Markdwn
 # redcarpet must be installed locally for this to work "$sudo gem install redcarpet"
