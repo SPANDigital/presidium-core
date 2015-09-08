@@ -9,18 +9,18 @@ id: "REPLACE WITH recipe-title"
 author: "REPLACE WITH github-username"
 ---
 
-### Solution
+## Solution
 
 REPLACE WITH a brief description of the solution
 
-{% highlight python lineos %}
+```
     '''REPLACE WITH a code snippet illustrating the solution to the problem. update the code language as required.'''
-{% endhighlight %}
+```
 
-### Discussion
+## Discussion
 
 REPLACE WITH A discussion of the solution including pros and cons of the approach
 
-### See Also
+## See Also
 
 - [REPLACE WITH a description of the link](http://www.google.com)

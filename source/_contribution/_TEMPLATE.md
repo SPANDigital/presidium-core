@@ -9,8 +9,6 @@ id: "contribution>"
 author: "REPLACE WITH github-username"
 ---
 
-# {{ page.title }}
-
 REPLACE WITH introductory paragraph describing this project's approach to contributions. Anything from "We welcome feedback", to "Our code is publicly available on github." or something in between.
 
 ## Providing Feedback & Reporting Issues

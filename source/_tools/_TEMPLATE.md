@@ -11,11 +11,11 @@ author: "REPLACE WITH github-username"
 
 REPLACE WITH a summary paragraph of the tool
 
-### Discussion 
+## Discussion 
 
 REPLACE WITH a discussion of the tool and why it is useful.
 
 
-### See Also
+## See Also
 
 - [REPLACE WITH a description of the link](http://www.google.com)
