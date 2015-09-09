@@ -4,18 +4,18 @@ author: virtualtraveler
 permalink: /references/
 ---
 
-<h1>{{ page.title | upcase }}</h1>
+<h1 class="primary">{{ page.title | upcase }}</h1>
 
 {% assign groups = site.references | group_by: "category" | sort_by: "name" %}
+
 {% for group in groups %}
-
-<h2 class="group-name">{{ group.name | upcase }}</h2>
-
+<h1 class="secondary">{{ group.name | upcase }}</h1>
 {% for item in group.items %}
-<!-- <a href="{{ item.url }}">{{ item.title }}</a> -->
-  {{ item.content }}
+<article id="{{ item.title | slugify }}">
+    {{ item.content }}
+</article>
 {% endfor %}
 
 {% else %}
-  {% include empty-article.html %}
+    {% include empty-article.html %}
 {% endfor %}
