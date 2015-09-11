@@ -11,7 +11,7 @@ permalink: /references/
 {% for group in groups %}
 <h1 class="secondary">{{ group.name | upcase }}</h1>
 {% for item in group.items %}
-<article id="{{ item.title | slugify }}">
+<article>
     {{ item.content }}
 </article>
 {% endfor %}
