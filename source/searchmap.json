@@ -1,0 +1,4 @@
+---
+layout: null
+---
+{% assign counter = 1 %}[{% for p in site.pages %}{% assign counter = counter | plus:'1' %}{% if p.url != "/searchmap.json" %}{"title":"{{ p.title | replace:'"','\"' }}","url":"{{ p.url }}","content":"{{ p.content | strip_newlines | replace:'"','\"' }}"}{% unless counter == forloop.length %},{% endunless %}{% endif %}{% endfor %}]
