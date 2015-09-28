@@ -4,25 +4,23 @@ author: "virtualtraveler"
 permalink: /typical-scenarios/
 ---
 
-{% comment %}
- Things you should do when using the solution. A list of Best practices in the format: Recommended Practice, Discussion, See Also
-{% endcomment %}
-
-# {{ page.title | upcase }}
+<h1 class="primary">{{ page.title | upcase }}</h1>
 
 {% for scenario in site.typical_scenarios %}
+<h1 id="{{ scenario.title | slugify }}" class="secondary">{{ scenario.title }}</h1>
 <article>
-  <hr>
-  <h2 id="{{scenario.id}}">{{ scenario.title }}</h2>
-  <div class="article-meta">
-      <a href="{{ page.github-url }}{{ scenario.author }}" class="post-author">
-          <img src="{{ page.github-url }}{{ scenario.author }}.png" class="avatar" alt="{{ scenario.author }} avatar" width="24" height="24">
-          {{ scenario.author }}</a>	
+    <div class="article-meta">
+        {% if practice.author %}    
+            <a href="{{ page.github-url }}{{ scenario.author }}" class="post-author">
+                <img src="{{ page.github-url }}{{ scenario.author }}.png" class="avatar" alt="{{ scenario.author }} avatar" width="24" height="24">
+                {{ scenario.author }}
+            </a>
+        {% endif %}
       <span class="date">{{scenario.publication-date}}</span>
-  </div>
-  <div class="article-content">
+    </div>
+    <div class="article-content">
       {{ scenario.content }}
-  </div>
+    </div>
 </article>
 {% else %}
 {% include empty-article.html %}

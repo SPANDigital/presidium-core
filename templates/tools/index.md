@@ -4,20 +4,18 @@ author: "virtualtraveler"
 permalink: /tools/
 ---
 
-{% comment %}
-    A list of tools commonly used with the solution
-{% endcomment %}
-
-# {{ page.title | upcase }}
+<h1 class="primary">{{ page.title | upcase }}</h1>
 
 {% for tool in site.tools %}
-  <article>
-      <hr>
-      <h2 id="{{ tool.id }}">{{ tool.title }}</h2>
+<h1 id="{{ tool.title | slugify }}" class="secondary">{{ tool.title }}</h1>
+<article>
       <div class="article-meta">
-          <a href="{{ page.github-url }}{{ scenario.author }}" class="post-author">
-              <img src="{{ page.github-url }}{{ scenario.author }}.png" class="avatar" alt="{{ scenario.author }} avatar" width="24" height="24">
-              {{ scenario.author }}</a>	
+          {% if practice.author %}
+              <a href="{{ page.github-url }}{{ scenario.author }}" class="post-author">
+                  <img src="{{ page.github-url }}{{ scenario.author }}.png" class="avatar" alt="{{ scenario.author }} avatar" width="24" height="24">
+                  {{ scenario.author }}
+              </a>
+          {% endif %}
           <span class="date">{{scenario.publication-date}}</span>
       </div>
       <div class="article-content">

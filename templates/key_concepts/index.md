@@ -3,10 +3,10 @@ title: "Key Concepts"
 permalink: /key-concepts/
 ---
 
-# {{ page.title | upcase }}
+<h1 class="primary">{{ page.title | upcase }}</h1>
 
 {% for key_concept in site.key_concepts %}
-    {{ key_concept.content }}
+{{ key_concept.content }}
 {% else %}
 {% include empty-article.html %}
 {% endfor %}

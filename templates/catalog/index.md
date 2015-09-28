@@ -1,11 +1,12 @@
 ---
-title: Getting Started
-permalink: /getting-started/
+title: Catalog
+author: virtualtraveler
+permalink: /catalog/
 ---
 
 <h1 class="primary">{{ page.title | upcase }}</h1>
 
-{% for article in site.getting_started %}
+{% for article in site.catalog %}
 {{ article.content }}
 {% else %}
 {% include empty-article.html %}

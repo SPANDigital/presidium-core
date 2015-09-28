@@ -1,15 +1,15 @@
 # Template Instructions
 # ---------------------
-# 1) Copy and rename this file to "YYYY-MM-DD-scenario-title.md". Don't forget to remove the leading "_" 
+# 1) Copy and rename this file to "YYYY-MM-DD-XX-YY-ZZ.md". Don't forget to remove the leading "_" 
 # 2) Replace content placeholders with appropriate content, search for "REPLACE WITH"
 # 3) Delete this line and all lines above so that the below front matter is at the top of the file.
 ---
-title: "REPLACE WITH Update Title"
+title: "REPLACE WITH the latest semantic version number XX.YY.ZZ"
 author: "REPLACE WITH github-username"
 publication-date: "<YYYY-MM-DD>"
 ---
 
-# Release REPLACE WITH the latest semantic version number 0.1.0
+## Summary
 
 REPLACE WITH A brief description of the release
 

@@ -1,10 +1,10 @@
 ---
-title: "Contribution"
-author: "virtualtraveler"
+title: Contribution
+author: virtualtraveler
 permalink: /contribution/
 --- 
 
-# {{ page.title | upcase }}
+<h1 class="primary">{{ page.title | upcase }}</h1>
 
 {% for article in site.contribution %}
 {{ article.content }}

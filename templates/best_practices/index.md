@@ -1,25 +1,26 @@
 ---
-title: "Best Practices"
-author: "virtualtraveler"
+title: Best practices
+author: virtualtraveler
 permalink: /best-practices/
 ---
 
-<h1>{{ page.title | upcase }}</h1>
+<h1 class="primary">{{ page.title | upcase }}</h1>
 
 {% for practice in site.best_practices %}
+<h1 id="{{ practice.title | slugify }}" class="secondary">{{ practice.title }}</h1>
 <article>
-    <h2 id="{{ practice.id }}">{{ practice.title }}</h2>
     <div class="article-meta">
-         <a href="{{ page.github-url }}{{ practice.author }}" class="post-author">
-            <img src="{{ page.github-url }}{{ practice.author }}.png" class="avatar" alt="{{ practice.author }} avatar" width="24" height="24">
-            {{ practice.author }}
-         </a>	
+        {% if practice.author %}
+             <a href="{{ page.github-url }}{{ practice.author }}" class="post-author">
+                <img src="{{ page.github-url }}{{ practice.author }}.png" class="avatar" alt="{{ practice.author }} avatar" width="24" height="24">
+                {{ practice.author }}
+             </a>
+        {% endif %}
          <span class="date">{{practice.publication-date}}</span>
     </div>
     <div class="article-content">
        {{ practice.content }}
     </div>
-	<hr>
 </article>
 {% else %}
 {% include empty-article.html %}

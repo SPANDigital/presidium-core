@@ -1,15 +1,18 @@
+{% assign portalurl = site.portalurl %}
+{% assign baseurl = site.baseurl %}
 <!DOCTYPE HTML>
 <html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Corpus</title>
+    <title>{{ site.name }}</title>
 
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/reset.css" type="text/css" media="screen"/>
-    <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/style.css" type="text/css" media="screen"/>
+    <link rel="stylesheet" href="{{ site.baseurl }}/assets/shared/css/reset.css" type="text/css" media="screen"/>
+    <link rel="stylesheet" href="{{ site.baseurl }}/assets/shared/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ site.baseurl }}/assets/shared/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="{{ site.baseurl }}/assets/shared/css/style.css" type="text/css" media="screen"/>
+    <link rel="stylesheet" href="{{ site.baseurl }}/assets/shared/css/prism.css" type="text/css" media="screen"/>
 
     <!-- Fonts -->
     <link href='http://fonts.googleapis.com/css?family=Roboto:300,500' rel='stylesheet' type='text/css'>
@@ -17,18 +20,34 @@
     <!-- JavaScript -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <script src="{{ site.baseurl }}/assets/js/respond.min.js"></script>
+    <script src="{{ site.baseurl }}/assets/shared/js/respond.min.js"></script>
+    <script src="{{ site.baseurl }}/assets/shared/js/prism.js"></script>
 
     <!--[if lt IE 9]>
-    <script src="{{ site.baseurl }}/assets/js/html5.js"></script>
+    <script src="{{ site.baseurl }}/assets/shared/js/html5.js"></script>
     <![endif]-->
 
+    {% include head.html %}
 </head>
 <body class="products">
 
-    {% capture portalurl %}{{ site.portalurl }}{% endcapture %}
-
     <div id="holder" class="mainholder">
+
+        <!-- Results panel -->
+        <div id="wrapper">
+            <div id="sidebar-wrapper">
+                <aside>
+                    <article>
+                        <h2>Definition</h2>
+                        <p>content here for results</p>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec pretium metus vitae urna pharetra fermentum. Nunc convallis ligula nec accumsan mollis.</p>
+                        <div class="divider"></div>
+                        <h2>Results formula</h2>
+                        <p> Something here <span class="light">A highlight</span><br>
+                    </article>
+                </aside>
+            </div>
+        </div>
 
         {% include header.html %}
 
@@ -37,25 +56,38 @@
             <!--CONTENT right-->
 
             <section id="rightpage">
-                <article>
-                    {{ content }}
+                <article class="reference">
+					<!--<a href="#menu-toggle" class="togglebut" id="menu-toggle">Toggle Results Panel</a>-->
+				
+                   {{ content }}
+
                 </article>
             </section>
-            <!--CONTENT sidebar left-->
+            
             <aside>
                 <!--Product Logo-->
                 <article>
-                    <a href="index.html" class="sublogo"><img src="/assets/images/sub-logo_corpus.png" alt=""></a>
+                    {% if site.logo %}
+                        <a href="index.html" class="sublogo"><img src="{{ site.baseurl}}{{ site.logo }}" alt=""></a>
+                    {% else %}
+                        <h1>{{ site.name | upcase }}</h1>
+                    {% endif %}
                     <h4>Version</h4>
 
-                    <div id="bar-select"><select>
-                        <option>V2</option>
-                    </select></div>
+                    <div id="bar-select">
+                        <select>
+                            <option value="{{ site.baseurl }}/versions/latest/">Latest</option>
+                            {% for update in site.updates %}
+                                <option value="{{ site.baseurl }}/versions/{{ update.version_number }}">{{ update.version_number }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
                 </article>
                 <div id="nav-container">
                     {% include navigation.html %}
                     <article>
                         <h4>Contact the team</h4>
+						<span class="button icon-slack"><a href="{{ site.slack_url }}" target="_blank">{{ site.slack_channel }}</a></span>
                     </article>
                     <article>
                         <h4>Is this Useful?</h4>
@@ -75,8 +107,7 @@
                 offset: {
                     top: 200,
                     bottom: function () {
-                        this.bottom = $('.footer').outerHeight(true);
-                        return this.bottom;
+                        return (this.bottom = $('.footer').outerHeight(true) + 12)
                     }
                 }
             });
@@ -85,5 +116,13 @@
                 $('#nav-container').removeAttr('style');
             });
         })
+    </script>
+<!-- Menu Toggle Script -->
+    <script>
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+		$("#menu-toggle").toggleClass("toggleon");
+    });
     </script>
 </body>

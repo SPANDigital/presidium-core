@@ -20,19 +20,17 @@ collections:
     typical_scenarios:
     updates:
 
-portalurl: http://localhost:4000
-name: My Project
+# Portal URL
+# ----------
+#
+# When hosting with Github Enterprise, it follows the standard:
+#
+# http(s)://[hostname]/pages/<username>/<projectname>
+#
+portalurl: /pages/jharr48/developer-portal
+baseurl: /pages/jharr48/corpus-docs
+name: Corpus
 logo:
-
-#
-# use redcarpet as the Markdown processor. Make it like GFM - Github Flavored Markdwn
-# redcarpet must be installed locally for this to work "$sudo gem install redcarpet"
-# set highlighter to whatever you want...
-#
-markdown: redcarpet
-redcarpet:
-    extensions: [ fenced_code_blocks, no_intra_emphasis, tables, autolink, strikethrough, with_toc_data ]
-highlighter: pygments
 
 #
 # Exclude the following files from the generated site
@@ -45,6 +43,15 @@ exclude: [
 ]
 
 #
+# use redcarpet as the Markdown processor. Make it as close to GFM as possible
+# redcarpet must be installed "$sudo gem install redcarpet"
+#
+markdown: redcarpet
+redcarpet:
+    extensions: [fenced_code_blocks, no_intra_emphasis, tables, autolink, strikethrough, with_toc_data]
+highlighter: pygments
+
+#
 # System wide defaults
 #
 defaults:
@@ -52,5 +59,6 @@ defaults:
         scope:
             path: ""
         values:
+            logo: ""
             layout: "default"
             github-url: "https://github.com/"

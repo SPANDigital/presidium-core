@@ -9,17 +9,17 @@ author: "REPLACE WITH github-username"
 ---
 
 
-## Scenario Context
+### Scenario Context
 
 REPLACE WITH A brief description of conditions that indicate use of the scenario
 
-## Implementation Example
+### Implementation Example
 
-```python
+{% highlight python lineos %}
     '''A code snippet implementing the scenario'''
-```
+{% endhighlight %}
 
-## Discussion
+### Discussion
 
 REPLACE WITH a discussion of the solution including pros and cons of the approach>
 

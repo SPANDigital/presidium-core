@@ -5,31 +5,47 @@
 				
         {% for section in site.data.sections %}
             {% assign groups = site[section.collection] | group_by: "category" %}
-        
-            <li>
-                <a href="{{ baseurl }}{{ section.path }}">{{ section.name }}</a>
-                <ul>
-                    {% for group in groups %}
-                        {% assign articles = site[section.collection] | where: "category", group.name %}
-                        {% if group.name.size > 0 %}
-                            <li>
-                                <a onclick="$('#dropdown-menu-{{ group.name | slugify }}').toggleClass('hidden');" >
-                                    {{ group.name }}
-                                    <span class="caret"></span>
-                                </a>
-                                <ul id="dropdown-menu-{{ group.name | slugify }}" class="hidden">
-                                    {% for article in articles %}
-                                    <li>
-                                        <a href="{{ baseurl }}{{ section.path }}#{{ article.title | slugify}}">{{ article.title }}</a>
-                                    </li>
-                                    {% endfor %}
-                                </ul>
-                            </li>
-                        {% endif %}
-                    {% endfor %}
-                </ul>
+            {% assign ungrouped_articles = site[section.collection] %}
 
-            </li>
+            {% if groups.size == 1 and groups[0].name.size == 0 %}
+                <li>
+                    <a onclick="$('#dropdown-menu-{{ section.name | slugify }}').toggleClass('hidden');" >
+                        {{ section.name }}
+                        <span class="caret"></span>
+                    </a>
+                    <ul id="dropdown-menu-{{ section.name | slugify }}" class="hidden">
+                        {% for article in ungrouped_articles %}
+                        <li class="sub-menu-item">
+                            <a href="{{ baseurl }}{{ section.path }}#{{ article.title | slugify}}">{{ article.title }}</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            {% else %}
+                <li>
+                    <a href="{{ baseurl }}{{ section.path }}">{{ section.name }}</a>
+                    <ul>
+                        {% for group in groups %}
+                            {% assign articles = site[section.collection] | where: "category", group.name %}
+                            {% if group.name.size > 0 %}
+                                <li>
+                                    <a onclick="$('#dropdown-menu-{{ group.name | slugify }}').toggleClass('hidden');" >
+                                        {{ group.name }}
+                                        <span class="caret"></span>
+                                    </a>
+                                    <ul id="dropdown-menu-{{ group.name | slugify }}" class="hidden">
+                                        {% for article in articles %}
+                                        <li class="sub-menu-item">
+                                            <a href="{{ baseurl }}{{ section.path }}#{{ article.title | slugify}}">{{ article.title }}</a>
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </li>
+            {% endif %}
          {% endfor %}
     </ul>
 </nav>
