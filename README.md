@@ -31,3 +31,22 @@ $ jekyll serve -s source -d versions/latest
 4. View the site locally in a browser at http://127.0.0.1:4000/ 
 5. Edit the site using [Github flavored markdown](https://help.github.com/articles/github-flavored-markdown/) as needed
 
+## Usage 
+
+### Syntax-highlighting 
+
+Corpus uses [prism.js](http://prismjs.com/) to handle all code highlighting. 
+
+To use prism, simply use the normal [fenced code blocks](https://help.github.com/articles/github-flavored-markdown/#fenced-code-blocks) as in Github Flavored Markdown. 
+
+To specify language, simpy add the language after the fist set of backticks (see below):
+ 
+  \`\`\`javascript
+  
+      function foo(){
+      
+      }
+     
+  \`\`\`
+  
+For a full list of supported languages, see [http://prismjs.com/#languages-list](http://prismjs.com/#languages-list).

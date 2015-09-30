@@ -1,0 +1,12 @@
+---
+title: Getting Started
+permalink: /getting-started/
+---
+
+<h1 class="primary">{{ page.title | upcase }}</h1>
+
+{% for article in site.getting_started %}
+{{ article.content }}
+{% else %}
+{% include empty-article.html %}
+{% endfor %}

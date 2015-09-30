@@ -1,0 +1,64 @@
+# -------------------------------------------------
+# Configuration for a solution documentation system
+# -------------------------------------------------
+
+#
+# Collections for content articles
+#
+collections:
+    best_practices:
+    getting_started:
+    key_concepts:
+    overview:
+    prerequisites:
+    recipes:
+    references:
+        output: true
+        permalink: /reference/:path/
+    testing:
+    tools:
+    typical_scenarios:
+    updates:
+
+# Portal URL
+# ----------
+#
+# When hosting with Github Enterprise, it follows the standard:
+#
+# http(s)://[hostname]/pages/<username>/<projectname>
+#
+portalurl: /pages/jharr48/developer-portal
+baseurl: /pages/jharr48/corpus-docs
+name: Corpus
+logo:
+
+#
+# Exclude the following files from the generated site
+#
+exclude: [
+    "README.md",
+    "LICENSE",
+    "_TEMPLATE.md",
+    ".gitignore",
+]
+
+#
+# use redcarpet as the Markdown processor. Make it as close to GFM as possible
+# redcarpet must be installed "$sudo gem install redcarpet"
+#
+markdown: redcarpet
+redcarpet:
+    extensions: [fenced_code_blocks, no_intra_emphasis, tables, autolink, strikethrough, with_toc_data]
+highlighter: pygments
+
+#
+# System wide defaults
+#
+defaults:
+    -
+        scope:
+            path: ""
+        values:
+            logo: ""
+            layout: "default"
+            github-url: "https://github.com/"
