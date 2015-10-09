@@ -2,7 +2,6 @@
 <nav id="sidenav">
     <h2>DOCUMENTATION</h2>
     <ul class="nav">
-				
         {% for section in site.data.sections %}
             {% assign groups = site[section.collection] | group_by: "category" %}
             {% assign ungrouped_articles = site[section.collection] %}
@@ -16,14 +15,16 @@
                     <ul id="dropdown-menu-{{ section.name | slugify }}" class="hidden">
                         {% for article in ungrouped_articles %}
                         <li class="sub-menu-item">
-                            <a href="{{ baseurl }}{{ section.path }}#{{ article.title | slugify}}">{{ article.title }}</a>
+                            <a href="{{ baseurl }}{{ section.path }}#{{ article.title | slugify}}"  data-target="#{{ article.title | slugify }}">{{ article.title }}</a>
                         </li>
                         {% endfor %}
                     </ul>
                 </li>
             {% else %}
+                {% assign section_name = section.name | slugify %}
+                {% assign page_name = page.title | slugify %}
                 <li>
-                    <a href="{{ baseurl }}{{ section.path }}">{{ section.name }}</a>
+                    <a href="{{ baseurl }}{{ section.path }}#{{ section.name | slugify }}" data-target="#{{ section.name | slugify }}">{{ section.name }}</a>
                     <ul>
                         {% for group in groups %}
                             {% assign articles = site[section.collection] | where: "category", group.name %}
@@ -36,7 +37,7 @@
                                     <ul id="dropdown-menu-{{ group.name | slugify }}" class="hidden">
                                         {% for article in articles %}
                                         <li class="sub-menu-item">
-                                            <a href="{{ baseurl }}{{ section.path }}#{{ article.title | slugify}}">{{ article.title }}</a>
+                                            <a href="{{ baseurl }}{{ section.path }}#{{ article.title | slugify}}" data-target="#{{ article.title | slugify }}">{{ article.title }}</a>
                                         </li>
                                         {% endfor %}
                                     </ul>

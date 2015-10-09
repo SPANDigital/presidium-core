@@ -18,10 +18,17 @@
     <link href='http://fonts.googleapis.com/css?family=Roboto:300,500' rel='stylesheet' type='text/css'>
 
     <!-- JavaScript -->
+    <script>
+        window.PortalSettings = {
+            searchUrl: "{{ site.searchurl }}",
+            searchName: "{{ site.searchname }}"
+        };
+    </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script src="{{ site.baseurl }}/assets/shared/js/respond.min.js"></script>
     <script src="{{ site.baseurl }}/assets/shared/js/prism.js"></script>
+    <script src="{{ site.baseurl }}/assets/shared/js/corpus-search.js"></script>
 
     <!--[if lt IE 9]>
     <script src="{{ site.baseurl }}/assets/shared/js/html5.js"></script>
@@ -56,14 +63,14 @@
             <!--CONTENT right-->
 
             <section id="rightpage">
-                <article class="reference">
+                <article id="{{ page.title | slugify }}" class="reference">
 					<!--<a href="#menu-toggle" class="togglebut" id="menu-toggle">Toggle Results Panel</a>-->
-				
+
                    {{ content }}
 
                 </article>
             </section>
-            
+
             <aside>
                 <!--Product Logo-->
                 <article>
@@ -114,6 +121,9 @@
 
             $('#nav-container').on('affix.bs.affix', function() {
                 $('#nav-container').removeAttr('style');
+            });
+            $('body').scrollspy({
+                target: '#sidenav'
             });
         })
     </script>
