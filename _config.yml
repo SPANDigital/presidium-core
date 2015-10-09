@@ -27,8 +27,8 @@ collections:
 #
 # http(s)://[hostname]/pages/<username>/<projectname>
 #
-portalurl: /pages/jharr48/developer-portal
-baseurl: /pages/jharr48/corpus-docs
+portalurl: /pages/developer-portal/home
+baseurl: /pages/developer-portal/corpus-docs
 name: Corpus
 logo:
 
