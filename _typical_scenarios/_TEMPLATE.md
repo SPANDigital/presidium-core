@@ -1,27 +1,27 @@
 # Template Instructions
 # ---------------------
-# 1) Copy and rename this file. Don't forget to remove the leading "_" 
-# 2) Replace content placeholders with appropriate content, search for "REPLACE WITH"
-# 3) Delete this line and all lines above so that the below front matter is at the top of the file.
+# 1) Copy and rename this file as closely as possible to the scenario with hyphens between the words. In the newly named filename, remove the leading "_". For example: onboard-external-admin-user.md.
+# 2) Replace any content placeholders with the appropriate content. Search for "REPLACE WITH".
+# 3) Delete this line and all lines above so that the front matter below is at the top of the file.
 ---
 title: "REPLACE WITH Scenario Title"
+id: "scenario-title"
 author: "REPLACE WITH github-username"
 ---
 
+# Scenario Context
 
-### Scenario Context
+REPLACE WITH A brief description of conditions that indicate use of the scenario.
 
-REPLACE WITH A brief description of conditions that indicate use of the scenario
-
-### Implementation Example
+# Implementation Example
 
 {% highlight python lineos %}
     '''A code snippet implementing the scenario'''
 {% endhighlight %}
 
-### Discussion
+# Discussion
 
-REPLACE WITH a discussion of the solution including pros and cons of the approach>
+REPLACE WITH a discussion of the solution including pros and cons of the approach.
 
-REPLACE WITH a diagram table or links to other information if required
+If required, REPLACE WITH a diagram table or links to other information.
 

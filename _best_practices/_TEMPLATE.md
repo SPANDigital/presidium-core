@@ -1,10 +1,11 @@
 # Template Instructions
 # ---------------------
-# 1) Copy and rename this file. Don't forget to remove the leading "_" 
-# 2) Replace content placeholders with appropriate content, search for "REPLACE WITH"
-# 3) Delete this line and all lines above so that the below front matter is at the top of the file. 
+# 1) Copy and rename this file as closely as possible to the best practice with hyphens between the words. In the newly named file, remove the leading "_". For example: keep-it-simple.md.
+# 2) Replace any content placeholders with the appropriate content. Search for "REPLACE WITH".
+# 3) Delete this line and all lines above so that the front matter below is at the top of the file. 
 ---
 title: REPLACE WITH Best Practice Title
+id: "best-practice-title"
 author: REPLACE WITH github-username
 ---
 
@@ -16,10 +17,10 @@ REPLACE WITH a summary paragraph of the recommended practice.
     """
 ```
 
-### Discussion 
+# Discussion 
 
-REPLACE WITH a discussion of the recommended practice. add sub-headings, code snippets and tables as required
+REPLACE WITH a discussion of the recommended practice. Add subheadings, code snippets and tables as required.
 
-### See Also
+# See Also
 
-- [REPLACE WITH a link description](http://www.google.com) 
+* [REPLACE WITH a link description](http://www.google.com) 

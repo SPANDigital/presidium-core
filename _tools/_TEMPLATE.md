@@ -1,20 +1,24 @@
 # Template Instructions
 # ---------------------
-# 1) Copy and rename this file. Don't forget to remove the leading "_" 
-# 2) Replace content placeholders with appropriate content, search for "REPLACE WITH"
-# 3) Delete this line and all lines above so that the below front matter is at the top of the file.
+# 1) Copy and rename this file as index.md without a leading "_".
+# 2) Replace any content placeholders with the appropriate content. Search for "REPLACE WITH".
+# 3) Delete this line and all lines above so that the front matter below is at the top of the file. 
 ---
 title: "REPLACE WITH Tool Title"
+id: "tools" 
 author: "REPLACE WITH github-username"
 ---
 
-REPLACE WITH a summary paragraph of the tool
+REPLACE WITH a list of the tools and services that are required to use the Product.
 
-### Discussion 
+# Tool
 
-REPLACE WITH a discussion of the tool and why it is useful.
+To offer additional information about a tool or service listed above, REPLACE WITH a summary paragraph of the tool.
 
+## Discussion 
 
-### See Also
+REPLACE WITH a discussion of the tool or service and why it is useful.
 
-- [REPLACE WITH a description of the link](http://www.google.com)
+# See Also
+
+* [REPLACE WITH a description of the link](http://www.google.com)
