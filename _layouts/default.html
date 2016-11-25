@@ -17,19 +17,11 @@
     <!-- Fonts -->
     <link href='http://fonts.googleapis.com/css?family=Roboto:300,500' rel='stylesheet' type='text/css'>
 
-    <!-- JavaScript -->
-    <script>
-        window.PortalSettings = {
-            searchUrl: "{{ site.searchurl }}",
-            searchName: "{{ site.searchname }}"
-        };
-    </script>
     <script src="{{ site.baseurl }}/assets/shared/js/session-capture.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script src="{{ site.baseurl }}/assets/shared/js/respond.min.js"></script>
     <script src="{{ site.baseurl }}/assets/shared/js/prism.js"></script>
-    <script src="{{ site.baseurl }}/assets/shared/js/corpus-search.js"></script>
 
     <!--[if lt IE 9]>
     <script src="{{ site.baseurl }}/assets/shared/js/html5.js"></script>
@@ -96,11 +88,6 @@
                     <article>
                         <h4>Contact the team</h4>
 						<span class="button icon-slack"><a href="{{ site.slack_url }}" target="_blank">{{ site.slack_channel }}</a></span>
-                    </article>
-                    <article>
-                        <h4>Is this Useful?</h4>
-                        <span class="button"><a href="">yes</a></span>
-                        <span class="button"><a href="" class="orange">no</a></span>
                     </article>
                 </div>
             </aside>

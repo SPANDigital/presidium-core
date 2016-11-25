@@ -1,7 +1,3 @@
-# -------------------------------------------------
-# Configuration for a solution documentation system
-# -------------------------------------------------
-
 #
 # Collections for content articles
 #
@@ -20,18 +16,11 @@ collections:
     typical_scenarios:
     updates:
 
-# Portal URL
-# ----------
-#
-# When hosting with Github Enterprise, it follows the standard:
-#
-# http(s)://[hostname]/pages/<username>/<projectname>
-#
-portalurl: /pages/developer-portal/home
-baseurl: /pages/developer-portal/corpus-docs
-name: Corpus
-logo:
-
+baseurl:
+name: PlayerPro
+logo: /assets/local/images/project_logo.jpg
+slack_url: https://spandigital.slack.com/messages/player-pro/
+slack_channel: player-pro
 #
 # Exclude the following files from the generated site
 #
@@ -49,7 +38,6 @@ exclude: [
 markdown: redcarpet
 redcarpet:
     extensions: [fenced_code_blocks, no_intra_emphasis, tables, autolink, strikethrough, with_toc_data]
-highlighter: pygments
 
 #
 # System wide defaults
