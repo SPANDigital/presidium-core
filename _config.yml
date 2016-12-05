@@ -21,6 +21,7 @@ name: PlayerPro
 logo: /assets/local/images/project_logo.jpg
 slack_url: https://spandigital.slack.com/messages/player-pro/
 slack_channel: player-pro
+
 #
 # Exclude the following files from the generated site
 #

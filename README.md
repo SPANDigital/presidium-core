@@ -25,7 +25,7 @@ The system requires or uses the following technologies:
 2. In GitHub online, clone the repository.
 3. To view the site locally, run Jekyll in the local repository's root directory.
 ```
-$ jekyll serve -s source -d versions/latest
+$ jekyll serve -s . -d versions/latest
 ```
 4. View the site in a local browser at http://127.0.0.1:4000/.
 5. Edit the site using [GitHub Flavored Markdown](https://help.github.com/articles/github-flavored-markdown/) as needed.
