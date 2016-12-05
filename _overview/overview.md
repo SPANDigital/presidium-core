@@ -1,23 +1,46 @@
-# Template Instructions
-# ---------------------
-# 1) Copy and rename this file as index.md without a leading "_".
-# 2) Replace any content placeholders with the appropriate content. Search for "REPLACE WITH".
-# 3) Delete this line and all lines above so that the front matter below is at the top of the file. 
 ---
 title: "Overview"
 id: "overview" 
-author: "REPLACE WITH github-username>"
+author: "dominicfollett"
 ---
 
-# REPLACE WITH the Product Title
+# PlayerPro Job Service
 
-REPLACE WITH a simple one-paragraph explanation of the product.
+The PlayerPro Job Service, is a fully scalable service that allows
+tightly coupled behaviours between the PHP Symfony App and the PlayerPro
+API to be separated or abstracted out for handling via an asynchronous
+mechanism - the result of which is improved throughput and scalability
+across the PlayerPro Product.
 
-# REPLACE WITH A Compelling Reason to Use the Product
+The Job Service consists of an event bus (implemented as a Kafka queue, 
+with a publish-subscribe pattern) that handles the transport of event
+messages published by PHP Symfony and/or the PlayerPro API.
+Additionally, a job queue handles the transport of enriched events 
+(jobs) from the event consumer pipeline. Events are enriched or
+'converted' into jobs through configuration rules supplied to the
+service. These jobs, in turn, are handled by a job consumer pipeline
+where its termination culminates in changes to various services and
+their resources, for example: webhooks, cache invalidation, user feed
+generation and more.
 
-REPLACE WITH an explanation of the first reason to use the product.
 
-# REPLACE WITH Another Compelling Reason to Use the Product
+# Supporting Scale
 
-REPLACE WITH an explanation of the second reason to use the product.
+With PlayerPro's continued growth as a leader in football social media,
+need has arisen to address the scalability concerns inherent large,
+monolithic services.
+
+## Through Decoupling:
+
+The design of the PlayerPro Job Service supports iteratively decoupling
+computationally expensive behaviours from the PlayerPro PHP Symfony and
+in stead handling these in a distributed and highly scalable manner.
+
+
+## Through Asychronicity:
+
+Through the use of an asynchronous Job Service, actions that would
+normally block and ruin the quality of services can now be handled in a
+way that does not prevent the timely processing of other (perhaps higher 
+priority) work.
 
