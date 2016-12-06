@@ -8,7 +8,7 @@ author: "dominicfollett"
 
 ![GitHub Logo](/assets/local/images/ppro_architecture_overview.svg)
 
-# Playerpro API
+# PlayerPro API
 
 ## Lorem Ipsum
 

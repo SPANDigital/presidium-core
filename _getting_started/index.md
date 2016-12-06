@@ -1,7 +1,7 @@
 ---
 title: "Getting Started"
 id: "getting-started" 
-author: "REPLACE WITH github-username"
+author: "dominicfollett"
 ---
 
 # Before You Code
@@ -27,16 +27,182 @@ Refer to the following documentation as you work.
 
 # Downloading the Code
 
-REPLACE WITH Instructions on where to download the product.
+The Job Service and PlayerPro API are available
+[here](https://github.com/SPANDigital/playerpro-job-service/) and
+[here](https://github.com/SPANDigital/playerpro-api-v2) respectively.
 
-# Installation
+### Installation
 
-REPLACE WITH instructions on how to correctly install the product.
+1. [PlayerPro Job Service](#job-service)
+2. [PlayerPro API](#playerpro-api)
 
 # Setup and Configuration
 
-REPLACE WITH how to set up and configure the product for initial use.
+## Job Service ##
 
-# Confirming it Works
+### Create virtualenv, activate it, and install dependencies. ###
+
+#### Python 3.5.2 ####
+
+Some python 3.5 specific code is used. For example:
+
+    # This code is 3.5 specific, and won't work on <= 3.4
+    a = {}
+    b = {}
+    c = {**a, **b}
+    
+
+##### Mac #####
+    brew install python3
+    brew install snappy
+    pip install virtualenv
+        
+##### Ubuntu #####
+    sudo apt-get install python-pip python3-dev snappy libsnappy-dev
+    sudo pip install virtualenv
+    
+###### Ubuntu 14.04 ######
+Ubuntu 14.04 installs python3.4 if you're using the normal repo's. You may use 
+fkrull to get 3.5.2
+
+    sudo add-apt-repository ppa:fkrull/deadsnakes
+    sudo apt-get update
+    sudo apt-get install python3.5 python3.5-dev
+    
+##### Virtualenv #####
+    virtualenv -p python3 .
+    . bin/activate
+    pip install --upgrade pip
+    pip install -r requirements.txt --upgrade
+    
+    
+Be aware snappy may fail to install, if this is the case, see troubleshooting below.
+
+###### Troubleshooting #####
+- Error installing python-snappy on Mac?
+
+        snappymodule.cc:31:10: fatal error: 'snappy-c.h' file not found
+        #include <snappy-c.h>
+                 ^
+        1 error generated.
+        error: command 'clang' failed with exit status 1
+        
+    - Install python snappy
+    
+            brew install snappy
+            CPPFLAGS="-I/usr/local/include -L/usr/local/lib" pip install python-snappy
+            
+- Error installing python-snappy on Ubuntu?
+         
+        x86_64-linux-gnu-gcc -pthread -DNDEBUG -g -fwrapv -O2 -Wall -Wstrict-prototypes -g -fstack-protector --param=ssp-buffer-size=4 -Wformat -Werror=format-security -D_FORTIFY_SOURCE=2 -fPIC -I/usr/include/python3.4m -I/home/sybrandspan/Workspace/playerpro-job-service/include/python3.4m -c snappymodule.cc -o build/temp.linux-x86_64-3.4/snappymodule.o
+        cc1plus: warning: command line option ‘-Wstrict-prototypes’ is valid for C/ObjC but not for C++ [enabled by default]
+        snappymodule.cc:28:20: fatal error: Python.h: No such file or directory
+         #include "Python.h"
+                            ^
+        compilation terminated.
+        error: command 'x86_64-linux-gnu-gcc' failed with exit status 1
+        
+    - Install python snappy
+    
+            ./bin/easy_install snappy
+
+
+### Run the Job Scheduler ###
+
+    python run_job_scheduler.py
+
+or
+
+    ./run_job_scheduler.py
+    
+### Run the Overlord ###
+
+    ./run_overlord.py
+    
+### Run unit tests ###
+
+    python -m unittest discover tests
+    
+### Run integration tests ###
+
+    python -m unittest discover integration_tests
+
+### Run all tests ###
+
+    python -m unittest discover
+    
+**Remember to specify tests, specifically with python3.5 the imports will work, but your mocks will fail.**
+
+### Install Kafka on AWS ###
+
+#### Ansible >= 2.1.1.0
+
+Ensure your ansible is up to date
+
+Check version: ansible-playbook --version
+
+http://docs.ansible.com/ansible/intro_installation.html
+
+    sudo pip install ansible
+
+#### Prepare servers ####
+
+Configure network and provision servers in EC2, with basic configuration in place.
+
+    ansible-playbook -i aws_host/ec2.py prepare_servers.yml -e "@vars/span.yml" --private-key=aws-load_testing-private.pem
+    
+    
+#### Install Kafka ####
+
+Install Kafka on servers
+
+    ansible-playbook -i kafka-testing-inventory install_kafka.yml -e "@vars/span.yml" --private-key=aws-load_testing-private.pem --user=ubuntu
+
+
+#### Deploy Job Service ####
+
+Install Job Service on servers
+
+
+
+#### Using Kafka On Mac ####
+
+If you've used Brew to install kafka, you can easily start/stop kafka:
+
+    brew services restart kafka
+
+You can edit kafka config here:
+
+    vi /usr/local/etc/kafka/server.properties
+    
+    
+**Disclaimer:** brew doesn't always have the latest version of Kafka, rather download the latest version and run as per: http://kafka.apache.org/quickstart
+
+
+### Dev notes relating to Kafka
+
+#### Produce events to play with ####
+
+    ./produce_event.py --json sample/mock_event.json --loops 100
+
+#### The Kafka Tools ####
+
+List consumer groups
+
+    bin/kafka-run-class.sh kafka.admin.ConsumerGroupCommand --bootstrap-server localhost:9092 --list
+    
+Get some basic info about a particular group
+
+    bin/kafka-run-class.sh kafka.admin.ConsumerGroupCommand --bootstrap-server localhost:9092 --describe --group playerpro-event-consumer-group
+    
+and
+
+    bin/kafka-run-class.sh kafka.admin.ConsumerGroupCommand --bootstrap-server localhost:9092 --describe --group playerpro-job-consumer-group
+
+### Confirming it Works ###
 
 REPLACE WITH how to test that the product is correctly installed.
+
+## PlayerPro API ##
+
+Lorem ipsum
