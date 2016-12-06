@@ -205,4 +205,140 @@ REPLACE WITH how to test that the product is correctly installed.
 
 ## PlayerPro API ##
 
-Lorem ipsum
+### Create virtualenv, activate it, and install dependencies. ###
+
+#### Python 2.7.9 ####
+
+##### Mac #####
+    brew install python
+    pip install virtualenv
+
+##### Ubuntu #####
+    sudo apt-get install python-pip
+    sudo pip install virtualenv
+
+##### Virtualenv #####
+    virtualenv .
+    . bin/activate
+    pip install -r requirements.txt
+    
+or if you're doing something very fancy
+
+    virtualenv -p /usr/local/bin/python2.7.
+    . bin/activate
+    pip install -r requirements.txt
+
+#### PyPy ####
+    brew install pypy
+    virtualenv -p /usr/local/bin/pypy pypy
+    . pypy/bin/activate
+    pip install -r requirements.txt
+
+### Install autoenv ####
+See https://github.com/kennethreitz/autoenv for details.
+
+    cp .env_cpython .env
+
+#### On Mac ####
+    brew install autoenv
+
+then depending on where activate.sh is:
+
+    echo 'source /usr/local/opt/autoenv/activate.sh' >> ~/.bash_profile
+
+or
+
+    echo 'source /usr/local/opt/autoenv/activate.sh' >> ~/.profile
+    
+#### On Ubuntu ####
+    pip install autoenv
+
+then - depending on where activate.sh is:
+
+    echo 'source ~/.local/bin/activate.sh' >> ~/.bashrc
+or
+    echo 'source /usr/local/bin/activate.sh' >> ~/.bashrc
+    
+#### pypy ####
+    cp .env_pypy .env
+    
+    source $(dirname "${BASH_SOURCE[0]}")/pypy/bin/activate
+
+### Configure and start ###
+
+Make a copy of settings.local.sample.cfg, and modify it as needed
+
+    cp etc/settings.sample.cfg etc/settings.cfg
+    vi settings.local.cfg
+
+### Deactivate, and let autoenv take over ###
+
+    deactivate
+    cd <player pro location>
+
+### Run the api ###
+
+    python run_api.py
+
+### Running tests ###
+
+    python tests/run_tests.py
+
+OR
+
+    python -m unittest discover
+
+
+### Swagger ###
+
+See: http://swagger.io/swagger-editor/
+
+    git clone https://github.com/swagger-api/swagger-editor.git
+    cd swagger-editor
+    npm start
+    
+Validating swagger:
+
+    npm install -g swagger-cli
+    swagger validate playerpro.yaml
+
+## Generating Android and iOS clients ##
+
+Using Swagger Code Generator (see: https://github.com/swagger-api/swagger-codegen)
+
+The project is included as a git submodule, in ./modules/swagger-codegen
+
+### Submodule issues ###
+Submodules can be a bit troublesome when switching between branches that have and don't have submodules.
+To get things working again - try:
+    git fetch
+    git checkout master # or any other branch that you need the latest of
+    git merge origin/master
+
+or:
+git submodule update --init --recursive
+
+### Installing ###
+
+*Swagger Code Generator specifies that it needs Java 1.7: http://www.oracle.com/technetwork/java/javase/downloads/java-archive-downloads-javase7-521261.html, but it seems to work
+just fine with 1.8*
+
+    brew install maven
+    cd ./modules/swagger-codegen
+    mvn package
+
+### Android ###
+
+Run ./scripts/android-java-playerpro.sh
+
+Will generate code in: dist/client/playerpro/android-java
+
+### Objective C ###
+
+Run ./scripts/objc-playerpro.sh
+
+Will generate code in: dist/client/playerpro/objc
+
+### Static HTML ###
+
+Run ./scripts/html-playerpro.sh
