@@ -112,7 +112,7 @@ method_decorators = [authenticate, handle_error, cache()]
 The Cache Middleware is bypassed if no entry in the config matches the
 endpoint's HTTP method and url path.
 
-### Cache Config & Logic
+### Cache Config Format
 
 Caching in the PlayerPro API relies on rules to determine how an
 endpoint should be cached, the mechanisms around this are displayed
@@ -143,26 +143,32 @@ below, and covered briefly as follows:
 }
 ```
 
+### Cache Logic
 
 ![Cache Configuration](/assets/local/images/ppro_cache_logic_flow.svg)
 
 
-The structure of a rule pattern is:
-<query_param>:<value>&<query_param>:<value>&<query_param>:<value>...
-Where value is a single word, a comma separated list, or the * wildcard.
-E.g. ‘type:Group&id:*’
-If no rules are supplied for an endpoint then then the API uses any
-defaults that may be available.
-If a rule is specified, then only APIv2 calls that agree with the rule
-are cached. If there are more query parameters e.g. ‘filter_by’ that are
-not specified in the rule, then defaults are used. Rules must be fully
-scoped. If a query parameter relies on another query parameter in the
-url string for meaning, then it must be included in the scope of the
-rules. E.g. type=Group relies on id=<id> Rules are passed a list of
-strings. The cache key is simply the request url, with any query
-parameters re-arranged in alphabetical order, and the values for those
-query parameters also ordered alphabetically.
+### Rules
 
+1. The structure of a rule pattern is:
+    ```<query_param>:<value>&<query_param>:<value>&<query_param>:<value>...```
+    Where value is a single word, a comma separated list, or the
+    ```*``` wildcard. E.g. ```'type:Group&id:*'```
+2. If no rules are supplied for an endpoint then then the API uses any
+    defaults that may be available.
+3. If a rule is specified, then only APIv2 calls that agree with the
+    rule are cached. If there are more query parameters e.g. 'filter_by'
+    that are not specified in the rule, then defaults are used. 
+4. Rules must be fully scoped. If a query parameter relies on another
+    query parameter in the url string for meaning, then it must be
+    included in the scope of the rules. E.g. ```type=Group``` relies on
+    ```id=<id>```.
+5. Rules are passed a list of strings. The cache key is simply the
+    request url, with any query parameters re-arranged in alphabetical
+    order, and the values for those query parameters also ordered
+    alphabetically.
+
+### Rational For Rules
 
 If we explicitly mark an endpoint for caching, we need to be able to
 differentiate between what is to be cached and what is not to be cached,
@@ -176,3 +182,17 @@ in it. Hence, the need to introduce rules.
 The burden of responsibility is on the shoulders of the programmer to
 clearly define which endpoints are to be cached, by being explicit about
 the HTTP method and the url path expected.
+
+### A Note On Access Tokens
+
+A note on use of ```access_token``` query parameter:
+
+The ```access_token``` parameter is present on some PlayerPro API
+endpoints (this is strongly advised against by the
+[Oauth2 RFC](https://tools.ietf.org/html/rfc6750#page-13)), when caching
+by user, if the ```access_token```  does not exist on the url, then it
+will be pulled from the request header. If no ```access_token``` is
+found, then the cache is bypassed. The access token query parameter is
+always ignored when checking the rules supplied for the endpoint match
+the url’s query parameters.
+

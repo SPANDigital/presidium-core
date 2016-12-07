@@ -10,9 +10,29 @@ author: "dominicfollett"
 
 # PlayerPro API
 
-## Lorem Ipsum
+PlayerPro currently provides an API that offers many of the
+functionality that one can perform on their website as well. Their
+endpoints are partially grouped into themes. The response data from the
+endpoints contains large amounts of irrelevant and confusion
+information. Their conventions regarding request parameters, errors,
+data formats etc are not always consistent. By and large the API is
+difficult to use and does not provide a good end user experience.
 
-Lorem Ipsum
+## Interface Design
+
+A clean and intuitive user experience requires considerable thought and
+thus we use an design-first workflow in combination with suitable tool
+support such as Swagger. We’ve chosen to use Swagger to design the API
+interface. Swagger gives us a complete toolchain necessary to build and
+manage a REST API. Furthermore, this gives us a clean framework in
+which to:
+
+* Design clean URLs
+* Clearly define request parameters and response objects
+* Manage headers
+* Generate client side code in a number of languages
+* Generate documentation
+
 
 # PlayerPro Job Service
 
