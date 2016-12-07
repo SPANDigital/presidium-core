@@ -46,6 +46,12 @@ Kafka Consumers have more workers in their pool than lower priority
 Kafka Consumer. This means that the amount of available resources
 provided is a function of priority range.
 
+### Job Expiration
+
+Each job that reaches the Expirer has an expiry that is set in the Job
+Scheduler. If the job has expired, it is dropped and no further
+processing occurs.
+
 ### Deduplication
 
 ![Deduplication](/assets/local/images/ppro_deduplication.svg)
@@ -71,8 +77,102 @@ the three causes discussed below.
 2. A Consumer crashes.
 3. Identical events produce the same kind of job.
 
-### Job Expiration
+### Dispatch
 
-There
+If the job is not expired and is not a duplicate, the Dispatcher passes
+it on to the appropriate hook so that the job can be completed. Some
+hooks might produce other jobs as a by-product.
+
+### Job Publisher
+
+Within the context of the Job Manager, the Job Publisher will publish
+jobs that are the result of a hook creating new jobs from jobs it has
+processed. The Job Publisher updates a generational count on a job to
+prevent a 'combinatorial explosion' of job creation. Jobs that exceed a
+set generational count are discarded.
 
 # PlayerPro API
+
+## Caching Middleware
+
+In the PlayerPro API, in order to provide significant performance
+improvements a flexible caching middleware has been added. The Caching
+Middleware supports the three main semantics of cache usage: get, set
+and delete.
+
+## Cache Configuration Design
+
+A cache decorator is applied on all endpoints in API, this done by
+adding it to the Flask Resource method_decorators array field:
+
+```python
+method_decorators = [authenticate, handle_error, cache()]
+```
+
+The Cache Middleware is bypassed if no entry in the config matches the
+endpoint's HTTP method and url path.
+
+### Cache Config & Logic
+
+Caching in the PlayerPro API relies on rules to determine how an
+endpoint should be cached, the mechanisms around this are displayed
+below, and covered briefly as follows:
+
+```json
+{  
+   "<METHOD>/path/":{  
+      "defaults":{  
+         "action":"<cache> || <invalidate>",
+         "session":"<bool>",
+         "expires":"<milliseconds ms>",
+         "xx":"<bool>",
+         "nx":"<bool>"
+      },
+      "overrides":{  
+         "rules":[  
+            {  
+               "rule":"<rule>",
+               "action":"<cache> ||<invalidate>",
+               "session":"<bool>",
+               "expires":"<milliseconds ms>",
+               "etc":"etc"
+            }
+         ]
+      }
+   }
+}
+```
+
+
+![Cache Configuration](/assets/local/images/ppro_cache_logic_flow.svg)
+
+
+The structure of a rule pattern is:
+<query_param>:<value>&<query_param>:<value>&<query_param>:<value>...
+Where value is a single word, a comma separated list, or the * wildcard.
+E.g. ‘type:Group&id:*’
+If no rules are supplied for an endpoint then then the API uses any
+defaults that may be available.
+If a rule is specified, then only APIv2 calls that agree with the rule
+are cached. If there are more query parameters e.g. ‘filter_by’ that are
+not specified in the rule, then defaults are used. Rules must be fully
+scoped. If a query parameter relies on another query parameter in the
+url string for meaning, then it must be included in the scope of the
+rules. E.g. type=Group relies on id=<id> Rules are passed a list of
+strings. The cache key is simply the request url, with any query
+parameters re-arranged in alphabetical order, and the values for those
+query parameters also ordered alphabetically.
+
+
+If we explicitly mark an endpoint for caching, we need to be able to
+differentiate between what is to be cached and what is not to be cached,
+especially in the case of complex endpoints such as GET /posts where
+query parameters effectively change the endpoint definition.
+
+Merely caching by endpoint url doesn’t allow us to stop caching in
+certain cases - perhaps we don’t want to cache anything with ‘filter_by’
+in it. Hence, the need to introduce rules.
+
+The burden of responsibility is on the shoulders of the programmer to
+clearly define which endpoints are to be cached, by being explicit about
+the HTTP method and the url path expected.

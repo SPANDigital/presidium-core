@@ -18,7 +18,7 @@ collections:
 
 baseurl:
 name: PlayerPro
-logo: /assets/local/images/project_logo.jpg
+logo: /assets/local/images/project_logo.png
 slack_url: https://spandigital.slack.com/messages/player-pro/
 slack_channel: player-pro
 
