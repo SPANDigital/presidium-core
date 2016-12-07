@@ -6,7 +6,7 @@ author: "dominicfollett"
 
 # PlayerPro Overall System Architecture
 
-![GitHub Logo](/assets/local/images/ppro_architecture_overview.svg)
+![Overall Architecture](/assets/local/images/ppro_architecture_overview.svg)
 
 # PlayerPro API
 
