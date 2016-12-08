@@ -93,6 +93,10 @@ set generational count are discarded.
 
 # PlayerPro API
 
+## System Context
+
+![API System Context](/assets/local/images/ppro_api_system_context.svg)
+
 ## Caching Middleware
 
 In the PlayerPro API, in order to provide significant performance
