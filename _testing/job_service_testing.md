@@ -28,23 +28,23 @@ author: "DominicFollett"
 # Testing
 
 ## Running Tests
-    
+
 ### Run Unit Tests
 
 ```sh
-   $ python -m unittest discover tests
+$ python -m unittest discover tests
 ```
- 
+
 ### Run Integration Tests
 
 ```sh
-   $ python -m unittest discover integration_tests
+$ python -m unittest discover integration_tests
 ```
 
 ### Run All Tests
 
 ```sh
-   $ python -m unittest discover
+$ python -m unittest discover
 ```
 
 **Remember to specify tests, specifically with python3.5 the imports
@@ -59,27 +59,27 @@ Lorem Ipsum.
 Ensure your ansible is up to date, check version:
 
 ```sh
-   $ ansible-playbook --version
+$ ansible-playbook --version
 ```
 
 http://docs.ansible.com/ansible/intro_installation.html
 
 ```sh
-   $ sudo pip install ansible
+$ sudo pip install ansible
 ```
 
 #### Prepare servers
 Configure network and provision servers in EC2, with basic configuration in place.
 
 ```sh
-    $ ansible-playbook -i aws_host/ec2.py prepare_servers.yml -e "@vars/span.yml" --private-key=aws-load_testing-private.pem
+$ ansible-playbook -i aws_host/ec2.py prepare_servers.yml -e "@vars/span.yml" --private-key=aws-load_testing-private.pem
 ```
-    
+
 #### Install Kafka
 Install Kafka on servers
 
 ```sh
-    $ ansible-playbook -i kafka-testing-inventory install_kafka.yml -e "@vars/span.yml" --private-key=aws-load_testing-private.pem --user=ubuntu
+$ ansible-playbook -i kafka-testing-inventory install_kafka.yml -e "@vars/span.yml" --private-key=aws-load_testing-private.pem --user=ubuntu
 ```
 
 #### Deploy Job Service
@@ -92,13 +92,13 @@ Install Job Service on servers
 If you've used Brew to install kafka, you can easily start/stop kafka:
 
 ```sh
-    $ brew services restart kafka
+$ brew services restart kafka
 ```
 
 You can edit kafka config here:
 
 ```sh
-    $ vi /usr/local/etc/kafka/server.properties
+$ vi /usr/local/etc/kafka/server.properties
 ```
 
 **Disclaimer:** brew doesn't always have the latest version of Kafka,
@@ -108,26 +108,26 @@ http://kafka.apache.org/quickstart
 #### Publish Dummy Events ####
 
 ```sh
-    $ ./produce_event.py --json sample/mock_event.json --loops 100
+$ ./produce_event.py --json sample/mock_event.json --loops 100
 ```
 
 #### Kafka Tools ####
 List consumer groups
 
 ```sh
-    $ bin/kafka-run-class.sh kafka.admin.ConsumerGroupCommand --bootstrap-server localhost:9092 --list
+$ bin/kafka-run-class.sh kafka.admin.ConsumerGroupCommand --bootstrap-server localhost:9092 --list
 ```
-    
+
 Get some basic info about a particular group:
 
 ```sh
-    $ bin/kafka-run-class.sh kafka.admin.ConsumerGroupCommand --bootstrap-server localhost:9092 --describe --group playerpro-event-consumer-group
+$ bin/kafka-run-class.sh kafka.admin.ConsumerGroupCommand --bootstrap-server localhost:9092 --describe --group playerpro-event-consumer-group
 ```
-    
+
 and
 
 ```sh
-    $ bin/kafka-run-class.sh kafka.admin.ConsumerGroupCommand --bootstrap-server localhost:9092 --describe --group playerpro-job-consumer-group
+$ bin/kafka-run-class.sh kafka.admin.ConsumerGroupCommand --bootstrap-server localhost:9092 --describe --group playerpro-job-consumer-group
 ```
 
 ### Sanity Checks ###

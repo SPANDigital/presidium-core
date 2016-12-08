@@ -129,19 +129,19 @@ Note: Please prefix all the included links with , for example:
 
 <h3 id="run-unit-tests">Run Unit Tests</h3>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code>   <span class="nv">$ </span>python -m unittest discover tests
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>python -m unittest discover tests
 </code></pre>
 </div>
 
 <h3 id="run-integration-tests">Run Integration Tests</h3>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code>   <span class="nv">$ </span>python -m unittest discover integration_tests
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>python -m unittest discover integration_tests
 </code></pre>
 </div>
 
 <h3 id="run-all-tests">Run All Tests</h3>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code>   <span class="nv">$ </span>python -m unittest discover
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>python -m unittest discover
 </code></pre>
 </div>
 
@@ -156,27 +156,27 @@ will work, but your mocks will fail.</strong></p>
 <h4 id="ansible--2110">Ansible &gt;= 2.1.1.0</h4>
 <p>Ensure your ansible is up to date, check version:</p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code>   <span class="nv">$ </span>ansible-playbook --version
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>ansible-playbook --version
 </code></pre>
 </div>
 
 <p>http://docs.ansible.com/ansible/intro_installation.html</p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code>   <span class="nv">$ </span>sudo pip install ansible
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>sudo pip install ansible
 </code></pre>
 </div>
 
 <h4 id="prepare-servers">Prepare servers</h4>
 <p>Configure network and provision servers in EC2, with basic configuration in place.</p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code>    <span class="nv">$ </span>ansible-playbook -i aws_host/ec2.py prepare_servers.yml -e <span class="s2">"@vars/span.yml"</span> --private-key<span class="o">=</span>aws-load_testing-private.pem
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>ansible-playbook -i aws_host/ec2.py prepare_servers.yml -e <span class="s2">"@vars/span.yml"</span> --private-key<span class="o">=</span>aws-load_testing-private.pem
 </code></pre>
 </div>
 
 <h4 id="install-kafka">Install Kafka</h4>
 <p>Install Kafka on servers</p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code>    <span class="nv">$ </span>ansible-playbook -i kafka-testing-inventory install_kafka.yml -e <span class="s2">"@vars/span.yml"</span> --private-key<span class="o">=</span>aws-load_testing-private.pem --user<span class="o">=</span>ubuntu
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>ansible-playbook -i kafka-testing-inventory install_kafka.yml -e <span class="s2">"@vars/span.yml"</span> --private-key<span class="o">=</span>aws-load_testing-private.pem --user<span class="o">=</span>ubuntu
 </code></pre>
 </div>
 
@@ -189,13 +189,13 @@ will work, but your mocks will fail.</strong></p>
 
 <p>If you’ve used Brew to install kafka, you can easily start/stop kafka:</p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code>    <span class="nv">$ </span>brew services restart kafka
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>brew services restart kafka
 </code></pre>
 </div>
 
 <p>You can edit kafka config here:</p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code>    <span class="nv">$ </span>vi /usr/local/etc/kafka/server.properties
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>vi /usr/local/etc/kafka/server.properties
 </code></pre>
 </div>
 
@@ -205,26 +205,26 @@ http://kafka.apache.org/quickstart</p>
 
 <h4 id="publish-dummy-events">Publish Dummy Events</h4>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code>    <span class="nv">$ </span>./produce_event.py --json sample/mock_event.json --loops 100
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>./produce_event.py --json sample/mock_event.json --loops 100
 </code></pre>
 </div>
 
 <h4 id="kafka-tools">Kafka Tools</h4>
 <p>List consumer groups</p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code>    <span class="nv">$ </span>bin/kafka-run-class.sh kafka.admin.ConsumerGroupCommand --bootstrap-server localhost:9092 --list
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>bin/kafka-run-class.sh kafka.admin.ConsumerGroupCommand --bootstrap-server localhost:9092 --list
 </code></pre>
 </div>
 
 <p>Get some basic info about a particular group:</p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code>    <span class="nv">$ </span>bin/kafka-run-class.sh kafka.admin.ConsumerGroupCommand --bootstrap-server localhost:9092 --describe --group playerpro-event-consumer-group
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>bin/kafka-run-class.sh kafka.admin.ConsumerGroupCommand --bootstrap-server localhost:9092 --describe --group playerpro-event-consumer-group
 </code></pre>
 </div>
 
 <p>and</p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code>    <span class="nv">$ </span>bin/kafka-run-class.sh kafka.admin.ConsumerGroupCommand --bootstrap-server localhost:9092 --describe --group playerpro-job-consumer-group
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>bin/kafka-run-class.sh kafka.admin.ConsumerGroupCommand --bootstrap-server localhost:9092 --describe --group playerpro-job-consumer-group
 </code></pre>
 </div>
 

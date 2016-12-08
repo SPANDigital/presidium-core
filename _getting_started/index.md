@@ -67,224 +67,303 @@ The Job Service and PlayerPro API are available
   * [Objective C](#objective-c)
   * [Static HTML](#static-html)
 
-## Job Service ##
+## Job Service
 
-### Create virtualenv, activate it, and install dependencies. ###
+### Set Up Virtualenv & Install Dependencies
 
-#### Python 3.5.2 ####
-
+#### Python 3.5.2
 Some python 3.5 specific code is used. For example:
 
-    # This code is 3.5 specific, and won't work on <= 3.4
-    a = {}
-    b = {}
-    c = {**a, **b}
-    
+```python
+# This code is 3.5 specific, and won't work on <= 3.4
+a = {}
+b = {}
+c = {**a, **b}
+```
 
-##### Mac #####
-    brew install python3
-    brew install snappy
-    pip install virtualenv
-        
-##### Ubuntu #####
-    sudo apt-get install python-pip python3-dev snappy libsnappy-dev
-    sudo pip install virtualenv
-    
-###### Ubuntu 14.04 ######
-Ubuntu 14.04 installs python3.4 if you're using the normal repo's. You may use 
-fkrull to get 3.5.2
+##### Mac
 
-    sudo add-apt-repository ppa:fkrull/deadsnakes
-    sudo apt-get update
-    sudo apt-get install python3.5 python3.5-dev
-    
-##### Virtualenv #####
-    virtualenv -p python3 .
-    . bin/activate
-    pip install --upgrade pip
-    pip install -r requirements.txt --upgrade
-    
-##### Troubleshooting ####
+```sh
+$ brew install python3
+$ brew install snappy
+$ pip install virtualenv
+```
 
-Be aware snappy may fail to install, if this is the case, see troubleshooting below.
+##### Ubuntu
 
-Error installing python-snappy on Mac?
+```sh
+$ sudo apt-get install python-pip python3-dev snappy libsnappy-dev
+$ sudo pip install virtualenv
+```    
 
-    snappymodule.cc:31:10: fatal error: 'snappy-c.h' file not found
-    #include <snappy-c.h>
-         ^
-    1 error generated.
-    error: command 'clang' failed with exit status 1
+###### Ubuntu 14.04
+Ubuntu 14.04 installs ```python-3.4``` if you're using the normal
+repo's. You may use ```fkrull``` to get ```python-3.5.2```
+
+```sh
+$ sudo add-apt-repository ppa:fkrull/deadsnakes
+$ sudo apt-get update
+$ sudo apt-get install python3.5 python3.5-dev
+```
+
+##### Virtualenv
+
+```sh
+$ virtualenv -p python3 .
+$ . bin/activate
+$ pip install --upgrade pip
+$ pip install -r requirements.txt --upgrade
+```
+
+##### Troubleshooting
+Be aware snappy may fail to install, if this is the case, see
+troubleshooting below. Error installing python-snappy on Mac?
+
+```sh
+snappymodule.cc:31:10: fatal error: 'snappy-c.h' file not found
+#include <snappy-c.h>
+     ^
+1 error generated.
+error: command 'clang' failed with exit status 1
+```
 
 Install python snappy:
-    
-            brew install snappy
-            CPPFLAGS="-I/usr/local/include -L/usr/local/lib" pip install python-snappy
-            
+
+```sh
+$ brew install snappy
+$ CPPFLAGS="-I/usr/local/include -L/usr/local/lib" pip install python-snappy
+```
+
 Error installing python-snappy on Ubuntu?
-             
-    x86_64-linux-gnu-gcc -pthread -DNDEBUG -g -fwrapv -O2 -Wall -Wstrict-prototypes -g -fstack-protector --param=ssp-buffer-size=4 -Wformat -Werror=format-security -D_FORTIFY_SOURCE=2 -fPIC -I/usr/include/python3.4m -I/home/sybrandspan/Workspace/playerpro-job-service/include/python3.4m -c snappymodule.cc -o build/temp.linux-x86_64-3.4/snappymodule.o
-    cc1plus: warning: command line option ‘-Wstrict-prototypes’ is valid for C/ObjC but not for C++ [enabled by default]
-    snappymodule.cc:28:20: fatal error: Python.h: No such file or directory
-     #include "Python.h"
-                        ^
-    compilation terminated.
-    error: command 'x86_64-linux-gnu-gcc' failed with exit status 1
 
-Install python snappy
-    
-    ./bin/easy_install snappy
+```sh
+x86_64-linux-gnu-gcc -pthread -DNDEBUG -g -fwrapv -O2 -Wall -Wstrict-prototypes -g -fstack-protector --param=ssp-buffer-size=4 -Wformat -Werror=format-security -D_FORTIFY_SOURCE=2 -fPIC -I/usr/include/python3.4m -I/home/sybrandspan/Workspace/playerpro-job-service/include/python3.4m -c snappymodule.cc -o build/temp.linux-x86_64-3.4/snappymodule.o
+cc1plus: warning: command line option ‘-Wstrict-prototypes’ is valid for C/ObjC but not for C++ [enabled by default]
+snappymodule.cc:28:20: fatal error: Python.h: No such file or directory
+ #include "Python.h"
+                    ^
+compilation terminated.
+error: command 'x86_64-linux-gnu-gcc' failed with exit status 1
+```
 
-## Running the Job Service
+Install python snappy:
 
-### Run the Job Scheduler ###
+```sh
+$ ./bin/easy_install snappy
+```
 
-    python run_job_scheduler.py
+## Running The Job Service
+
+### Run The Job Scheduler
+
+```sh
+$ python run_job_scheduler.py
+```
 
 or
 
-    ./run_job_scheduler.py
-    
-### Run the Overlord ###
+```sh
+$ ./run_job_scheduler.py
+```
 
-    ./run_overlord.py
+### Run The Overlord
 
-## PlayerPro API ##
+```sh
+$ ./run_overlord.py
+```
 
-### Create virtualenv, activate it, and install dependencies. ###
+## PlayerPro API
 
-#### Python 2.7.9 ####
+### Set Up Virtualenv & Install Dependencies
 
-##### Mac #####
-    brew install python
-    pip install virtualenv
+#### Python 2.7.9
 
-##### Ubuntu #####
-    sudo apt-get install python-pip
-    sudo pip install virtualenv
+##### Mac
 
-##### Virtualenv #####
-    virtualenv .
-    . bin/activate
-    pip install -r requirements.txt
-    
+```sh
+$ brew install python
+$ pip install virtualenv
+```
+
+##### Ubuntu
+
+```sh
+$ sudo apt-get install python-pip
+$ sudo pip install virtualenv
+```
+
+##### Virtualenv
+
+```sh
+$ virtualenv .
+$ . bin/activate
+$ pip install -r requirements.txt
+```
+
 or if you're doing something very fancy
 
-    virtualenv -p /usr/local/bin/python2.7.
-    . bin/activate
-    pip install -r requirements.txt
+```sh
+$ virtualenv -p /usr/local/bin/python2.7.
+$ . bin/activate
+$ pip install -r requirements.txt
+```
 
-#### PyPy ####
-    brew install pypy
-    virtualenv -p /usr/local/bin/pypy pypy
-    . pypy/bin/activate
-    pip install -r requirements.txt
+#### PyPy
 
-### Install autoenv ####
+```sh
+$ brew install pypy
+$ virtualenv -p /usr/local/bin/pypy pypy
+$ . pypy/bin/activate
+$ pip install -r requirements.txt
+```
+
+### Install ```autoenv```
 See https://github.com/kennethreitz/autoenv for details.
 
-    cp .env_cpython .env
+```sh
+$ cp .env_cpython .env
+```
 
-#### On Mac ####
-    brew install autoenv
+#### On Mac
+
+```sh
+$ brew install autoenv
+```
 
 then depending on where activate.sh is:
 
-    echo 'source /usr/local/opt/autoenv/activate.sh' >> ~/.bash_profile
+```sh
+$ echo 'source /usr/local/opt/autoenv/activate.sh' >> ~/.bash_profile
+```
 
 or
 
-    echo 'source /usr/local/opt/autoenv/activate.sh' >> ~/.profile
-    
-#### On Ubuntu ####
-    pip install autoenv
+```sh
+$ echo 'source /usr/local/opt/autoenv/activate.sh' >> ~/.profile
+```
+
+#### On Ubuntu
+
+```sh
+$ pip install autoenv
+```
 
 then - depending on where activate.sh is:
 
-    echo 'source ~/.local/bin/activate.sh' >> ~/.bashrc
-or
-    echo 'source /usr/local/bin/activate.sh' >> ~/.bashrc
-    
-#### pypy ####
-    cp .env_pypy .env
-    
-    source $(dirname "${BASH_SOURCE[0]}")/pypy/bin/activate
+```sh
+$ echo 'source ~/.local/bin/activate.sh' >> ~/.bashrc
+```
 
-### Configure and start ###
+or
+
+```sh
+$ echo 'source /usr/local/bin/activate.sh' >> ~/.bashrc
+```
+
+#### PyPy
+
+```sh
+$ cp .env_pypy .env
+$ source $(dirname "${BASH_SOURCE[0]}")/pypy/bin/activate
+```
+
+### Configure & Start
 
 Make a copy of settings.local.sample.cfg, and modify it as needed
 
-    cp etc/settings.sample.cfg etc/settings.cfg
-    vi settings.local.cfg
+```sh
+$ cp etc/settings.sample.cfg etc/settings.cfg
+$ vi settings.local.cfg
+```
 
-### Deactivate, and let autoenv take over ###
+### Deactivate & Let ```autoenv``` Take Over
 
-    deactivate
-    cd <player pro location>
+```sh
+$ deactivate
+$ cd <player pro location>
+```
 
-### Run the api ###
+### Run The API
 
-    python run_api.py
+```sh
+$ python run_api.py
+```
 
-### Running tests ###
+### Running Tests
 
-    python tests/run_tests.py
+```sh
+$ python tests/run_tests.py
+```
 
 OR
 
-    python -m unittest discover
+```sh
+$ python -m unittest discover
+```
 
+### [Swagger](http://swagger.io/swagger-editor/)
 
-### Swagger ###
+```sh
+$ git clone https://github.com/swagger-api/swagger-editor.git
+$ cd swagger-editor
+$ npm start
+```
 
-See: http://swagger.io/swagger-editor/
+Validating Swagger:
 
-    git clone https://github.com/swagger-api/swagger-editor.git
-    cd swagger-editor
-    npm start
-    
-Validating swagger:
+```sh
+$ npm install -g swagger-cli
+$ swagger validate playerpro.yaml
+```
 
-    npm install -g swagger-cli
-    swagger validate playerpro.yaml
+## Generating Android & iOS Clients
+Using the [Swagger Code Generator](https://github.com/swagger-api/swagger-codegen):
+the project is included as a git submodule, in ```./modules/swagger-codegen```
 
-## Generating Android and iOS clients ##
+### Submodule Issues
+Submodules can be a bit troublesome when switching between branches
+that have and don't have submodules. To get things working again - try:
 
-Using Swagger Code Generator (see: https://github.com/swagger-api/swagger-codegen)
-
-The project is included as a git submodule, in ./modules/swagger-codegen
-
-### Submodule issues ###
-Submodules can be a bit troublesome when switching between branches that have and don't have submodules.
-To get things working again - try:
-    git fetch
-    git checkout master # or any other branch that you need the latest of
-    git merge origin/master
+```sh
+$ git fetch
+$ git checkout master # or any other branch that you need the latest of
+$ git merge origin/master
+```
 
 or:
-git submodule update --init --recursive
 
-### Installing ###
+```sh
+$ git submodule update --init --recursive
+```
 
-*Swagger Code Generator specifies that it needs Java 1.7: http://www.oracle.com/technetwork/java/javase/downloads/java-archive-downloads-javase7-521261.html, but it seems to work
-just fine with 1.8*
+### Installing
+*Swagger Code Generator specifies that it needs [Java 1.7](http://www.oracle.com/technetwork/java/javase/downloads/java-archive-downloads-javase7-521261.html)
+but it seems to work just fine with 1.8*
 
-    brew install maven
-    cd ./modules/swagger-codegen
-    mvn package
+```sh
+$ brew install maven
+$ cd ./modules/swagger-codegen
+$ mvn package
+```
 
-### Android ###
+### Android
 
-Run ./scripts/android-java-playerpro.sh
+```sh
+$ ./scripts/android-java-playerpro.sh
+```
 
-Will generate code in: dist/client/playerpro/android-java
+Will generate code in: ```dist/client/playerpro/android-java```
 
-### Objective C ###
+### Objective C
 
-Run ./scripts/objc-playerpro.sh
+```sh
+$ ./scripts/objc-playerpro.sh
+```
 
-Will generate code in: dist/client/playerpro/objc
+Will generate code in: ```dist/client/playerpro/objc```
 
-### Static HTML ###
+### Static HTML
 
-Run ./scripts/html-playerpro.sh
+```sh
+$ ./scripts/html-playerpro.sh
+```
