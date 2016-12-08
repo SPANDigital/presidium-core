@@ -44,21 +44,6 @@ The Job Service and PlayerPro API are available
 - [Running the Job Service](#running-the-job-service)
   * [Run the Job Scheduler](#run-the-job-scheduler)
   * [Run the Overlord](#run-the-overlord)
-- [Running Tests](#running-tests)
-  * [Run Unit Tests](#run-unit-tests)
-  * [Run Integration Tests](#run-integration-tests)
-  * [Run All Tests](#run-all-tests)
-  * [Travis CI](#travis-ci)
-  * [Deployment Considerations](#deployment-considerations)
-    + [Ansible >= 2.1.1.0](#ansible----2110)
-    + [Prepare servers](#prepare-servers)
-    + [Install Kafka](#install-kafka)
-    + [Deploy Job Service](#deploy-job-service)
-  * [Kafka Developer Notes](#kafka-developer-notes)
-    + [Using Kafka On Mac](#using-kafka-on-mac)
-    + [Publish Dummy Events](#publish-dummy-events)
-    + [Kafka Tools](#kafka-tools)
-  * [Sanity Checks](#sanity-checks)
 - [PlayerPro API](#playerpro-api)
   * [Create virtualenv, activate it, and install dependencies.](#create-virtualenv--activate-it--and-install-dependencies-1)
     + [Python 2.7.9](#python-279)
@@ -163,90 +148,6 @@ or
 ### Run the Overlord ###
 
     ./run_overlord.py
-    
-## Running Tests
-    
-### Run Unit Tests ###
-
-    python -m unittest discover tests
-    
-### Run Integration Tests ###
-
-    python -m unittest discover integration_tests
-
-### Run All Tests ###
-
-    python -m unittest discover
-    
-**Remember to specify tests, specifically with python3.5 the imports will work, but your mocks will fail.**
-
-### Travis CI ###
-
-### Deployment Considerations ###
-
-#### Ansible >= 2.1.1.0
-
-Ensure your ansible is up to date
-
-Check version: ansible-playbook --version
-
-http://docs.ansible.com/ansible/intro_installation.html
-
-    sudo pip install ansible
-
-#### Prepare servers ####
-
-Configure network and provision servers in EC2, with basic configuration in place.
-
-    ansible-playbook -i aws_host/ec2.py prepare_servers.yml -e "@vars/span.yml" --private-key=aws-load_testing-private.pem
-    
-#### Install Kafka ####
-
-Install Kafka on servers
-
-    ansible-playbook -i kafka-testing-inventory install_kafka.yml -e "@vars/span.yml" --private-key=aws-load_testing-private.pem --user=ubuntu
-
-
-#### Deploy Job Service ####
-
-Install Job Service on servers
-
-
-### Kafka Developer Notes ###
-
-#### Using Kafka On Mac ####
-
-If you've used Brew to install kafka, you can easily start/stop kafka:
-
-    brew services restart kafka
-
-You can edit kafka config here:
-
-    vi /usr/local/etc/kafka/server.properties
-    
-**Disclaimer:** brew doesn't always have the latest version of Kafka, rather download the latest version and run as per: http://kafka.apache.org/quickstart
-
-#### Publish Dummy Events ####
-
-    ./produce_event.py --json sample/mock_event.json --loops 100
-
-#### Kafka Tools ####
-
-List consumer groups
-
-    bin/kafka-run-class.sh kafka.admin.ConsumerGroupCommand --bootstrap-server localhost:9092 --list
-    
-Get some basic info about a particular group
-
-    bin/kafka-run-class.sh kafka.admin.ConsumerGroupCommand --bootstrap-server localhost:9092 --describe --group playerpro-event-consumer-group
-    
-and
-
-    bin/kafka-run-class.sh kafka.admin.ConsumerGroupCommand --bootstrap-server localhost:9092 --describe --group playerpro-job-consumer-group
-
-### Sanity Checks ###
-
-REPLACE WITH how to test that the product is correctly installed.
 
 ## PlayerPro API ##
 

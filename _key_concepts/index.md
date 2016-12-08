@@ -190,6 +190,8 @@ The ```common``` section applies to any topic, and in this case matches a
 ```Heartbeat Read```, thus across any topic, heartbeats have the same
 ```key_fields``` and ```job_properties```.
 
+
+
 # PlayerPro API
 
 ## System Context
