@@ -1,0 +1,854 @@
+
+
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PlayerPro</title>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/assets/shared/css/reset.css" type="text/css" media="screen"/>
+    <link rel="stylesheet" href="/assets/shared/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/shared/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/assets/shared/css/style.css" type="text/css" media="screen"/>
+    <link rel="stylesheet" href="/assets/shared/css/prism.css" type="text/css" media="screen"/>
+
+    <!-- Fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Roboto:300,500' rel='stylesheet' type='text/css'>
+
+    <script src="/assets/shared/js/session-capture.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="/assets/shared/js/respond.min.js"></script>
+    <script src="/assets/shared/js/prism.js"></script>
+
+    <!--[if lt IE 9]>
+    <script src="/assets/shared/js/html5.js"></script>
+    <![endif]-->
+
+    <!--
+
+This file gets included in the <head></head> section of the main layout pages.  It allows you to add in additional
+overriding stylesheets and / or JavaScript libraries that you might require in your project.
+
+Note: Please prefix all the included links with , for example:
+
+      <link rel="stylesheet" href="/assets/local/css/style.css" type="text/css" media="screen"/>
+-->
+
+
+</head>
+<body class="products">
+
+    <div id="holder" class="mainholder">
+
+        <!-- Results panel -->
+        <div id="wrapper">
+            <div id="sidebar-wrapper">
+                <aside>
+                    <article>
+                        <h2>Definition</h2>
+                        <p>content here for results</p>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec pretium metus vitae urna pharetra fermentum. Nunc convallis ligula nec accumsan mollis.</p>
+                        <div class="divider"></div>
+                        <h2>Results formula</h2>
+                        <p> Something here <span class="light">A highlight</span><br>
+                    </article>
+                </aside>
+            </div>
+        </div>
+
+        <!--header-->
+<section id="page-head">
+	<!--logo-->
+	<!--<header id="logo">-->
+			<!--<a href=""><img src="/assets/local/images/company_logo.png" alt=""></a>-->
+	<!--</header>-->
+	<!--menu-->
+	<!-- <nav id = "topnav">
+	    <ul>
+	        <li>
+	            <a href="/products/">PRODUCTS</a>
+	            <a href="/classes/">CLASSES</a>
+	            <a href="/events/">EVENTS</a>
+	            <a href="/pangaea-onboarding/">ONBOARDING</a>
+	        </li>
+	    </ul>
+	</nav> -->
+</section>
+
+
+        <!--CONTENT with sidebar left-->
+        <section id="onebar" class="leftbar">
+            <!--CONTENT right-->
+
+            <section id="rightpage">
+                <article id="getting-started" class="reference">
+					<!--<a href="#menu-toggle" class="togglebut" id="menu-toggle">Toggle Results Panel</a>-->
+
+                   <h1 class="primary">GETTING STARTED</h1>
+
+<h1 id="before-you-code">Before You Code</h1>
+
+<p>Before you code, read the following documentation. It is the most essential information you need before you start.</p>
+
+<ul>
+  <li><strong><a href="../overview">Overview:</a></strong> “REPLACE WITH your product name” business-level description of main benefits versus alternative solutions</li>
+  <li><strong><a href="../key-concepts">Key Concepts:</a></strong> Conceptual description and diagram of how “REPLACE WITH your product name” works</li>
+  <li><strong><a href="../tools">Tools:</a></strong> List of supporting tools and services that can be used with “REPLACE WITH your product name”</li>
+  <li><strong><a href="../getting-started">Getting Started:</a></strong> How to start using “REPLACE WITH your product name” (this section)</li>
+  <li><strong><a href="../best-practices">Best Practices:</a></strong> How you should use “REPLACE WITH your product name” for best results</li>
+</ul>
+
+<h1 id="what-you-will-need-when-you-code">What You Will Need When You Code</h1>
+
+<p>Refer to the following documentation as you work.</p>
+
+<ul>
+  <li><strong><a href="../typical-scenarios">Typical Usage Scenarios:</a></strong> How components work together to enable commonly implemented scenarios</li>
+  <li><strong><a href="../references">References:</a></strong> Detailed code usage descriptions with code snippets</li>
+  <li><strong><a href="../cookbook">Cookbook:</a></strong> ‘Recipes’ That solve a specific problem or achieve a specific solution</li>
+  <li><strong><a href="../testing">Testing &amp; Debugging:</a></strong> — Strategic overview description of how to test and debug “REPLACE WITH your product name”</li>
+  <li><strong><a href="../updates">Updates:</a></strong> Release and patch announcements as well as articles of interest to “REPLACE WITH your product name” users</li>
+  <li><strong><a href="../contribution">Contribution:</a></strong> How to provide feedback, report issues, contribute to development, or contact us</li>
+</ul>
+
+<h1 id="downloading-the-code">Downloading the Code</h1>
+
+<p>The Job Service and PlayerPro API are available
+<a href="https://github.com/SPANDigital/playerpro-job-service/">here</a> and
+<a href="https://github.com/SPANDigital/playerpro-api-v2">here</a> respectively.</p>
+
+<h1 id="installation-setup-and-configuration">Installation, Setup and Configuration</h1>
+
+<ul>
+  <li><a href="#job-service">Job Service</a>
+    <ul>
+      <li><a href="#create-virtualenv--activate-it--and-install-dependencies">Create virtualenv, activate it, and install dependencies.</a>
+        <ul>
+          <li><a href="#python-352">Python 3.5.2</a>
+            <ul>
+              <li><a href="#mac">Mac</a></li>
+              <li><a href="#ubuntu">Ubuntu</a>
+                <ul>
+                  <li><a href="#ubuntu-1404">Ubuntu 14.04</a></li>
+                </ul>
+              </li>
+              <li><a href="#virtualenv">Virtualenv</a></li>
+              <li><a href="#troubleshooting">Troubleshooting</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#running-the-job-service">Running the Job Service</a>
+    <ul>
+      <li><a href="#run-the-job-scheduler">Run the Job Scheduler</a></li>
+      <li><a href="#run-the-overlord">Run the Overlord</a></li>
+    </ul>
+  </li>
+  <li><a href="#running-tests">Running Tests</a>
+    <ul>
+      <li><a href="#run-unit-tests">Run Unit Tests</a></li>
+      <li><a href="#run-integration-tests">Run Integration Tests</a></li>
+      <li><a href="#run-all-tests">Run All Tests</a></li>
+      <li><a href="#travis-ci">Travis CI</a></li>
+      <li><a href="#deployment-considerations">Deployment Considerations</a>
+        <ul>
+          <li><a href="#ansible----2110">Ansible &gt;= 2.1.1.0</a></li>
+          <li><a href="#prepare-servers">Prepare servers</a></li>
+          <li><a href="#install-kafka">Install Kafka</a></li>
+          <li><a href="#deploy-job-service">Deploy Job Service</a></li>
+        </ul>
+      </li>
+      <li><a href="#kafka-developer-notes">Kafka Developer Notes</a>
+        <ul>
+          <li><a href="#using-kafka-on-mac">Using Kafka On Mac</a></li>
+          <li><a href="#publish-dummy-events">Publish Dummy Events</a></li>
+          <li><a href="#kafka-tools">Kafka Tools</a></li>
+        </ul>
+      </li>
+      <li><a href="#sanity-checks">Sanity Checks</a></li>
+    </ul>
+  </li>
+  <li><a href="#playerpro-api">PlayerPro API</a>
+    <ul>
+      <li><a href="#create-virtualenv--activate-it--and-install-dependencies-1">Create virtualenv, activate it, and install dependencies.</a>
+        <ul>
+          <li><a href="#python-279">Python 2.7.9</a>
+            <ul>
+              <li><a href="#mac-1">Mac</a></li>
+              <li><a href="#ubuntu-1">Ubuntu</a></li>
+              <li><a href="#virtualenv-1">Virtualenv</a></li>
+            </ul>
+          </li>
+          <li><a href="#pypy">PyPy</a></li>
+        </ul>
+      </li>
+      <li><a href="#install-autoenv">Install autoenv</a>
+        <ul>
+          <li><a href="#on-mac">On Mac</a></li>
+          <li><a href="#on-ubuntu">On Ubuntu</a></li>
+          <li><a href="#pypy">pypy</a></li>
+        </ul>
+      </li>
+      <li><a href="#configure-and-start">Configure and start</a></li>
+      <li><a href="#deactivate--and-let-autoenv-take-over">Deactivate, and let autoenv take over</a></li>
+      <li><a href="#run-the-api">Run the api</a></li>
+      <li><a href="#running-tests">Running tests</a></li>
+      <li><a href="#swagger">Swagger</a></li>
+    </ul>
+  </li>
+  <li><a href="#generating-android-and-ios-clients">Generating Android and iOS clients</a>
+    <ul>
+      <li><a href="#submodule-issues">Submodule issues</a></li>
+      <li><a href="#installing">Installing</a></li>
+      <li><a href="#android">Android</a></li>
+      <li><a href="#objective-c">Objective C</a></li>
+      <li><a href="#static-html">Static HTML</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="job-service">Job Service</h2>
+
+<h3 id="create-virtualenv-activate-it-and-install-dependencies">Create virtualenv, activate it, and install dependencies.</h3>
+
+<h4 id="python-352">Python 3.5.2</h4>
+
+<p>Some python 3.5 specific code is used. For example:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># This code is 3.5 specific, and won't work on &lt;= 3.4
+a = {}
+b = {}
+c = {**a, **b}
+</code></pre>
+</div>
+
+<h5 id="mac">Mac</h5>
+<div class="highlighter-rouge"><pre class="highlight"><code>brew install python3
+brew install snappy
+pip install virtualenv
+</code></pre>
+</div>
+
+<h5 id="ubuntu">Ubuntu</h5>
+<div class="highlighter-rouge"><pre class="highlight"><code>sudo apt-get install python-pip python3-dev snappy libsnappy-dev
+sudo pip install virtualenv
+</code></pre>
+</div>
+
+<h6 id="ubuntu-1404">Ubuntu 14.04</h6>
+<p>Ubuntu 14.04 installs python3.4 if you’re using the normal repo’s. You may use 
+fkrull to get 3.5.2</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>sudo add-apt-repository ppa:fkrull/deadsnakes
+sudo apt-get update
+sudo apt-get install python3.5 python3.5-dev
+</code></pre>
+</div>
+
+<h5 id="virtualenv">Virtualenv</h5>
+<div class="highlighter-rouge"><pre class="highlight"><code>virtualenv -p python3 .
+. bin/activate
+pip install --upgrade pip
+pip install -r requirements.txt --upgrade
+</code></pre>
+</div>
+
+<h5 id="troubleshooting">Troubleshooting</h5>
+
+<p>Be aware snappy may fail to install, if this is the case, see troubleshooting below.</p>
+
+<p>Error installing python-snappy on Mac?</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>snappymodule.cc:31:10: fatal error: 'snappy-c.h' file not found
+#include &lt;snappy-c.h&gt;
+     ^
+1 error generated.
+error: command 'clang' failed with exit status 1
+</code></pre>
+</div>
+
+<p>Install python snappy:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>        brew install snappy
+        CPPFLAGS="-I/usr/local/include -L/usr/local/lib" pip install python-snappy
+</code></pre>
+</div>
+
+<p>Error installing python-snappy on Ubuntu?</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>x86_64-linux-gnu-gcc -pthread -DNDEBUG -g -fwrapv -O2 -Wall -Wstrict-prototypes -g -fstack-protector --param=ssp-buffer-size=4 -Wformat -Werror=format-security -D_FORTIFY_SOURCE=2 -fPIC -I/usr/include/python3.4m -I/home/sybrandspan/Workspace/playerpro-job-service/include/python3.4m -c snappymodule.cc -o build/temp.linux-x86_64-3.4/snappymodule.o
+cc1plus: warning: command line option ‘-Wstrict-prototypes’ is valid for C/ObjC but not for C++ [enabled by default]
+snappymodule.cc:28:20: fatal error: Python.h: No such file or directory
+ #include "Python.h"
+                    ^
+compilation terminated.
+error: command 'x86_64-linux-gnu-gcc' failed with exit status 1
+</code></pre>
+</div>
+
+<p>Install python snappy</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>./bin/easy_install snappy
+</code></pre>
+</div>
+
+<h2 id="running-the-job-service">Running the Job Service</h2>
+
+<h3 id="run-the-job-scheduler">Run the Job Scheduler</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>python run_job_scheduler.py
+</code></pre>
+</div>
+
+<p>or</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>./run_job_scheduler.py
+</code></pre>
+</div>
+
+<h3 id="run-the-overlord">Run the Overlord</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>./run_overlord.py
+</code></pre>
+</div>
+
+<h2 id="running-tests">Running Tests</h2>
+
+<h3 id="run-unit-tests">Run Unit Tests</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>python -m unittest discover tests
+</code></pre>
+</div>
+
+<h3 id="run-integration-tests">Run Integration Tests</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>python -m unittest discover integration_tests
+</code></pre>
+</div>
+
+<h3 id="run-all-tests">Run All Tests</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>python -m unittest discover
+</code></pre>
+</div>
+
+<p><strong>Remember to specify tests, specifically with python3.5 the imports will work, but your mocks will fail.</strong></p>
+
+<h3 id="travis-ci">Travis CI</h3>
+
+<h3 id="deployment-considerations">Deployment Considerations</h3>
+
+<h4 id="ansible--2110">Ansible &gt;= 2.1.1.0</h4>
+
+<p>Ensure your ansible is up to date</p>
+
+<p>Check version: ansible-playbook –version</p>
+
+<p>http://docs.ansible.com/ansible/intro_installation.html</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>sudo pip install ansible
+</code></pre>
+</div>
+
+<h4 id="prepare-servers">Prepare servers</h4>
+
+<p>Configure network and provision servers in EC2, with basic configuration in place.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>ansible-playbook -i aws_host/ec2.py prepare_servers.yml -e "@vars/span.yml" --private-key=aws-load_testing-private.pem
+</code></pre>
+</div>
+
+<h4 id="install-kafka">Install Kafka</h4>
+
+<p>Install Kafka on servers</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>ansible-playbook -i kafka-testing-inventory install_kafka.yml -e "@vars/span.yml" --private-key=aws-load_testing-private.pem --user=ubuntu
+</code></pre>
+</div>
+
+<h4 id="deploy-job-service">Deploy Job Service</h4>
+
+<p>Install Job Service on servers</p>
+
+<h3 id="kafka-developer-notes">Kafka Developer Notes</h3>
+
+<h4 id="using-kafka-on-mac">Using Kafka On Mac</h4>
+
+<p>If you’ve used Brew to install kafka, you can easily start/stop kafka:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>brew services restart kafka
+</code></pre>
+</div>
+
+<p>You can edit kafka config here:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>vi /usr/local/etc/kafka/server.properties
+</code></pre>
+</div>
+
+<p><strong>Disclaimer:</strong> brew doesn’t always have the latest version of Kafka, rather download the latest version and run as per: http://kafka.apache.org/quickstart</p>
+
+<h4 id="publish-dummy-events">Publish Dummy Events</h4>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>./produce_event.py --json sample/mock_event.json --loops 100
+</code></pre>
+</div>
+
+<h4 id="kafka-tools">Kafka Tools</h4>
+
+<p>List consumer groups</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>bin/kafka-run-class.sh kafka.admin.ConsumerGroupCommand --bootstrap-server localhost:9092 --list
+</code></pre>
+</div>
+
+<p>Get some basic info about a particular group</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>bin/kafka-run-class.sh kafka.admin.ConsumerGroupCommand --bootstrap-server localhost:9092 --describe --group playerpro-event-consumer-group
+</code></pre>
+</div>
+
+<p>and</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>bin/kafka-run-class.sh kafka.admin.ConsumerGroupCommand --bootstrap-server localhost:9092 --describe --group playerpro-job-consumer-group
+</code></pre>
+</div>
+
+<h3 id="sanity-checks">Sanity Checks</h3>
+
+<p>REPLACE WITH how to test that the product is correctly installed.</p>
+
+<h2 id="playerpro-api">PlayerPro API</h2>
+
+<h3 id="create-virtualenv-activate-it-and-install-dependencies-1">Create virtualenv, activate it, and install dependencies.</h3>
+
+<h4 id="python-279">Python 2.7.9</h4>
+
+<h5 id="mac-1">Mac</h5>
+<div class="highlighter-rouge"><pre class="highlight"><code>brew install python
+pip install virtualenv
+</code></pre>
+</div>
+
+<h5 id="ubuntu-1">Ubuntu</h5>
+<div class="highlighter-rouge"><pre class="highlight"><code>sudo apt-get install python-pip
+sudo pip install virtualenv
+</code></pre>
+</div>
+
+<h5 id="virtualenv-1">Virtualenv</h5>
+<div class="highlighter-rouge"><pre class="highlight"><code>virtualenv .
+. bin/activate
+pip install -r requirements.txt
+</code></pre>
+</div>
+
+<p>or if you’re doing something very fancy</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>virtualenv -p /usr/local/bin/python2.7.
+. bin/activate
+pip install -r requirements.txt
+</code></pre>
+</div>
+
+<h4 id="pypy">PyPy</h4>
+<div class="highlighter-rouge"><pre class="highlight"><code>brew install pypy
+virtualenv -p /usr/local/bin/pypy pypy
+. pypy/bin/activate
+pip install -r requirements.txt
+</code></pre>
+</div>
+
+<h3 id="install-autoenv">Install autoenv</h3>
+<p>See https://github.com/kennethreitz/autoenv for details.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>cp .env_cpython .env
+</code></pre>
+</div>
+
+<h4 id="on-mac">On Mac</h4>
+<div class="highlighter-rouge"><pre class="highlight"><code>brew install autoenv
+</code></pre>
+</div>
+
+<p>then depending on where activate.sh is:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>echo 'source /usr/local/opt/autoenv/activate.sh' &gt;&gt; ~/.bash_profile
+</code></pre>
+</div>
+
+<p>or</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>echo 'source /usr/local/opt/autoenv/activate.sh' &gt;&gt; ~/.profile
+</code></pre>
+</div>
+
+<h4 id="on-ubuntu">On Ubuntu</h4>
+<div class="highlighter-rouge"><pre class="highlight"><code>pip install autoenv
+</code></pre>
+</div>
+
+<p>then - depending on where activate.sh is:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>echo 'source ~/.local/bin/activate.sh' &gt;&gt; ~/.bashrc or
+echo 'source /usr/local/bin/activate.sh' &gt;&gt; ~/.bashrc
+</code></pre>
+</div>
+
+<h4 id="pypy-1">pypy</h4>
+<div class="highlighter-rouge"><pre class="highlight"><code>cp .env_pypy .env
+
+source $(dirname "${BASH_SOURCE[0]}")/pypy/bin/activate
+</code></pre>
+</div>
+
+<h3 id="configure-and-start">Configure and start</h3>
+
+<p>Make a copy of settings.local.sample.cfg, and modify it as needed</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>cp etc/settings.sample.cfg etc/settings.cfg
+vi settings.local.cfg
+</code></pre>
+</div>
+
+<h3 id="deactivate-and-let-autoenv-take-over">Deactivate, and let autoenv take over</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>deactivate
+cd &lt;player pro location&gt;
+</code></pre>
+</div>
+
+<h3 id="run-the-api">Run the api</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>python run_api.py
+</code></pre>
+</div>
+
+<h3 id="running-tests-1">Running tests</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>python tests/run_tests.py
+</code></pre>
+</div>
+
+<p>OR</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>python -m unittest discover
+</code></pre>
+</div>
+
+<h3 id="swagger">Swagger</h3>
+
+<p>See: http://swagger.io/swagger-editor/</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>git clone https://github.com/swagger-api/swagger-editor.git
+cd swagger-editor
+npm start
+</code></pre>
+</div>
+
+<p>Validating swagger:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>npm install -g swagger-cli
+swagger validate playerpro.yaml
+</code></pre>
+</div>
+
+<h2 id="generating-android-and-ios-clients">Generating Android and iOS clients</h2>
+
+<p>Using Swagger Code Generator (see: https://github.com/swagger-api/swagger-codegen)</p>
+
+<p>The project is included as a git submodule, in ./modules/swagger-codegen</p>
+
+<h3 id="submodule-issues">Submodule issues</h3>
+<p>Submodules can be a bit troublesome when switching between branches that have and don’t have submodules.
+To get things working again - try:
+    git fetch
+    git checkout master # or any other branch that you need the latest of
+    git merge origin/master</p>
+
+<p>or:
+git submodule update –init –recursive</p>
+
+<h3 id="installing">Installing</h3>
+
+<p><em>Swagger Code Generator specifies that it needs Java 1.7: http://www.oracle.com/technetwork/java/javase/downloads/java-archive-downloads-javase7-521261.html, but it seems to work
+just fine with 1.8</em></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>brew install maven
+cd ./modules/swagger-codegen
+mvn package
+</code></pre>
+</div>
+
+<h3 id="android">Android</h3>
+
+<p>Run ./scripts/android-java-playerpro.sh</p>
+
+<p>Will generate code in: dist/client/playerpro/android-java</p>
+
+<h3 id="objective-c">Objective C</h3>
+
+<p>Run ./scripts/objc-playerpro.sh</p>
+
+<p>Will generate code in: dist/client/playerpro/objc</p>
+
+<h3 id="static-html">Static HTML</h3>
+
+<p>Run ./scripts/html-playerpro.sh</p>
+
+
+
+                </article>
+            </section>
+
+            <aside>
+                <!--Product Logo-->
+                <article>
+                    
+                        <a href="index.html" class="sublogo"><img src="/assets/local/images/project_logo.png" alt=""></a>
+                    
+                    <h4>Version</h4>
+
+                    <div id="bar-select">
+                        <select>
+                            <option value="/versions/latest/">Latest</option>
+                            
+                        </select>
+                    </div>
+                </article>
+                <div id="nav-container">
+                    <!--left sub navigation-->
+<nav id="sidenav">
+    <h2>DOCUMENTATION</h2>
+    <ul class="nav">
+        
+            
+            
+
+            
+                
+                
+                <li>
+                    <a href="/#overview" data-target="#overview">Overview</a>
+                    <ul>
+                        
+                    </ul>
+                </li>
+            
+         
+            
+            
+
+            
+                
+                
+                <li>
+                    <a href="/key-concepts#key-concepts" data-target="#key-concepts">Key Concepts</a>
+                    <ul>
+                        
+                    </ul>
+                </li>
+            
+         
+            
+            
+
+            
+                
+                
+                <li>
+                    <a href="/prerequisites#prerequisites" data-target="#prerequisites">Prerequisites</a>
+                    <ul>
+                        
+                    </ul>
+                </li>
+            
+         
+            
+            
+
+            
+                
+                
+                <li>
+                    <a href="/getting-started#getting-started" data-target="#getting-started">Getting started</a>
+                    <ul>
+                        
+                    </ul>
+                </li>
+            
+         
+            
+            
+
+            
+                
+                
+                <li>
+                    <a href="/typical-scenarios#typical-usage-scenarios" data-target="#typical-usage-scenarios">Typical Usage Scenarios</a>
+                    <ul>
+                        
+                    </ul>
+                </li>
+            
+         
+            
+            
+
+            
+                
+                
+                <li>
+                    <a href="/best-practices#best-practices" data-target="#best-practices">Best Practices</a>
+                    <ul>
+                        
+                    </ul>
+                </li>
+            
+         
+            
+            
+
+            
+                
+                
+                <li>
+                    <a href="/references#reference" data-target="#reference">Reference</a>
+                    <ul>
+                        
+                    </ul>
+                </li>
+            
+         
+            
+            
+
+            
+                
+                
+                <li>
+                    <a href="/cookbook#cookbook" data-target="#cookbook">Cookbook</a>
+                    <ul>
+                        
+                    </ul>
+                </li>
+            
+         
+            
+            
+
+            
+                
+                
+                <li>
+                    <a href="/tools#tools" data-target="#tools">Tools</a>
+                    <ul>
+                        
+                    </ul>
+                </li>
+            
+         
+            
+            
+
+            
+                
+                
+                <li>
+                    <a href="/testing#testing-debugging" data-target="#testing-debugging">Testing & Debugging</a>
+                    <ul>
+                        
+                    </ul>
+                </li>
+            
+         
+            
+            
+
+            
+                
+                
+                <li>
+                    <a href="/updates#updates" data-target="#updates">Updates</a>
+                    <ul>
+                        
+                    </ul>
+                </li>
+            
+         
+            
+            
+
+            
+                
+                
+                <li>
+                    <a href="/contribution#contribution" data-target="#contribution">Contribution</a>
+                    <ul>
+                        
+                    </ul>
+                </li>
+            
+         
+    </ul>
+</nav>
+
+
+<!--href="#"></a>-->
+
+                    <article>
+                        <h4>Contact the team</h4>
+						<span class="button icon-slack"><a href="https://spandigital.slack.com/messages/player-pro/" target="_blank">player-pro</a></span>
+                    </article>
+                </div>
+            </aside>
+        </section>
+
+        <!-- footer 
+Commenting out the footer until we get content... :-)
+so not to break layout - is also hidden in the style.css footer-->
+
+<section id="page-foot">
+	<!-- <footer class="footer">
+      <div class="container">
+        <h2></h2>
+		<p>&copy; August 2015 [ <a href="/">Lorem Ipsum</a> ] All rights reserved | </p>
+      </div>
+    </footer>-->
+</section>
+
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $('#nav-container').affix({
+                offset: {
+                    top: 200,
+                    bottom: function () {
+                        return (this.bottom = $('.footer').outerHeight(true) + 12)
+                    }
+                }
+            });
+
+            $('#nav-container').on('affix.bs.affix', function() {
+                $('#nav-container').removeAttr('style');
+            });
+            $('body').scrollspy({
+                target: '#sidenav'
+            });
+        })
+    </script>
+<!-- Menu Toggle Script -->
+    <script>
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+		$("#menu-toggle").toggleClass("toggleon");
+    });
+    </script>
+</body>

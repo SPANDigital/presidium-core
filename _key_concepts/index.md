@@ -91,6 +91,105 @@ processed. The Job Publisher updates a generational count on a job to
 prevent a 'combinatorial explosion' of job creation. Jobs that exceed a
 set generational count are discarded.
 
+## The Config File
+
+### Kafka Connection Settings For Producers And Consumers
+
+```yaml
+kafka:
+  # This section contains default kafka settings for all consumers and producers.
+  consumer:
+    # For available settings, refer to http://kafka-python.readthedocs.io/en/master/apidoc/KafkaConsumer.html
+    bootstrap_servers:
+      - 'localhost:9090'
+      - 'localhost:9091'
+      - 'localhost:9092'
+    enable_auto_commit: False
+  producer:
+    # For available settings, refer to http://kafka-python.readthedocs.io/en/master/apidoc/KafkaProducer.html
+    bootstrap_servers:
+      - 'localhost:9090'
+      - 'localhost:9091'
+      - 'localhost:9092'
+
+```
+
+### Job Scheduler Consumer Groups
+
+```yaml
+job_scheduler:
+  kafka:
+    # This section contains kafka configuration for job_scheduler consumer and producer.
+    consumer:
+      # For available settings, refer to http://kafka-python.readthedocs.io/en/master/apidoc/KafkaConsumer.html
+      group_id: 'pp-evnt-cnsmr-grp'
+      client_id: 'pp-evnt-cnsmr-clnt'
+    producer:
+      # For available settings, refer to http://kafka-python.readthedocs.io/en/master/apidoc/KafkaProducer.html
+      client_id: 'pp-job-prdcr-clnt'
+```
+
+### Job Scheduler Routing Rules
+
+By matching against a resource type and action type,the Job Scheduler
+can extract the kinds of jobs that need to be created. For example, in
+the snippet below if the event has a resource type of ```PostsById```
+and an action type of either ```Create```, ```Update``` or  ```Delete```
+then a cache-related job will be created.
+
+```yaml
+job_scheduler:
+  job_rules:
+    # ...
+    - { action_type: "^(Create|Update|Delete)$", resource_type: "PostsById", topic: "pp-cache" }
+    # ...
+```
+
+### Job Scheduler Job Creation (Enrichment Rules)
+
+For a particular topic, candidate events are matched again by resource
+type and action type, providing a lower level of granularity with 
+respect to the kinds of jobs (and their properties) to be created.
+In the snippet below, under the topic of ```pp-cache```, for an
+```Update``` of ```PostsById```, the ```key_fields``` are those job
+fields which must be used as the plaintext for unique hash generation.
+The ```job_properties``` dictionary, specifies certain attributes of the
+job, such as when it expires (5 min from now), or when it is due
+(immediately), or that tis particular job type is an invalidation etc.
+
+```yaml
+job_scheduler:
+  # ...
+  enricher:
+    topics:
+      pp-cache:
+        - match:
+            { action_type: "Update", resource_type: "PostsById" }
+          key_fields:
+            - 'payload'
+            - 'expires'
+            - 'due'
+            - 'priority'
+            - 'job_type'
+          job_properties:
+              { superceedable: True, job_type: 'invalidate', priority: 1, due: 0, expires: 5 }
+    common:
+      - match:
+          { action_type: "Read", resource_type: "Heartbeat" }
+        key_fields:
+          - timestamp
+          - job_type
+        job_properties:
+            { superceedable: False, job_type: 'Heartbeat', priority: 1, due: 0, expires: 5 }
+    defaults:
+        job_properties:
+            { job_type: 'invalidate', due: 0, expires: 5, priority: 1, superceedable: False, retry_limit: 3 }
+```
+
+The ```common``` section applies to any topic, and in this case matches a
+```Heartbeat Read```, thus across any topic, heartbeats have the same
+```key_fields``` and ```job_properties```.
+
 # PlayerPro API
 
 ## System Context
