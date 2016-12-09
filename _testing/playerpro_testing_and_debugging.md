@@ -1,13 +1,11 @@
 ---
 title: "Testing and Debugging"
-id: "testing-and-debugging" 
+id: "playerpro-testing-and-debugging" 
 author: "DominicFollett"
 ---
 
-# PlayerPro job Service
-
-- [Testing](#testing)
-  * [Running Tests](#running-tests)
+- [PlayerPro job Service](#playerpro-job-service)
+  * [Testing](#testing)
     + [Run Unit Tests](#run-unit-tests)
     + [Run Integration Tests](#run-integration-tests)
     + [Run All Tests](#run-all-tests)
@@ -22,12 +20,14 @@ author: "DominicFollett"
       - [Publish Dummy Events](#publish-dummy-events)
       - [Kafka Tools](#kafka-tools)
     + [Sanity Checks](#sanity-checks)
-- [Debugging](#debugging)
+  * [Debugging](#debugging)
+- [PlayerPro API](#playerpro-api)
+  * [Running Tests](#running-tests)
+  * [Debugging](#debugging-1)
 
+# PlayerPro Job Service
 
-# Testing
-
-## Running Tests
+## Testing
 
 ### Run Unit Tests
 
@@ -133,5 +133,22 @@ $ bin/kafka-run-class.sh kafka.admin.ConsumerGroupCommand --bootstrap-server loc
 ### Sanity Checks ###
 REPLACE WITH how to test that the product is correctly installed.
 
-# Debugging
+## Debugging
+REPLACE WITH an explanation of how best to debug the solutions built using the product. 
+
+# PlayerPro API
+
+## Running Tests
+
+```sh
+$ python tests/run_tests.py
+```
+
+OR
+
+```sh
+$ python -m unittest discover
+```
+
+## Debugging
 REPLACE WITH an explanation of how best to debug the solutions built using the product. 

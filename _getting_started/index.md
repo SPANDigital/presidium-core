@@ -289,18 +289,6 @@ $ cd <player pro location>
 $ python run_api.py
 ```
 
-### Running Tests
-
-```sh
-$ python tests/run_tests.py
-```
-
-OR
-
-```sh
-$ python -m unittest discover
-```
-
 ### [Swagger](http://swagger.io/swagger-editor/)
 
 ```sh

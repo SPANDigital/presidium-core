@@ -8,23 +8,23 @@
     <title>PlayerPro</title>
 
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="/assets/shared/css/reset.css" type="text/css" media="screen"/>
-    <link rel="stylesheet" href="/assets/shared/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/assets/shared/css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="/assets/shared/css/style.css" type="text/css" media="screen"/>
-    <link rel="stylesheet" href="/assets/shared/css/prism.css" type="text/css" media="screen"/>
+    <link rel="stylesheet" href="/playerpro/assets/shared/css/reset.css" type="text/css" media="screen"/>
+    <link rel="stylesheet" href="/playerpro/assets/shared/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/playerpro/assets/shared/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/playerpro/assets/shared/css/style.css" type="text/css" media="screen"/>
+    <link rel="stylesheet" href="/playerpro/assets/shared/css/prism.css" type="text/css" media="screen"/>
 
     <!-- Fonts -->
     <link href='http://fonts.googleapis.com/css?family=Roboto:300,500' rel='stylesheet' type='text/css'>
 
-    <script src="/assets/shared/js/session-capture.js"></script>
+    <script src="/playerpro/assets/shared/js/session-capture.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <script src="/assets/shared/js/respond.min.js"></script>
-    <script src="/assets/shared/js/prism.js"></script>
+    <script src="/playerpro/assets/shared/js/respond.min.js"></script>
+    <script src="/playerpro/assets/shared/js/prism.js"></script>
 
     <!--[if lt IE 9]>
-    <script src="/assets/shared/js/html5.js"></script>
+    <script src="/playerpro/assets/shared/js/html5.js"></script>
     <![endif]-->
 
     <!--
@@ -32,9 +32,9 @@
 This file gets included in the <head></head> section of the main layout pages.  It allows you to add in additional
 overriding stylesheets and / or JavaScript libraries that you might require in your project.
 
-Note: Please prefix all the included links with , for example:
+Note: Please prefix all the included links with /playerpro, for example:
 
-      <link rel="stylesheet" href="/assets/local/css/style.css" type="text/css" media="screen"/>
+      <link rel="stylesheet" href="/playerpro/assets/local/css/style.css" type="text/css" media="screen"/>
 -->
 
 
@@ -63,7 +63,7 @@ Note: Please prefix all the included links with , for example:
 <section id="page-head">
 	<!--logo-->
 	<!--<header id="logo">-->
-			<!--<a href=""><img src="/assets/local/images/company_logo.png" alt=""></a>-->
+			<!--<a href=""><img src="/playerpro/assets/local/images/company_logo.png" alt=""></a>-->
 	<!--</header>-->
 	<!--menu-->
 	<!-- <nav id = "topnav">
@@ -89,6 +89,53 @@ Note: Please prefix all the included links with , for example:
 
                    <h1 class="primary">KEY CONCEPTS</h1>
 
+<h1 id="contents">Contents</h1>
+
+<ul>
+  <li><a href="#job-service">Job Service</a>
+    <ul>
+      <li><a href="#job-scheduler">Job Scheduler</a></li>
+      <li><a href="#job-manager">Job Manager</a>
+        <ul>
+          <li><a href="#prioritization">Prioritization</a></li>
+          <li><a href="#job-expiration">Job Expiration</a></li>
+          <li><a href="#deduplication">Deduplication</a>
+            <ul>
+              <li><a href="#three-ways-duplicates-occur">Three Ways Duplicates Occur</a></li>
+            </ul>
+          </li>
+          <li><a href="#dispatch">Dispatch</a></li>
+          <li><a href="#job-publisher">Job Publisher</a></li>
+        </ul>
+      </li>
+      <li><a href="#the-config-file">The Config File</a>
+        <ul>
+          <li><a href="#kafka-connection-settings-for-producers-and-consumers">Kafka Connection Settings For Producers And Consumers</a></li>
+          <li><a href="#job-scheduler-consumer-groups">Job Scheduler Consumer Groups</a></li>
+          <li><a href="#job-scheduler-routing-rules">Job Scheduler Routing Rules</a></li>
+          <li><a href="#job-scheduler-job-creation-enrichment-rules">Job Scheduler Job Creation (Enrichment Rules)</a></li>
+          <li><a href="#job-manager-job-consumer-config">Job Manager Job Consumer Config</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#playerpro-api">PlayerPro API</a>
+    <ul>
+      <li><a href="#system-context">System Context</a></li>
+      <li><a href="#caching-middleware">Caching Middleware</a></li>
+      <li><a href="#cache-configuration-design">Cache Configuration Design</a>
+        <ul>
+          <li><a href="#cache-config-format">Cache Config Format</a></li>
+          <li><a href="#cache-logic">Cache Logic</a></li>
+          <li><a href="#rules">Rules</a></li>
+          <li><a href="#rational-for-rules">Rational For Rules</a></li>
+          <li><a href="#a-note-on-access-tokens">A Note On Access Tokens</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
 <h1 id="job-service">Job Service</h1>
 
 <h2 id="job-scheduler">Job Scheduler</h2>
@@ -96,7 +143,7 @@ Note: Please prefix all the included links with , for example:
 <p>The Job Scheduler consumes events and creates jobs from them, these are
 then published to their respective job queues.</p>
 
-<p><img src="/assets/local/images/ppro_job_scheduler.svg" alt="Job Scheduler" /></p>
+<p><img src="/playerpro/assets/local/images/ppro_job_scheduler.svg" alt="Job Scheduler" /></p>
 
 <p>An Event Consumer polls the bus, and retrieves messages of the the Kafka 
 queue. The event is passed to a Router module which determines (as per
@@ -112,7 +159,7 @@ publishes each job to the correct topic queue it belongs.</p>
 <p>In the Job Manager, Job Consumers consume jobs from each topic queue and
 process them before dispatching them to their respective hooks.</p>
 
-<p><img src="/assets/local/images/ppro_job_manager.svg" alt="Job Manager" /></p>
+<p><img src="/playerpro/assets/local/images/ppro_job_manager.svg" alt="Job Manager" /></p>
 
 <h3 id="prioritization">Prioritization</h3>
 
@@ -120,7 +167,7 @@ process them before dispatching them to their respective hooks.</p>
 that higher priority jobs receive a greater share of resources than
 lower priority jobs.</p>
 
-<p><img src="/assets/local/images/ppro_prioritization.svg" alt="Pioritization" /></p>
+<p><img src="/playerpro/assets/local/images/ppro_prioritization.svg" alt="Job Manager Prioritization" /></p>
 
 <p>Each topic queue has a set of Kafka Consumers per priority level range.
 Each of these Kafka Consumers uses a separate Consumer Group, such that
@@ -139,7 +186,7 @@ processing occurs.</p>
 
 <h3 id="deduplication">Deduplication</h3>
 
-<p><img src="/assets/local/images/ppro_deduplication.svg" alt="Deduplication" /></p>
+<p><img src="/playerpro/assets/local/images/ppro_deduplication.svg" alt="Deduplication" /></p>
 
 <p>The mechanism of job deduplication relies on a unique job hash which is
 generated at the enricher stage in the Job Scheduler. Configuration
@@ -155,7 +202,7 @@ the three causes discussed below.</p>
 
 <h4 id="three-ways-duplicates-occur">Three Ways Duplicates Occur</h4>
 
-<p><img src="/assets/local/images/ppro_three_causes_of_duplication.svg" alt="Three Mechanisms" /></p>
+<p><img src="/playerpro/assets/local/images/ppro_three_causes_of_duplication.svg" alt="Three Mechanisms" /></p>
 
 <ol>
   <li>A Job Publisher does not receive an ACK due to a
@@ -215,6 +262,7 @@ set generational count are discarded.</p>
       <span class="s">client_id</span><span class="pi">:</span> <span class="s1">'</span><span class="s">pp-job-prdcr-clnt'</span>
 </code></pre>
 </div>
+<p>The same information is supplied under the <code class="highlighter-rouge">job_manager</code> section.</p>
 
 <h3 id="job-scheduler-routing-rules">Job Scheduler Routing Rules</h3>
 
@@ -277,11 +325,42 @@ job, such as when it expires (5 min from now), or when it is due
 <code class="highlighter-rouge">Heartbeat Read</code>, thus across any topic, heartbeats have the same
 <code class="highlighter-rouge">key_fields</code> and <code class="highlighter-rouge">job_properties</code>.</p>
 
+<h3 id="job-manager-job-consumer-config">Job Manager Job Consumer Config</h3>
+
+<div class="language-yaml highlighter-rouge"><pre class="highlight"><code>
+<span class="s">job_consumers</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">name</span><span class="pi">:</span> <span class="s1">'</span><span class="s">PlayerPro</span><span class="nv"> </span><span class="s">Feed</span><span class="nv"> </span><span class="s">Job</span><span class="nv"> </span><span class="s">Consumer'</span>
+      <span class="s">topics</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="s1">'</span><span class="s">pp-jobs-feeds'</span>
+      <span class="s">serializing_function</span><span class="pi">:</span> <span class="s">ppro.models.event.Event.deserialize</span>
+      <span class="s">hook</span><span class="pi">:</span> <span class="s">ppro.job_manager.hook.feed.FeedHook</span>
+      <span class="s">priority_ranges</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="pi">{</span><span class="nv">pool_size</span><span class="pi">:</span> <span class="nv">8</span><span class="pi">}</span>
+    <span class="pi">-</span> <span class="s">name</span><span class="pi">:</span> <span class="s1">'</span><span class="s">Mock</span><span class="nv"> </span><span class="s">Job</span><span class="nv"> </span><span class="s">Consumer'</span>
+      <span class="s">topics</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="s1">'</span><span class="s">pp-mock'</span>
+      <span class="s">serializing_function</span><span class="pi">:</span> <span class="s">ppro.models.event.Event.deserialize</span>
+      <span class="s">hook</span><span class="pi">:</span> <span class="s">ppro.job_manager.hook.mock.MockHook</span>
+      <span class="s">priority_ranges</span><span class="pi">:</span>
+<span class="c1">#        - {pool_size: 8}</span>
+        <span class="pi">-</span> <span class="pi">{</span><span class="nv">range</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0</span><span class="pi">,</span> <span class="nv">5</span><span class="pi">],</span> <span class="nv">pool_size</span><span class="pi">:</span> <span class="nv">5</span><span class="pi">}</span>
+        <span class="pi">-</span> <span class="pi">{</span><span class="nv">range</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">6</span><span class="pi">,</span> <span class="nv">10</span><span class="pi">],</span> <span class="nv">pool_size</span><span class="pi">:</span> <span class="nv">2</span><span class="pi">}</span>
+        <span class="pi">-</span> <span class="pi">{</span><span class="nv">range</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">11</span><span class="pi">,</span> <span class="nv">15</span><span class="pi">],</span> <span class="nv">pool_size</span><span class="pi">:</span> <span class="nv">1</span><span class="pi">}</span>
+    <span class="pi">-</span> <span class="s">name</span><span class="pi">:</span> <span class="s1">'</span><span class="s">PlayerPro</span><span class="nv"> </span><span class="s">Cache</span><span class="nv"> </span><span class="s">Consumer'</span>
+      <span class="s">topics</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="s1">'</span><span class="s">pp-cache'</span>
+      <span class="s">serializing_function</span><span class="pi">:</span> <span class="s">ppro.models.event.Event.deserialize</span>
+      <span class="s">hook</span><span class="pi">:</span> <span class="s">ppro.job_manager.hook.cache.CacheHook</span>
+      <span class="s">priority_ranges</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="pi">{</span><span class="nv">pool_size</span><span class="pi">:</span> <span class="nv">8</span><span class="pi">}</span>
+</code></pre>
+</div>
+
 <h1 id="playerpro-api">PlayerPro API</h1>
 
 <h2 id="system-context">System Context</h2>
 
-<p><img src="/assets/local/images/ppro_api_system_context.svg" alt="API System Context" /></p>
+<p><img src="/playerpro/assets/local/images/ppro_api_system_context.svg" alt="API System Context" /></p>
 
 <h2 id="caching-middleware">Caching Middleware</h2>
 
@@ -335,7 +414,7 @@ below, and covered briefly as follows:</p>
 
 <h3 id="cache-logic">Cache Logic</h3>
 
-<p><img src="/assets/local/images/ppro_cache_logic_flow.svg" alt="Cache Configuration" /></p>
+<p><img src="/playerpro/assets/local/images/ppro_cache_logic_flow.svg" alt="Cache Configuration" /></p>
 
 <h3 id="rules">Rules</h3>
 
@@ -396,13 +475,13 @@ the url’s query parameters.</p>
                 <!--Product Logo-->
                 <article>
                     
-                        <a href="index.html" class="sublogo"><img src="/assets/local/images/project_logo.png" alt=""></a>
+                        <a href="index.html" class="sublogo"><img src="/playerpro/assets/local/images/project_logo.png" alt=""></a>
                     
                     <h4>Version</h4>
 
                     <div id="bar-select">
                         <select>
-                            <option value="/versions/latest/">Latest</option>
+                            <option value="/playerpro/versions/latest/">Latest</option>
                             
                         </select>
                     </div>
@@ -420,7 +499,7 @@ the url’s query parameters.</p>
                 
                 
                 <li>
-                    <a href="/#overview" data-target="#overview">Overview</a>
+                    <a href="/playerpro/#overview" data-target="#overview">Overview</a>
                     <ul>
                         
                     </ul>
@@ -434,7 +513,7 @@ the url’s query parameters.</p>
                 
                 
                 <li>
-                    <a href="/key-concepts#key-concepts" data-target="#key-concepts">Key Concepts</a>
+                    <a href="/playerpro/key-concepts#key-concepts" data-target="#key-concepts">Key Concepts</a>
                     <ul>
                         
                     </ul>
@@ -448,7 +527,7 @@ the url’s query parameters.</p>
                 
                 
                 <li>
-                    <a href="/prerequisites#prerequisites" data-target="#prerequisites">Prerequisites</a>
+                    <a href="/playerpro/prerequisites#prerequisites" data-target="#prerequisites">Prerequisites</a>
                     <ul>
                         
                     </ul>
@@ -462,7 +541,7 @@ the url’s query parameters.</p>
                 
                 
                 <li>
-                    <a href="/getting-started#getting-started" data-target="#getting-started">Getting started</a>
+                    <a href="/playerpro/getting-started#getting-started" data-target="#getting-started">Getting started</a>
                     <ul>
                         
                     </ul>
@@ -476,7 +555,7 @@ the url’s query parameters.</p>
                 
                 
                 <li>
-                    <a href="/typical-scenarios#typical-usage-scenarios" data-target="#typical-usage-scenarios">Typical Usage Scenarios</a>
+                    <a href="/playerpro/typical-scenarios#typical-usage-scenarios" data-target="#typical-usage-scenarios">Typical Usage Scenarios</a>
                     <ul>
                         
                     </ul>
@@ -490,7 +569,7 @@ the url’s query parameters.</p>
                 
                 
                 <li>
-                    <a href="/best-practices#best-practices" data-target="#best-practices">Best Practices</a>
+                    <a href="/playerpro/best-practices#best-practices" data-target="#best-practices">Best Practices</a>
                     <ul>
                         
                     </ul>
@@ -504,7 +583,7 @@ the url’s query parameters.</p>
                 
                 
                 <li>
-                    <a href="/references#reference" data-target="#reference">Reference</a>
+                    <a href="/playerpro/references#reference" data-target="#reference">Reference</a>
                     <ul>
                         
                     </ul>
@@ -518,7 +597,7 @@ the url’s query parameters.</p>
                 
                 
                 <li>
-                    <a href="/cookbook#cookbook" data-target="#cookbook">Cookbook</a>
+                    <a href="/playerpro/cookbook#cookbook" data-target="#cookbook">Cookbook</a>
                     <ul>
                         
                     </ul>
@@ -532,7 +611,7 @@ the url’s query parameters.</p>
                 
                 
                 <li>
-                    <a href="/tools#tools" data-target="#tools">Tools</a>
+                    <a href="/playerpro/tools#tools" data-target="#tools">Tools</a>
                     <ul>
                         
                     </ul>
@@ -546,7 +625,7 @@ the url’s query parameters.</p>
                 
                 
                 <li>
-                    <a href="/testing#testing-debugging" data-target="#testing-debugging">Testing & Debugging</a>
+                    <a href="/playerpro/testing#testing-debugging" data-target="#testing-debugging">Testing & Debugging</a>
                     <ul>
                         
                     </ul>
@@ -560,7 +639,7 @@ the url’s query parameters.</p>
                 
                 
                 <li>
-                    <a href="/updates#updates" data-target="#updates">Updates</a>
+                    <a href="/playerpro/updates#updates" data-target="#updates">Updates</a>
                     <ul>
                         
                     </ul>
@@ -574,7 +653,7 @@ the url’s query parameters.</p>
                 
                 
                 <li>
-                    <a href="/contribution#contribution" data-target="#contribution">Contribution</a>
+                    <a href="/playerpro/contribution#contribution" data-target="#contribution">Contribution</a>
                     <ul>
                         
                     </ul>
@@ -585,7 +664,7 @@ the url’s query parameters.</p>
 </nav>
 
 
-<!--href="#"></a>-->
+<!--href="/playerpro#"></a>-->
 
                     <article>
                         <h4>Contact the team</h4>

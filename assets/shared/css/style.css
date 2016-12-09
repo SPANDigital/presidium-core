@@ -33,21 +33,25 @@ img {
 }
 
 h1 {
+    color: #ed8b00;
     font-size: 20px;
     margin-bottom: 0.7em;
 }
 
 h2 {
-    font-size: 14px;
+    color: #999999ff;
+    font-size: 18px;
     margin-bottom: 0.5em;
 }
 
 h3 {
+    color: #999999;
     font-size: 16px;
     margin-bottom: 0.5em;
 }
 
 h4 {
+    color: #999999;
     font-size: 12px;
     text-transform: uppercase;
 }
@@ -57,7 +61,7 @@ b {
 }
 
 a {
-    color: #108ac0;
+    color: #999999;
 }
 
 .blue {
@@ -789,8 +793,9 @@ hr {
     padding-bottom: 1em;
 }
 
+/* This causes the table of contents to have unsightly gaps. */
 #rightpage ul, #nobar ul {
-    padding-bottom: 1em;
+    /* padding-bottom: 1em; */
 }
 
 #rightpage ul li, #nobar ul li {

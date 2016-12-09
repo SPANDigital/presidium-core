@@ -4,6 +4,34 @@ id: "key-concepts"
 author: "dominicfollett"
 ---
 
+# Contents
+
+- [Job Service](#job-service)
+  * [Job Scheduler](#job-scheduler)
+  * [Job Manager](#job-manager)
+    + [Prioritization](#prioritization)
+    + [Job Expiration](#job-expiration)
+    + [Deduplication](#deduplication)
+      - [Three Ways Duplicates Occur](#three-ways-duplicates-occur)
+    + [Dispatch](#dispatch)
+    + [Job Publisher](#job-publisher)
+  * [The Config File](#the-config-file)
+    + [Kafka Connection Settings For Producers And Consumers](#kafka-connection-settings-for-producers-and-consumers)
+    + [Job Scheduler Consumer Groups](#job-scheduler-consumer-groups)
+    + [Job Scheduler Routing Rules](#job-scheduler-routing-rules)
+    + [Job Scheduler Job Creation (Enrichment Rules)](#job-scheduler-job-creation-enrichment-rules)
+    + [Job Manager Job Consumer Config](#job-manager-job-consumer-config)
+- [PlayerPro API](#playerpro-api)
+  * [System Context](#system-context)
+  * [Caching Middleware](#caching-middleware)
+  * [Cache Configuration Design](#cache-configuration-design)
+    + [Cache Config Format](#cache-config-format)
+    + [Cache Logic](#cache-logic)
+    + [Rules](#rules)
+    + [Rational For Rules](#rational-for-rules)
+    + [A Note On Access Tokens](#a-note-on-access-tokens)
+
+
 # Job Service
 
 ## Job Scheduler
@@ -11,7 +39,7 @@ author: "dominicfollett"
 The Job Scheduler consumes events and creates jobs from them, these are
 then published to their respective job queues.
 
-![Job Scheduler](/assets/local/images/ppro_job_scheduler.svg)
+![Job Scheduler]({{ "/assets/local/images/ppro_job_scheduler.svg" | relative_url }})
 
 An Event Consumer polls the bus, and retrieves messages of the the Kafka 
 queue. The event is passed to a Router module which determines (as per
@@ -27,7 +55,7 @@ publishes each job to the correct topic queue it belongs.
 In the Job Manager, Job Consumers consume jobs from each topic queue and
 process them before dispatching them to their respective hooks.
 
-![Job Manager](/assets/local/images/ppro_job_manager.svg)
+![Job Manager]({{ "/assets/local/images/ppro_job_manager.svg" | relative_url }})
 
 ### Prioritization
 
@@ -35,7 +63,7 @@ Prioritization, the first module in the Job Manager pipeline, ensures
 that higher priority jobs receive a greater share of resources than
 lower priority jobs.
 
-![Pioritization](/assets/local/images/ppro_prioritization.svg)
+![Job Manager Prioritization]({{ "/assets/local/images/ppro_prioritization.svg" | relative_url }})
 
 Each topic queue has a set of Kafka Consumers per priority level range.
 Each of these Kafka Consumers uses a separate Consumer Group, such that
@@ -54,7 +82,7 @@ processing occurs.
 
 ### Deduplication
 
-![Deduplication](/assets/local/images/ppro_deduplication.svg)
+![Deduplication]({{ "/assets/local/images/ppro_deduplication.svg" | relative_url }})
 
 The mechanism of job deduplication relies on a unique job hash which is
 generated at the enricher stage in the Job Scheduler. Configuration
@@ -70,7 +98,7 @@ the three causes discussed below.
 
 #### Three Ways Duplicates Occur
 
-![Three Mechanisms](/assets/local/images/ppro_three_causes_of_duplication.svg)
+![Three Mechanisms]({{ "/assets/local/images/ppro_three_causes_of_duplication.svg" | relative_url }})
 
 1. A Job Publisher does not receive an ACK due to a
    network error, and continues to publish a job repeatedly.
@@ -128,6 +156,7 @@ job_scheduler:
       # For available settings, refer to http://kafka-python.readthedocs.io/en/master/apidoc/KafkaProducer.html
       client_id: 'pp-job-prdcr-clnt'
 ```
+The same information is supplied under the ```job_manager``` section.
 
 ### Job Scheduler Routing Rules
 
@@ -190,13 +219,42 @@ The ```common``` section applies to any topic, and in this case matches a
 ```Heartbeat Read```, thus across any topic, heartbeats have the same
 ```key_fields``` and ```job_properties```.
 
+### Job Manager Job Consumer Config
 
+```yaml
+
+job_consumers:
+    - name: 'PlayerPro Feed Job Consumer'
+      topics:
+        - 'pp-jobs-feeds'
+      serializing_function: ppro.models.event.Event.deserialize
+      hook: ppro.job_manager.hook.feed.FeedHook
+      priority_ranges:
+        - {pool_size: 8}
+    - name: 'Mock Job Consumer'
+      topics:
+        - 'pp-mock'
+      serializing_function: ppro.models.event.Event.deserialize
+      hook: ppro.job_manager.hook.mock.MockHook
+      priority_ranges:
+#        - {pool_size: 8}
+        - {range: [0, 5], pool_size: 5}
+        - {range: [6, 10], pool_size: 2}
+        - {range: [11, 15], pool_size: 1}
+    - name: 'PlayerPro Cache Consumer'
+      topics:
+        - 'pp-cache'
+      serializing_function: ppro.models.event.Event.deserialize
+      hook: ppro.job_manager.hook.cache.CacheHook
+      priority_ranges:
+        - {pool_size: 8}
+```
 
 # PlayerPro API
 
 ## System Context
 
-![API System Context](/assets/local/images/ppro_api_system_context.svg)
+![API System Context]({{ "/assets/local/images/ppro_api_system_context.svg" | relative_url }})
 
 ## Caching Middleware
 
@@ -248,10 +306,11 @@ below, and covered briefly as follows:
 }
 ```
 
+
+
 ### Cache Logic
 
-![Cache Configuration](/assets/local/images/ppro_cache_logic_flow.svg)
-
+![Cache Configuration]({{ "/assets/local/images/ppro_cache_logic_flow.svg" | relative_url }})
 
 ### Rules
 

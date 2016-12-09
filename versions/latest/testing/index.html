@@ -8,23 +8,23 @@
     <title>PlayerPro</title>
 
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="/assets/shared/css/reset.css" type="text/css" media="screen"/>
-    <link rel="stylesheet" href="/assets/shared/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/assets/shared/css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="/assets/shared/css/style.css" type="text/css" media="screen"/>
-    <link rel="stylesheet" href="/assets/shared/css/prism.css" type="text/css" media="screen"/>
+    <link rel="stylesheet" href="/playerpro/assets/shared/css/reset.css" type="text/css" media="screen"/>
+    <link rel="stylesheet" href="/playerpro/assets/shared/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/playerpro/assets/shared/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/playerpro/assets/shared/css/style.css" type="text/css" media="screen"/>
+    <link rel="stylesheet" href="/playerpro/assets/shared/css/prism.css" type="text/css" media="screen"/>
 
     <!-- Fonts -->
     <link href='http://fonts.googleapis.com/css?family=Roboto:300,500' rel='stylesheet' type='text/css'>
 
-    <script src="/assets/shared/js/session-capture.js"></script>
+    <script src="/playerpro/assets/shared/js/session-capture.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <script src="/assets/shared/js/respond.min.js"></script>
-    <script src="/assets/shared/js/prism.js"></script>
+    <script src="/playerpro/assets/shared/js/respond.min.js"></script>
+    <script src="/playerpro/assets/shared/js/prism.js"></script>
 
     <!--[if lt IE 9]>
-    <script src="/assets/shared/js/html5.js"></script>
+    <script src="/playerpro/assets/shared/js/html5.js"></script>
     <![endif]-->
 
     <!--
@@ -32,9 +32,9 @@
 This file gets included in the <head></head> section of the main layout pages.  It allows you to add in additional
 overriding stylesheets and / or JavaScript libraries that you might require in your project.
 
-Note: Please prefix all the included links with , for example:
+Note: Please prefix all the included links with /playerpro, for example:
 
-      <link rel="stylesheet" href="/assets/local/css/style.css" type="text/css" media="screen"/>
+      <link rel="stylesheet" href="/playerpro/assets/local/css/style.css" type="text/css" media="screen"/>
 -->
 
 
@@ -63,7 +63,7 @@ Note: Please prefix all the included links with , for example:
 <section id="page-head">
 	<!--logo-->
 	<!--<header id="logo">-->
-			<!--<a href=""><img src="/assets/local/images/company_logo.png" alt=""></a>-->
+			<!--<a href=""><img src="/playerpro/assets/local/images/company_logo.png" alt=""></a>-->
 	<!--</header>-->
 	<!--menu-->
 	<!-- <nav id = "topnav">
@@ -89,12 +89,10 @@ Note: Please prefix all the included links with , for example:
 
                    <h1 class="primary">TESTING AND DEBUGGING</h1>
 
-<h1 id="playerpro-job-service">PlayerPro job Service</h1>
-
 <ul>
-  <li><a href="#testing">Testing</a>
+  <li><a href="#playerpro-job-service">PlayerPro job Service</a>
     <ul>
-      <li><a href="#running-tests">Running Tests</a>
+      <li><a href="#testing">Testing</a>
         <ul>
           <li><a href="#run-unit-tests">Run Unit Tests</a></li>
           <li><a href="#run-integration-tests">Run Integration Tests</a></li>
@@ -118,14 +116,20 @@ Note: Please prefix all the included links with , for example:
           <li><a href="#sanity-checks">Sanity Checks</a></li>
         </ul>
       </li>
+      <li><a href="#debugging">Debugging</a></li>
     </ul>
   </li>
-  <li><a href="#debugging">Debugging</a></li>
+  <li><a href="#playerpro-api">PlayerPro API</a>
+    <ul>
+      <li><a href="#running-tests">Running Tests</a></li>
+      <li><a href="#debugging-1">Debugging</a></li>
+    </ul>
+  </li>
 </ul>
 
-<h1 id="testing">Testing</h1>
+<h1 id="playerpro-job-service">PlayerPro Job Service</h1>
 
-<h2 id="running-tests">Running Tests</h2>
+<h2 id="testing">Testing</h2>
 
 <h3 id="run-unit-tests">Run Unit Tests</h3>
 
@@ -231,7 +235,24 @@ http://kafka.apache.org/quickstart</p>
 <h3 id="sanity-checks">Sanity Checks</h3>
 <p>REPLACE WITH how to test that the product is correctly installed.</p>
 
-<h1 id="debugging">Debugging</h1>
+<h2 id="debugging">Debugging</h2>
+<p>REPLACE WITH an explanation of how best to debug the solutions built using the product.</p>
+
+<h1 id="playerpro-api">PlayerPro API</h1>
+
+<h2 id="running-tests">Running Tests</h2>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>python tests/run_tests.py
+</code></pre>
+</div>
+
+<p>OR</p>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>python -m unittest discover
+</code></pre>
+</div>
+
+<h2 id="debugging-1">Debugging</h2>
 <p>REPLACE WITH an explanation of how best to debug the solutions built using the product.</p>
 
 
@@ -243,13 +264,13 @@ http://kafka.apache.org/quickstart</p>
                 <!--Product Logo-->
                 <article>
                     
-                        <a href="index.html" class="sublogo"><img src="/assets/local/images/project_logo.png" alt=""></a>
+                        <a href="index.html" class="sublogo"><img src="/playerpro/assets/local/images/project_logo.png" alt=""></a>
                     
                     <h4>Version</h4>
 
                     <div id="bar-select">
                         <select>
-                            <option value="/versions/latest/">Latest</option>
+                            <option value="/playerpro/versions/latest/">Latest</option>
                             
                         </select>
                     </div>
@@ -267,7 +288,7 @@ http://kafka.apache.org/quickstart</p>
                 
                 
                 <li>
-                    <a href="/#overview" data-target="#overview">Overview</a>
+                    <a href="/playerpro/#overview" data-target="#overview">Overview</a>
                     <ul>
                         
                     </ul>
@@ -281,7 +302,7 @@ http://kafka.apache.org/quickstart</p>
                 
                 
                 <li>
-                    <a href="/key-concepts#key-concepts" data-target="#key-concepts">Key Concepts</a>
+                    <a href="/playerpro/key-concepts#key-concepts" data-target="#key-concepts">Key Concepts</a>
                     <ul>
                         
                     </ul>
@@ -295,7 +316,7 @@ http://kafka.apache.org/quickstart</p>
                 
                 
                 <li>
-                    <a href="/prerequisites#prerequisites" data-target="#prerequisites">Prerequisites</a>
+                    <a href="/playerpro/prerequisites#prerequisites" data-target="#prerequisites">Prerequisites</a>
                     <ul>
                         
                     </ul>
@@ -309,7 +330,7 @@ http://kafka.apache.org/quickstart</p>
                 
                 
                 <li>
-                    <a href="/getting-started#getting-started" data-target="#getting-started">Getting started</a>
+                    <a href="/playerpro/getting-started#getting-started" data-target="#getting-started">Getting started</a>
                     <ul>
                         
                     </ul>
@@ -323,7 +344,7 @@ http://kafka.apache.org/quickstart</p>
                 
                 
                 <li>
-                    <a href="/typical-scenarios#typical-usage-scenarios" data-target="#typical-usage-scenarios">Typical Usage Scenarios</a>
+                    <a href="/playerpro/typical-scenarios#typical-usage-scenarios" data-target="#typical-usage-scenarios">Typical Usage Scenarios</a>
                     <ul>
                         
                     </ul>
@@ -337,7 +358,7 @@ http://kafka.apache.org/quickstart</p>
                 
                 
                 <li>
-                    <a href="/best-practices#best-practices" data-target="#best-practices">Best Practices</a>
+                    <a href="/playerpro/best-practices#best-practices" data-target="#best-practices">Best Practices</a>
                     <ul>
                         
                     </ul>
@@ -351,7 +372,7 @@ http://kafka.apache.org/quickstart</p>
                 
                 
                 <li>
-                    <a href="/references#reference" data-target="#reference">Reference</a>
+                    <a href="/playerpro/references#reference" data-target="#reference">Reference</a>
                     <ul>
                         
                     </ul>
@@ -365,7 +386,7 @@ http://kafka.apache.org/quickstart</p>
                 
                 
                 <li>
-                    <a href="/cookbook#cookbook" data-target="#cookbook">Cookbook</a>
+                    <a href="/playerpro/cookbook#cookbook" data-target="#cookbook">Cookbook</a>
                     <ul>
                         
                     </ul>
@@ -379,7 +400,7 @@ http://kafka.apache.org/quickstart</p>
                 
                 
                 <li>
-                    <a href="/tools#tools" data-target="#tools">Tools</a>
+                    <a href="/playerpro/tools#tools" data-target="#tools">Tools</a>
                     <ul>
                         
                     </ul>
@@ -393,7 +414,7 @@ http://kafka.apache.org/quickstart</p>
                 
                 
                 <li>
-                    <a href="/testing#testing-debugging" data-target="#testing-debugging">Testing & Debugging</a>
+                    <a href="/playerpro/testing#testing-debugging" data-target="#testing-debugging">Testing & Debugging</a>
                     <ul>
                         
                     </ul>
@@ -407,7 +428,7 @@ http://kafka.apache.org/quickstart</p>
                 
                 
                 <li>
-                    <a href="/updates#updates" data-target="#updates">Updates</a>
+                    <a href="/playerpro/updates#updates" data-target="#updates">Updates</a>
                     <ul>
                         
                     </ul>
@@ -421,7 +442,7 @@ http://kafka.apache.org/quickstart</p>
                 
                 
                 <li>
-                    <a href="/contribution#contribution" data-target="#contribution">Contribution</a>
+                    <a href="/playerpro/contribution#contribution" data-target="#contribution">Contribution</a>
                     <ul>
                         
                     </ul>
@@ -432,7 +453,7 @@ http://kafka.apache.org/quickstart</p>
 </nav>
 
 
-<!--href="#"></a>-->
+<!--href="/playerpro#"></a>-->
 
                     <article>
                         <h4>Contact the team</h4>
