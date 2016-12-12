@@ -279,14 +279,18 @@ If new cache jobs need to be created, the config for doing so is placed
 under the ```cache_manager``` heading.
 
 ```yaml
-rules:
-- match:
-    { action_type: "Update", resource_type: "PostsById", job_type: 'invalidate' }
-  jobs:
-    - { others_affected: True, entity_type: 'Post', entity_id_offset: 1, params: {type: 'type', id: 'entity'},  topic: 'pp-cache', update_fields: { superceedable: True, job_type: 'invalidate', priority: 1, due: 0, expires: 5} }
-- match:
-    { action_type: "Update", resource_type: "Post", job_type: 'invalidate' }
-  jobs:
+cache_manager:
+  .
+  . 
+  .
+  rules:
+  - match:
+      { action_type: "Update", resource_type: "PostsById", job_type: 'invalidate' }
+    jobs:
+      - { others_affected: True, entity_type: 'Post', entity_id_offset: 1, params: {type: 'type', id: 'entity'},  topic: 'pp-cache', update_fields: { superceedable: True, job_type: 'invalidate', priority: 1, due: 0, expires: 5} }
+  - match:
+      { action_type: "Update", resource_type: "Post", job_type: 'invalidate' }
+    jobs:
       # type and id in the source url corresponds to type and entity in the external api call respectively.
       # params is a dict with params to look at on the source url, with a mapping between the job service
       # and ppro's api endpoint. others_affected indicates to the hook that an external api must be queried to find
@@ -309,23 +313,24 @@ their meaning:
 2. ```entity_type``` is the type of entity associated with this resource
     type.
 3. ```entity_id_offset``` is the position in the ```resource_url``` path
+    (the ```resource_url``` is a property on the job)
     that provides the the entity id.
 4. ```params``` indicate which query parameters on the 'resource_url'
     provide the ```type``` and ```entity_id``` - required for calling
     the API.
     The dictionary here is actually to provide a mapping between the
-    query parameter names in the ```resource_url``` and the query
+    query parameter names in the ```resource_url``` (the ```resource_url``` 
+    is a property on the job) and the query
     parameter names in the API call, which are different.
 5.  ```topic```  - the job queue these new jobs will be published to.
-6.  ```update_fields```  are the ob fields that need to be updated with
+6.  ```update_fields```  are the fields that need to be updated with
     the specified values. A new job inherits the parent's attributes,
     this mechanism allows for that to be overridden.
 
 Note that ```entity_type``` and ```entity_id_offset``` are used when the
-```resource url``` does not have any query parameters. The ```params```
-dictionary is used when query parameters exist.
-
-This may appear
+```resource_url``` (the ```resource_url``` is a property on the job) does 
+not have any query parameters. The ```params```dictionary is used when 
+query parameters exist.
 
 ### Job Manager Job Consumer Config
 
@@ -363,7 +368,7 @@ and delete.
 
 ## Cache Configuration Design
 
-A cache decorator is applied on all endpoints in API, this done by
+A cache decorator is applied on all endpoints in API, this is done by
 adding it to the Flask Resource method_decorators array field:
 
 ```python
@@ -432,16 +437,16 @@ below, and covered briefly as follows:
 
 ### Rational For Rules
 
-If we explicitly mark an endpoint for caching, we need to be able to
+- If we explicitly mark an endpoint for caching, we need to be able to
 differentiate between what is to be cached and what is not to be cached,
 especially in the case of complex endpoints such as GET /posts where
 query parameters effectively change the endpoint definition.
 
-Merely caching by endpoint url doesn’t allow us to stop caching in
+- Merely caching by endpoint url doesn’t allow us to stop caching in
 certain cases - perhaps we don’t want to cache anything with ‘filter_by’
 in it. Hence, the need to introduce rules.
 
-The burden of responsibility is on the shoulders of the programmer to
+- The burden of responsibility is on the shoulders of the programmer to
 clearly define which endpoints are to be cached, by being explicit about
 the HTTP method and the url path expected.
 

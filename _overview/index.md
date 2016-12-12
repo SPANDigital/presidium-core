@@ -10,10 +10,10 @@ author: "dominicfollett"
 
 # PlayerPro API
 
-PlayerPro currently provides an API that offers many of the
+PlayerPro currently provides an API that offers much of the
 functionality that one can perform on their website as well. Their
 endpoints are partially grouped into themes. The response data from the
-endpoints contains large amounts of irrelevant and confusion
+endpoints contains large amounts of irrelevant and confusing
 information. Their conventions regarding request parameters, errors,
 data formats etc are not always consistent. By and large the API is
 difficult to use and does not provide a good end user experience.
@@ -67,7 +67,7 @@ computationally expensive behaviours from the PlayerPro PHP Symfony and,
 in stead, handling these in a distributed and highly scalable manner.
 
 
-### Through Asychronicity:
+### Through Asynchronicity:
 
 Through the use of an asynchronous Job Service, actions that would
 normally block - and, as a consequence ruin the quality of services, can

@@ -388,14 +388,18 @@ resource.</p>
 <p>If new cache jobs need to be created, the config for doing so is placed
 under the <code class="highlighter-rouge">cache_manager</code> heading.</p>
 
-<div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="s">rules</span><span class="pi">:</span>
-<span class="pi">-</span> <span class="s">match</span><span class="pi">:</span>
-    <span class="pi">{</span> <span class="nv">action_type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Update"</span><span class="pi">,</span> <span class="nv">resource_type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">PostsById"</span><span class="pi">,</span> <span class="nv">job_type</span><span class="pi">:</span> <span class="s1">'</span><span class="s">invalidate'</span> <span class="pi">}</span>
-  <span class="s">jobs</span><span class="pi">:</span>
-    <span class="pi">-</span> <span class="pi">{</span> <span class="nv">others_affected</span><span class="pi">:</span> <span class="nv">True</span><span class="pi">,</span> <span class="nv">entity_type</span><span class="pi">:</span> <span class="s1">'</span><span class="s">Post'</span><span class="pi">,</span> <span class="nv">entity_id_offset</span><span class="pi">:</span> <span class="nv">1</span><span class="pi">,</span> <span class="nv">params</span><span class="pi">:</span> <span class="pi">{</span><span class="nv">type</span><span class="pi">:</span> <span class="s1">'</span><span class="s">type'</span><span class="pi">,</span> <span class="nv">id</span><span class="pi">:</span> <span class="s1">'</span><span class="s">entity'</span><span class="pi">},</span>  <span class="nv">topic</span><span class="pi">:</span> <span class="s1">'</span><span class="s">pp-cache'</span><span class="pi">,</span> <span class="nv">update_fields</span><span class="pi">:</span> <span class="pi">{</span> <span class="nv">superceedable</span><span class="pi">:</span> <span class="nv">True</span><span class="pi">,</span> <span class="nv">job_type</span><span class="pi">:</span> <span class="s1">'</span><span class="s">invalidate'</span><span class="pi">,</span> <span class="nv">priority</span><span class="pi">:</span> <span class="nv">1</span><span class="pi">,</span> <span class="nv">due</span><span class="pi">:</span> <span class="nv">0</span><span class="pi">,</span> <span class="nv">expires</span><span class="pi">:</span> <span class="nv">5</span><span class="pi">}</span> <span class="pi">}</span>
-<span class="pi">-</span> <span class="s">match</span><span class="pi">:</span>
-    <span class="pi">{</span> <span class="nv">action_type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Update"</span><span class="pi">,</span> <span class="nv">resource_type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Post"</span><span class="pi">,</span> <span class="nv">job_type</span><span class="pi">:</span> <span class="s1">'</span><span class="s">invalidate'</span> <span class="pi">}</span>
-  <span class="s">jobs</span><span class="pi">:</span>
+<div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="s">cache_manager</span><span class="pi">:</span>
+  <span class="s">.</span>
+  <span class="s">.</span> 
+  <span class="s">.</span>
+  <span class="s">rules</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">match</span><span class="pi">:</span>
+      <span class="pi">{</span> <span class="nv">action_type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Update"</span><span class="pi">,</span> <span class="nv">resource_type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">PostsById"</span><span class="pi">,</span> <span class="nv">job_type</span><span class="pi">:</span> <span class="s1">'</span><span class="s">invalidate'</span> <span class="pi">}</span>
+    <span class="s">jobs</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="pi">{</span> <span class="nv">others_affected</span><span class="pi">:</span> <span class="nv">True</span><span class="pi">,</span> <span class="nv">entity_type</span><span class="pi">:</span> <span class="s1">'</span><span class="s">Post'</span><span class="pi">,</span> <span class="nv">entity_id_offset</span><span class="pi">:</span> <span class="nv">1</span><span class="pi">,</span> <span class="nv">params</span><span class="pi">:</span> <span class="pi">{</span><span class="nv">type</span><span class="pi">:</span> <span class="s1">'</span><span class="s">type'</span><span class="pi">,</span> <span class="nv">id</span><span class="pi">:</span> <span class="s1">'</span><span class="s">entity'</span><span class="pi">},</span>  <span class="nv">topic</span><span class="pi">:</span> <span class="s1">'</span><span class="s">pp-cache'</span><span class="pi">,</span> <span class="nv">update_fields</span><span class="pi">:</span> <span class="pi">{</span> <span class="nv">superceedable</span><span class="pi">:</span> <span class="nv">True</span><span class="pi">,</span> <span class="nv">job_type</span><span class="pi">:</span> <span class="s1">'</span><span class="s">invalidate'</span><span class="pi">,</span> <span class="nv">priority</span><span class="pi">:</span> <span class="nv">1</span><span class="pi">,</span> <span class="nv">due</span><span class="pi">:</span> <span class="nv">0</span><span class="pi">,</span> <span class="nv">expires</span><span class="pi">:</span> <span class="nv">5</span><span class="pi">}</span> <span class="pi">}</span>
+  <span class="pi">-</span> <span class="s">match</span><span class="pi">:</span>
+      <span class="pi">{</span> <span class="nv">action_type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Update"</span><span class="pi">,</span> <span class="nv">resource_type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Post"</span><span class="pi">,</span> <span class="nv">job_type</span><span class="pi">:</span> <span class="s1">'</span><span class="s">invalidate'</span> <span class="pi">}</span>
+    <span class="s">jobs</span><span class="pi">:</span>
       <span class="c1"># type and id in the source url corresponds to type and entity in the external api call respectively.</span>
       <span class="c1"># params is a dict with params to look at on the source url, with a mapping between the job service</span>
       <span class="c1"># and ppro's api endpoint. others_affected indicates to the hook that an external api must be queried to find</span>
@@ -420,24 +424,25 @@ their meaning:</p>
   <li><code class="highlighter-rouge">entity_type</code> is the type of entity associated with this resource
  type.</li>
   <li><code class="highlighter-rouge">entity_id_offset</code> is the position in the <code class="highlighter-rouge">resource_url</code> path
+ (the <code class="highlighter-rouge">resource_url</code> is a property on the job)
  that provides the the entity id.</li>
   <li><code class="highlighter-rouge">params</code> indicate which query parameters on the ‘resource_url’
  provide the <code class="highlighter-rouge">type</code> and <code class="highlighter-rouge">entity_id</code> - required for calling
  the API.
  The dictionary here is actually to provide a mapping between the
- query parameter names in the <code class="highlighter-rouge">resource_url</code> and the query
+ query parameter names in the <code class="highlighter-rouge">resource_url</code> (the <code class="highlighter-rouge">resource_url</code> 
+ is a property on the job) and the query
  parameter names in the API call, which are different.</li>
   <li><code class="highlighter-rouge">topic</code>  - the job queue these new jobs will be published to.</li>
-  <li><code class="highlighter-rouge">update_fields</code>  are the ob fields that need to be updated with
+  <li><code class="highlighter-rouge">update_fields</code>  are the fields that need to be updated with
 the specified values. A new job inherits the parent’s attributes,
 this mechanism allows for that to be overridden.</li>
 </ol>
 
 <p>Note that <code class="highlighter-rouge">entity_type</code> and <code class="highlighter-rouge">entity_id_offset</code> are used when the
-<code class="highlighter-rouge">resource url</code> does not have any query parameters. The <code class="highlighter-rouge">params</code>
-dictionary is used when query parameters exist.</p>
-
-<p>This may appear</p>
+<code class="highlighter-rouge">resource_url</code> (the <code class="highlighter-rouge">resource_url</code> is a property on the job) does 
+not have any query parameters. The <code class="highlighter-rouge">params</code>dictionary is used when 
+query parameters exist.</p>
 
 <h3 id="job-manager-job-consumer-config">Job Manager Job Consumer Config</h3>
 
@@ -475,7 +480,7 @@ and delete.</p>
 
 <h2 id="cache-configuration-design">Cache Configuration Design</h2>
 
-<p>A cache decorator is applied on all endpoints in API, this done by
+<p>A cache decorator is applied on all endpoints in API, this is done by
 adding it to the Flask Resource method_decorators array field:</p>
 
 <div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">method_decorators</span> <span class="o">=</span> <span class="p">[</span><span class="n">authenticate</span><span class="p">,</span> <span class="n">handle_error</span><span class="p">,</span> <span class="n">cache</span><span class="p">()]</span>
@@ -544,18 +549,24 @@ below, and covered briefly as follows:</p>
 
 <h3 id="rational-for-rules">Rational For Rules</h3>
 
-<p>If we explicitly mark an endpoint for caching, we need to be able to
+<ul>
+  <li>
+    <p>If we explicitly mark an endpoint for caching, we need to be able to
 differentiate between what is to be cached and what is not to be cached,
 especially in the case of complex endpoints such as GET /posts where
 query parameters effectively change the endpoint definition.</p>
-
-<p>Merely caching by endpoint url doesn’t allow us to stop caching in
+  </li>
+  <li>
+    <p>Merely caching by endpoint url doesn’t allow us to stop caching in
 certain cases - perhaps we don’t want to cache anything with ‘filter_by’
 in it. Hence, the need to introduce rules.</p>
-
-<p>The burden of responsibility is on the shoulders of the programmer to
+  </li>
+  <li>
+    <p>The burden of responsibility is on the shoulders of the programmer to
 clearly define which endpoints are to be cached, by being explicit about
 the HTTP method and the url path expected.</p>
+  </li>
+</ul>
 
 <h3 id="a-note-on-access-tokens">A Note On Access Tokens</h3>
 
