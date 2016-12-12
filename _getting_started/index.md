@@ -10,20 +10,12 @@ Before you code, read the following documentation. It is the most essential info
 
 * **[Overview:](../overview)** "REPLACE WITH your product name" business-level description of main benefits versus alternative solutions
 * **[Key Concepts:](../key-concepts)** Conceptual description and diagram of how "REPLACE WITH your product name" works
-* **[Tools:](../tools)** List of supporting tools and services that can be used with "REPLACE WITH your product name" 
-* **[Getting Started:](../getting-started)** How to start using "REPLACE WITH your product name" (this section)
-* **[Best Practices:](../best-practices)** How you should use "REPLACE WITH your product name" for best results
 
 # What You Will Need When You Code
 
 Refer to the following documentation as you work. 
 
-* **[Typical Usage Scenarios:](../typical-scenarios)** How components work together to enable commonly implemented scenarios
-* **[References:](../references)** Detailed code usage descriptions with code snippets
-* **[Cookbook:](../cookbook)** 'Recipes' That solve a specific problem or achieve a specific solution
 * **[Testing & Debugging:](../testing)** — Strategic overview description of how to test and debug "REPLACE WITH your product name"
-* **[Updates:](../updates)** Release and patch announcements as well as articles of interest to "REPLACE WITH your product name" users
-* **[Contribution:](../contribution)** How to provide feedback, report issues, contribute to development, or contact us
 
 # Downloading the Code
 
@@ -60,18 +52,18 @@ The Job Service and PlayerPro API are available
   * [Run the api](#run-the-api)
   * [Running tests](#running-tests)
   * [Swagger](#swagger)
-- [Generating Android and iOS clients](#generating-android-and-ios-clients)
+- [Generating Android and iOS clients](#generating-android--ios-clients)
   * [Submodule issues](#submodule-issues)
   * [Installing](#installing)
   * [Android](#android)
   * [Objective C](#objective-c)
   * [Static HTML](#static-html)
 
-## Job Service
+# Job Service
 
-### Set Up Virtualenv & Install Dependencies
+## Set Up Virtualenv & Install Dependencies
 
-#### Python 3.5.2
+### Python 3.5.2
 Some python 3.5 specific code is used. For example:
 
 ```python
@@ -81,7 +73,7 @@ b = {}
 c = {**a, **b}
 ```
 
-##### Mac
+#### Mac
 
 ```sh
 $ brew install python3
@@ -89,14 +81,14 @@ $ brew install snappy
 $ pip install virtualenv
 ```
 
-##### Ubuntu
+#### Ubuntu
 
 ```sh
 $ sudo apt-get install python-pip python3-dev snappy libsnappy-dev
 $ sudo pip install virtualenv
 ```    
 
-###### Ubuntu 14.04
+##### Ubuntu 14.04
 Ubuntu 14.04 installs ```python-3.4``` if you're using the normal
 repo's. You may use ```fkrull``` to get ```python-3.5.2```
 
@@ -106,7 +98,7 @@ $ sudo apt-get update
 $ sudo apt-get install python3.5 python3.5-dev
 ```
 
-##### Virtualenv
+#### Virtualenv
 
 ```sh
 $ virtualenv -p python3 .
@@ -115,7 +107,7 @@ $ pip install --upgrade pip
 $ pip install -r requirements.txt --upgrade
 ```
 
-##### Troubleshooting
+#### Troubleshooting
 Be aware snappy may fail to install, if this is the case, see
 troubleshooting below. Error installing python-snappy on Mac?
 
@@ -172,27 +164,27 @@ $ ./run_job_scheduler.py
 $ ./run_overlord.py
 ```
 
-## PlayerPro API
+# PlayerPro API
 
-### Set Up Virtualenv & Install Dependencies
+## Set Up Virtualenv & Install Dependencies
 
-#### Python 2.7.9
+### Python 2.7.9
 
-##### Mac
+#### Mac
 
 ```sh
 $ brew install python
 $ pip install virtualenv
 ```
 
-##### Ubuntu
+#### Ubuntu
 
 ```sh
 $ sudo apt-get install python-pip
 $ sudo pip install virtualenv
 ```
 
-##### Virtualenv
+#### Virtualenv
 
 ```sh
 $ virtualenv .
@@ -208,7 +200,7 @@ $ . bin/activate
 $ pip install -r requirements.txt
 ```
 
-#### PyPy
+### PyPy
 
 ```sh
 $ brew install pypy

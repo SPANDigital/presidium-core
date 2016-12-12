@@ -32,6 +32,17 @@ author: "dominicfollett"
     + [A Note On Access Tokens](#a-note-on-access-tokens)
 
 
+- [PlayerPro API](#playerpro-api)
+  * [System Context](#system-context)
+  * [Caching Middleware](#caching-middleware)
+  * [Cache Configuration Design](#cache-configuration-design)
+    + [Cache Config Format](#cache-config-format)
+    + [Cache Logic](#cache-logic)
+    + [Rules](#rules)
+    + [Rational For Rules](#rational-for-rules)
+    + [A Note On Access Tokens](#a-note-on-access-tokens)
+
+
 # Job Service
 
 ## Job Scheduler
@@ -189,66 +200,154 @@ job, such as when it expires (5 min from now), or when it is due
 ```yaml
 job_scheduler:
   # ...
-  enricher:
-    topics:
-      pp-cache:
-        - match:
-            { action_type: "Update", resource_type: "PostsById" }
-          key_fields:
-            - 'payload'
-            - 'expires'
-            - 'due'
-            - 'priority'
-            - 'job_type'
-          job_properties:
-              { superceedable: True, job_type: 'invalidate', priority: 1, due: 0, expires: 5 }
-    common:
-      - match:
-          { action_type: "Read", resource_type: "Heartbeat" }
-        key_fields:
-          - timestamp
-          - job_type
-        job_properties:
-            { superceedable: False, job_type: 'Heartbeat', priority: 1, due: 0, expires: 5 }
-    defaults:
-        job_properties:
-            { job_type: 'invalidate', due: 0, expires: 5, priority: 1, superceedable: False, retry_limit: 3 }
+enricher:
+topics:
+  pp-cache:
+    - match:
+        { action_type: "Update", resource_type: "PostsById" }
+      key_fields:
+        - 'payload'
+        - 'expires'
+        - 'due'
+        - 'priority'
+        - 'job_type'
+      job_properties:
+          { superceedable: True, job_type: 'invalidate', priority: 1, due: 0, expires: 5 }
+common:
+  - match:
+      { action_type: "Read", resource_type: "Heartbeat" }
+    key_fields:
+      - timestamp
+      - job_type
+    job_properties:
+        { superceedable: False, job_type: 'Heartbeat', priority: 1, due: 0, expires: 5 }
+defaults:
+    job_properties:
+        { job_type: 'invalidate', due: 0, expires: 5, priority: 1, superceedable: False, retry_limit: 3 }
 ```
 
 The ```common``` section applies to any topic, and in this case matches a
 ```Heartbeat Read```, thus across any topic, heartbeats have the same
 ```key_fields``` and ```job_properties```.
 
+### Job Manager Deduplication Config
+
+```yaml
+deduper:
+  # the amount of time in milliseconds to store a job hash
+    unique_id_expiry: 60000
+```
+
+An unseen job's unique hash will be cached for the specified time.
+
+### Job Manager Generational Count Config
+
+```yaml
+job_publisher:
+  generations_limit: 3
+```
+
+Generational limit can be lowered or increased as required. High
+generational counts are not recommended as this may induce a
+'combinatorial explosion' in the service. The purpose of allowing
+second or third generation jobs, is specifically to support cases where
+job side effects need to be processed. It does not make sense to create
+a separate topic and hook to handle these jobs - especially when they
+exist within the same semantic space of the current topic, e.g. caching.
+Additionally, such jobs do not have their own 'source of truth' like
+other jobs do - the knowledge that another job needs to be created is in
+effect inferred from a job and not an event in this case.
+
+### Job Manager Feed & Cache Manager Sections
+
+```yaml
+feed_manager:
+  worker_url: 'http://localhost:8000?type={type}&id={id}'
+
+cache_manager:
+  ppro_user_id/token_endpoint: 'http://remote_url/post/affected_users/FNwDuWV98ZiwfvOUB9Tx?type={type}&id={id}
+  redis_url: 'redis://localhost:6379/'
+```
+
+These sections provide the hook with extra information it might need to
+complete its task. For example, the cache hook queries an endpoint to
+retrieve all users affected by an invalidation with respect to some
+resource.
+
+### Job Manager Creating Generational Jobs Config
+
+If new cache jobs need to be created, the config for doing so is placed
+under the ```cache_manager``` heading.
+
+```yaml
+rules:
+- match:
+    { action_type: "Update", resource_type: "PostsById", job_type: 'invalidate' }
+  jobs:
+    - { others_affected: True, entity_type: 'Post', entity_id_offset: 1, params: {type: 'type', id: 'entity'},  topic: 'pp-cache', update_fields: { superceedable: True, job_type: 'invalidate', priority: 1, due: 0, expires: 5} }
+- match:
+    { action_type: "Update", resource_type: "Post", job_type: 'invalidate' }
+  jobs:
+      # type and id in the source url corresponds to type and entity in the external api call respectively.
+      # params is a dict with params to look at on the source url, with a mapping between the job service
+      # and ppro's api endpoint. others_affected indicates to the hook that an external api must be queried to find
+      # data for new jobs to be created.
+      # Adding entity_type and entity_id_offset tells the cache hook to look at the url path to get the entity ID.
+      # e.g. entity_type: Post, entity_id_offset: 1 -- /posts/<int:post_id>
+      - { others_affected: True, params: {type: 'type', id: 'entity'},  topic: 'cache', update_fields: { superceedable: True, job_type: 'invalidate', priority: 1, due: 0, expires: 5} }
+      - { others_affected: False, topic: 'feed', update_fields: { superceedable: False, job_type: 'feed', priority: 1, due: 0, expires: 5} }
+      - { others_affected: False, topic: 'cache', update_fields: { superceedable: False, job_type: 'invalidate', priority: 1, due: 0, expires: 5} }
+```
+
+The cache hook matches the current job against resource, action and job
+type. If a match exists, the config specifies information required to
+assist in job generation. In this case for and Update to PostsById, we
+have a new kind of job to create. Below is a list if attributes and
+their meaning:
+
+1. ```others_affected``` this tells the hook that there is a set of jobs
+    that need to be created - which prompts it to call the external API.
+2. ```entity_type``` is the type of entity associated with this resource
+    type.
+3. ```entity_id_offset``` is the position in the ```resource_url``` path
+    that provides the the entity id.
+4. ```params``` indicate which query parameters on the 'resource_url'
+    provide the ```type``` and ```entity_id``` - required for calling
+    the API.
+    The dictionary here is actually to provide a mapping between the
+    query parameter names in the ```resource_url``` and the query
+    parameter names in the API call, which are different.
+5.  ```topic```  - the job queue these new jobs will be published to.
+6.  ```update_fields```  are the ob fields that need to be updated with
+    the specified values. A new job inherits the parent's attributes,
+    this mechanism allows for that to be overridden.
+
+Note that ```entity_type``` and ```entity_id_offset``` are used when the
+```resource url``` does not have any query parameters. The ```params```
+dictionary is used when query parameters exist.
+
+This may appear
+
 ### Job Manager Job Consumer Config
 
 ```yaml
-
 job_consumers:
-    - name: 'PlayerPro Feed Job Consumer'
-      topics:
-        - 'pp-jobs-feeds'
-      serializing_function: ppro.models.event.Event.deserialize
-      hook: ppro.job_manager.hook.feed.FeedHook
-      priority_ranges:
-        - {pool_size: 8}
-    - name: 'Mock Job Consumer'
-      topics:
-        - 'pp-mock'
-      serializing_function: ppro.models.event.Event.deserialize
-      hook: ppro.job_manager.hook.mock.MockHook
-      priority_ranges:
-#        - {pool_size: 8}
-        - {range: [0, 5], pool_size: 5}
-        - {range: [6, 10], pool_size: 2}
-        - {range: [11, 15], pool_size: 1}
-    - name: 'PlayerPro Cache Consumer'
-      topics:
-        - 'pp-cache'
-      serializing_function: ppro.models.event.Event.deserialize
-      hook: ppro.job_manager.hook.cache.CacheHook
-      priority_ranges:
-        - {pool_size: 8}
+  - name: 'Mock Job Consumer'
+    topics:
+      - 'pp-mock'
+    serializing_function: ppro.models.event.Event.deserialize
+    hook: ppro.job_manager.hook.mock.MockHook
+    priority_ranges:
+      - {range: [0, 5], pool_size: 5}
+      - {range: [6, 10], pool_size: 2}
+      - {range: [11, 15], pool_size: 1}
 ```
+
+This configuration snippet describes how a how a topic is assigned
+priority ranges for Kafka Consumers, as well the hook in which jobs in
+this topic will be executed. ```pp-mock``` has three priority ranges,
+and each is assigned a pool of workers - generally, the higher the
+priority the more resources assigned. 
 
 # PlayerPro API
 

@@ -134,6 +134,21 @@ Note: Please prefix all the included links with /playerpro, for example:
       </li>
     </ul>
   </li>
+  <li><a href="#playerpro-api">PlayerPro API</a>
+    <ul>
+      <li><a href="#system-context">System Context</a></li>
+      <li><a href="#caching-middleware">Caching Middleware</a></li>
+      <li><a href="#cache-configuration-design">Cache Configuration Design</a>
+        <ul>
+          <li><a href="#cache-config-format">Cache Config Format</a></li>
+          <li><a href="#cache-logic">Cache Logic</a></li>
+          <li><a href="#rules">Rules</a></li>
+          <li><a href="#rational-for-rules">Rational For Rules</a></li>
+          <li><a href="#a-note-on-access-tokens">A Note On Access Tokens</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
 </ul>
 
 <h1 id="job-service">Job Service</h1>
@@ -294,30 +309,30 @@ job, such as when it expires (5 min from now), or when it is due
 
 <div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="s">job_scheduler</span><span class="pi">:</span>
   <span class="c1"># ...</span>
-  <span class="s">enricher</span><span class="pi">:</span>
-    <span class="s">topics</span><span class="pi">:</span>
-      <span class="s">pp-cache</span><span class="pi">:</span>
-        <span class="pi">-</span> <span class="s">match</span><span class="pi">:</span>
-            <span class="pi">{</span> <span class="nv">action_type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Update"</span><span class="pi">,</span> <span class="nv">resource_type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">PostsById"</span> <span class="pi">}</span>
-          <span class="s">key_fields</span><span class="pi">:</span>
-            <span class="pi">-</span> <span class="s1">'</span><span class="s">payload'</span>
-            <span class="pi">-</span> <span class="s1">'</span><span class="s">expires'</span>
-            <span class="pi">-</span> <span class="s1">'</span><span class="s">due'</span>
-            <span class="pi">-</span> <span class="s1">'</span><span class="s">priority'</span>
-            <span class="pi">-</span> <span class="s1">'</span><span class="s">job_type'</span>
-          <span class="s">job_properties</span><span class="pi">:</span>
-              <span class="pi">{</span> <span class="nv">superceedable</span><span class="pi">:</span> <span class="nv">True</span><span class="pi">,</span> <span class="nv">job_type</span><span class="pi">:</span> <span class="s1">'</span><span class="s">invalidate'</span><span class="pi">,</span> <span class="nv">priority</span><span class="pi">:</span> <span class="nv">1</span><span class="pi">,</span> <span class="nv">due</span><span class="pi">:</span> <span class="nv">0</span><span class="pi">,</span> <span class="nv">expires</span><span class="pi">:</span> <span class="nv">5</span> <span class="pi">}</span>
-    <span class="s">common</span><span class="pi">:</span>
-      <span class="pi">-</span> <span class="s">match</span><span class="pi">:</span>
-          <span class="pi">{</span> <span class="nv">action_type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Read"</span><span class="pi">,</span> <span class="nv">resource_type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Heartbeat"</span> <span class="pi">}</span>
-        <span class="s">key_fields</span><span class="pi">:</span>
-          <span class="pi">-</span> <span class="s">timestamp</span>
-          <span class="pi">-</span> <span class="s">job_type</span>
-        <span class="s">job_properties</span><span class="pi">:</span>
-            <span class="pi">{</span> <span class="nv">superceedable</span><span class="pi">:</span> <span class="nv">False</span><span class="pi">,</span> <span class="nv">job_type</span><span class="pi">:</span> <span class="s1">'</span><span class="s">Heartbeat'</span><span class="pi">,</span> <span class="nv">priority</span><span class="pi">:</span> <span class="nv">1</span><span class="pi">,</span> <span class="nv">due</span><span class="pi">:</span> <span class="nv">0</span><span class="pi">,</span> <span class="nv">expires</span><span class="pi">:</span> <span class="nv">5</span> <span class="pi">}</span>
-    <span class="s">defaults</span><span class="pi">:</span>
-        <span class="s">job_properties</span><span class="pi">:</span>
-            <span class="pi">{</span> <span class="nv">job_type</span><span class="pi">:</span> <span class="s1">'</span><span class="s">invalidate'</span><span class="pi">,</span> <span class="nv">due</span><span class="pi">:</span> <span class="nv">0</span><span class="pi">,</span> <span class="nv">expires</span><span class="pi">:</span> <span class="nv">5</span><span class="pi">,</span> <span class="nv">priority</span><span class="pi">:</span> <span class="nv">1</span><span class="pi">,</span> <span class="nv">superceedable</span><span class="pi">:</span> <span class="nv">False</span><span class="pi">,</span> <span class="nv">retry_limit</span><span class="pi">:</span> <span class="nv">3</span> <span class="pi">}</span>
+<span class="s">enricher</span><span class="pi">:</span>
+<span class="s">topics</span><span class="pi">:</span>
+  <span class="s">pp-cache</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">match</span><span class="pi">:</span>
+        <span class="pi">{</span> <span class="nv">action_type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Update"</span><span class="pi">,</span> <span class="nv">resource_type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">PostsById"</span> <span class="pi">}</span>
+      <span class="s">key_fields</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="s1">'</span><span class="s">payload'</span>
+        <span class="pi">-</span> <span class="s1">'</span><span class="s">expires'</span>
+        <span class="pi">-</span> <span class="s1">'</span><span class="s">due'</span>
+        <span class="pi">-</span> <span class="s1">'</span><span class="s">priority'</span>
+        <span class="pi">-</span> <span class="s1">'</span><span class="s">job_type'</span>
+      <span class="s">job_properties</span><span class="pi">:</span>
+          <span class="pi">{</span> <span class="nv">superceedable</span><span class="pi">:</span> <span class="nv">True</span><span class="pi">,</span> <span class="nv">job_type</span><span class="pi">:</span> <span class="s1">'</span><span class="s">invalidate'</span><span class="pi">,</span> <span class="nv">priority</span><span class="pi">:</span> <span class="nv">1</span><span class="pi">,</span> <span class="nv">due</span><span class="pi">:</span> <span class="nv">0</span><span class="pi">,</span> <span class="nv">expires</span><span class="pi">:</span> <span class="nv">5</span> <span class="pi">}</span>
+<span class="s">common</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">match</span><span class="pi">:</span>
+      <span class="pi">{</span> <span class="nv">action_type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Read"</span><span class="pi">,</span> <span class="nv">resource_type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Heartbeat"</span> <span class="pi">}</span>
+    <span class="s">key_fields</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">timestamp</span>
+      <span class="pi">-</span> <span class="s">job_type</span>
+    <span class="s">job_properties</span><span class="pi">:</span>
+        <span class="pi">{</span> <span class="nv">superceedable</span><span class="pi">:</span> <span class="nv">False</span><span class="pi">,</span> <span class="nv">job_type</span><span class="pi">:</span> <span class="s1">'</span><span class="s">Heartbeat'</span><span class="pi">,</span> <span class="nv">priority</span><span class="pi">:</span> <span class="nv">1</span><span class="pi">,</span> <span class="nv">due</span><span class="pi">:</span> <span class="nv">0</span><span class="pi">,</span> <span class="nv">expires</span><span class="pi">:</span> <span class="nv">5</span> <span class="pi">}</span>
+<span class="s">defaults</span><span class="pi">:</span>
+    <span class="s">job_properties</span><span class="pi">:</span>
+        <span class="pi">{</span> <span class="nv">job_type</span><span class="pi">:</span> <span class="s1">'</span><span class="s">invalidate'</span><span class="pi">,</span> <span class="nv">due</span><span class="pi">:</span> <span class="nv">0</span><span class="pi">,</span> <span class="nv">expires</span><span class="pi">:</span> <span class="nv">5</span><span class="pi">,</span> <span class="nv">priority</span><span class="pi">:</span> <span class="nv">1</span><span class="pi">,</span> <span class="nv">superceedable</span><span class="pi">:</span> <span class="nv">False</span><span class="pi">,</span> <span class="nv">retry_limit</span><span class="pi">:</span> <span class="nv">3</span> <span class="pi">}</span>
 </code></pre>
 </div>
 
@@ -325,36 +340,126 @@ job, such as when it expires (5 min from now), or when it is due
 <code class="highlighter-rouge">Heartbeat Read</code>, thus across any topic, heartbeats have the same
 <code class="highlighter-rouge">key_fields</code> and <code class="highlighter-rouge">job_properties</code>.</p>
 
-<h3 id="job-manager-job-consumer-config">Job Manager Job Consumer Config</h3>
+<h3 id="job-manager-deduplication-config">Job Manager Deduplication Config</h3>
 
-<div class="language-yaml highlighter-rouge"><pre class="highlight"><code>
-<span class="s">job_consumers</span><span class="pi">:</span>
-    <span class="pi">-</span> <span class="s">name</span><span class="pi">:</span> <span class="s1">'</span><span class="s">PlayerPro</span><span class="nv"> </span><span class="s">Feed</span><span class="nv"> </span><span class="s">Job</span><span class="nv"> </span><span class="s">Consumer'</span>
-      <span class="s">topics</span><span class="pi">:</span>
-        <span class="pi">-</span> <span class="s1">'</span><span class="s">pp-jobs-feeds'</span>
-      <span class="s">serializing_function</span><span class="pi">:</span> <span class="s">ppro.models.event.Event.deserialize</span>
-      <span class="s">hook</span><span class="pi">:</span> <span class="s">ppro.job_manager.hook.feed.FeedHook</span>
-      <span class="s">priority_ranges</span><span class="pi">:</span>
-        <span class="pi">-</span> <span class="pi">{</span><span class="nv">pool_size</span><span class="pi">:</span> <span class="nv">8</span><span class="pi">}</span>
-    <span class="pi">-</span> <span class="s">name</span><span class="pi">:</span> <span class="s1">'</span><span class="s">Mock</span><span class="nv"> </span><span class="s">Job</span><span class="nv"> </span><span class="s">Consumer'</span>
-      <span class="s">topics</span><span class="pi">:</span>
-        <span class="pi">-</span> <span class="s1">'</span><span class="s">pp-mock'</span>
-      <span class="s">serializing_function</span><span class="pi">:</span> <span class="s">ppro.models.event.Event.deserialize</span>
-      <span class="s">hook</span><span class="pi">:</span> <span class="s">ppro.job_manager.hook.mock.MockHook</span>
-      <span class="s">priority_ranges</span><span class="pi">:</span>
-<span class="c1">#        - {pool_size: 8}</span>
-        <span class="pi">-</span> <span class="pi">{</span><span class="nv">range</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0</span><span class="pi">,</span> <span class="nv">5</span><span class="pi">],</span> <span class="nv">pool_size</span><span class="pi">:</span> <span class="nv">5</span><span class="pi">}</span>
-        <span class="pi">-</span> <span class="pi">{</span><span class="nv">range</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">6</span><span class="pi">,</span> <span class="nv">10</span><span class="pi">],</span> <span class="nv">pool_size</span><span class="pi">:</span> <span class="nv">2</span><span class="pi">}</span>
-        <span class="pi">-</span> <span class="pi">{</span><span class="nv">range</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">11</span><span class="pi">,</span> <span class="nv">15</span><span class="pi">],</span> <span class="nv">pool_size</span><span class="pi">:</span> <span class="nv">1</span><span class="pi">}</span>
-    <span class="pi">-</span> <span class="s">name</span><span class="pi">:</span> <span class="s1">'</span><span class="s">PlayerPro</span><span class="nv"> </span><span class="s">Cache</span><span class="nv"> </span><span class="s">Consumer'</span>
-      <span class="s">topics</span><span class="pi">:</span>
-        <span class="pi">-</span> <span class="s1">'</span><span class="s">pp-cache'</span>
-      <span class="s">serializing_function</span><span class="pi">:</span> <span class="s">ppro.models.event.Event.deserialize</span>
-      <span class="s">hook</span><span class="pi">:</span> <span class="s">ppro.job_manager.hook.cache.CacheHook</span>
-      <span class="s">priority_ranges</span><span class="pi">:</span>
-        <span class="pi">-</span> <span class="pi">{</span><span class="nv">pool_size</span><span class="pi">:</span> <span class="nv">8</span><span class="pi">}</span>
+<div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="s">deduper</span><span class="pi">:</span>
+  <span class="c1"># the amount of time in milliseconds to store a job hash</span>
+    <span class="s">unique_id_expiry</span><span class="pi">:</span> <span class="s">60000</span>
 </code></pre>
 </div>
+
+<p>An unseen job’s unique hash will be cached for the specified time.</p>
+
+<h3 id="job-manager-generational-count-config">Job Manager Generational Count Config</h3>
+
+<div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="s">job_publisher</span><span class="pi">:</span>
+  <span class="s">generations_limit</span><span class="pi">:</span> <span class="s">3</span>
+</code></pre>
+</div>
+
+<p>Generational limit can be lowered or increased as required. High
+generational counts are not recommended as this may induce a
+‘combinatorial explosion’ in the service. The purpose of allowing
+second or third generation jobs, is specifically to support cases where
+job side effects need to be processed. It does not make sense to create
+a separate topic and hook to handle these jobs - especially when they
+exist within the same semantic space of the current topic, e.g. caching.
+Additionally, such jobs do not have their own ‘source of truth’ like
+other jobs do - the knowledge that another job needs to be created is in
+effect inferred from a job and not an event in this case.</p>
+
+<h3 id="job-manager-feed--cache-manager-sections">Job Manager Feed &amp; Cache Manager Sections</h3>
+
+<div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="s">feed_manager</span><span class="pi">:</span>
+  <span class="s">worker_url</span><span class="pi">:</span> <span class="s1">'</span><span class="s">http://localhost:8000?type={type}&amp;id={id}'</span>
+
+<span class="s">cache_manager</span><span class="pi">:</span>
+  <span class="s">ppro_user_id/token_endpoint</span><span class="pi">:</span> <span class="s1">'</span><span class="s">http://remote_url/post/affected_users/FNwDuWV98ZiwfvOUB9Tx?type={type}&amp;id={id}</span>
+  <span class="s">redis_url:</span><span class="nv"> </span><span class="s">'redis://localhost:6379/'</span>
+</code></pre>
+</div>
+
+<p>These sections provide the hook with extra information it might need to
+complete its task. For example, the cache hook queries an endpoint to
+retrieve all users affected by an invalidation with respect to some
+resource.</p>
+
+<h3 id="job-manager-creating-generational-jobs-config">Job Manager Creating Generational Jobs Config</h3>
+
+<p>If new cache jobs need to be created, the config for doing so is placed
+under the <code class="highlighter-rouge">cache_manager</code> heading.</p>
+
+<div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="s">rules</span><span class="pi">:</span>
+<span class="pi">-</span> <span class="s">match</span><span class="pi">:</span>
+    <span class="pi">{</span> <span class="nv">action_type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Update"</span><span class="pi">,</span> <span class="nv">resource_type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">PostsById"</span><span class="pi">,</span> <span class="nv">job_type</span><span class="pi">:</span> <span class="s1">'</span><span class="s">invalidate'</span> <span class="pi">}</span>
+  <span class="s">jobs</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="pi">{</span> <span class="nv">others_affected</span><span class="pi">:</span> <span class="nv">True</span><span class="pi">,</span> <span class="nv">entity_type</span><span class="pi">:</span> <span class="s1">'</span><span class="s">Post'</span><span class="pi">,</span> <span class="nv">entity_id_offset</span><span class="pi">:</span> <span class="nv">1</span><span class="pi">,</span> <span class="nv">params</span><span class="pi">:</span> <span class="pi">{</span><span class="nv">type</span><span class="pi">:</span> <span class="s1">'</span><span class="s">type'</span><span class="pi">,</span> <span class="nv">id</span><span class="pi">:</span> <span class="s1">'</span><span class="s">entity'</span><span class="pi">},</span>  <span class="nv">topic</span><span class="pi">:</span> <span class="s1">'</span><span class="s">pp-cache'</span><span class="pi">,</span> <span class="nv">update_fields</span><span class="pi">:</span> <span class="pi">{</span> <span class="nv">superceedable</span><span class="pi">:</span> <span class="nv">True</span><span class="pi">,</span> <span class="nv">job_type</span><span class="pi">:</span> <span class="s1">'</span><span class="s">invalidate'</span><span class="pi">,</span> <span class="nv">priority</span><span class="pi">:</span> <span class="nv">1</span><span class="pi">,</span> <span class="nv">due</span><span class="pi">:</span> <span class="nv">0</span><span class="pi">,</span> <span class="nv">expires</span><span class="pi">:</span> <span class="nv">5</span><span class="pi">}</span> <span class="pi">}</span>
+<span class="pi">-</span> <span class="s">match</span><span class="pi">:</span>
+    <span class="pi">{</span> <span class="nv">action_type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Update"</span><span class="pi">,</span> <span class="nv">resource_type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Post"</span><span class="pi">,</span> <span class="nv">job_type</span><span class="pi">:</span> <span class="s1">'</span><span class="s">invalidate'</span> <span class="pi">}</span>
+  <span class="s">jobs</span><span class="pi">:</span>
+      <span class="c1"># type and id in the source url corresponds to type and entity in the external api call respectively.</span>
+      <span class="c1"># params is a dict with params to look at on the source url, with a mapping between the job service</span>
+      <span class="c1"># and ppro's api endpoint. others_affected indicates to the hook that an external api must be queried to find</span>
+      <span class="c1"># data for new jobs to be created.</span>
+      <span class="c1"># Adding entity_type and entity_id_offset tells the cache hook to look at the url path to get the entity ID.</span>
+      <span class="c1"># e.g. entity_type: Post, entity_id_offset: 1 -- /posts/&lt;int:post_id&gt;</span>
+      <span class="pi">-</span> <span class="pi">{</span> <span class="nv">others_affected</span><span class="pi">:</span> <span class="nv">True</span><span class="pi">,</span> <span class="nv">params</span><span class="pi">:</span> <span class="pi">{</span><span class="nv">type</span><span class="pi">:</span> <span class="s1">'</span><span class="s">type'</span><span class="pi">,</span> <span class="nv">id</span><span class="pi">:</span> <span class="s1">'</span><span class="s">entity'</span><span class="pi">},</span>  <span class="nv">topic</span><span class="pi">:</span> <span class="s1">'</span><span class="s">cache'</span><span class="pi">,</span> <span class="nv">update_fields</span><span class="pi">:</span> <span class="pi">{</span> <span class="nv">superceedable</span><span class="pi">:</span> <span class="nv">True</span><span class="pi">,</span> <span class="nv">job_type</span><span class="pi">:</span> <span class="s1">'</span><span class="s">invalidate'</span><span class="pi">,</span> <span class="nv">priority</span><span class="pi">:</span> <span class="nv">1</span><span class="pi">,</span> <span class="nv">due</span><span class="pi">:</span> <span class="nv">0</span><span class="pi">,</span> <span class="nv">expires</span><span class="pi">:</span> <span class="nv">5</span><span class="pi">}</span> <span class="pi">}</span>
+      <span class="pi">-</span> <span class="pi">{</span> <span class="nv">others_affected</span><span class="pi">:</span> <span class="nv">False</span><span class="pi">,</span> <span class="nv">topic</span><span class="pi">:</span> <span class="s1">'</span><span class="s">feed'</span><span class="pi">,</span> <span class="nv">update_fields</span><span class="pi">:</span> <span class="pi">{</span> <span class="nv">superceedable</span><span class="pi">:</span> <span class="nv">False</span><span class="pi">,</span> <span class="nv">job_type</span><span class="pi">:</span> <span class="s1">'</span><span class="s">feed'</span><span class="pi">,</span> <span class="nv">priority</span><span class="pi">:</span> <span class="nv">1</span><span class="pi">,</span> <span class="nv">due</span><span class="pi">:</span> <span class="nv">0</span><span class="pi">,</span> <span class="nv">expires</span><span class="pi">:</span> <span class="nv">5</span><span class="pi">}</span> <span class="pi">}</span>
+      <span class="pi">-</span> <span class="pi">{</span> <span class="nv">others_affected</span><span class="pi">:</span> <span class="nv">False</span><span class="pi">,</span> <span class="nv">topic</span><span class="pi">:</span> <span class="s1">'</span><span class="s">cache'</span><span class="pi">,</span> <span class="nv">update_fields</span><span class="pi">:</span> <span class="pi">{</span> <span class="nv">superceedable</span><span class="pi">:</span> <span class="nv">False</span><span class="pi">,</span> <span class="nv">job_type</span><span class="pi">:</span> <span class="s1">'</span><span class="s">invalidate'</span><span class="pi">,</span> <span class="nv">priority</span><span class="pi">:</span> <span class="nv">1</span><span class="pi">,</span> <span class="nv">due</span><span class="pi">:</span> <span class="nv">0</span><span class="pi">,</span> <span class="nv">expires</span><span class="pi">:</span> <span class="nv">5</span><span class="pi">}</span> <span class="pi">}</span>
+</code></pre>
+</div>
+
+<p>The cache hook matches the current job against resource, action and job
+type. If a match exists, the config specifies information required to
+assist in job generation. In this case for and Update to PostsById, we
+have a new kind of job to create. Below is a list if attributes and
+their meaning:</p>
+
+<ol>
+  <li><code class="highlighter-rouge">others_affected</code> this tells the hook that there is a set of jobs
+ that need to be created - which prompts it to call the external API.</li>
+  <li><code class="highlighter-rouge">entity_type</code> is the type of entity associated with this resource
+ type.</li>
+  <li><code class="highlighter-rouge">entity_id_offset</code> is the position in the <code class="highlighter-rouge">resource_url</code> path
+ that provides the the entity id.</li>
+  <li><code class="highlighter-rouge">params</code> indicate which query parameters on the ‘resource_url’
+ provide the <code class="highlighter-rouge">type</code> and <code class="highlighter-rouge">entity_id</code> - required for calling
+ the API.
+ The dictionary here is actually to provide a mapping between the
+ query parameter names in the <code class="highlighter-rouge">resource_url</code> and the query
+ parameter names in the API call, which are different.</li>
+  <li><code class="highlighter-rouge">topic</code>  - the job queue these new jobs will be published to.</li>
+  <li><code class="highlighter-rouge">update_fields</code>  are the ob fields that need to be updated with
+the specified values. A new job inherits the parent’s attributes,
+this mechanism allows for that to be overridden.</li>
+</ol>
+
+<p>Note that <code class="highlighter-rouge">entity_type</code> and <code class="highlighter-rouge">entity_id_offset</code> are used when the
+<code class="highlighter-rouge">resource url</code> does not have any query parameters. The <code class="highlighter-rouge">params</code>
+dictionary is used when query parameters exist.</p>
+
+<p>This may appear</p>
+
+<h3 id="job-manager-job-consumer-config">Job Manager Job Consumer Config</h3>
+
+<div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="s">job_consumers</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">name</span><span class="pi">:</span> <span class="s1">'</span><span class="s">Mock</span><span class="nv"> </span><span class="s">Job</span><span class="nv"> </span><span class="s">Consumer'</span>
+    <span class="s">topics</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s1">'</span><span class="s">pp-mock'</span>
+    <span class="s">serializing_function</span><span class="pi">:</span> <span class="s">ppro.models.event.Event.deserialize</span>
+    <span class="s">hook</span><span class="pi">:</span> <span class="s">ppro.job_manager.hook.mock.MockHook</span>
+    <span class="s">priority_ranges</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="pi">{</span><span class="nv">range</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0</span><span class="pi">,</span> <span class="nv">5</span><span class="pi">],</span> <span class="nv">pool_size</span><span class="pi">:</span> <span class="nv">5</span><span class="pi">}</span>
+      <span class="pi">-</span> <span class="pi">{</span><span class="nv">range</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">6</span><span class="pi">,</span> <span class="nv">10</span><span class="pi">],</span> <span class="nv">pool_size</span><span class="pi">:</span> <span class="nv">2</span><span class="pi">}</span>
+      <span class="pi">-</span> <span class="pi">{</span><span class="nv">range</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">11</span><span class="pi">,</span> <span class="nv">15</span><span class="pi">],</span> <span class="nv">pool_size</span><span class="pi">:</span> <span class="nv">1</span><span class="pi">}</span>
+</code></pre>
+</div>
+
+<p>This configuration snippet describes how a how a topic is assigned
+priority ranges for Kafka Consumers, as well the hook in which jobs in
+this topic will be executed. <code class="highlighter-rouge">pp-mock</code> has three priority ranges,
+and each is assigned a pool of workers - generally, the higher the
+priority the more resources assigned.</p>
 
 <h1 id="playerpro-api">PlayerPro API</h1>
 

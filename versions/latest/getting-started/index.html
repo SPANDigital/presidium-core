@@ -96,9 +96,6 @@ Note: Please prefix all the included links with /playerpro, for example:
 <ul>
   <li><strong><a href="../overview">Overview:</a></strong> “REPLACE WITH your product name” business-level description of main benefits versus alternative solutions</li>
   <li><strong><a href="../key-concepts">Key Concepts:</a></strong> Conceptual description and diagram of how “REPLACE WITH your product name” works</li>
-  <li><strong><a href="../tools">Tools:</a></strong> List of supporting tools and services that can be used with “REPLACE WITH your product name”</li>
-  <li><strong><a href="../getting-started">Getting Started:</a></strong> How to start using “REPLACE WITH your product name” (this section)</li>
-  <li><strong><a href="../best-practices">Best Practices:</a></strong> How you should use “REPLACE WITH your product name” for best results</li>
 </ul>
 
 <h1 id="what-you-will-need-when-you-code">What You Will Need When You Code</h1>
@@ -106,12 +103,7 @@ Note: Please prefix all the included links with /playerpro, for example:
 <p>Refer to the following documentation as you work.</p>
 
 <ul>
-  <li><strong><a href="../typical-scenarios">Typical Usage Scenarios:</a></strong> How components work together to enable commonly implemented scenarios</li>
-  <li><strong><a href="../references">References:</a></strong> Detailed code usage descriptions with code snippets</li>
-  <li><strong><a href="../cookbook">Cookbook:</a></strong> ‘Recipes’ That solve a specific problem or achieve a specific solution</li>
   <li><strong><a href="../testing">Testing &amp; Debugging:</a></strong> — Strategic overview description of how to test and debug “REPLACE WITH your product name”</li>
-  <li><strong><a href="../updates">Updates:</a></strong> Release and patch announcements as well as articles of interest to “REPLACE WITH your product name” users</li>
-  <li><strong><a href="../contribution">Contribution:</a></strong> How to provide feedback, report issues, contribute to development, or contact us</li>
 </ul>
 
 <h1 id="downloading-the-code">Downloading the Code</h1>
@@ -177,7 +169,7 @@ Note: Please prefix all the included links with /playerpro, for example:
       <li><a href="#swagger">Swagger</a></li>
     </ul>
   </li>
-  <li><a href="#generating-android-and-ios-clients">Generating Android and iOS clients</a>
+  <li><a href="#generating-android--ios-clients">Generating Android and iOS clients</a>
     <ul>
       <li><a href="#submodule-issues">Submodule issues</a></li>
       <li><a href="#installing">Installing</a></li>
@@ -188,11 +180,11 @@ Note: Please prefix all the included links with /playerpro, for example:
   </li>
 </ul>
 
-<h2 id="job-service">Job Service</h2>
+<h1 id="job-service">Job Service</h1>
 
-<h3 id="set-up-virtualenv--install-dependencies">Set Up Virtualenv &amp; Install Dependencies</h3>
+<h2 id="set-up-virtualenv--install-dependencies">Set Up Virtualenv &amp; Install Dependencies</h2>
 
-<h4 id="python-352">Python 3.5.2</h4>
+<h3 id="python-352">Python 3.5.2</h3>
 <p>Some python 3.5 specific code is used. For example:</p>
 
 <div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c"># This code is 3.5 specific, and won't work on &lt;= 3.4</span>
@@ -202,7 +194,7 @@ Note: Please prefix all the included links with /playerpro, for example:
 </code></pre>
 </div>
 
-<h5 id="mac">Mac</h5>
+<h4 id="mac">Mac</h4>
 
 <div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>brew install python3
 <span class="gp">$ </span>brew install snappy
@@ -210,14 +202,14 @@ Note: Please prefix all the included links with /playerpro, for example:
 </code></pre>
 </div>
 
-<h5 id="ubuntu">Ubuntu</h5>
+<h4 id="ubuntu">Ubuntu</h4>
 
 <div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>sudo apt-get install python-pip python3-dev snappy libsnappy-dev
 <span class="gp">$ </span>sudo pip install virtualenv
 </code></pre>
 </div>
 
-<h6 id="ubuntu-1404">Ubuntu 14.04</h6>
+<h5 id="ubuntu-1404">Ubuntu 14.04</h5>
 <p>Ubuntu 14.04 installs <code class="highlighter-rouge">python-3.4</code> if you’re using the normal
 repo’s. You may use <code class="highlighter-rouge">fkrull</code> to get <code class="highlighter-rouge">python-3.5.2</code></p>
 
@@ -227,7 +219,7 @@ repo’s. You may use <code class="highlighter-rouge">fkrull</code> to get <code
 </code></pre>
 </div>
 
-<h5 id="virtualenv">Virtualenv</h5>
+<h4 id="virtualenv">Virtualenv</h4>
 
 <div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>virtualenv -p python3 .
 <span class="gp">$ </span>. bin/activate
@@ -236,7 +228,7 @@ repo’s. You may use <code class="highlighter-rouge">fkrull</code> to get <code
 </code></pre>
 </div>
 
-<h5 id="troubleshooting">Troubleshooting</h5>
+<h4 id="troubleshooting">Troubleshooting</h4>
 <p>Be aware snappy may fail to install, if this is the case, see
 troubleshooting below. Error installing python-snappy on Mac?</p>
 
@@ -293,27 +285,27 @@ error: <span class="nb">command</span> <span class="s1">'x86_64-linux-gnu-gcc'</
 </code></pre>
 </div>
 
-<h2 id="playerpro-api">PlayerPro API</h2>
+<h1 id="playerpro-api">PlayerPro API</h1>
 
-<h3 id="set-up-virtualenv--install-dependencies-1">Set Up Virtualenv &amp; Install Dependencies</h3>
+<h2 id="set-up-virtualenv--install-dependencies-1">Set Up Virtualenv &amp; Install Dependencies</h2>
 
-<h4 id="python-279">Python 2.7.9</h4>
+<h3 id="python-279">Python 2.7.9</h3>
 
-<h5 id="mac-1">Mac</h5>
+<h4 id="mac-1">Mac</h4>
 
 <div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>brew install python
 <span class="gp">$ </span>pip install virtualenv
 </code></pre>
 </div>
 
-<h5 id="ubuntu-1">Ubuntu</h5>
+<h4 id="ubuntu-1">Ubuntu</h4>
 
 <div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>sudo apt-get install python-pip
 <span class="gp">$ </span>sudo pip install virtualenv
 </code></pre>
 </div>
 
-<h5 id="virtualenv-1">Virtualenv</h5>
+<h4 id="virtualenv-1">Virtualenv</h4>
 
 <div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>virtualenv .
 <span class="gp">$ </span>. bin/activate
@@ -329,7 +321,7 @@ error: <span class="nb">command</span> <span class="s1">'x86_64-linux-gnu-gcc'</
 </code></pre>
 </div>
 
-<h4 id="pypy">PyPy</h4>
+<h3 id="pypy">PyPy</h3>
 
 <div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>brew install pypy
 <span class="gp">$ </span>virtualenv -p /usr/local/bin/pypy pypy

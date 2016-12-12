@@ -1,12 +1,13 @@
 ---
 title: "Job Workers"
 id: "job-workers" 
-author: "REPLACE WITH github-username"
+author: "dominicfollett"
 ---
 
 # Solution
 
-REPLACE WITH a brief description of the solution.
+It is possible to adjust the number of workers available for each
+priority range.
 
 {% highlight python lineos %}
     '''REPLACE WITH a code snippet illustrating the solution to the problem. update the code language as required.'''
