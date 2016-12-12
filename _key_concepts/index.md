@@ -59,7 +59,7 @@ type of job, the event is passed into the enricher module to be
 converted into a job. Configuration rules supplied to the Job
 Scheduler determine the kinds of properties each job has - e.g. expiry
 time, priority level, due date, etc. Finally, the Job Publisher
-publishes each job to the correct topic queue it belongs.
+publishes each job to the correct topic queue.
 
 ## Job Manager
 
@@ -79,10 +79,10 @@ lower priority jobs.
 Each topic queue has a set of Kafka Consumers per priority level range.
 Each of these Kafka Consumers uses a separate Consumer Group, such that
 every job is read once by a Kafka Consumer but is only processed if the
-job priority level matches the Kafka Consumer priority rang.
+job priority level matches the Kafka Consumer priority range.
 Each Kafka Consumer has a pool of Job Consumer workers, higher priority
 Kafka Consumers have more workers in their pool than lower priority
-Kafka Consumer. This means that the amount of available resources
+Kafka Consumers. This means that the amount of available resources
 provided is a function of priority range.
 
 ### Job Expiration
@@ -125,10 +125,9 @@ hooks might produce other jobs as a by-product.
 ### Job Publisher
 
 Within the context of the Job Manager, the Job Publisher will publish
-jobs that are the result of a hook creating new jobs from jobs it has
-processed. The Job Publisher updates a generational count on a job to
-prevent a 'combinatorial explosion' of job creation. Jobs that exceed a
-set generational count are discarded.
+jobs that are sent to it from a hook. The Job Publisher updates a
+generational count on a job to prevent a 'combinatorial explosion' of
+jobs. Jobs that exceed a set generational count are discarded.
 
 ## The Config File
 
@@ -171,8 +170,8 @@ The same information is supplied under the ```job_manager``` section.
 
 ### Job Scheduler Routing Rules
 
-By matching against a resource type and action type,the Job Scheduler
-can extract the kinds of jobs that need to be created. For example, in
+By matching against a resource type and action type, the Job Scheduler
+can determine the kinds of jobs that need to be created. For example, in
 the snippet below if the event has a resource type of ```PostsById```
 and an action type of either ```Create```, ```Update``` or  ```Delete```
 then a cache-related job will be created.
@@ -189,13 +188,13 @@ job_scheduler:
 
 For a particular topic, candidate events are matched again by resource
 type and action type, providing a lower level of granularity with 
-respect to the kinds of jobs (and their properties) to be created.
+respect to the kinds of jobs (and their properties) that can be created.
 In the snippet below, under the topic of ```pp-cache```, for an
 ```Update``` of ```PostsById```, the ```key_fields``` are those job
-fields which must be used as the plaintext for unique hash generation.
+fields which must be used as the 'plaintext' for unique hash generation.
 The ```job_properties``` dictionary, specifies certain attributes of the
 job, such as when it expires (5 min from now), or when it is due
-(immediately), or that tis particular job type is an invalidation etc.
+(immediately), or that this particular job type is an invalidation etc.
 
 ```yaml
 job_scheduler:
@@ -235,7 +234,7 @@ The ```common``` section applies to any topic, and in this case matches a
 ```yaml
 deduper:
   # the amount of time in milliseconds to store a job hash
-    unique_id_expiry: 60000
+  unique_id_expiry: 60000
 ```
 
 An unseen job's unique hash will be cached for the specified time.

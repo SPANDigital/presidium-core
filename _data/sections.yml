@@ -10,10 +10,10 @@
 - name: "Getting started"
   path: "/getting-started"
 
-- name: "Typical Usage Scenarios"
-  collection: "typical_scenarios"
-  path: "/typical-scenarios"
-
+#- name: "Typical Usage Scenarios"
+#  collection: "typical_scenarios"
+#  path: "/typical-scenarios"
+#
 - name: "Best Practices"
   collection: "best_practices"
   path: "/best-practices"
@@ -37,6 +37,6 @@
   collection: "updates"
   path: "/updates"
 
-- name: "Contribution"
-  collection: "contributions"
-  path: "/contribution"
+#- name: "Contribution"
+#  collection: "contributions"
+#  path: "/contribution"
