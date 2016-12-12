@@ -70,13 +70,12 @@ of its attributes. The insertion mechanism will simply index by
 this list, new tokens can be appended to this list. and the result
 cached.
 
-Note that it is useful cache these entries for less than the amount of
-time the GETs are cached: if the GETs are cached for 5 minutes, then
 
 # Discussion
 
-REPLACE WITH A discussion of the solution including pros and cons of the approach.
-
-# See Also
-
-* [REPLACE WITH a description of the link](http://www.google.com)
+This solution has some advantages over the incumbent: most importantly
+it prevents the hook from having to query a slow API endpoint to
+retrieve users associated with the resource. Moreover, it leverages
+existing events produced by the PlayerPro API, and maintains the purity
+of the API by not introducing work that is semantically different from
+its intended purpose.

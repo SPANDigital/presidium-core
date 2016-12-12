@@ -158,45 +158,14 @@ of its attributes. The insertion mechanism will simply index by
 this list, new tokens can be appended to this list. and the result
 cached.</p>
 
-<p>Note that it is useful cache these entries for less than the amount of
-time the GETs are cached: if the GETs are cached for 5 minutes, then</p>
-
 <h1 id="discussion">Discussion</h1>
 
-<p>REPLACE WITH A discussion of the solution including pros and cons of the approach.</p>
-
-<h1 id="see-also">See Also</h1>
-
-<ul>
-  <li><a href="http://www.google.com">REPLACE WITH a description of the link</a></li>
-</ul>
-
-    </div>
-</article>
-
-<h1 id="job-workers" class="secondary">Job Workers</h1>
-<article>
-    <div class="article-meta">
-        
-        <span class="date"></span>
-    </div>
-    <div class="article-content">
-        <h1 id="solution">Solution</h1>
-
-<p>It is possible to adjust the number of workers available for each
-priority range.</p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python">    <span class="s">'''REPLACE WITH a code snippet illustrating the solution to the problem. update the code language as required.'''</span></code></pre></figure>
-
-<h1 id="discussion">Discussion</h1>
-
-<p>REPLACE WITH A discussion of the solution including pros and cons of the approach.</p>
-
-<h1 id="see-also">See Also</h1>
-
-<ul>
-  <li><a href="http://www.google.com">REPLACE WITH a description of the link</a></li>
-</ul>
+<p>This solution has some advantages over the incumbent: most importantly
+it prevents the hook from having to query a slow API endpoint to
+retrieve users associated with the resource. Moreover, it leverages
+existing events produced by the PlayerPro API, and maintains the purity
+of the API by not introducing work that is semantically different from
+its intended purpose.</p>
 
     </div>
 </article>
