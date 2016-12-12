@@ -50,9 +50,6 @@ $ python -m unittest discover
 **Remember to specify tests, specifically with python3.5 the imports
 will work, but your mocks will fail.**
 
-### Travis CI
-Lorem Ipsum.
-
 ### Deployment Considerations
 
 #### Ansible >= 2.1.1.0

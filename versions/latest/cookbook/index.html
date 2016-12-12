@@ -100,7 +100,7 @@ Note: Please prefix all the included links with /playerpro, for example:
 
 <p>Users perform a GET for a resource against the PlayerPro API. If so
 desired, the relationship between the entity and user may be recorded in
-redis for use at a later stage when the Job Service would be required
+Redis for use at a later stage when the Job Service would be required
 to invalidate all users who have a cached version of that resource.</p>
 
 <p>Currently this relationship is determined by querying an external API.
@@ -111,13 +111,13 @@ information.</p>
 Service configuration rules to create a job from the events spawned as a
 result of a GET against the PlayerPro API.</p>
 
-<p>For the purposes of illustration, assume that the PlayerPro API cache
+<p>For the purposes of illustration, assume that the PlayerPro API caches
 the GETs of <code class="highlighter-rouge">posts</code>: <code class="highlighter-rouge">GET /posts/&lt;int:post_id&gt;</code>, and this is
-done per user. The cache keys existing in the Redis store will look
-like: <code class="highlighter-rouge">/posts/&lt;int:post_id&gt;?access_token=users_access_token</code>.</p>
+done per user. The cache keys in the Redis store will look like:
+<code class="highlighter-rouge">/posts/&lt;int:post_id&gt;?access_token=users_access_token</code>.</p>
 
 <p>The events that are pushed to the Job Service, can be converted into
-job by using the following configuration:</p>
+jobs by using the following configuration:</p>
 
 <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="s">job_scheduler</span><span class="pi">:</span>
   <span class="s">job_rules</span><span class="pi">:</span>
@@ -151,7 +151,7 @@ job type, not <code class="highlighter-rouge">invalidate</code>.</p>
  <span class="k">elif</span> <span class="n">job</span><span class="o">.</span><span class="n">job_type</span> <span class="o">==</span> <span class="s">'cache'</span><span class="p">:</span>
     <span class="c"># Cache the relationship.</span></code></pre></figure>
 
-<p>Here the logic to retrieve the <code class="highlighter-rouge">access_token</code> and <code class="highlighter-rouge">entity_id</code>
+<p>Here, the logic to retrieve the <code class="highlighter-rouge">access_token</code> and <code class="highlighter-rouge">entity_id</code>
 (Post Id), maybe be inserted. The job will have this information as part
 of its attributes. The insertion mechanism will simply index by
 <code class="highlighter-rouge">entity_id</code>, and return a list of access token’s associated with
