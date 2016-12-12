@@ -8,14 +8,15 @@ author: "dominicfollett"
 
 Before you code, read the following documentation. It is the most essential information you need before you start.
 
-* **[Overview:](../overview)** "REPLACE WITH your product name" business-level description of main benefits versus alternative solutions
-* **[Key Concepts:](../key-concepts)** Conceptual description and diagram of how "REPLACE WITH your product name" works
+* **[Overview:](../overview)** "PlayerPro API and Job Service" overview of components.
+* **[Key Concepts:](../key-concepts)** Conceptual description and diagram of how "PlayerPro API and Job Service" and 
+is configured.
 
 # What You Will Need When You Code
 
 Refer to the following documentation as you work. 
 
-* **[Testing & Debugging:](../testing)** — Strategic overview description of how to test and debug "REPLACE WITH your product name"
+* **[Testing & Debugging:](../testing)** — Strategic overview description of how to test and debug the "PlayerPro API and Job Service"
 
 # Downloading the Code
 
@@ -109,7 +110,9 @@ $ pip install -r requirements.txt --upgrade
 
 #### Troubleshooting
 Be aware snappy may fail to install, if this is the case, see
-troubleshooting below. Error installing python-snappy on Mac?
+troubleshooting below. 
+
+Error installing python-snappy on Mac?
 
 ```sh
 snappymodule.cc:31:10: fatal error: 'snappy-c.h' file not found

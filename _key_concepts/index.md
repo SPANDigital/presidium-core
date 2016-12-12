@@ -31,18 +31,6 @@ author: "dominicfollett"
     + [Rational For Rules](#rational-for-rules)
     + [A Note On Access Tokens](#a-note-on-access-tokens)
 
-
-- [PlayerPro API](#playerpro-api)
-  * [System Context](#system-context)
-  * [Caching Middleware](#caching-middleware)
-  * [Cache Configuration Design](#cache-configuration-design)
-    + [Cache Config Format](#cache-config-format)
-    + [Cache Logic](#cache-logic)
-    + [Rules](#rules)
-    + [Rational For Rules](#rational-for-rules)
-    + [A Note On Access Tokens](#a-note-on-access-tokens)
-
-
 # Job Service
 
 ## Job Scheduler
