@@ -425,16 +425,16 @@ below, and covered briefly as follows:
 
 ### Rational For Rules
 
-- If we explicitly mark an endpoint for caching, we need to be able to
+If we explicitly mark an endpoint for caching, we need to be able to
 differentiate between what is to be cached and what is not to be cached,
 especially in the case of complex endpoints such as GET /posts where
 query parameters effectively change the endpoint definition.
 
-- Merely caching by endpoint url doesn’t allow us to stop caching in
+Merely caching by endpoint url doesn’t allow us to stop caching in
 certain cases - perhaps we don’t want to cache anything with ‘filter_by’
 in it. Hence, the need to introduce rules.
 
-- The burden of responsibility is on the shoulders of the programmer to
+The burden of responsibility is on the shoulders of the programmer to
 clearly define which endpoints are to be cached, by being explicit about
 the HTTP method and the url path expected.
 

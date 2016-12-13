@@ -29,17 +29,17 @@ h4 {
 
 /* Created by Pixelzoo: www.pixelzoo.co.za */
 /* Generic styles. */
-html, body {
-  height: 100%; }
-
-body, p, li, a, input {
+p, body, li, body, a, body, input, body {
   font-family: "Helvetica Neue", sans-serif;
   font-weight: 300;
   color: #6C6C6C;
   line-height: 1.7em;
   font-size: 14px; }
 
-h1, h2, h3, h4, nav#topnav li a, #page-image p {
+body {
+  height: 100%; }
+
+h1, h2, h3, h4, nav#topnav li a, nav#topnav ul li.active a li a, nav#topnav ul body.active a li a, nav#topnav ul li.active body li a, nav#topnav ul body.active body li a, nav#topnav body a, nav#topnav ul li.active a body a, nav#topnav ul body.active a body a, nav#topnav ul li.active body body a, nav#topnav ul body.active body body a, nav#topnav li body, nav#topnav ul li.active a li body, nav#topnav ul body.active a li body, nav#topnav ul li.active body li body, nav#topnav ul body.active body li body, nav#topnav body body, nav#topnav ul li.active a body body, nav#topnav ul body.active a body body, nav#topnav ul li.active body body body, nav#topnav ul body.active body body body, #page-image p, #page-image body {
   font-family: "Helvetica Neue", sans-serif;
   font-weight: 500; }
 
@@ -57,7 +57,7 @@ img {
 b {
   font-weight: 500; }
 
-a {
+a, body {
   color: #999999; }
 
 /* Main structure. */
@@ -83,43 +83,39 @@ a {
   margin: auto 0;
   float: left; }
 
-nav#topnav {
+nav#topnav, nav#topnav ul li.active a, nav#topnav ul body.active a, nav#topnav ul li.active body, nav#topnav ul body.active body {
   width: auto;
   margin: 1em; }
-  nav#topnav ul {
+  nav#topnav ul, nav#topnav ul li.active a ul, nav#topnav ul body.active a ul, nav#topnav ul li.active body ul, nav#topnav ul body.active body ul {
     list-style: none; }
-    nav#topnav ul li {
+    nav#topnav ul li, nav#topnav ul li.active a ul li, nav#topnav ul body.active a ul li, nav#topnav ul li.active body ul li, nav#topnav ul body.active body ul li, nav#topnav ul body, nav#topnav ul li.active a ul body, nav#topnav ul body.active a ul body, nav#topnav ul li.active body ul body, nav#topnav ul body.active body ul body {
       display: inline;
       line-height: 2em;
       height: 50px; }
-      nav#topnav ul li a {
+      nav#topnav ul li a, nav#topnav ul li.active a ul li a, nav#topnav ul body.active a ul li a, nav#topnav ul li.active body ul li a, nav#topnav ul body.active body ul li a, nav#topnav ul body a, nav#topnav ul li.active a ul body a, nav#topnav ul body.active a ul body a, nav#topnav ul li.active body ul body a, nav#topnav ul body.active body ul body a, nav#topnav ul li body, nav#topnav ul li.active a ul li body, nav#topnav ul body.active a ul li body, nav#topnav ul li.active body ul li body, nav#topnav ul body.active body ul li body, nav#topnav ul body body, nav#topnav ul li.active a ul body body, nav#topnav ul body.active a ul body body, nav#topnav ul li.active body ul body body, nav#topnav ul body.active body ul body body {
         text-decoration: none;
         color: #7abfff;
         margin: 0 0.8em;
         font-size: 15px; }
 
-nav#topnav ul li a:hover, nav#topnav ul li.active a {
+nav#topnav ul li.active a, nav#topnav ul body.active a, nav#topnav ul li.active body, nav#topnav ul body.active body {
   color: #fff;
   border-bottom: 3px solid #fff;
   padding-bottom: 10px; }
 
 #page-image.high {
   height: 260px; }
-
 #page-image.short {
   height: 160px; }
-
 #page-image h1 {
   color: #fff;
   font-size: 44px;
   padding: 115px 0 0 60px;
   text-transform: uppercase; }
-
 #page-image.high h1 {
   text-transform: none;
   padding: 60px 0 0 60px; }
-
-#page-image p {
+#page-image p, #page-image body {
   color: #fff;
   padding: 1em 0 0 60px;
   width: 400px; }
@@ -128,10 +124,9 @@ nav#topnav ul li a:hover, nav#topnav ul li.active a {
 #nobar {
   clear: both;
   padding: 0 20px 0 50px; }
-
-#nobar article {
-  float: left;
-  padding: 1em; }
+  #nobar article {
+    float: left;
+    padding: 1em; }
 
 #rightpage article {
   padding: 1em 2em; }
@@ -141,57 +136,108 @@ nav#topnav ul li a:hover, nav#topnav ul li.active a {
 #onebar {
   clear: both;
   padding: 0 20px 0 50px; }
-
-#onebar article {
-  padding: 1em; }
-
-#onebar #leftpage {
-  width: 65%;
-  float: left; }
-
-#onebar.rightbar aside {
-  width: 30%;
-  float: right;
-  color: #f9f8f6; }
-
-#onebar.rightbar aside .notebox {
-  background: #2774ba url(../images/icon_star_light.png) no-repeat 150px center;
-  margin-bottom: 30px; }
-
-#onebar.rightbar aside .newsbox {
-  background: #394145;
-  margin-bottom: 30px; }
-
-#onebar.rightbar aside .infobox {
-  background: #f2f1ed;
-  color: #4c4c4c;
-  margin-bottom: 30px; }
-
-/* Structure: one bar on left */
-#onebar.leftbar {
-  clear: both;
-  padding: 0;
-  height: 100%; }
-
-#onebar #rightpage {
-  width: 80%;
-  float: right;
-  background: #fff;
-  min-height: 1020px; }
-
-#onebar.leftbar aside {
-  width: 20%;
-  float: left;
-  border-right: 1px solid #fff;
-  height: 100%; }
-
-#onebar.leftbar.wide #rightpage {
-  width: 70%; }
-
-#onebar.leftbar.wide aside {
-  width: 30%; }
+  #onebar article {
+    padding: 1em; }
+  #onebar #leftpage {
+    width: 65%;
+    float: left; }
+  #onebar.rightbar aside {
+    width: 30%;
+    float: right;
+    color: #f9f8f6; }
+    #onebar.rightbar aside .notebox {
+      background: #2774ba url(../images/icon_star_light.png) no-repeat 150px center;
+      margin-bottom: 30px; }
+    #onebar.rightbar aside .newsbox {
+      background: #394145;
+      margin-bottom: 30px; }
+    #onebar.rightbar aside .infobox {
+      background: #f2f1ed;
+      color: #4c4c4c;
+      margin-bottom: 30px; }
+  #onebar.leftbar {
+    /* Structure: one bar on left */
+    clear: both;
+    padding: 0;
+    height: 100%; }
+  #onebar #rightpage {
+    width: 80%;
+    float: right;
+    background: #fff;
+    min-height: 1020px; }
+  #onebar.leftbar aside {
+    width: 20%;
+    float: left;
+    border-right: 1px solid #fff;
+    height: 100%; }
+  #onebar.leftbar.wide #rightpage {
+    width: 70%; }
+  #onebar.leftbar.wide aside {
+    width: 30%; }
 
 /* -- */
+/* Built with: http://paletton.com/ */
+/* Color palette. */
+/* Font size gradient. */
+/* Base font styles. */
+/* Header styles. */
+h1 {
+  color: #ED8B00;
+  font-size: 20px;
+  margin-bottom: 0.7em;
+  text-transform: None; }
+
+h2 {
+  color: #474746;
+  font-size: 18px;
+  margin-bottom: 0.5em;
+  text-transform: None; }
+
+h3 {
+  color: #6C6C6C;
+  font-size: 16px;
+  margin-bottom: 0.5em;
+  text-transform: None; }
+
+h4 {
+  color: #999999;
+  font-size: 14px;
+  margin-bottom: None;
+  text-transform: Uppercase; }
+
+/* Created by Pixelzoo: www.pixelzoo.co.za */
+/* Generic styles. */
+p, body, li, body, a, body, input, body {
+  font-family: "Helvetica Neue", sans-serif;
+  font-weight: 300;
+  color: #6C6C6C;
+  line-height: 1.7em;
+  font-size: 14px; }
+
+body {
+  height: 100%; }
+
+h1, h2, h3, h4, nav#topnav li a, nav#topnav ul li.active a li a, nav#topnav ul body.active a li a, nav#topnav ul li.active body li a, nav#topnav ul body.active body li a, nav#topnav body a, nav#topnav ul li.active a body a, nav#topnav ul body.active a body a, nav#topnav ul li.active body body a, nav#topnav ul body.active body body a, nav#topnav li body, nav#topnav ul li.active a li body, nav#topnav ul body.active a li body, nav#topnav ul li.active body li body, nav#topnav ul body.active body li body, nav#topnav body body, nav#topnav ul li.active a body body, nav#topnav ul body.active a body body, nav#topnav ul li.active body body body, nav#topnav ul body.active body body body, #page-image p, #page-image body {
+  font-family: "Helvetica Neue", sans-serif;
+  font-weight: 500; }
+
+/* Auto media. */
+video {
+  height: 100%; }
+
+iframe {
+  width: 100%; }
+
+img {
+  width: auto;
+  max-width: 100%; }
+
+b {
+  font-weight: 500; }
+
+a, body {
+  color: #999999; }
+
 /* Misc color classes. */
 .blue {
   color: #108ac0; }
@@ -490,11 +536,10 @@ nav#topnav ul li a:hover, nav#topnav ul li.active a {
   height: 0px;
   /* change to 200px */ }
 
-footer p, footer a {
+footer p, footer body, footer a, footer body {
   font-size: 9px;
   text-align: center;
   padding: 0; }
-
 footer h2 {
   color: #fff;
   font-size: 32px;
@@ -519,7 +564,7 @@ hr {
   text-align: center;
   padding: 0 1em; }
 
-.button a, .togglebut {
+.button a, .button body, .togglebut {
   clear: both;
   background: #108ac0;
   padding: 5px 10px;
@@ -538,11 +583,11 @@ hr {
   color: #fff;
   outline: 0; }
 
-.button a.orange {
+.button a.orange, .button body.orange {
   background: #f75000;
   color: #fff; }
 
-.tag a {
+.tag a, .tag body {
   clear: both;
   background: #108ac0;
   padding: 2px 4px;
@@ -557,7 +602,7 @@ hr {
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px; }
 
-.more a {
+.more a, .more body {
   color: #108ac0;
   font-weight: 500;
   text-decoration: none;
@@ -570,10 +615,10 @@ hr {
 .notebox h1 {
   color: #f9f8f6; }
 
-.notebox p {
+.notebox p, .notebox body {
   color: #f9f8f6; }
 
-.notebox a {
+.notebox a, .notebox body {
   color: #fdb728;
   font-weight: 500;
   text-decoration: none; }
@@ -601,15 +646,15 @@ hr {
   font-size: 14px;
   float: right; }
 
-.newsbox p {
+.newsbox p, .newsbox body {
   color: #f9f8f6; }
 
-.newsbox a {
+.newsbox a, .newsbox body {
   color: #f9f8f6;
   font-weight: 500;
   text-decoration: none; }
 
-.newsbox .more a {
+.newsbox .more a, .newsbox .more body {
   color: #8fd3f4; }
 
 .newsbox .divider {
@@ -648,10 +693,10 @@ hr {
 .infobox h4 {
   color: #4d4d4d; }
 
-.infobox p {
+.infobox p, .infobox body {
   clear: both; }
 
-.infobox a, .infobox .more {
+.infobox a, .infobox body, .infobox .more {
   color: #108ac0; }
 
 /* Styles: menu and headings onebar-left */
@@ -663,7 +708,7 @@ hr {
   color: #4d4d4d;
   text-transform: uppercase; }
 
-.leftbar aside h3 a {
+.leftbar aside h3 a, .leftbar aside h3 body {
   font-size: 16px;
   text-decoration: none;
   font-weight: 500; }
@@ -679,49 +724,49 @@ hr {
 #nav-container h2 {
   padding: 0 1em; }
 
-#nav-container li a {
+#nav-container li a, #nav-container body a, #nav-container li body, #nav-container body body {
   text-decoration: none;
   color: #4d4d4d;
   cursor: pointer; }
 
-#nav-container .nav > li > a {
+#nav-container .nav > li > a, #nav-container .nav > body > a, #nav-container .nav > li > body, #nav-container .nav > body > body {
   padding: 0.4em 1em; }
 
-#nav-container ul ul li a {
+#nav-container ul ul li a, #nav-container ul ul body a, #nav-container ul ul li body, #nav-container ul ul body body {
   margin-left: 1.5em;
   font-weight: 300; }
 
-#nav-container ul ul ul li a {
+#nav-container ul ul ul li a, #nav-container ul ul ul body a, #nav-container ul ul ul li body, #nav-container ul ul ul body body {
   margin-left: 2.5em;
   font-weight: 300;
   font-style: italic;
   font-size: 0.9em; }
 
-#nav-container li a:hover, #nav-container li a:focus, .opened {
+#nav-container li a:hover, #nav-container body a:hover, #nav-container li body:hover, #nav-container body body:hover, #nav-container li a:focus, #nav-container body a:focus, #nav-container li body:focus, #nav-container body body:focus, .opened {
   background: #e4ecf0 url(../images/subnav_bg.png) right center no-repeat;
   font-weight: 500; }
 
 /* active hovers + subnav overides  */
-#nav-container ul ul li a:hover, #nav-container ul ul li a:focus, #nav-container li.active ul li a:hover {
+#nav-container ul ul li a:hover, #nav-container ul ul body a:hover, #nav-container ul ul li body:hover, #nav-container ul ul body body:hover, #nav-container ul ul li a:focus, #nav-container ul ul body a:focus, #nav-container ul ul li body:focus, #nav-container ul ul body body:focus, #nav-container li.active ul li a:hover, #nav-container body.active ul li a:hover, #nav-container li.active ul body a:hover, #nav-container body.active ul body a:hover, #nav-container li.active ul li body:hover, #nav-container body.active ul li body:hover, #nav-container li.active ul body body:hover, #nav-container body.active ul body body:hover {
   background: none;
   font-weight: 500; }
 
-#nav-container ul ul li:hover, #nav-container ul ul li:focus {
+#nav-container ul ul li:hover, #nav-container ul ul body:hover, #nav-container ul ul li:focus, #nav-container ul ul body:focus {
   background: #e4ecf0; }
 
-#nav-container ul ul ul li:hover, #nav-container ul ul ul li:focus {
+#nav-container ul ul ul li:hover, #nav-container ul ul ul body:hover, #nav-container ul ul ul li:focus, #nav-container ul ul ul body:focus {
   background: none; }
 
-#nav-container li.active {
+#nav-container li.active, #nav-container body.active {
   background: #e4ecf0 url(../images/subnav_bg.png) right center no-repeat; }
 
-#nav-container ul ul li.active {
+#nav-container ul ul li.active, #nav-container ul ul body.active {
   background: none; }
 
-#nav-container li.active a {
+#nav-container li.active a, #nav-container body.active a, #nav-container li.active body, #nav-container body.active body {
   font-weight: 500; }
 
-#nav-container li.active ul li a {
+#nav-container li.active ul li a, #nav-container body.active ul li a, #nav-container li.active ul body a, #nav-container body.active ul body a, #nav-container li.active ul li body, #nav-container body.active ul li body, #nav-container li.active ul body body, #nav-container body.active ul body body {
   font-weight: 300; }
 
 /* Styles: general side bar in twobar-right Results Panel */
@@ -761,7 +806,7 @@ hr {
 #sidebar-wrapper article {
   padding: 1em; }
 
-#sidebar-wrapper p {
+#sidebar-wrapper p, #sidebar-wrapper body {
   color: #f9f8f6; }
 
 #sidebar-wrapper h2 {
@@ -776,7 +821,7 @@ hr {
 
 /* -- */
 /* Content Layouts:  Intro text page */
-.intro p, p.intro {
+.intro p, .intro body, p.intro, body.intro {
   font-size: 20px; }
 
 #bar-select select {
@@ -832,25 +877,25 @@ hr {
   -moz-border-radius: 0 7px 7px 0;
   -webkit-border-radius: 0 7px 7px 0; }
 
-.list-row div p {
+.list-row div p, .list-row div body {
   padding: 10px; }
 
-.list-row div.list-col1 p {
+.list-row div.list-col1 p, .list-row div.list-col1 body {
   padding: 5px 10px; }
 
-.list-row div a {
+.list-row div a, .list-row div body {
   color: #108ac0;
   text-decoration: none;
   font-size: 16px;
   font-weight: 500;
   margin-top: -5px; }
 
-.list-row-header div p {
+.list-row-header div p, .list-row-header div body {
   padding: 10px;
   font-size: 10px;
   text-transform: uppercase; }
 
-.list-row-header div a {
+.list-row-header div a, .list-row-header div body {
   text-decoration: none;
   font-size: 10px;
   color: #4d4d4d; }
@@ -886,12 +931,12 @@ hr {
   font-size: 20px;
   padding: 0 0.7em; }
 
-.half p.dark {
+.half p.dark, .half body.dark {
   color: #108ac0;
   font-size: 16px;
   margin-bottom: 0.7em; }
 
-.half h4, .half h4 a {
+.half h4, .half h4 a, .half h4 body {
   color: #108ac0;
   font-size: 16px;
   text-decoration: none;
@@ -911,7 +956,7 @@ hr {
   font-size: 14px;
   margin-left: 150px; }
 
-.half .bio p {
+.half .bio p, .half .bio body {
   margin-left: 150px; }
 
 .half .biopic {
@@ -924,24 +969,24 @@ hr {
   -moz-border-radius: 150px; }
 
 /* Content Layouts:  Main text - for one bar (rightpage content)*/
-#rightpage p, #nobar p {
+#rightpage p, #rightpage body, #nobar p, #nobar body {
   padding-bottom: 1em; }
 
 /* This causes the table of contents to have unsightly gaps. */
 #rightpage ul, #nobar ul {
   /* padding-bottom: 1em; */ }
 
-#rightpage ul li, #nobar ul li {
+#rightpage ul li, #rightpage ul body, #nobar ul li, #nobar ul body {
   list-style: inside disc; }
 
-#rightpage ul li a {
+#rightpage ul li a, #rightpage ul body a, #rightpage ul li body, #rightpage ul body body {
   text-decoration: none; }
 
 #rightpage ul ul, #nobar ul ul {
   list-style: inside disc;
   margin-left: 1em; }
 
-#rightpage ul li li, #nobar ul li li {
+#rightpage ul li li, #rightpage ul body li, #rightpage ul li body, #rightpage ul body body, #nobar ul li li, #nobar ul body li, #nobar ul li body, #nobar ul body body {
   list-style: inside circle; }
 
 /* Content Layouts:  News / events page- for onebar (rightpage content)*/
@@ -960,11 +1005,11 @@ hr {
 #rightpage .news h2 span {
   color: #d6d6d6; }
 
-#rightpage .actions a {
+#rightpage .actions a, #rightpage .actions body {
   text-decoration: none;
   text-transform: uppercase; }
 
-#rightpage .but_outlook a, #rightpage .but_contact a {
+#rightpage .but_outlook a, #rightpage .but_outlook body, #rightpage .but_contact a, #rightpage .but_contact body {
   font-size: 11px;
   font-weight: 500;
   line-height: 2em;
@@ -980,7 +1025,7 @@ hr {
   height: 90px;
   width: 160px; }
 
-#mediathumbs a {
+#mediathumbs a, #mediathumbs body {
   display: block;
   text-decoration: none;
   text-align: center; }
@@ -1084,13 +1129,13 @@ th {
   vertical-align: middle;
   color: #108ac0; }
 
-.button.icon-slack a {
+.button.icon-slack a, .button.icon-slack body {
   background: #ffffff url(../images/icon-slack.png) no-repeat 10px 8px;
   padding-left: 30px;
   color: #4d4d4d;
   padding: 10px 10px 10px 40px; }
 
-.icon-slack a:hover, .icon-slack a:focus {
+.icon-slack a:hover, .icon-slack body:hover, .icon-slack a:focus, .icon-slack body:focus {
   background-color: #d4d4d4; }
 
 /* Product layout specific ---------------------------------------------------------- */
@@ -1170,7 +1215,7 @@ body.products #rightpage .reference article h4 {
   display: block;
   margin: 0 auto; }
 
-.catalog p {
+.catalog p, .catalog body {
   padding: 10px; }
 
 /*removing first / second iterations - border tops */
