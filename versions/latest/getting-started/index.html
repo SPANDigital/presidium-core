@@ -324,7 +324,9 @@ error: <span class="nb">command</span> <span class="s1">'x86_64-linux-gnu-gcc'</
 </code></pre>
 </div>
 
-<h3 id="pypy">PyPy</h3>
+<h3 id="pypy-optional">PyPy (optional)</h3>
+
+<p>It is possible to run the API using PyPy, although production uses CPython.</p>
 
 <div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>brew install pypy
 <span class="gp">$ </span>virtualenv -p /usr/local/bin/pypy pypy
@@ -333,7 +335,7 @@ error: <span class="nb">command</span> <span class="s1">'x86_64-linux-gnu-gcc'</
 </code></pre>
 </div>
 
-<h3 id="install-autoenv">Install <code class="highlighter-rouge">autoenv</code></h3>
+<h3 id="install-autoenv-optional">Install <code class="highlighter-rouge">autoenv</code> (optional)</h3>
 <p>See https://github.com/kennethreitz/autoenv for details.</p>
 
 <div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>cp .env_cpython .env
@@ -376,7 +378,7 @@ error: <span class="nb">command</span> <span class="s1">'x86_64-linux-gnu-gcc'</
 </code></pre>
 </div>
 
-<h4 id="pypy-1">PyPy</h4>
+<h4 id="pypy">PyPy</h4>
 
 <div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>cp .env_pypy .env
 <span class="gp">$ </span><span class="nb">source</span> <span class="k">$(</span>dirname <span class="s2">"</span><span class="k">${</span><span class="nv">BASH_SOURCE</span><span class="p">[0]</span><span class="k">}</span><span class="s2">"</span><span class="k">)</span>/pypy/bin/activate
@@ -655,7 +657,7 @@ but it seems to work just fine with 1.8</em></p>
                     <ul id="dropdown-menu-updates" class="hidden">
                         
                         <li class="sub-menu-item">
-                            <a href="/playerpro/updates#3-1-4"  data-target="#3-1-4">3.1.4</a>
+                            <a href="/playerpro/updates#job-service-3-1-4"  data-target="#job-service-3-1-4">Job Service 3.1.4</a>
                         </li>
                         
                     </ul>

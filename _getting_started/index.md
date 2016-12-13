@@ -203,7 +203,9 @@ $ . bin/activate
 $ pip install -r requirements.txt
 ```
 
-### PyPy
+### PyPy (optional)
+
+It is possible to run the API using PyPy, although production uses CPython.
 
 ```sh
 $ brew install pypy
@@ -212,7 +214,7 @@ $ . pypy/bin/activate
 $ pip install -r requirements.txt
 ```
 
-### Install ```autoenv```
+### Install ```autoenv``` (optional)
 See https://github.com/kennethreitz/autoenv for details.
 
 ```sh
