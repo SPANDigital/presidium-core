@@ -9,8 +9,8 @@ collections:
     prerequisites:
     recipes:
     references:
-#        output: true
-#        permalink: /reference/:path/
+        output: true
+        permalink: /reference/:path/
     testing:
     tools:
     typical_scenarios:
