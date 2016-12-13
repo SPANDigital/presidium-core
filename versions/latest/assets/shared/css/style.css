@@ -258,6 +258,8 @@ a {
   min-width: 222px; }
   #nav-container h2 {
     padding: 0 1em; }
+  #nav-container li {
+    list-style: none; }
   #nav-container li a {
     text-decoration: none;
     color: #4d4d4d;
