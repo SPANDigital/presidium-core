@@ -89,48 +89,53 @@ Note: Please prefix all the included links with /playerpro, for example:
 
                    <h1 class="primary">UPDATES</h1>
 
-<h1 id="job-service-3-1-4" class="secondary">Job Service 3.1.4</h1>
+<h1 id="api-3-1-4" class="secondary">API 3.1.4</h1>
 <article>
     <div class="article-meta">
         <a href="https://github.com/torabisu" class="post-author">
             <img src="https://github.com/torabisu.png" class="avatar" alt="torabisu avatar" width="24" height="24" />
             torabisu
         </a>
-        <span class="date">2016-12-06</span>
+        <span class="date">2016-12-01</span>
     </div>
     <div class="article-content">
         <h1 id="summary">Summary</h1>
 
-<p>3.1.4 release</p>
+<p>Allow for asynchronous processing based on HTTP requests.</p>
 
 <h1 id="new-features">New Features</h1>
 
 <ul>
-  <li>REPLACE WITH Feature 1</li>
-  <li>REPLACE WITH Feature 2</li>
+  <li>Publish an event corresponding to every HTTP request to a Kafka topic.</li>
 </ul>
 
-<h1 id="enhancements">Enhancements</h1>
+    </div>
+</article>
+
+<h1 id="job-service-0-1-2" class="secondary">Job Service 0.1.2</h1>
+<article>
+    <div class="article-meta">
+        <a href="https://github.com/sybrandstrauss" class="post-author">
+            <img src="https://github.com/sybrandstrauss.png" class="avatar" alt="sybrandstrauss avatar" width="24" height="24" />
+            sybrandstrauss
+        </a>
+        <span class="date">2016-12-01</span>
+    </div>
+    <div class="article-content">
+        <h1 id="summary">Summary</h1>
+
+<p>Configurable and scalable framework for completing discrete units of work based on events.</p>
+
+<h1 id="new-features">New Features</h1>
 
 <ul>
-  <li>REPLACE WITH Enhancements 1</li>
-  <li>REPLACE WITH Enhancements 2</li>
+  <li>Configurable event routing.</li>
+  <li>Enriching events based on configuration.</li>
+  <li>Job prioritization.</li>
+  <li>Job expiration.</li>
+  <li>Job duplicate removal.</li>
+  <li>Basic web hook.</li>
 </ul>
-
-<h1 id="fixes">Fixes</h1>
-
-<ul>
-  <li>REPLACE WITH Defect 01 - A description of the fix</li>
-  <li>REPLACE WITH Defect 02 - A description of the fix</li>
-</ul>
-
-<h1 id="known-issues-and-problems">Known Issues and Problems</h1>
-
-<ul>
-  <li>REPLACE WITH Issue 1</li>
-  <li>REPLACE WITH Issue 2</li>
-</ul>
-
 
     </div>
 </article>
@@ -150,6 +155,8 @@ Note: Please prefix all the included links with /playerpro, for example:
                     <div id="bar-select">
                         <select>
                             <option value="/playerpro/versions/latest/">Latest</option>
+                            
+                                <option value="/playerpro/versions/"></option>
                             
                                 <option value="/playerpro/versions/"></option>
                             
@@ -245,14 +252,14 @@ Note: Please prefix all the included links with /playerpro, for example:
                             
                             
                                 <li>
-                                    <a onclick="$('#dropdown-menu-php-api').toggleClass('hidden');" >
-                                        PHP API
+                                    <a onclick="$('#dropdown-menu-api').toggleClass('hidden');" >
+                                        API
                                         <span class="caret"></span>
                                     </a>
-                                    <ul id="dropdown-menu-php-api" class="hidden">
+                                    <ul id="dropdown-menu-api" class="hidden">
                                         
                                         <li class="sub-menu-item">
-                                            <a href="/playerpro/references#php-api" data-target="#php-api">PHP API</a>
+                                            <a href="/playerpro/references#playerpro-python-flask-api" data-target="#playerpro-python-flask-api">PlayerPro Python/FLASK API</a>
                                         </li>
                                         
                                     </ul>
@@ -317,7 +324,11 @@ Note: Please prefix all the included links with /playerpro, for example:
                     <ul id="dropdown-menu-updates" class="hidden">
                         
                         <li class="sub-menu-item">
-                            <a href="/playerpro/updates#job-service-3-1-4"  data-target="#job-service-3-1-4">Job Service 3.1.4</a>
+                            <a href="/playerpro/updates#job-service-0-1-2"  data-target="#job-service-0-1-2">Job Service 0.1.2</a>
+                        </li>
+                        
+                        <li class="sub-menu-item">
+                            <a href="/playerpro/updates#api-3-1-4"  data-target="#api-3-1-4">API 3.1.4</a>
                         </li>
                         
                     </ul>
