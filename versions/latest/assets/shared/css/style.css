@@ -87,11 +87,7 @@ nav#topnav, nav#topnav ul li.active a {
   width: auto;
   margin: 1em; }
   nav#topnav ul, nav#topnav ul li.active a ul {
-<<<<<<< 136315465d4061aa1fa0b0b37c5deb3d1bf3e5be
-    list-style: none; }
-=======
     list-style: None; }
->>>>>>> Add sass refactor of sidenav content.
     nav#topnav ul li, nav#topnav ul li.active a ul li {
       display: inline;
       line-height: 2em;
@@ -769,61 +765,6 @@ hr {
   color: #4d4d4d;
   text-transform: uppercase; }
 
-<<<<<<< 136315465d4061aa1fa0b0b37c5deb3d1bf3e5be
-/* Styles: subnav collapsible on onebar-left */
-#nav-container {
-  min-width: 222px; }
-
-#nav-container h2 {
-  padding: 0 1em; }
-
-#nav-container li a {
-  text-decoration: none;
-  color: #4d4d4d;
-  cursor: pointer; }
-
-#nav-container .nav > li > a {
-  padding: 0.4em 1em; }
-
-#nav-container ul ul li a {
-  margin-left: 1.5em;
-  font-weight: 300; }
-
-#nav-container ul ul ul li a {
-  margin-left: 2.5em;
-  font-weight: 300;
-  font-style: italic;
-  font-size: 0.9em; }
-
-#nav-container li a:hover, #nav-container li a:focus, .opened {
-  background: #e4ecf0 url(../images/subnav_bg.png) right center no-repeat;
-  font-weight: 500; }
-
-/* active hovers + subnav overides  */
-#nav-container ul ul li a:hover, #nav-container ul ul li a:focus, #nav-container li.active ul li a:hover {
-  background: none;
-  font-weight: 500; }
-
-#nav-container ul ul li:hover, #nav-container ul ul li:focus {
-  background: #e4ecf0; }
-
-#nav-container ul ul ul li:hover, #nav-container ul ul ul li:focus {
-  background: none; }
-
-#nav-container li.active {
-  background: #e4ecf0 url(../images/subnav_bg.png) right center no-repeat; }
-
-#nav-container ul ul li.active {
-  background: none; }
-
-#nav-container li.active a {
-  font-weight: 500; }
-
-#nav-container li.active ul li a {
-  font-weight: 300; }
-
-=======
->>>>>>> Add sass refactor of sidenav content.
 /* Styles: general side bar in twobar-right Results Panel */
 #wrapper {
   padding-right: 0;
