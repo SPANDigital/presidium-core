@@ -1,59 +1,80 @@
 /* This is a partial. */
 
-/* Structure: one bar on right */
-#onebar {
-  clear: both;
-  padding: 0 20px 0 50px;
-  article {
-    padding: 1em;
+/* Styles for navigation in sidebar. */
+#nav-container {
+  min-width: 222px;
+  h2 {
+    padding: 0 1em;
   }
-  #leftpage {
-    width: 65%;
-    float: left;
+  li a {
+    text-decoration: none;
+    color: #4d4d4d;
+    cursor: pointer;
   }
-  &.rightbar aside {
-    width: 30%;
-    float: right;
-    color: #f9f8f6;
-    .notebox {
-      background: #2774ba url(../images/icon_star_light.png) no-repeat 150px center;
-      margin-bottom: 30px;
+  .nav > li > a {
+    padding: 0.4em 1em;
+  }
+  ul ul {
+    li a {
+      margin-left: 1.5em;
+      font-weight: 300;
     }
-    .newsbox {
-      background: #394145;
-      margin-bottom: 30px;
-    }
-    .infobox {
-      background: #f2f1ed;
-      color: #4c4c4c;
-      margin-bottom: 30px;
+    ul li a {
+      margin-left: 2.5em;
+      font-weight: 300;
+      font-style: italic;
+      font-size: 0.9em;
     }
   }
-  &.leftbar { /* Structure: one bar on left */
-    clear: both;
-    padding: 0;
-    height: 100%;
-  }
-  #rightpage {
-    width: 80%;
-    float: right;
-    background: #fff;
-    min-height: 1020px;
-  }
-  &.leftbar {
-    aside {
-      width: 20%;
-      float: left;
-      border-right: 1px solid #fff;
-      height: 100%;
+  li a {
+    &:hover, &:focus {
+      background: #e4ecf0 url(../images/subnav_bg.png) right center no-repeat;
+      font-weight: 500;
     }
-    &.wide {
-      #rightpage {
-        width: 70%;
+  }
+}
+
+.opened {
+  background: #e4ecf0 url(../images/subnav_bg.png) right center no-repeat;
+  font-weight: 500;
+}
+
+/* Styles for active hovers in sidebar.  */
+#nav-container {
+  ul ul li a {
+    &:hover, &:focus {
+      background: none;
+      font-weight: 500;
+    }
+  }
+  li.active ul li a:hover {
+    background: none;
+    font-weight: 500;
+  }
+  ul ul {
+    li {
+      &:hover, &:focus {
+        background: #e4ecf0;
       }
-      aside {
-        width: 30%;
+    }
+    ul li {
+      &:hover, &:focus {
+        background: none;
       }
+    }
+  }
+  li.active {
+    background: #e4ecf0 url(../images/subnav_bg.png) right center no-repeat;
+  }
+  ul ul li.active {
+    background: none;
+  }
+  li.active {
+    a {
+      font-weight: 500;
+    }
+    ul li a {
+      font-weight: 300;
     }
   }
 }

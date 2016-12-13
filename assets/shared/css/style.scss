@@ -5,6 +5,7 @@
 
 @import 'general';
 @import 'structure';
+@import 'mainbar';
 @import 'sidebar';
 @import 'misc';
 @import 'footer';
@@ -193,94 +194,6 @@ hr {
 
 .infobox a, .infobox .more {
   color: #108ac0;
-}
-
-/* Styles: menu and headings onebar-left */
-.leftbar aside h1 {
-  color: #4d4d4d;
-  margin-bottom: 0;
-}
-
-.leftbar aside h2 {
-  color: #4d4d4d;
-  text-transform: uppercase;
-}
-
-.leftbar aside h3 a {
-  font-size: 16px;
-  text-decoration: none;
-  font-weight: 500;
-}
-
-.leftbar aside h4 {
-  color: #4d4d4d;
-  text-transform: uppercase;
-}
-
-/* Styles: subnav collapsible on onebar-left */
-#nav-container {
-  min-width: 222px;
-}
-
-#nav-container h2 {
-  padding: 0 1em;
-}
-
-#nav-container li a {
-  text-decoration: none;
-  color: #4d4d4d;
-  cursor: pointer;
-}
-
-#nav-container .nav > li > a {
-  padding: 0.4em 1em;
-}
-
-#nav-container ul ul li a {
-  margin-left: 1.5em;
-  font-weight: 300;
-}
-
-#nav-container ul ul ul li a {
-  margin-left: 2.5em;
-  font-weight: 300;
-  font-style: italic;
-  font-size: 0.9em;
-}
-
-#nav-container li a:hover, #nav-container li a:focus, .opened {
-  background: #e4ecf0 url(../images/subnav_bg.png) right center no-repeat;
-  font-weight: 500;
-}
-
-/* active hovers + subnav overides  */
-#nav-container ul ul li a:hover, #nav-container ul ul li a:focus, #nav-container li.active ul li a:hover {
-  background: none;
-  font-weight: 500;
-}
-
-#nav-container ul ul li:hover, #nav-container ul ul li:focus {
-  background: #e4ecf0;
-}
-
-#nav-container ul ul ul li:hover, #nav-container ul ul ul li:focus {
-  background: none;
-}
-
-#nav-container li.active {
-  background: #e4ecf0 url(../images/subnav_bg.png) right center no-repeat;
-}
-
-#nav-container ul ul li.active {
-  background: none;
-}
-
-#nav-container li.active a {
-  font-weight: 500;
-}
-
-#nav-container li.active ul li a {
-  font-weight: 300;
 }
 
 /* Styles: general side bar in twobar-right Results Panel */

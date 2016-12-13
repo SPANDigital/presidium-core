@@ -1,0 +1,12 @@
+@mixin x-box($background, $color, $margin-bottom) {
+  background: #f2f1ed;
+  color: #4c4c4c;
+  margin-bottom: 30px;
+}
+
+@mixin default-header( $color, $font-size, $margin-bottom, $text-transform ){
+  color: $color;
+  font-size: $font-size;
+  margin-bottom: $margin-bottom;
+  text-transform: $text-transform;
+}

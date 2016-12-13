@@ -87,7 +87,7 @@ nav#topnav, nav#topnav ul li.active a {
   width: auto;
   margin: 1em; }
   nav#topnav ul, nav#topnav ul li.active a ul {
-    list-style: none; }
+    list-style: None; }
     nav#topnav ul li, nav#topnav ul li.active a ul li {
       display: inline;
       line-height: 2em;
@@ -131,51 +131,7 @@ nav#topnav ul li.active a {
 #rightpage article {
   padding: 1em 2em; }
 
-/* This is a partial. */
-/* Structure: one bar on right */
-#onebar {
-  clear: both;
-  padding: 0 20px 0 50px; }
-  #onebar article {
-    padding: 1em; }
-  #onebar #leftpage {
-    width: 65%;
-    float: left; }
-  #onebar.rightbar aside {
-    width: 30%;
-    float: right;
-    color: #f9f8f6; }
-    #onebar.rightbar aside .notebox {
-      background: #2774ba url(../images/icon_star_light.png) no-repeat 150px center;
-      margin-bottom: 30px; }
-    #onebar.rightbar aside .newsbox {
-      background: #394145;
-      margin-bottom: 30px; }
-    #onebar.rightbar aside .infobox {
-      background: #f2f1ed;
-      color: #4c4c4c;
-      margin-bottom: 30px; }
-  #onebar.leftbar {
-    /* Structure: one bar on left */
-    clear: both;
-    padding: 0;
-    height: 100%; }
-  #onebar #rightpage {
-    width: 80%;
-    float: right;
-    background: #fff;
-    min-height: 1020px; }
-  #onebar.leftbar aside {
-    width: 20%;
-    float: left;
-    border-right: 1px solid #fff;
-    height: 100%; }
-  #onebar.leftbar.wide #rightpage {
-    width: 70%; }
-  #onebar.leftbar.wide aside {
-    width: 30%; }
-
-/* -- */
+/* Styles for main bar headings. */
 /* Built with: http://paletton.com/ */
 /* Color palette. */
 /* Font size gradient. */
@@ -238,7 +194,175 @@ b {
 a {
   color: #999999; }
 
-/* Misc color classes. */
+/* Structure: sidebar */
+#onebar {
+  clear: both;
+  padding: 0 20px 0 50px; }
+  #onebar article {
+    padding: 1em; }
+  #onebar #leftpage {
+    width: 65%;
+    float: left; }
+  #onebar.rightbar aside {
+    width: 30%;
+    float: right;
+    color: #f9f8f6; }
+    #onebar.rightbar aside .notebox {
+      background: #f2f1ed;
+      color: #4c4c4c;
+      margin-bottom: 30px; }
+    #onebar.rightbar aside .newsbox {
+      background: #f2f1ed;
+      color: #4c4c4c;
+      margin-bottom: 30px; }
+    #onebar.rightbar aside .infobox {
+      background: #f2f1ed;
+      color: #4c4c4c;
+      margin-bottom: 30px; }
+  #onebar.leftbar {
+    /* Structure: one bar on left */
+    clear: both;
+    padding: 0;
+    height: 100%; }
+  #onebar #rightpage {
+    width: 80%;
+    float: right;
+    background: #fff;
+    min-height: 1020px; }
+  #onebar.leftbar aside {
+    width: 20%;
+    float: left;
+    border-right: 1px solid #fff;
+    height: 100%; }
+    #onebar.leftbar aside h1 {
+      color: #474746;
+      margin-bottom: 0; }
+    #onebar.leftbar aside h2 {
+      color: #474746;
+      text-transform: uppercase; }
+    #onebar.leftbar aside h3 a {
+      font-size: 16px;
+      text-decoration: none;
+      font-weight: 500; }
+    #onebar.leftbar aside h4 {
+      color: #474746;
+      text-transform: uppercase; }
+  #onebar.leftbar.wide #rightpage {
+    width: 70%; }
+  #onebar.leftbar.wide aside {
+    width: 30%; }
+
+/* This is a partial. */
+/* Styles for navigation in sidebar. */
+#nav-container {
+  min-width: 222px; }
+  #nav-container h2 {
+    padding: 0 1em; }
+  #nav-container li a {
+    text-decoration: none;
+    color: #4d4d4d;
+    cursor: pointer; }
+  #nav-container .nav > li > a {
+    padding: 0.4em 1em; }
+  #nav-container ul ul li a {
+    margin-left: 1.5em;
+    font-weight: 300; }
+  #nav-container ul ul ul li a {
+    margin-left: 2.5em;
+    font-weight: 300;
+    font-style: italic;
+    font-size: 0.9em; }
+  #nav-container li a:hover, #nav-container li a:focus {
+    background: #e4ecf0 url(../images/subnav_bg.png) right center no-repeat;
+    font-weight: 500; }
+
+.opened {
+  background: #e4ecf0 url(../images/subnav_bg.png) right center no-repeat;
+  font-weight: 500; }
+
+/* Styles for active hovers in sidebar.  */
+#nav-container ul ul li a:hover, #nav-container ul ul li a:focus {
+  background: none;
+  font-weight: 500; }
+#nav-container li.active ul li a:hover {
+  background: none;
+  font-weight: 500; }
+#nav-container ul ul li:hover, #nav-container ul ul li:focus {
+  background: #e4ecf0; }
+#nav-container ul ul ul li:hover, #nav-container ul ul ul li:focus {
+  background: none; }
+#nav-container li.active {
+  background: #e4ecf0 url(../images/subnav_bg.png) right center no-repeat; }
+#nav-container ul ul li.active {
+  background: none; }
+#nav-container li.active a {
+  font-weight: 500; }
+#nav-container li.active ul li a {
+  font-weight: 300; }
+
+/* This mostly includes coloring for code markup */
+/* Built with: http://paletton.com/ */
+/* Color palette. */
+/* Font size gradient. */
+/* Base font styles. */
+/* Header styles. */
+h1 {
+  color: #ED8B00;
+  font-size: 20px;
+  margin-bottom: 0.7em;
+  text-transform: None; }
+
+h2 {
+  color: #474746;
+  font-size: 18px;
+  margin-bottom: 0.5em;
+  text-transform: None; }
+
+h3 {
+  color: #6C6C6C;
+  font-size: 16px;
+  margin-bottom: 0.5em;
+  text-transform: None; }
+
+h4 {
+  color: #999999;
+  font-size: 14px;
+  margin-bottom: None;
+  text-transform: Uppercase; }
+
+/* Created by Pixelzoo: www.pixelzoo.co.za */
+/* Generic styles. */
+html, body {
+  height: 100%; }
+
+body, p, li, a, input {
+  font-family: "Helvetica Neue", sans-serif;
+  font-weight: 300;
+  color: #6C6C6C;
+  line-height: 1.7em;
+  font-size: 14px; }
+
+h1, h2, h3, h4, nav#topnav li a, nav#topnav ul li.active a li a, #page-image p {
+  font-family: "Helvetica Neue", sans-serif;
+  font-weight: 500; }
+
+/* Auto media. */
+video {
+  height: 100%; }
+
+iframe {
+  width: 100%; }
+
+img {
+  width: auto;
+  max-width: 100%; }
+
+b {
+  font-weight: 500; }
+
+a {
+  color: #999999; }
+
 .blue {
   color: #108ac0; }
 
@@ -698,76 +822,6 @@ hr {
 
 .infobox a, .infobox .more {
   color: #108ac0; }
-
-/* Styles: menu and headings onebar-left */
-.leftbar aside h1 {
-  color: #4d4d4d;
-  margin-bottom: 0; }
-
-.leftbar aside h2 {
-  color: #4d4d4d;
-  text-transform: uppercase; }
-
-.leftbar aside h3 a {
-  font-size: 16px;
-  text-decoration: none;
-  font-weight: 500; }
-
-.leftbar aside h4 {
-  color: #4d4d4d;
-  text-transform: uppercase; }
-
-/* Styles: subnav collapsible on onebar-left */
-#nav-container {
-  min-width: 222px; }
-
-#nav-container h2 {
-  padding: 0 1em; }
-
-#nav-container li a {
-  text-decoration: none;
-  color: #4d4d4d;
-  cursor: pointer; }
-
-#nav-container .nav > li > a {
-  padding: 0.4em 1em; }
-
-#nav-container ul ul li a {
-  margin-left: 1.5em;
-  font-weight: 300; }
-
-#nav-container ul ul ul li a {
-  margin-left: 2.5em;
-  font-weight: 300;
-  font-style: italic;
-  font-size: 0.9em; }
-
-#nav-container li a:hover, #nav-container li a:focus, .opened {
-  background: #e4ecf0 url(../images/subnav_bg.png) right center no-repeat;
-  font-weight: 500; }
-
-/* active hovers + subnav overides  */
-#nav-container ul ul li a:hover, #nav-container ul ul li a:focus, #nav-container li.active ul li a:hover {
-  background: none;
-  font-weight: 500; }
-
-#nav-container ul ul li:hover, #nav-container ul ul li:focus {
-  background: #e4ecf0; }
-
-#nav-container ul ul ul li:hover, #nav-container ul ul ul li:focus {
-  background: none; }
-
-#nav-container li.active {
-  background: #e4ecf0 url(../images/subnav_bg.png) right center no-repeat; }
-
-#nav-container ul ul li.active {
-  background: none; }
-
-#nav-container li.active a {
-  font-weight: 500; }
-
-#nav-container li.active ul li a {
-  font-weight: 300; }
 
 /* Styles: general side bar in twobar-right Results Panel */
 #wrapper {
