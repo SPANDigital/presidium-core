@@ -1,0 +1,98 @@
+// This partial provides basic styles that affect the intrinsic aesthetics of the documentation.
+// This comment is not visible in css.
+
+/* Built with: http://paletton.com/ */
+/* Color palette. */
+$primary-color:    #ED8B00;
+$secondary-color:  #474746;
+$tertiary-color:   #6C6C6C;
+$quaternary-color: #999999;
+
+/* Font size gradient. */
+$text-large:  20px;
+$text-medium: 18px;
+$text-small:  16px;
+$text-tiny:   14px;
+
+/* Base font styles. */
+$base-font-family: 'Helvetica Neue';
+
+/* Header styles. */
+@mixin default-header( $color, $font-size, $margin-bottom, $text-transform ){
+  color: $color;
+  font-size: $font-size;
+  margin-bottom: $margin-bottom;
+  text-transform: $text-transform;
+}
+
+h1{@include default-header($primary-color, $text-large, 0.7em, None)}
+h2{@include default-header($secondary-color, $text-medium, 0.5em, None)}
+h3{@include default-header($tertiary-color, $text-small, 0.5em, None)}
+h4{@include default-header($quaternary-color, $text-tiny, None, Uppercase)}
+
+
+/* Created by Pixelzoo: www.pixelzoo.co.za */
+/* Generic styles. */
+html, body {
+  height: 100%;
+}
+
+body, p, li, a, input {
+  font-family: $base-font-family, sans-serif;
+  font-weight: 300;
+  color: $tertiary-color;
+  line-height: 1.7em;
+  font-size: $text-tiny;
+}
+
+h1, h2, h3, h4, nav#topnav li a, #page-image p {
+  font-family: $base-font-family, sans-serif;
+  font-weight: 500;
+}
+
+/* Auto media. */
+video {
+  height: 100%;
+}
+
+iframe {
+  width: 100%;
+}
+
+img {
+  width: auto;
+  max-width: 100%;
+}
+
+b {
+  font-weight: 500;
+}
+
+a {
+  color: $quaternary-color;
+}
+
+/* Misc color classes. */
+.blue {
+  color: #108ac0;
+}
+
+.dark {
+  color: #133d57;
+}
+
+.yellow {
+  color: #fdb728;
+}
+
+.light {
+  color: #8fd3f4;
+}
+
+.green {
+  color: #05993b;
+}
+
+.orange {
+  color: $primary-color;
+}
