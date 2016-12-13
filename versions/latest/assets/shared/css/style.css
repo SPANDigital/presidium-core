@@ -87,7 +87,11 @@ nav#topnav, nav#topnav ul li.active a {
   width: auto;
   margin: 1em; }
   nav#topnav ul, nav#topnav ul li.active a ul {
+<<<<<<< 136315465d4061aa1fa0b0b37c5deb3d1bf3e5be
     list-style: none; }
+=======
+    list-style: None; }
+>>>>>>> Add sass refactor of sidenav content.
     nav#topnav ul li, nav#topnav ul li.active a ul li {
       display: inline;
       line-height: 2em;
@@ -132,7 +136,7 @@ nav#topnav ul li.active a {
   padding: 1em 2em; }
 
 /* This is a partial. */
-/* Structure: one bar on right */
+/* Structure: sidebar */
 #onebar {
   clear: both;
   padding: 0 20px 0 50px; }
@@ -146,10 +150,12 @@ nav#topnav ul li.active a {
     float: right;
     color: #f9f8f6; }
     #onebar.rightbar aside .notebox {
-      background: #2774ba url(../images/icon_star_light.png) no-repeat 150px center;
+      background: #f2f1ed;
+      color: #4c4c4c;
       margin-bottom: 30px; }
     #onebar.rightbar aside .newsbox {
-      background: #394145;
+      background: #f2f1ed;
+      color: #4c4c4c;
       margin-bottom: 30px; }
     #onebar.rightbar aside .infobox {
       background: #f2f1ed;
@@ -175,7 +181,54 @@ nav#topnav ul li.active a {
   #onebar.leftbar.wide aside {
     width: 30%; }
 
-/* -- */
+/* Styles for navigation in sidebar. */
+#nav-container {
+  min-width: 222px; }
+  #nav-container h2 {
+    padding: 0 1em; }
+  #nav-container li a {
+    text-decoration: none;
+    color: #4d4d4d;
+    cursor: pointer; }
+  #nav-container .nav > li > a {
+    padding: 0.4em 1em; }
+  #nav-container ul ul li a {
+    margin-left: 1.5em;
+    font-weight: 300; }
+  #nav-container ul ul ul li a {
+    margin-left: 2.5em;
+    font-weight: 300;
+    font-style: italic;
+    font-size: 0.9em; }
+  #nav-container li a:hover, #nav-container li a:focus {
+    background: #e4ecf0 url(../images/subnav_bg.png) right center no-repeat;
+    font-weight: 500; }
+
+.opened {
+  background: #e4ecf0 url(../images/subnav_bg.png) right center no-repeat;
+  font-weight: 500; }
+
+/* Styles for active hovers in sidebar.  */
+#nav-container ul ul li a:hover, #nav-container ul ul li a:focus {
+  background: none;
+  font-weight: 500; }
+#nav-container li.active ul li a:hover {
+  background: none;
+  font-weight: 500; }
+#nav-container ul ul li:hover, #nav-container ul ul li:focus {
+  background: #e4ecf0; }
+#nav-container ul ul ul li:hover, #nav-container ul ul ul li:focus {
+  background: none; }
+#nav-container li.active {
+  background: #e4ecf0 url(../images/subnav_bg.png) right center no-repeat; }
+#nav-container ul ul li.active {
+  background: none; }
+#nav-container li.active a {
+  font-weight: 500; }
+#nav-container li.active ul li a {
+  font-weight: 300; }
+
+/* This mostly includes coloring for code markup */
 /* Built with: http://paletton.com/ */
 /* Color palette. */
 /* Font size gradient. */
@@ -238,7 +291,6 @@ b {
 a {
   color: #999999; }
 
-/* Misc color classes. */
 .blue {
   color: #108ac0; }
 
@@ -717,6 +769,7 @@ hr {
   color: #4d4d4d;
   text-transform: uppercase; }
 
+<<<<<<< 136315465d4061aa1fa0b0b37c5deb3d1bf3e5be
 /* Styles: subnav collapsible on onebar-left */
 #nav-container {
   min-width: 222px; }
@@ -769,6 +822,8 @@ hr {
 #nav-container li.active ul li a {
   font-weight: 300; }
 
+=======
+>>>>>>> Add sass refactor of sidenav content.
 /* Styles: general side bar in twobar-right Results Panel */
 #wrapper {
   padding-right: 0;
