@@ -182,75 +182,10 @@ nav#topnav ul li a:hover, nav#topnav ul li.active a {
     padding: 1em;
 }
 
-/* Structure: one bar on right */
-#onebar {
-    clear: both;
-    padding: 0 20px 0 50px;
-}
-
-#onebar article {
-    padding: 1em;
-}
-
-#onebar #leftpage {
-    width: 65%;
-    float: left;
-}
-
-#onebar.rightbar aside {
-    width: 30%;
-    float: right;
-    color: #f9f8f6;
-}
-
-#onebar.rightbar aside .notebox {
-    background: #2774ba url(../images/icon_star_light.png) no-repeat 150px center;
-    margin-bottom: 30px;
-}
-
-#onebar.rightbar aside .newsbox {
-    background: #394145;
-    margin-bottom: 30px;
-}
-
-#onebar.rightbar aside .infobox {
-    background: #f2f1ed;
-    color: #4c4c4c;
-    margin-bottom: 30px;
-}
-
-/* Structure: one bar on left */
-#onebar.leftbar {
-    clear: both;
-    padding: 0;
-    height: 100%;
-}
-
-#onebar #rightpage {
-    width: 80%;
-    float: right;
-    background: #fff;
-    min-height: 1020px;
-}
-
 #rightpage article {
     padding: 1em 2em;
 }
 
-#onebar.leftbar aside {
-    width: 20%;
-    float: left;
-    border-right: 1px solid #fff;
-    height: 100%;
-}
-
-#onebar.leftbar.wide #rightpage {
-    width: 70%;
-}
-
-#onebar.leftbar.wide aside {
-    width: 30%;
-}
 
 /* Structure: footer */
 .spacer {

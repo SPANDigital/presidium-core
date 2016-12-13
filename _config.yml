@@ -43,3 +43,9 @@ defaults:
             logo: ""
             layout: "default"
             github-url: "https://github.com/"
+
+#
+# Sass settings
+#
+sass:
+    sass_dir: assets/shared/_sass
