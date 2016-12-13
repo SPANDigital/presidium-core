@@ -14,9 +14,9 @@
 #  collection: "typical_scenarios"
 #  path: "/typical-scenarios"
 #
-- name: "Best Practices"
-  collection: "best_practices"
-  path: "/best-practices"
+#- name: "Best Practices"
+#  collection: "best_practices"
+#  path: "/best-practices"
   
 - name: "Reference"
   collection: "references"

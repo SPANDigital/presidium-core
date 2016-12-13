@@ -2,7 +2,7 @@
 # Collections for content articles
 #
 collections:
-    best_practices:
+#    best_practices:
     getting_started:
     key_concepts:
     overview:
@@ -29,7 +29,8 @@ exclude: [
     "README.md",
     "LICENSE",
     "_TEMPLATE.md",
-    ".gitignore"
+    ".gitignore",
+    "_best_practices"
 ]
 
 #
