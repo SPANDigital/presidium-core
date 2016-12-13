@@ -415,11 +415,20 @@ using an application such as curl (on *nix environments), <a href="https://www.g
             
 
             
-                
-                
                 <li>
-                    <a href="/playerpro/tools#tools" data-target="#tools">Tools</a>
-                    <ul>
+                    <a onclick="$('#dropdown-menu-tools').toggleClass('hidden');" >
+                        Tools
+                        <span class="caret"></span>
+                    </a>
+                    <ul id="dropdown-menu-tools" class="hidden">
+                        
+                        <li class="sub-menu-item">
+                            <a href="/playerpro/tools#integrated-development-environment"  data-target="#integrated-development-environment">Integrated Development Environment</a>
+                        </li>
+                        
+                        <li class="sub-menu-item">
+                            <a href="/playerpro/tools#rest-client"  data-target="#rest-client">REST Client</a>
+                        </li>
                         
                     </ul>
                 </li>

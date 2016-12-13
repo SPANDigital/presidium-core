@@ -89,12 +89,52 @@ Note: Please prefix all the included links with /playerpro, for example:
 
                    <h1 class="primary">TOOLS</h1>
 
+<h1 id="integrated-development-environment" class="secondary">Integrated Development Environment</h1>
 <article>
-	<h2 id="no-content">No Content</h2>
-	<div class="article-content">
-		Crickets... There is no content defined for this area at this time.
-	</div>	
-</article>
+      <div class="article-meta">
+          
+          <span class="date"></span>
+      </div>
+      <div class="article-content">
+          <h1 id="intellij-idea">IntelliJ Idea</h1>
+
+<p>IntelliJ Idea with the Python plugin provides a powerful environment within which to develop Python
+applications.</p>
+
+<h1 id="see-also">See Also</h1>
+
+<ul>
+  <li><a href="https://www.jetbrains.com/pycharm/">PyCharm</a></li>
+</ul>
+
+      </div>
+  </article>
+
+<h1 id="rest-client" class="secondary">REST Client</h1>
+<article>
+      <div class="article-meta">
+          
+          <span class="date"></span>
+      </div>
+      <div class="article-content">
+          <h1 id="rest-client">REST Client</h1>
+
+<p>A rest client is an easy way to replicate client transactions against the API.</p>
+
+<h2 id="postman"><a href="https://www.getpostman.com/">Postman</a></h2>
+
+<p>Postman is a cross platform tool that is available as a chrome plugin.</p>
+
+<h2 id="paw"><a href="https://paw.cloud/">Paw</a></h2>
+
+<p>Paw is a Mac HTTP Client.</p>
+
+<h2 id="curl"><a href="https://curl.haxx.se">curl</a></h2>
+
+<p>curl is a command line tool that can be used as a REST client and is available on *nix platforms.</p>
+
+      </div>
+  </article>
 
 
                 </article>
@@ -244,11 +284,20 @@ Note: Please prefix all the included links with /playerpro, for example:
             
 
             
-                
-                
                 <li>
-                    <a href="/playerpro/tools#tools" data-target="#tools">Tools</a>
-                    <ul>
+                    <a onclick="$('#dropdown-menu-tools').toggleClass('hidden');" >
+                        Tools
+                        <span class="caret"></span>
+                    </a>
+                    <ul id="dropdown-menu-tools" class="hidden">
+                        
+                        <li class="sub-menu-item">
+                            <a href="/playerpro/tools#integrated-development-environment"  data-target="#integrated-development-environment">Integrated Development Environment</a>
+                        </li>
+                        
+                        <li class="sub-menu-item">
+                            <a href="/playerpro/tools#rest-client"  data-target="#rest-client">REST Client</a>
+                        </li>
                         
                     </ul>
                 </li>
