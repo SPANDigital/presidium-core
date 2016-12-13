@@ -131,7 +131,69 @@ nav#topnav ul li.active a {
 #rightpage article {
   padding: 1em 2em; }
 
-/* This is a partial. */
+/* Styles for main bar headings. */
+/* Built with: http://paletton.com/ */
+/* Color palette. */
+/* Font size gradient. */
+/* Base font styles. */
+/* Header styles. */
+h1 {
+  color: #ED8B00;
+  font-size: 20px;
+  margin-bottom: 0.7em;
+  text-transform: None; }
+
+h2 {
+  color: #474746;
+  font-size: 18px;
+  margin-bottom: 0.5em;
+  text-transform: None; }
+
+h3 {
+  color: #6C6C6C;
+  font-size: 16px;
+  margin-bottom: 0.5em;
+  text-transform: None; }
+
+h4 {
+  color: #999999;
+  font-size: 14px;
+  margin-bottom: None;
+  text-transform: Uppercase; }
+
+/* Created by Pixelzoo: www.pixelzoo.co.za */
+/* Generic styles. */
+html, body {
+  height: 100%; }
+
+body, p, li, a, input {
+  font-family: "Helvetica Neue", sans-serif;
+  font-weight: 300;
+  color: #6C6C6C;
+  line-height: 1.7em;
+  font-size: 14px; }
+
+h1, h2, h3, h4, nav#topnav li a, nav#topnav ul li.active a li a, #page-image p {
+  font-family: "Helvetica Neue", sans-serif;
+  font-weight: 500; }
+
+/* Auto media. */
+video {
+  height: 100%; }
+
+iframe {
+  width: 100%; }
+
+img {
+  width: auto;
+  max-width: 100%; }
+
+b {
+  font-weight: 500; }
+
+a {
+  color: #999999; }
+
 /* Structure: sidebar */
 #onebar {
   clear: both;
@@ -172,11 +234,25 @@ nav#topnav ul li.active a {
     float: left;
     border-right: 1px solid #fff;
     height: 100%; }
+    #onebar.leftbar aside h1 {
+      color: #474746;
+      margin-bottom: 0; }
+    #onebar.leftbar aside h2 {
+      color: #474746;
+      text-transform: uppercase; }
+    #onebar.leftbar aside h3 a {
+      font-size: 16px;
+      text-decoration: none;
+      font-weight: 500; }
+    #onebar.leftbar aside h4 {
+      color: #474746;
+      text-transform: uppercase; }
   #onebar.leftbar.wide #rightpage {
     width: 70%; }
   #onebar.leftbar.wide aside {
     width: 30%; }
 
+/* This is a partial. */
 /* Styles for navigation in sidebar. */
 #nav-container {
   min-width: 222px; }
@@ -746,24 +822,6 @@ hr {
 
 .infobox a, .infobox .more {
   color: #108ac0; }
-
-/* Styles: menu and headings onebar-left */
-.leftbar aside h1 {
-  color: #4d4d4d;
-  margin-bottom: 0; }
-
-.leftbar aside h2 {
-  color: #4d4d4d;
-  text-transform: uppercase; }
-
-.leftbar aside h3 a {
-  font-size: 16px;
-  text-decoration: none;
-  font-weight: 500; }
-
-.leftbar aside h4 {
-  color: #4d4d4d;
-  text-transform: uppercase; }
 
 /* Styles: general side bar in twobar-right Results Panel */
 #wrapper {

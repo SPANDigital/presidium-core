@@ -1,6 +1,8 @@
 // This partial provides basic styles that affect the intrinsic aesthetics of the documentation.
 // This comment is not visible in css.
 
+@import 'mixins';
+
 /* Built with: http://paletton.com/ */
 /* Color palette. */
 $primary-color:    #ED8B00;
@@ -18,13 +20,6 @@ $text-tiny:   14px;
 $base-font-family: 'Helvetica Neue';
 
 /* Header styles. */
-@mixin default-header( $color, $font-size, $margin-bottom, $text-transform ){
-  color: $color;
-  font-size: $font-size;
-  margin-bottom: $margin-bottom;
-  text-transform: $text-transform;
-}
-
 h1{@include default-header($primary-color, $text-large, 0.7em, None)}
 h2{@include default-header($secondary-color, $text-medium, 0.5em, None)}
 h3{@include default-header($tertiary-color, $text-small, 0.5em, None)}

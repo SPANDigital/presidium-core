@@ -5,6 +5,7 @@
 
 @import 'general';
 @import 'structure';
+@import 'mainbar';
 @import 'sidebar';
 @import 'misc';
 @import 'footer';
@@ -193,28 +194,6 @@ hr {
 
 .infobox a, .infobox .more {
   color: #108ac0;
-}
-
-/* Styles: menu and headings onebar-left */
-.leftbar aside h1 {
-  color: #4d4d4d;
-  margin-bottom: 0;
-}
-
-.leftbar aside h2 {
-  color: #4d4d4d;
-  text-transform: uppercase;
-}
-
-.leftbar aside h3 a {
-  font-size: 16px;
-  text-decoration: none;
-  font-weight: 500;
-}
-
-.leftbar aside h4 {
-  color: #4d4d4d;
-  text-transform: uppercase;
 }
 
 /* Styles: general side bar in twobar-right Results Panel */
