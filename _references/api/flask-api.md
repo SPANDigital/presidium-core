@@ -5,6 +5,6 @@ id: "reference-title"
 author: "sybrandstrauss"
 ---
 
-* [Link to static file](playerpro-api.html)
-* [PlayerPro API](http://swagger.api.getplayerpro.com/?url=http://swagger.api.getplayerpro.com/schema)
+* [PlayerPro API (snapshot)](../reference/api/playerpro-api.html)
+* [PlayerPro API (live)](http://swagger.api.getplayerpro.com/?url=http://swagger.api.getplayerpro.com/schema)
  

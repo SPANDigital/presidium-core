@@ -1,0 +1,408 @@
+
+
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PlayerPro</title>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/playerpro/assets/shared/css/reset.css" type="text/css" media="screen"/>
+    <link rel="stylesheet" href="/playerpro/assets/shared/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/playerpro/assets/shared/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/playerpro/assets/shared/css/style.css" type="text/css" media="screen"/>
+    <link rel="stylesheet" href="/playerpro/assets/shared/css/prism.css" type="text/css" media="screen"/>
+
+    <!-- Fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Roboto:300,500' rel='stylesheet' type='text/css'>
+
+    <script src="/playerpro/assets/shared/js/session-capture.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="/playerpro/assets/shared/js/respond.min.js"></script>
+    <script src="/playerpro/assets/shared/js/prism.js"></script>
+
+    <!--[if lt IE 9]>
+    <script src="/playerpro/assets/shared/js/html5.js"></script>
+    <![endif]-->
+
+    <!--
+
+This file gets included in the <head></head> section of the main layout pages.  It allows you to add in additional
+overriding stylesheets and / or JavaScript libraries that you might require in your project.
+
+Note: Please prefix all the included links with /playerpro, for example:
+
+      <link rel="stylesheet" href="/playerpro/assets/local/css/style.css" type="text/css" media="screen"/>
+-->
+
+
+</head>
+<body class="products">
+
+    <div id="holder" class="mainholder">
+
+        <!-- Results panel -->
+        <div id="wrapper">
+            <div id="sidebar-wrapper">
+                <aside>
+                    <article>
+                        <h2>Definition</h2>
+                        <p>content here for results</p>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec pretium metus vitae urna pharetra fermentum. Nunc convallis ligula nec accumsan mollis.</p>
+                        <div class="divider"></div>
+                        <h2>Results formula</h2>
+                        <p> Something here <span class="light">A highlight</span><br>
+                    </article>
+                </aside>
+            </div>
+        </div>
+
+        <!--header-->
+<section id="page-head">
+	<!--logo-->
+	<!--<header id="logo">-->
+			<!--<a href=""><img src="/playerpro/assets/local/images/company_logo.png" alt=""></a>-->
+	<!--</header>-->
+	<!--menu-->
+	<!-- <nav id = "topnav">
+	    <ul>
+	        <li>
+	            <a href="/products/">PRODUCTS</a>
+	            <a href="/classes/">CLASSES</a>
+	            <a href="/events/">EVENTS</a>
+	            <a href="/pangaea-onboarding/">ONBOARDING</a>
+	        </li>
+	    </ul>
+	</nav> -->
+</section>
+
+
+        <!--CONTENT with sidebar left-->
+        <section id="onebar" class="leftbar">
+            <!--CONTENT right-->
+
+            <section id="rightpage">
+                <article id="overview" class="reference">
+					<!--<a href="#menu-toggle" class="togglebut" id="menu-toggle">Toggle Results Panel</a>-->
+
+                   <h1 class="primary">OVERVIEW</h1>
+
+<h1 id="playerpro-overall-system-architecture">PlayerPro Overall System Architecture</h1>
+
+<p><img src="/playerpro/assets/local/images/ppro_architecture_overview.svg" alt="Overall Architecture" /></p>
+
+<h1 id="playerpro-api">PlayerPro API</h1>
+
+<p>PlayerPro currently provides an API that offers much of the
+functionality that one can perform on their website as well. Their
+endpoints are partially grouped into themes. The response data from the
+endpoints contains large amounts of irrelevant and confusing
+information. Their conventions regarding request parameters, errors,
+data formats etc are not always consistent. By and large the API is
+difficult to use and does not provide a good end user experience.</p>
+
+<h2 id="interface-design">Interface Design</h2>
+
+<p>A clean and intuitive user experience requires considerable thought and
+thus we use an design-first workflow in combination with suitable tool
+support such as Swagger. We’ve chosen to use Swagger to design the API
+interface. Swagger gives us a complete toolchain necessary to build and
+manage a REST API. Furthermore, this gives us a clean framework in
+which to:</p>
+
+<ul>
+  <li>Design clean URLs</li>
+  <li>Clearly define request parameters and response objects</li>
+  <li>Manage headers</li>
+  <li>Generate client side code in a number of languages</li>
+  <li>Generate documentation</li>
+</ul>
+
+<h1 id="playerpro-job-service">PlayerPro Job Service</h1>
+
+<p>The PlayerPro Job Service, is a fully scalable service that allows
+tightly coupled behaviours between the PHP Symfony App and the PlayerPro
+API to be separated or abstracted out for handling via an asynchronous
+mechanism - the result of which is improved throughput and scalability
+across the PlayerPro Product.</p>
+
+<p>The Job Service consists of an event bus (implemented as a Kafka queue, 
+with a publish-subscribe pattern) that handles the transport of event
+messages published by PHP Symfony and/or the PlayerPro API.
+Additionally, a job queue handles the transport of enriched events 
+(jobs) from the event consumer pipeline. Events are enriched or
+‘converted’ into jobs through the application of configuration rules
+supplied to the service. These jobs, in turn, are handled by a job
+consumer pipeline where its termination culminates in changes to various
+services and their resources, for example: webhooks, cache invalidation,
+user feed generation and more.</p>
+
+<h2 id="supporting-scale">Supporting Scale</h2>
+
+<p>With PlayerPro’s continued growth as a leader in football social media,
+need has arisen to address the scalability concerns inherent large,
+monolithic services.</p>
+
+<h3 id="through-decoupling">Through Decoupling:</h3>
+
+<p>The design of the PlayerPro Job Service supports iteratively decoupling
+computationally expensive behaviours from the PlayerPro PHP Symfony and,
+in stead, handling these in a distributed and highly scalable manner.</p>
+
+<h3 id="through-asynchronicity">Through Asynchronicity:</h3>
+
+<p>Through the use of an asynchronous Job Service, actions that would
+normally block - and, as a consequence ruin the quality of services, can
+now be handled in a way that does not prevent the timely processing of
+other (perhaps higher priority) work.</p>
+
+
+
+                </article>
+            </section>
+
+            <aside>
+                <!--Product Logo-->
+                <article>
+                    
+                        <a href="index.html" class="sublogo"><img src="/playerpro/assets/local/images/project_logo.png" alt=""></a>
+                    
+                    <h4>Version</h4>
+
+                    <div id="bar-select">
+                        <select>
+                            <option value="/playerpro/versions/latest/">Latest</option>
+                            
+                                <option value="/playerpro/versions/"></option>
+                            
+                                <option value="/playerpro/versions/"></option>
+                            
+                        </select>
+                    </div>
+                </article>
+                <div id="nav-container">
+                    <!--left sub navigation-->
+<nav id="sidenav">
+    <h2>DOCUMENTATION</h2>
+    <ul class="nav">
+        
+            
+            
+
+            
+                
+                
+                <li>
+                    <a href="/playerpro/#overview" data-target="#overview">Overview</a>
+                    <ul>
+                        
+                    </ul>
+                </li>
+            
+         
+            
+            
+
+            
+                
+                
+                <li>
+                    <a href="/playerpro/key-concepts#key-concepts" data-target="#key-concepts">Key Concepts</a>
+                    <ul>
+                        
+                    </ul>
+                </li>
+            
+         
+            
+            
+
+            
+                
+                
+                <li>
+                    <a href="/playerpro/prerequisites#prerequisites" data-target="#prerequisites">Prerequisites</a>
+                    <ul>
+                        
+                    </ul>
+                </li>
+            
+         
+            
+            
+
+            
+                
+                
+                <li>
+                    <a href="/playerpro/getting-started#getting-started" data-target="#getting-started">Getting started</a>
+                    <ul>
+                        
+                    </ul>
+                </li>
+            
+         
+            
+            
+
+            
+                
+                
+                <li>
+                    <a href="/playerpro/references#reference" data-target="#reference">Reference</a>
+                    <ul>
+                        
+                            
+                            
+                                <li>
+                                    <a onclick="$('#dropdown-menu-api').toggleClass('hidden');" >
+                                        API
+                                        <span class="caret"></span>
+                                    </a>
+                                    <ul id="dropdown-menu-api" class="hidden">
+                                        
+                                        <li class="sub-menu-item">
+                                            <a href="/playerpro/references#playerpro-python-flask-api" data-target="#playerpro-python-flask-api">PlayerPro Python/FLASK API</a>
+                                        </li>
+                                        
+                                    </ul>
+                                </li>
+                            
+                        
+                    </ul>
+                </li>
+            
+         
+            
+            
+
+            
+                
+                
+                <li>
+                    <a href="/playerpro/cookbook#cookbook" data-target="#cookbook">Cookbook</a>
+                    <ul>
+                        
+                    </ul>
+                </li>
+            
+         
+            
+            
+
+            
+                <li>
+                    <a onclick="$('#dropdown-menu-tools').toggleClass('hidden');" >
+                        Tools
+                        <span class="caret"></span>
+                    </a>
+                    <ul id="dropdown-menu-tools" class="hidden">
+                        
+                        <li class="sub-menu-item">
+                            <a href="/playerpro/tools#integrated-development-environment"  data-target="#integrated-development-environment">Integrated Development Environment</a>
+                        </li>
+                        
+                        <li class="sub-menu-item">
+                            <a href="/playerpro/tools#rest-client"  data-target="#rest-client">REST Client</a>
+                        </li>
+                        
+                    </ul>
+                </li>
+            
+         
+            
+            
+
+            
+                
+                
+                <li>
+                    <a href="/playerpro/testing#testing-debugging" data-target="#testing-debugging">Testing & Debugging</a>
+                    <ul>
+                        
+                    </ul>
+                </li>
+            
+         
+            
+            
+
+            
+                <li>
+                    <a onclick="$('#dropdown-menu-updates').toggleClass('hidden');" >
+                        Updates
+                        <span class="caret"></span>
+                    </a>
+                    <ul id="dropdown-menu-updates" class="hidden">
+                        
+                        <li class="sub-menu-item">
+                            <a href="/playerpro/updates#job-service-0-1-2"  data-target="#job-service-0-1-2">Job Service 0.1.2</a>
+                        </li>
+                        
+                        <li class="sub-menu-item">
+                            <a href="/playerpro/updates#api-3-1-4"  data-target="#api-3-1-4">API 3.1.4</a>
+                        </li>
+                        
+                    </ul>
+                </li>
+            
+         
+    </ul>
+</nav>
+
+
+<!--href="/playerpro#"></a>-->
+
+                    <article>
+                        <h4>Contact the team</h4>
+						<span class="button icon-slack"><a href="https://spandigital.slack.com/messages/player-pro/" target="_blank">player-pro</a></span>
+                    </article>
+                </div>
+            </aside>
+        </section>
+
+        <!-- footer 
+Commenting out the footer until we get content... :-)
+so not to break layout - is also hidden in the style.css footer-->
+
+<section id="page-foot">
+	<!-- <footer class="footer">
+      <div class="container">
+        <h2></h2>
+		<p>&copy; August 2015 [ <a href="/">Lorem Ipsum</a> ] All rights reserved | </p>
+      </div>
+    </footer>-->
+</section>
+
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $('#nav-container').affix({
+                offset: {
+                    top: 200,
+                    bottom: function () {
+                        return (this.bottom = $('.footer').outerHeight(true) + 12)
+                    }
+                }
+            });
+
+            $('#nav-container').on('affix.bs.affix', function() {
+                $('#nav-container').removeAttr('style');
+            });
+            $('body').scrollspy({
+                target: '#sidenav'
+            });
+        })
+    </script>
+<!-- Menu Toggle Script -->
+    <script>
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+		$("#menu-toggle").toggleClass("toggleon");
+    });
+    </script>
+</body>
