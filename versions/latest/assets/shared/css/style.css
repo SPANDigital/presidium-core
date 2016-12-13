@@ -194,7 +194,7 @@ b {
 a {
   color: #999999; }
 
-/* Structure: sidebar */
+/* Structure: all bars. */
 #onebar {
   clear: both;
   padding: 0 20px 0 50px; }
@@ -267,11 +267,18 @@ a {
   #nav-container ul ul li a {
     margin-left: 1.5em;
     font-weight: 300; }
+    #nav-container ul ul li a:hover, #nav-container ul ul li afocus {
+      background: None;
+      font-weight: 500; }
+  #nav-container ul ul li:hover, #nav-container ul ul li:focus {
+    background: #e4ecf0; }
   #nav-container ul ul ul li a {
     margin-left: 2.5em;
     font-weight: 300;
     font-style: italic;
     font-size: 0.9em; }
+  #nav-container ul ul ul li:hover, #nav-container ul ul ul li:focus {
+    background: none; }
   #nav-container li a:hover, #nav-container li a:focus {
     background: #e4ecf0 url(../images/subnav_bg.png) right center no-repeat;
     font-weight: 500; }
@@ -281,16 +288,9 @@ a {
   font-weight: 500; }
 
 /* Styles for active hovers in sidebar.  */
-#nav-container ul ul li a:hover, #nav-container ul ul li a:focus {
-  background: none;
-  font-weight: 500; }
 #nav-container li.active ul li a:hover {
   background: none;
   font-weight: 500; }
-#nav-container ul ul li:hover, #nav-container ul ul li:focus {
-  background: #e4ecf0; }
-#nav-container ul ul ul li:hover, #nav-container ul ul ul li:focus {
-  background: none; }
 #nav-container li.active {
   background: #e4ecf0 url(../images/subnav_bg.png) right center no-repeat; }
 #nav-container ul ul li.active {

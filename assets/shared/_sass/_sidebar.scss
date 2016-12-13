@@ -15,15 +15,29 @@
     padding: 0.4em 1em;
   }
   ul ul {
-    li a {
-      margin-left: 1.5em;
-      font-weight: 300;
+    li {
+      a {
+        margin-left: 1.5em;
+        font-weight: 300;
+        &:hover, &focus {
+          background: None;
+          font-weight: 500;
+        }
+      }
+      &:hover, &:focus {
+        background: #e4ecf0;
+      }
     }
-    ul li a {
-      margin-left: 2.5em;
-      font-weight: 300;
-      font-style: italic;
-      font-size: 0.9em;
+    ul li {
+      a {
+        margin-left: 2.5em;
+        font-weight: 300;
+        font-style: italic;
+        font-size: 0.9em;
+      }
+      &:hover, &:focus {
+        background: none;
+      }
     }
   }
   li a {
@@ -41,27 +55,9 @@
 
 /* Styles for active hovers in sidebar.  */
 #nav-container {
-  ul ul li a {
-    &:hover, &:focus {
-      background: none;
-      font-weight: 500;
-    }
-  }
   li.active ul li a:hover {
     background: none;
     font-weight: 500;
-  }
-  ul ul {
-    li {
-      &:hover, &:focus {
-        background: #e4ecf0;
-      }
-    }
-    ul li {
-      &:hover, &:focus {
-        background: none;
-      }
-    }
   }
   li.active {
     background: #e4ecf0 url(../images/subnav_bg.png) right center no-repeat;
