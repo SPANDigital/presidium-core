@@ -7,9 +7,12 @@
 @import 'structure';
 @import 'mainbar';
 @import 'sidebar';
-@import 'misc';
 @import 'footer';
+@import 'syntax';
 
+.light {
+  color: #8fd3f4;
+}
 
 /* Content Types - Layout & Styles ---------------------------------------------------------- */
 /* Styles - Misc  */

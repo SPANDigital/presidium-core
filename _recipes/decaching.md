@@ -27,7 +27,7 @@ done per user. The cache keys in the Redis store will look like:
 The events that are pushed to the Job Service, can be converted into
 jobs by using the following configuration:
 
-{% highlight yaml lineos %}
+{% highlight yaml %}
 job_scheduler:
   job_rules:
     # ...
