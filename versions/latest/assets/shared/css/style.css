@@ -39,16 +39,13 @@ body, p, li, a, input {
   line-height: 1.7em;
   font-size: 14px; }
 
-h1, h2, h3, h4, nav#topnav li a, nav#topnav ul li.active a li a, #page-image p {
+h1, h2, h3, h4 {
   font-family: "Helvetica Neue", sans-serif;
   font-weight: 500; }
 
 /* Auto media. */
 video {
   height: 100%; }
-
-iframe {
-  width: 100%; }
 
 img {
   width: auto;
@@ -59,6 +56,12 @@ b {
 
 a {
   color: #999999; }
+
+hr {
+  height: 1px;
+  background: #ddd;
+  border: none;
+  margin: 20px 0; }
 
 /* Main structure. */
 #holder {
@@ -131,6 +134,12 @@ nav#topnav ul li.active a {
 #rightpage article {
   padding: 1em 2em; }
 
+.divider {
+  height: 1px;
+  border-bottom: solid 1px #ddd;
+  margin: 10px 0;
+  clear: both; }
+
 /* Styles for main bar headings. */
 /* Built with: http://paletton.com/ */
 /* Color palette. */
@@ -173,16 +182,13 @@ body, p, li, a, input {
   line-height: 1.7em;
   font-size: 14px; }
 
-h1, h2, h3, h4, nav#topnav li a, nav#topnav ul li.active a li a, #page-image p {
+h1, h2, h3, h4 {
   font-family: "Helvetica Neue", sans-serif;
   font-weight: 500; }
 
 /* Auto media. */
 video {
   height: 100%; }
-
-iframe {
-  width: 100%; }
 
 img {
   width: auto;
@@ -193,6 +199,12 @@ b {
 
 a {
   color: #999999; }
+
+hr {
+  height: 1px;
+  background: #ddd;
+  border: none;
+  margin: 20px 0; }
 
 /* Structure: all bars. */
 #onebar {
@@ -251,6 +263,109 @@ a {
     width: 70%; }
   #onebar.leftbar.wide aside {
     width: 30%; }
+
+/* Content Layouts:  Main text - for one bar (rightpage content)*/
+#rightpage p, #nobar p {
+  padding-bottom: 1em; }
+
+/* Content Layouts:  News / events page- for onebar (rightpage content)*/
+.news {
+  clear: both; }
+
+#rightpage .cardgrid.catalog article {
+  background: #fafafa;
+  padding: 0;
+  min-height: 100px;
+  width: 100%; }
+
+#rightpage .cardgrid.catalog div {
+  /*max-width: 320px;  will flow if you set max width */
+  padding: 20px 40px; }
+
+#rightpage article.reference {
+  margin-left: 1em; }
+
+#rightpage .reference article {
+  margin: 0;
+  padding: 0; }
+
+#rightpage #imagethumbs {
+  width: 180px;
+  float: right;
+  padding-left: 20px; }
+
+#rightpage .news h1 {
+  font-size: 24px;
+  color: #108ac0;
+  margin-bottom: 0.5em; }
+
+#rightpage .news h2 {
+  color: #fdb728;
+  text-transform: uppercase; }
+
+#rightpage .news h2 span {
+  color: #d6d6d6; }
+
+#rightpage .actions a {
+  text-decoration: none;
+  text-transform: uppercase; }
+
+#rightpage .but_outlook a, #rightpage .but_contact a {
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 2em;
+  color: #108ac0; }
+
+/* This causes the table of contents to have unsightly gaps. */
+#rightpage ul, #nobar ul {
+  /* padding-bottom: 1em; */ }
+
+#rightpage ul li, #nobar ul li {
+  list-style: inside disc; }
+
+#rightpage ul li a {
+  text-decoration: none; }
+
+#rightpage ul ul, #nobar ul ul {
+  list-style: inside disc;
+  margin-left: 1em; }
+
+#rightpage ul li li, #nobar ul li li {
+  list-style: inside circle; }
+
+/* Product layout specific ---------------------------------------------------------- */
+body.products #rightpage .primary {
+  font-size: 24px;
+  border-bottom: solid 1px #ddd;
+  padding-bottom: 20px;
+  text-transform: uppercase; }
+
+body.products #rightpage .secondary {
+  font-size: 20px;
+  color: #108ac0;
+  border-top: solid 1px #108ac0;
+  text-transform: uppercase;
+  padding-top: 20px;
+  margin-top: 50px; }
+
+body.products #rightpage .reference article h1 {
+  font-size: 20px;
+  border-top: solid 1px #4d4d4d;
+  padding-top: 10px; }
+
+body.products #rightpage .reference article h2 {
+  font-size: 16px; }
+
+body.products #rightpage .reference article h3 {
+  font-size: 14px; }
+
+body.products #rightpage .reference article h4 {
+  font-size: 12px; }
+
+/*removing first / second iterations - border tops */
+body.products #rightpage h1:nth-of-type(2) {
+  border-top: none;
+  margin-top: 0; }
 
 /* This is a partial. */
 /* Styles for navigation in sidebar. */
@@ -344,16 +459,13 @@ body, p, li, a, input {
   line-height: 1.7em;
   font-size: 14px; }
 
-h1, h2, h3, h4, nav#topnav li a, nav#topnav ul li.active a li a, #page-image p {
+h1, h2, h3, h4 {
   font-family: "Helvetica Neue", sans-serif;
   font-weight: 500; }
 
 /* Auto media. */
 video {
   height: 100%; }
-
-iframe {
-  width: 100%; }
 
 img {
   width: auto;
@@ -364,6 +476,12 @@ b {
 
 a {
   color: #999999; }
+
+hr {
+  height: 1px;
+  background: #ddd;
+  border: none;
+  margin: 20px 0; }
 
 .blue {
   color: #108ac0; }
@@ -673,18 +791,6 @@ footer h2 {
 
 /* Content Types - Layout & Styles ---------------------------------------------------------- */
 /* Styles - Misc  */
-.divider {
-  height: 1px;
-  border-bottom: solid 1px #ddd;
-  margin: 10px 0;
-  clear: both; }
-
-hr {
-  height: 1px;
-  background: #ddd;
-  border: none;
-  margin: 20px 0; }
-
 .caption {
   font-size: 0.9em;
   text-align: center;
@@ -1024,53 +1130,6 @@ hr {
   -webkit-border-radius: 150px;
   -moz-border-radius: 150px; }
 
-/* Content Layouts:  Main text - for one bar (rightpage content)*/
-#rightpage p, #nobar p {
-  padding-bottom: 1em; }
-
-/* This causes the table of contents to have unsightly gaps. */
-#rightpage ul, #nobar ul {
-  /* padding-bottom: 1em; */ }
-
-#rightpage ul li, #nobar ul li {
-  list-style: inside disc; }
-
-#rightpage ul li a {
-  text-decoration: none; }
-
-#rightpage ul ul, #nobar ul ul {
-  list-style: inside disc;
-  margin-left: 1em; }
-
-#rightpage ul li li, #nobar ul li li {
-  list-style: inside circle; }
-
-/* Content Layouts:  News / events page- for onebar (rightpage content)*/
-.news {
-  clear: both; }
-
-#rightpage .news h1 {
-  font-size: 24px;
-  color: #108ac0;
-  margin-bottom: 0.5em; }
-
-#rightpage .news h2 {
-  color: #fdb728;
-  text-transform: uppercase; }
-
-#rightpage .news h2 span {
-  color: #d6d6d6; }
-
-#rightpage .actions a {
-  text-decoration: none;
-  text-transform: uppercase; }
-
-#rightpage .but_outlook a, #rightpage .but_contact a {
-  font-size: 11px;
-  font-weight: 500;
-  line-height: 2em;
-  color: #108ac0; }
-
 /* Content Layouts:  Media thumbnails (rightpage content)*/
 #mediathumbs {
   float: left;
@@ -1094,11 +1153,6 @@ hr {
   height: 300px;
   max-width: 180px;
   padding-bottom: 1em; }
-
-#rightpage #imagethumbs {
-  width: 180px;
-  float: right;
-  padding-left: 20px; }
 
 .bg-grey #imagethumbs {
   max-height: 300px;
@@ -1194,42 +1248,6 @@ th {
 .icon-slack a:hover, .icon-slack a:focus {
   background-color: #d4d4d4; }
 
-/* Product layout specific ---------------------------------------------------------- */
-#rightpage article.reference {
-  margin-left: 1em; }
-
-#rightpage .reference article {
-  margin: 0;
-  padding: 0; }
-
-body.products #rightpage .primary {
-  font-size: 24px;
-  border-bottom: solid 1px #ddd;
-  padding-bottom: 20px;
-  text-transform: uppercase; }
-
-body.products #rightpage .secondary {
-  font-size: 20px;
-  color: #108ac0;
-  border-top: solid 1px #108ac0;
-  text-transform: uppercase;
-  padding-top: 20px;
-  margin-top: 50px; }
-
-body.products #rightpage .reference article h1 {
-  font-size: 20px;
-  border-top: solid 1px #4d4d4d;
-  padding-top: 10px; }
-
-body.products #rightpage .reference article h2 {
-  font-size: 16px; }
-
-body.products #rightpage .reference article h3 {
-  font-size: 14px; }
-
-body.products #rightpage .reference article h4 {
-  font-size: 12px; }
-
 /* Content layout: cardgrid for nobar */
 .cardgrid {
   padding: 0;
@@ -1247,16 +1265,6 @@ body.products #rightpage .reference article h4 {
   background: #fff;
   border: 1px solid #ccc; }
 
-#rightpage .cardgrid.catalog article {
-  background: #fafafa;
-  padding: 0;
-  min-height: 100px;
-  width: 100%; }
-
-#rightpage .cardgrid.catalog div {
-  /*max-width: 320px;  will flow if you set max width */
-  padding: 20px 40px; }
-
 .catalog h2 {
   background: #e4ecf0;
   color: #4d4d4d;
@@ -1273,11 +1281,6 @@ body.products #rightpage .reference article h4 {
 
 .catalog p {
   padding: 10px; }
-
-/*removing first / second iterations - border tops */
-body.products #rightpage h1:nth-of-type(2) {
-  border-top: none;
-  margin-top: 0; }
 
 /*
  * Styling for the side navbar positioning using affix

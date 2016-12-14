@@ -1,4 +1,5 @@
 // This partial provides basic styles that affect the intrinsic aesthetics of the documentation.
+// The rule of thumb is that these are general styles that are applied to basic HTML elements.
 // This comment is not visible in css.
 
 @import 'mixins';
@@ -9,6 +10,8 @@ $primary-color:    #ED8B00;
 $secondary-color:  #474746;
 $tertiary-color:   #6C6C6C;
 $quaternary-color: #999999;
+
+$quinary-color: #ddd;
 
 /* Font size gradient. */
 $text-large:  20px;
@@ -40,7 +43,7 @@ body, p, li, a, input {
   font-size: $text-tiny;
 }
 
-h1, h2, h3, h4, nav#topnav li a, #page-image p {
+h1, h2, h3, h4 {
   font-family: $base-font-family, sans-serif;
   font-weight: 500;
 }
@@ -48,10 +51,6 @@ h1, h2, h3, h4, nav#topnav li a, #page-image p {
 /* Auto media. */
 video {
   height: 100%;
-}
-
-iframe {
-  width: 100%;
 }
 
 img {
@@ -65,4 +64,11 @@ b {
 
 a {
   color: $quaternary-color;
+}
+
+hr {
+  height: 1px;
+  background: $quinary-color;
+  border: none;
+  margin: 20px 0;
 }

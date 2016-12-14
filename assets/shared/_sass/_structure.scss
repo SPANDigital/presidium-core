@@ -91,3 +91,10 @@ nav#topnav ul li.active a {
 #rightpage article {
   padding: 1em 2em;
 }
+
+.divider {
+  height: 1px;
+  border-bottom: solid 1px $quinary-color;
+  margin: 10px 0;
+  clear: both;
+}
