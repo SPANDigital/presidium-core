@@ -1,8 +1,13 @@
+code {
+  span {
+    font-size: $text-teeny;
+  }
+}
 /*
 Taken from : source: https://github.com/mojombo/tpw/blob/master/css/syntax.css
 This is css for code highlighting.
 */
-.highlight  { background: #ffffff; font-size: 11px }
+.highlight  { background: #ffffff }
 .highlight .c { color: #999988; font-style: italic } /* Comment */
 .highlight .err { color: #a61717; background-color: #e3d2d2 } /* Error */
 .highlight .k { font-weight: bold } /* Keyword */

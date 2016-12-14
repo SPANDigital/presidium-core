@@ -495,13 +495,15 @@ footer h2 {
   font-size: 32px;
   padding: 35px 0 100px 60px; }
 
+code span {
+  font-size: 12px; }
+
 /*
 Taken from : source: https://github.com/mojombo/tpw/blob/master/css/syntax.css
 This is css for code highlighting.
 */
 .highlight {
-  background: #ffffff;
-  font-size: 11px; }
+  background: #ffffff; }
 
 .highlight .c {
   color: #999988;
