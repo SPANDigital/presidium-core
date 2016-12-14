@@ -264,14 +264,12 @@ hr {
   #onebar.leftbar.wide aside {
     width: 30%; }
 
-/* Content Layouts:  Main text - for one bar (rightpage content)*/
-#rightpage p, #nobar p {
-  padding-bottom: 1em; }
-
 /* Content Layouts:  News / events page- for onebar (rightpage content)*/
 .news {
   clear: both; }
 
+#rightpage p {
+  padding-bottom: 1em; }
 #rightpage .cardgrid.catalog article {
   background: #fafafa;
   padding: 0;
@@ -306,28 +304,27 @@ hr {
   font-weight: 500;
   line-height: 2em;
   color: #108ac0; }
-#rightpage ul {
-  /* padding-bottom: 1em; */ }
-
-/* This causes the table of contents to have unsightly gaps. */
-#nobar ul {
-  /* padding-bottom: 1em; */ }
-
-#rightpage ul li, #nobar ul li {
+#rightpage ul li {
   list-style: inside disc; }
-
-#rightpage ul li a {
-  text-decoration: none; }
+  #rightpage ul li a {
+    text-decoration: none; }
+  #rightpage ul li li {
+    list-style: inside circle; }
 #rightpage ul ul {
   list-style: inside disc;
   margin-left: 1em; }
 
+#nobar ul li {
+  list-style: inside disc; }
+  #nobar ul li a {
+    text-decoration: initial; }
+  #nobar ul li li {
+    list-style: inside circle; }
 #nobar ul ul {
   list-style: inside disc;
   margin-left: 1em; }
-
-#rightpage ul li li, #nobar ul li li {
-  list-style: inside circle; }
+#nobar p {
+  padding-bottom: 1em; }
 
 /* Product layout specific ---------------------------------------------------------- */
 body.products #rightpage .primary {

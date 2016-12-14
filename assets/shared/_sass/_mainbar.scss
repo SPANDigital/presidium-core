@@ -3,6 +3,25 @@
 @import 'general';
 @import 'mixins';
 
+
+@mixin lists($text-decoration: initial) {
+  ul {
+    li {
+      list-style: inside disc;
+      a {
+        text-decoration: $text-decoration;
+      }
+      li {
+        list-style: inside circle;
+      }
+    }
+    ul {
+      list-style: inside disc;
+      margin-left: 1em;
+    }
+  }
+}
+
 /* Structure: all bars. */
 #onebar {
   clear: both;
@@ -68,12 +87,6 @@
   }
 }
 
-/* Content Layouts:  Main text - for one bar (rightpage content)*/
-
-#rightpage p, #nobar p {
-  padding-bottom: 1em;
-}
-
 /* Content Layouts:  News / events page- for onebar (rightpage content)*/
 
 .news {
@@ -81,6 +94,9 @@
 }
 
 #rightpage {
+  p {
+    padding-bottom: 1em;
+  }
   .cardgrid.catalog {
     article {
       background: #fafafa;
@@ -129,38 +145,15 @@
     line-height: 2em;
     color: $blue;
   }
-  ul {
-    /* padding-bottom: 1em; */
+
+  @include lists(none)
+}
+
+#nobar {
+  @include lists();
+  p {
+    padding-bottom: 1em;
   }
-}
-
-/* This causes the table of contents to have unsightly gaps. */
-
-#nobar ul {
-  /* padding-bottom: 1em; */
-}
-
-#rightpage ul li, #nobar ul li {
-  list-style: inside disc;
-}
-
-#rightpage ul {
-  li a {
-    text-decoration: none;
-  }
-  ul {
-    list-style: inside disc;
-    margin-left: 1em;
-  }
-}
-
-#nobar ul ul {
-  list-style: inside disc;
-  margin-left: 1em;
-}
-
-#rightpage ul li li, #nobar ul li li {
-  list-style: inside circle;
 }
 
 /* Product layout specific ---------------------------------------------------------- */
