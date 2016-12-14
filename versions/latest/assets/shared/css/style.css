@@ -363,18 +363,33 @@ body.products #rightpage h1:nth-of-type(2) {
     list-style: None; }
     #nav-container li.active {
       background: #e4ecf0 url(../images/subnav_bg.png) right center no-repeat; }
+<<<<<<< f248d70187f5a171b3068bdb7b80c3ee6f9e68ab
       #nav-container li.active ul li a:hover {
         background: None;
         font-weight: 500; }
     #nav-container li a {
       text-decoration: None;
       color: #474746;
+=======
+      #nav-container li.active a {
+        font-weight: 500; }
+      #nav-container li.active ul li a {
+        font-weight: 300; }
+        #nav-container li.active ul li a:hover {
+          background: None;
+          font-weight: 500; }
+    #nav-container li a {
+      text-decoration: None;
+      color: #4d4d4d;
+>>>>>>> Minor redundancy change.
       cursor: pointer; }
       #nav-container li a:hover, #nav-container li a:focus {
         background: #e4ecf0 url(../images/subnav_bg.png) right center no-repeat;
         font-weight: 500; }
   #nav-container .nav > li > a {
     padding: 0.4em 1em; }
+  #nav-container ul ul li.active {
+    background: None; }
   #nav-container ul ul li a {
     margin-left: 1.5em;
     font-weight: 300; }
@@ -395,6 +410,7 @@ body.products #rightpage h1:nth-of-type(2) {
   background: #e4ecf0 url(../images/subnav_bg.png) right center no-repeat;
   font-weight: 500; }
 
+<<<<<<< f248d70187f5a171b3068bdb7b80c3ee6f9e68ab
 /* Styles for active hovers in sidebar.  */
 #nav-container ul ul li.active {
   background: None; }
@@ -403,6 +419,8 @@ body.products #rightpage h1:nth-of-type(2) {
 #nav-container li.active ul li a {
   font-weight: 300; }
 
+=======
+>>>>>>> Minor redundancy change.
 /* This mostly includes coloring for code markup */
 /* Built with: http://paletton.com/ */
 /* Color palette. */
