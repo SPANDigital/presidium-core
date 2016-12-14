@@ -1,5 +1,7 @@
 /* This is a partial. */
 
+@import 'general';
+
 /* Styles for navigation in sidebar. */
 #nav-container {
   min-width: 222px;
@@ -40,6 +42,10 @@
         background: None;
       }
       a {
+        padding-left: 8%;
+        display: block;
+        width: 100%;
+        word-wrap: break-word;
         margin-left: 1.5em;
         font-weight: 300;
         &:hover, &focus {
@@ -53,6 +59,10 @@
     }
     ul li {
       a {
+        padding-left: 8%;
+        display: block;
+        width: 100%;
+        word-wrap: break-word;
         margin-left: 2.5em;
         font-weight: 300;
         font-style: italic;
