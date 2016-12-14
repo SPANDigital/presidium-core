@@ -1,5 +1,7 @@
 /* This is a partial. */
 
+@import 'general';
+
 /* Styles for navigation in sidebar. */
 #nav-container {
   min-width: 222px;
@@ -9,13 +11,15 @@
   li {
     list-style: None;
      &.active {
+       a {
+         font-weight: 500;
+       }
       background: #e4ecf0 url(../images/subnav_bg.png) right center no-repeat;
-      ul {
-        li {
-          a:hover {
-            background: None;
-            font-weight: 500;
-          }
+      ul li a {
+        font-weight: 300;
+        &:hover {
+          background: None;
+          font-weight: 500;
         }
       }
     }
@@ -34,7 +38,14 @@
   }
   ul ul {
     li {
+      &.active {
+        background: None;
+      }
       a {
+        padding-left: 8%;
+        display: block;
+        width: 100%;
+        word-wrap: break-word;
         margin-left: 1.5em;
         font-weight: 300;
         &:hover, &focus {
@@ -48,6 +59,10 @@
     }
     ul li {
       a {
+        padding-left: 8%;
+        display: block;
+        width: 100%;
+        word-wrap: break-word;
         margin-left: 2.5em;
         font-weight: 300;
         font-style: italic;
@@ -63,19 +78,4 @@
 .opened {
   background: #e4ecf0 url(../images/subnav_bg.png) right center no-repeat;
   font-weight: 500;
-}
-
-/* Styles for active hovers in sidebar.  */
-#nav-container {
-  ul ul li.active {
-    background: None;
-  }
-  li.active {
-    a {
-      font-weight: 500;
-    }
-    ul li a {
-      font-weight: 300;
-    }
-  }
 }
