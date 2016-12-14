@@ -7,38 +7,33 @@
     padding: 0 1em;
   }
   li {
-    a {
-      text-decoration: None;
-      color: #4d4d4d;
-      cursor: pointer;
-    }
-    .active {
+    list-style: None;
+     &.active {
       background: #e4ecf0 url(../images/subnav_bg.png) right center no-repeat;
-      a {
-        font-weight: 500;
-      }
       ul {
-        li{
-          a {
-            font-weight: 300;
-            &:hover {
-              background: none;
-              font-weight: 500;
-            }
+        li {
+          a:hover {
+            background: None;
+            font-weight: 500;
           }
         }
       }
     }
-    list-style: none;
+    a {
+      text-decoration: None;
+      color: #4d4d4d;
+      cursor: pointer;
+      &:hover, &:focus {
+        background: #e4ecf0 url(../images/subnav_bg.png) right center no-repeat;
+        font-weight: 500;
+      }
+    }
   }
   .nav > li > a {
     padding: 0.4em 1em;
   }
   ul ul {
     li {
-      .active {
-        background: None;
-      }
       a {
         margin-left: 1.5em;
         font-weight: 300;
@@ -59,14 +54,8 @@
         font-size: 0.9em;
       }
       &:hover, &:focus {
-        background: none;
+        background: None;
       }
-    }
-  }
-  li a {
-    &:hover, &:focus {
-      background: #e4ecf0 url(../images/subnav_bg.png) right center no-repeat;
-      font-weight: 500;
     }
   }
 }
@@ -74,4 +63,19 @@
 .opened {
   background: #e4ecf0 url(../images/subnav_bg.png) right center no-repeat;
   font-weight: 500;
+}
+
+/* Styles for active hovers in sidebar.  */
+#nav-container {
+  ul ul li.active {
+    background: None;
+  }
+  li.active {
+    a {
+      font-weight: 500;
+    }
+    ul li a {
+      font-weight: 300;
+    }
+  }
 }
