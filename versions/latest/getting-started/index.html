@@ -1,0 +1,720 @@
+
+
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PlayerPro</title>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/SPANDigital/playerpro-docs/versions/latest/assets/shared/css/reset.css" type="text/css" media="screen"/>
+    <link rel="stylesheet" href="/SPANDigital/playerpro-docs/versions/latest/assets/shared/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/SPANDigital/playerpro-docs/versions/latest/assets/shared/css/style.css" type="text/css" media="screen"/>
+
+    <!-- Fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Roboto:300,500' rel='stylesheet' type='text/css'>
+
+    <script src="/SPANDigital/playerpro-docs/versions/latest/assets/shared/js/session-capture.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="/SPANDigital/playerpro-docs/versions/latest/assets/shared/js/respond.min.js"></script>
+
+    <!--[if lt IE 9]>
+    <script src="/SPANDigital/playerpro-docs/versions/latest/assets/shared/js/html5.js"></script>
+    <![endif]-->
+
+    <!--
+
+This file gets included in the <head></head> section of the main layout pages.  It allows you to add in additional
+overriding stylesheets and / or JavaScript libraries that you might require in your project.
+
+Note: Please prefix all the included links with /SPANDigital/playerpro-docs/versions/latest, for example:
+
+      <link rel="stylesheet" href="/SPANDigital/playerpro-docs/versions/latest/assets/local/css/style.css" type="text/css" media="screen"/>
+-->
+
+
+</head>
+<body class="products">
+
+    <div id="holder" class="mainholder">
+
+        <!-- Results panel -->
+        <div id="wrapper">
+            <div id="sidebar-wrapper">
+                <aside>
+                    <article>
+                        <h2>Definition</h2>
+                        <p>content here for results</p>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec pretium metus vitae urna pharetra fermentum. Nunc convallis ligula nec accumsan mollis.</p>
+                        <div class="divider"></div>
+                        <h2>Results formula</h2>
+                        <p> Something here <span class="light">A highlight</span><br>
+                    </article>
+                </aside>
+            </div>
+        </div>
+
+        <!--header-->
+<section id="page-head">
+	<!--logo-->
+	<!--<header id="logo">-->
+			<!--<a href=""><img src="/SPANDigital/playerpro-docs/versions/latest/assets/local/images/company_logo.png" alt=""></a>-->
+	<!--</header>-->
+	<!--menu-->
+	<!-- <nav id = "topnav">
+	    <ul>
+	        <li>
+	            <a href="/products/">PRODUCTS</a>
+	            <a href="/classes/">CLASSES</a>
+	            <a href="/events/">EVENTS</a>
+	            <a href="/pangaea-onboarding/">ONBOARDING</a>
+	        </li>
+	    </ul>
+	</nav> -->
+</section>
+
+
+        <!--CONTENT with sidebar left-->
+        <section id="onebar" class="leftbar">
+            <!--CONTENT right-->
+
+            <section id="rightpage">
+                <article id="getting-started" class="reference">
+					<!--<a href="#menu-toggle" class="togglebut" id="menu-toggle">Toggle Results Panel</a>-->
+
+                   <h1 class="primary">GETTING STARTED</h1>
+
+<h1 id="before-you-code">Before You Code</h1>
+
+<p>Before you code, read the following documentation. It is the most essential information you need before you start.</p>
+
+<ul>
+  <li><strong><a href="../overview">Overview:</a></strong> “PlayerPro API and Job Service” overview of components.</li>
+  <li><strong><a href="../key-concepts">Key Concepts:</a></strong> Conceptual description and diagram of how “PlayerPro API and Job Service” and 
+is configured.</li>
+</ul>
+
+<h1 id="what-you-will-need-when-you-code">What You Will Need When You Code</h1>
+
+<p>Refer to the following documentation as you work.</p>
+
+<ul>
+  <li><strong><a href="../testing">Testing &amp; Debugging:</a></strong> — Strategic overview description of how to test and debug the “PlayerPro API and Job Service”</li>
+</ul>
+
+<h1 id="downloading-the-code">Downloading the Code</h1>
+
+<p>The Job Service and PlayerPro API are available
+<a href="https://github.com/SPANDigital/playerpro-job-service/">here</a> and
+<a href="https://github.com/SPANDigital/playerpro-api-v2">here</a> respectively.</p>
+
+<h1 id="installation-setup-and-configuration">Installation, Setup and Configuration</h1>
+
+<ul>
+  <li><a href="#job-service">Job Service</a>
+    <ul>
+      <li><a href="#create-virtualenv--activate-it--and-install-dependencies">Create virtualenv, activate it, and install dependencies.</a>
+        <ul>
+          <li><a href="#python-352">Python 3.5.2</a>
+            <ul>
+              <li><a href="#mac">Mac</a></li>
+              <li><a href="#ubuntu">Ubuntu</a>
+                <ul>
+                  <li><a href="#ubuntu-1404">Ubuntu 14.04</a></li>
+                </ul>
+              </li>
+              <li><a href="#virtualenv">Virtualenv</a></li>
+              <li><a href="#troubleshooting">Troubleshooting</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#running-the-job-service">Running the Job Service</a>
+    <ul>
+      <li><a href="#run-the-job-scheduler">Run the Job Scheduler</a></li>
+      <li><a href="#run-the-overlord">Run the Overlord</a></li>
+    </ul>
+  </li>
+  <li><a href="#playerpro-api">PlayerPro API</a>
+    <ul>
+      <li><a href="#create-virtualenv--activate-it--and-install-dependencies-1">Create virtualenv, activate it, and install dependencies.</a>
+        <ul>
+          <li><a href="#python-279">Python 2.7.9</a>
+            <ul>
+              <li><a href="#mac-1">Mac</a></li>
+              <li><a href="#ubuntu-1">Ubuntu</a></li>
+              <li><a href="#virtualenv-1">Virtualenv</a></li>
+            </ul>
+          </li>
+          <li><a href="#pypy">PyPy</a></li>
+        </ul>
+      </li>
+      <li><a href="#install-autoenv">Install autoenv</a>
+        <ul>
+          <li><a href="#on-mac">On Mac</a></li>
+          <li><a href="#on-ubuntu">On Ubuntu</a></li>
+          <li><a href="#pypy">pypy</a></li>
+        </ul>
+      </li>
+      <li><a href="#configure-and-start">Configure and start</a></li>
+      <li><a href="#deactivate--and-let-autoenv-take-over">Deactivate, and let autoenv take over</a></li>
+      <li><a href="#run-the-api">Run the api</a></li>
+      <li><a href="#running-tests">Running tests</a></li>
+      <li><a href="#swagger">Swagger</a></li>
+    </ul>
+  </li>
+  <li><a href="#generating-android--ios-clients">Generating Android and iOS clients</a>
+    <ul>
+      <li><a href="#submodule-issues">Submodule issues</a></li>
+      <li><a href="#installing">Installing</a></li>
+      <li><a href="#android">Android</a></li>
+      <li><a href="#objective-c">Objective C</a></li>
+      <li><a href="#static-html">Static HTML</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="job-service">Job Service</h1>
+
+<h2 id="set-up-virtualenv--install-dependencies">Set Up Virtualenv &amp; Install Dependencies</h2>
+
+<h3 id="python-352">Python 3.5.2</h3>
+<p>Some python 3.5 specific code is used. For example:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c"># This code is 3.5 specific, and won't work on &lt;= 3.4</span>
+<span class="n">a</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">b</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">c</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">b</span><span class="p">}</span>
+</code></pre>
+</div>
+
+<h4 id="mac">Mac</h4>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>brew install python3
+<span class="gp">$ </span>brew install snappy
+<span class="gp">$ </span>pip install virtualenv
+</code></pre>
+</div>
+
+<h4 id="ubuntu">Ubuntu</h4>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>sudo apt-get install python-pip python3-dev snappy libsnappy-dev
+<span class="gp">$ </span>sudo pip install virtualenv
+</code></pre>
+</div>
+
+<h5 id="ubuntu-1404">Ubuntu 14.04</h5>
+<p>Ubuntu 14.04 installs <code class="highlighter-rouge">python-3.4</code> if you’re using the normal
+repo’s. You may use <code class="highlighter-rouge">fkrull</code> to get <code class="highlighter-rouge">python-3.5.2</code></p>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>sudo add-apt-repository ppa:fkrull/deadsnakes
+<span class="gp">$ </span>sudo apt-get update
+<span class="gp">$ </span>sudo apt-get install python3.5 python3.5-dev
+</code></pre>
+</div>
+
+<h4 id="virtualenv">Virtualenv</h4>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>virtualenv -p python3 .
+<span class="gp">$ </span>. bin/activate
+<span class="gp">$ </span>pip install --upgrade pip
+<span class="gp">$ </span>pip install -r requirements.txt --upgrade
+</code></pre>
+</div>
+
+<h4 id="troubleshooting">Troubleshooting</h4>
+<p>Be aware snappy may fail to install, if this is the case, see
+troubleshooting below.</p>
+
+<p>Error installing python-snappy on Mac?</p>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code>snappymodule.cc:31:10: fatal error: <span class="s1">'snappy-c.h'</span> file not found
+<span class="c">#include &lt;snappy-c.h&gt;</span>
+     ^
+1 error generated.
+error: <span class="nb">command</span> <span class="s1">'clang'</span> failed with <span class="nb">exit </span>status 1
+</code></pre>
+</div>
+
+<p>Install python snappy:</p>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>brew install snappy
+<span class="gp">$ </span><span class="nv">CPPFLAGS</span><span class="o">=</span><span class="s2">"-I/usr/local/include -L/usr/local/lib"</span> pip install python-snappy
+</code></pre>
+</div>
+
+<p>Error installing python-snappy on Ubuntu?</p>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code>x86_64-linux-gnu-gcc -pthread -DNDEBUG -g -fwrapv -O2 -Wall -Wstrict-prototypes -g -fstack-protector --param<span class="o">=</span>ssp-buffer-size<span class="o">=</span>4 -Wformat -Werror<span class="o">=</span>format-security -D_FORTIFY_SOURCE<span class="o">=</span>2 -fPIC -I/usr/include/python3.4m -I/home/sybrandspan/Workspace/playerpro-job-service/include/python3.4m -c snappymodule.cc -o build/temp.linux-x86_64-3.4/snappymodule.o
+cc1plus: warning: <span class="nb">command </span>line option ‘-Wstrict-prototypes’ is valid <span class="k">for </span>C/ObjC but not <span class="k">for </span>C++ <span class="o">[</span>enabled by default]
+snappymodule.cc:28:20: fatal error: Python.h: No such file or directory
+ <span class="c">#include "Python.h"</span>
+                    ^
+compilation terminated.
+error: <span class="nb">command</span> <span class="s1">'x86_64-linux-gnu-gcc'</span> failed with <span class="nb">exit </span>status 1
+</code></pre>
+</div>
+
+<p>Install python snappy:</p>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>./bin/easy_install snappy
+</code></pre>
+</div>
+
+<h2 id="running-the-job-service">Running The Job Service</h2>
+
+<h3 id="run-the-job-scheduler">Run The Job Scheduler</h3>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>python run_job_scheduler.py
+</code></pre>
+</div>
+
+<p>or</p>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>./run_job_scheduler.py
+</code></pre>
+</div>
+
+<h3 id="run-the-overlord">Run The Overlord</h3>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>./run_overlord.py
+</code></pre>
+</div>
+
+<h1 id="playerpro-api">PlayerPro API</h1>
+
+<h2 id="set-up-virtualenv--install-dependencies-1">Set Up Virtualenv &amp; Install Dependencies</h2>
+
+<h3 id="python-279">Python 2.7.9</h3>
+
+<h4 id="mac-1">Mac</h4>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>brew install python
+<span class="gp">$ </span>pip install virtualenv
+</code></pre>
+</div>
+
+<h4 id="ubuntu-1">Ubuntu</h4>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>sudo apt-get install python-pip
+<span class="gp">$ </span>sudo pip install virtualenv
+</code></pre>
+</div>
+
+<h4 id="virtualenv-1">Virtualenv</h4>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>virtualenv .
+<span class="gp">$ </span>. bin/activate
+<span class="gp">$ </span>pip install -r requirements.txt
+</code></pre>
+</div>
+
+<p>or if you’re doing something very fancy</p>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>virtualenv -p /usr/local/bin/python2.7.
+<span class="gp">$ </span>. bin/activate
+<span class="gp">$ </span>pip install -r requirements.txt
+</code></pre>
+</div>
+
+<h3 id="pypy-optional">PyPy (optional)</h3>
+
+<p>It is possible to run the API using PyPy, although production uses CPython.</p>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>brew install pypy
+<span class="gp">$ </span>virtualenv -p /usr/local/bin/pypy pypy
+<span class="gp">$ </span>. pypy/bin/activate
+<span class="gp">$ </span>pip install -r requirements.txt
+</code></pre>
+</div>
+
+<h3 id="install-autoenv-optional">Install <code class="highlighter-rouge">autoenv</code> (optional)</h3>
+<p>See https://github.com/kennethreitz/autoenv for details.</p>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>cp .env_cpython .env
+</code></pre>
+</div>
+
+<h4 id="on-mac">On Mac</h4>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>brew install autoenv
+</code></pre>
+</div>
+
+<p>then depending on where activate.sh is:</p>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span><span class="nb">echo</span> <span class="s1">'source /usr/local/opt/autoenv/activate.sh'</span> &gt;&gt; ~/.bash_profile
+</code></pre>
+</div>
+
+<p>or</p>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span><span class="nb">echo</span> <span class="s1">'source /usr/local/opt/autoenv/activate.sh'</span> &gt;&gt; ~/.profile
+</code></pre>
+</div>
+
+<h4 id="on-ubuntu">On Ubuntu</h4>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>pip install autoenv
+</code></pre>
+</div>
+
+<p>then - depending on where activate.sh is:</p>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span><span class="nb">echo</span> <span class="s1">'source ~/.local/bin/activate.sh'</span> &gt;&gt; ~/.bashrc
+</code></pre>
+</div>
+
+<p>or</p>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span><span class="nb">echo</span> <span class="s1">'source /usr/local/bin/activate.sh'</span> &gt;&gt; ~/.bashrc
+</code></pre>
+</div>
+
+<h4 id="pypy">PyPy</h4>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>cp .env_pypy .env
+<span class="gp">$ </span><span class="nb">source</span> <span class="k">$(</span>dirname <span class="s2">"</span><span class="k">${</span><span class="nv">BASH_SOURCE</span><span class="p">[0]</span><span class="k">}</span><span class="s2">"</span><span class="k">)</span>/pypy/bin/activate
+</code></pre>
+</div>
+
+<h3 id="configure--start">Configure &amp; Start</h3>
+
+<p>Make a copy of settings.local.sample.cfg, and modify it as needed</p>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>cp etc/settings.sample.cfg etc/settings.cfg
+<span class="gp">$ </span>vi settings.local.cfg
+</code></pre>
+</div>
+
+<h3 id="deactivate--let-autoenv-take-over">Deactivate &amp; Let <code class="highlighter-rouge">autoenv</code> Take Over</h3>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>deactivate
+<span class="gp">$ </span><span class="nb">cd</span> &lt;player pro location&gt;
+</code></pre>
+</div>
+
+<h3 id="run-the-api">Run The API</h3>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>python run_api.py
+</code></pre>
+</div>
+
+<h3 id="swaggerhttpswaggerioswagger-editor"><a href="http://swagger.io/swagger-editor/">Swagger</a></h3>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>git clone https://github.com/swagger-api/swagger-editor.git
+<span class="gp">$ </span><span class="nb">cd </span>swagger-editor
+<span class="gp">$ </span>npm start
+</code></pre>
+</div>
+
+<p>Validating Swagger:</p>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>npm install -g swagger-cli
+<span class="gp">$ </span>swagger validate playerpro.yaml
+</code></pre>
+</div>
+
+<h2 id="generating-android--ios-clients">Generating Android &amp; iOS Clients</h2>
+<p>Using the <a href="https://github.com/swagger-api/swagger-codegen">Swagger Code Generator</a>:
+the project is included as a git submodule, in <code class="highlighter-rouge">./modules/swagger-codegen</code></p>
+
+<h3 id="submodule-issues">Submodule Issues</h3>
+<p>Submodules can be a bit troublesome when switching between branches
+that have and don’t have submodules. To get things working again - try:</p>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>git fetch
+<span class="gp">$ </span>git checkout master <span class="c"># or any other branch that you need the latest of</span>
+<span class="gp">$ </span>git merge origin/master
+</code></pre>
+</div>
+
+<p>or:</p>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>git submodule update --init --recursive
+</code></pre>
+</div>
+
+<h3 id="installing">Installing</h3>
+<p><em>Swagger Code Generator specifies that it needs <a href="http://www.oracle.com/technetwork/java/javase/downloads/java-archive-downloads-javase7-521261.html">Java 1.7</a>
+but it seems to work just fine with 1.8</em></p>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>brew install maven
+<span class="gp">$ </span><span class="nb">cd</span> ./modules/swagger-codegen
+<span class="gp">$ </span>mvn package
+</code></pre>
+</div>
+
+<h3 id="android">Android</h3>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>./scripts/android-java-playerpro.sh
+</code></pre>
+</div>
+
+<p>Will generate code in: <code class="highlighter-rouge">dist/client/playerpro/android-java</code></p>
+
+<h3 id="objective-c">Objective C</h3>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>./scripts/objc-playerpro.sh
+</code></pre>
+</div>
+
+<p>Will generate code in: <code class="highlighter-rouge">dist/client/playerpro/objc</code></p>
+
+<h3 id="static-html">Static HTML</h3>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>./scripts/html-playerpro.sh
+</code></pre>
+</div>
+
+
+
+                </article>
+            </section>
+
+            <aside>
+                <!--Product Logo-->
+                <article>
+                    
+                        <a href="index.html" class="sublogo"><img src="/SPANDigital/playerpro-docs/versions/latest/assets/local/images/project_logo.png" alt=""></a>
+                    
+                    <h4>Version</h4>
+
+                    <div id="bar-select">
+                        <select>
+                            <option value="/SPANDigital/playerpro-docs/versions/latest/versions/latest/">Latest</option>
+                            
+                                <option value="/SPANDigital/playerpro-docs/versions/latest/versions/"></option>
+                            
+                                <option value="/SPANDigital/playerpro-docs/versions/latest/versions/"></option>
+                            
+                        </select>
+                    </div>
+                </article>
+                <div id="nav-container">
+                    <!--left sub navigation-->
+<nav id="sidenav">
+    <h2>DOCUMENTATION</h2>
+    <ul class="nav">
+        
+        
+        
+
+        
+        
+        
+        <li>
+            <a href="/SPANDigital/playerpro-docs/versions/latest/#overview" data-target="#overview">Overview</a>
+            <ul>
+                
+            </ul>
+        </li>
+        
+        
+        
+        
+
+        
+        
+        
+        <li>
+            <a href="/SPANDigital/playerpro-docs/versions/latest/key-concepts#key-concepts" data-target="#key-concepts">Key Concepts</a>
+            <ul>
+                
+            </ul>
+        </li>
+        
+        
+        
+        
+
+        
+        
+        
+        <li>
+            <a href="/SPANDigital/playerpro-docs/versions/latest/prerequisites#prerequisites" data-target="#prerequisites">Prerequisites</a>
+            <ul>
+                
+            </ul>
+        </li>
+        
+        
+        
+        
+
+        
+        
+        
+        <li>
+            <a href="/SPANDigital/playerpro-docs/versions/latest/getting-started#getting-started" data-target="#getting-started">Getting started</a>
+            <ul>
+                
+            </ul>
+        </li>
+        
+        
+        
+        
+
+        
+        
+        
+        <li>
+            <a href="/SPANDigital/playerpro-docs/versions/latest/references#reference" data-target="#reference">Reference</a>
+            <ul>
+                
+                
+                
+                <li>
+                    <a onclick="$('#dropdown-menu-api').toggleClass('hidden');" >
+                        API
+                        <span class="caret"></span>
+                    </a>
+                    <ul id="dropdown-menu-api" class="hidden">
+                        
+                        <li class="sub-menu-item">
+                            <a href="/SPANDigital/playerpro-docs/versions/latest/references#playerpro-python-flask-api" data-target="#playerpro-python-flask-api">PlayerPro Python/FLASK API</a>
+                        </li>
+                        
+                    </ul>
+                </li>
+                
+                
+            </ul>
+        </li>
+        
+        
+        
+        
+
+        
+        
+        
+        <li>
+            <a href="/SPANDigital/playerpro-docs/versions/latest/cookbook#cookbook" data-target="#cookbook">Cookbook</a>
+            <ul>
+                
+            </ul>
+        </li>
+        
+        
+        
+        
+
+        
+        <li>
+            <a onclick="$('#dropdown-menu-tools').toggleClass('hidden');" >
+                Tools
+                <span class="caret"></span>
+            </a>
+            <ul id="dropdown-menu-tools" class="hidden">
+                
+                <li class="sub-menu-item">
+                    <a href="/SPANDigital/playerpro-docs/versions/latest/tools#integrated-development-environment"  data-target="#integrated-development-environment">Integrated Development Environment</a>
+                </li>
+                
+                <li class="sub-menu-item">
+                    <a href="/SPANDigital/playerpro-docs/versions/latest/tools#rest-client"  data-target="#rest-client">REST Client</a>
+                </li>
+                
+            </ul>
+        </li>
+        
+        
+        
+        
+
+        
+        
+        
+        <li>
+            <a href="/SPANDigital/playerpro-docs/versions/latest/testing#testing-debugging" data-target="#testing-debugging">Testing & Debugging</a>
+            <ul>
+                
+            </ul>
+        </li>
+        
+        
+        
+        
+
+        
+        <li>
+            <a onclick="$('#dropdown-menu-updates').toggleClass('hidden');" >
+                Updates
+                <span class="caret"></span>
+            </a>
+            <ul id="dropdown-menu-updates" class="hidden">
+                
+                <li class="sub-menu-item">
+                    <a href="/SPANDigital/playerpro-docs/versions/latest/updates#job-service-0-1-2"  data-target="#job-service-0-1-2">Job Service 0.1.2</a>
+                </li>
+                
+                <li class="sub-menu-item">
+                    <a href="/SPANDigital/playerpro-docs/versions/latest/updates#api-3-1-4"  data-target="#api-3-1-4">API 3.1.4</a>
+                </li>
+                
+            </ul>
+        </li>
+        
+        
+    </ul>
+</nav>
+
+
+<!--href="/SPANDigital/playerpro-docs/versions/latest#"></a>-->
+                    <article>
+                        <h4>Contact the team</h4>
+						<span class="button icon-slack"><a href="https://spandigital.slack.com/messages/player-pro/" target="_blank">player-pro</a></span>
+                    </article>
+                </div>
+            </aside>
+        </section>
+
+        <!-- footer 
+Commenting out the footer until we get content... :-)
+so not to break layout - is also hidden in the style.css footer-->
+
+<section id="page-foot">
+	<!-- <footer class="footer">
+      <div class="container">
+        <h2></h2>
+		<p>&copy; August 2015 [ <a href="/">Lorem Ipsum</a> ] All rights reserved | </p>
+      </div>
+    </footer>-->
+</section>
+
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $('#nav-container').affix({
+                offset: {
+                    top: 200,
+                    bottom: function () {
+                        return (this.bottom = $('.footer').outerHeight(true) + 12)
+                    }
+                }
+            });
+
+            $('#nav-container').on('affix.bs.affix', function() {
+                $('#nav-container').removeAttr('style');
+            });
+            $('body').scrollspy({
+                target: '#sidenav'
+            });
+        })
+    </script>
+<!-- Menu Toggle Script -->
+    <script>
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+		$("#menu-toggle").toggleClass("toggleon");
+    });
+    </script>
+</body>

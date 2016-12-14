@@ -16,7 +16,7 @@ collections:
     typical_scenarios:
     updates:
 
-baseurl: /playerpro
+baseurl: /SPANDigital/playerpro-docs/versions/latest
 name: PlayerPro
 logo: /assets/local/images/project_logo.png
 slack_url: https://spandigital.slack.com/messages/player-pro/

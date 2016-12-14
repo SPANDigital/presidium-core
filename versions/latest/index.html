@@ -81,13 +81,79 @@ Note: Please prefix all the included links with /SPANDigital/playerpro-docs/vers
             <!--CONTENT right-->
 
             <section id="rightpage">
-                <article id="playerpro-python-flask-api" class="reference">
+                <article id="overview" class="reference">
 					<!--<a href="#menu-toggle" class="togglebut" id="menu-toggle">Toggle Results Panel</a>-->
 
-                   <ul>
-  <li><a href="../reference/api/playerpro-api.html">PlayerPro API (snapshot)</a></li>
-  <li><a href="http://swagger.api.getplayerpro.com/?url=http://swagger.api.getplayerpro.com/schema">PlayerPro API (live)</a></li>
+                   <h1 class="primary">OVERVIEW</h1>
+
+<h1 id="playerpro-overall-system-architecture">PlayerPro Overall System Architecture</h1>
+
+<p><img src="/SPANDigital/playerpro-docs/versions/latest/assets/local/images/ppro_architecture_overview.svg" alt="Overall Architecture" /></p>
+
+<h1 id="playerpro-api">PlayerPro API</h1>
+
+<p>PlayerPro currently provides an API that offers much of the
+functionality that one can perform on their website as well. Their
+endpoints are partially grouped into themes. The response data from the
+endpoints contains large amounts of irrelevant and confusing
+information. Their conventions regarding request parameters, errors,
+data formats etc are not always consistent. By and large the API is
+difficult to use and does not provide a good end user experience.</p>
+
+<h2 id="interface-design">Interface Design</h2>
+
+<p>A clean and intuitive user experience requires considerable thought and
+thus we use an design-first workflow in combination with suitable tool
+support such as Swagger. We’ve chosen to use Swagger to design the API
+interface. Swagger gives us a complete toolchain necessary to build and
+manage a REST API. Furthermore, this gives us a clean framework in
+which to:</p>
+
+<ul>
+  <li>Design clean URLs</li>
+  <li>Clearly define request parameters and response objects</li>
+  <li>Manage headers</li>
+  <li>Generate client side code in a number of languages</li>
+  <li>Generate documentation</li>
 </ul>
+
+<h1 id="playerpro-job-service">PlayerPro Job Service</h1>
+
+<p>The PlayerPro Job Service, is a fully scalable service that allows
+tightly coupled behaviours between the PHP Symfony App and the PlayerPro
+API to be separated or abstracted out for handling via an asynchronous
+mechanism - the result of which is improved throughput and scalability
+across the PlayerPro Product.</p>
+
+<p>The Job Service consists of an event bus (implemented as a Kafka queue, 
+with a publish-subscribe pattern) that handles the transport of event
+messages published by PHP Symfony and/or the PlayerPro API.
+Additionally, a job queue handles the transport of enriched events 
+(jobs) from the event consumer pipeline. Events are enriched or
+‘converted’ into jobs through the application of configuration rules
+supplied to the service. These jobs, in turn, are handled by a job
+consumer pipeline where its termination culminates in changes to various
+services and their resources, for example: webhooks, cache invalidation,
+user feed generation and more.</p>
+
+<h2 id="supporting-scale">Supporting Scale</h2>
+
+<p>With PlayerPro’s continued growth as a leader in football social media,
+need has arisen to address the scalability concerns inherent large,
+monolithic services.</p>
+
+<h3 id="through-decoupling">Through Decoupling:</h3>
+
+<p>The design of the PlayerPro Job Service supports iteratively decoupling
+computationally expensive behaviours from the PlayerPro PHP Symfony and,
+in stead, handling these in a distributed and highly scalable manner.</p>
+
+<h3 id="through-asynchronicity">Through Asynchronicity:</h3>
+
+<p>Through the use of an asynchronous Job Service, actions that would
+normally block - and, as a consequence ruin the quality of services, can
+now be handled in a way that does not prevent the timely processing of
+other (perhaps higher priority) work.</p>
 
 
 
