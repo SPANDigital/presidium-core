@@ -59,7 +59,7 @@ a {
 
 hr {
   height: 1px;
-  background: #ddd;
+  background: #d6d6d6;
   border: none;
   margin: 20px 0; }
 
@@ -136,7 +136,7 @@ nav#topnav ul li.active a {
 
 .divider {
   height: 1px;
-  border-bottom: solid 1px #ddd;
+  border-bottom: solid 1px #d6d6d6;
   margin: 10px 0;
   clear: both; }
 
@@ -202,7 +202,7 @@ a {
 
 hr {
   height: 1px;
-  background: #ddd;
+  background: #d6d6d6;
   border: none;
   margin: 20px 0; }
 
@@ -277,47 +277,40 @@ hr {
   padding: 0;
   min-height: 100px;
   width: 100%; }
-
 #rightpage .cardgrid.catalog div {
   /*max-width: 320px;  will flow if you set max width */
   padding: 20px 40px; }
-
 #rightpage article.reference {
   margin-left: 1em; }
-
 #rightpage .reference article {
   margin: 0;
   padding: 0; }
-
 #rightpage #imagethumbs {
   width: 180px;
   float: right;
   padding-left: 20px; }
-
 #rightpage .news h1 {
   font-size: 24px;
   color: #108ac0;
   margin-bottom: 0.5em; }
-
 #rightpage .news h2 {
   color: #fdb728;
   text-transform: uppercase; }
-
-#rightpage .news h2 span {
-  color: #d6d6d6; }
-
+  #rightpage .news h2 span {
+    color: #d6d6d6; }
 #rightpage .actions a {
   text-decoration: none;
   text-transform: uppercase; }
-
 #rightpage .but_outlook a, #rightpage .but_contact a {
   font-size: 11px;
   font-weight: 500;
   line-height: 2em;
   color: #108ac0; }
+#rightpage ul {
+  /* padding-bottom: 1em; */ }
 
 /* This causes the table of contents to have unsightly gaps. */
-#rightpage ul, #nobar ul {
+#nobar ul {
   /* padding-bottom: 1em; */ }
 
 #rightpage ul li, #nobar ul li {
@@ -325,8 +318,11 @@ hr {
 
 #rightpage ul li a {
   text-decoration: none; }
+#rightpage ul ul {
+  list-style: inside disc;
+  margin-left: 1em; }
 
-#rightpage ul ul, #nobar ul ul {
+#nobar ul ul {
   list-style: inside disc;
   margin-left: 1em; }
 
@@ -336,10 +332,9 @@ hr {
 /* Product layout specific ---------------------------------------------------------- */
 body.products #rightpage .primary {
   font-size: 24px;
-  border-bottom: solid 1px #ddd;
+  border-bottom: solid 1px #d6d6d6;
   padding-bottom: 20px;
   text-transform: uppercase; }
-
 body.products #rightpage .secondary {
   font-size: 20px;
   color: #108ac0;
@@ -347,22 +342,16 @@ body.products #rightpage .secondary {
   text-transform: uppercase;
   padding-top: 20px;
   margin-top: 50px; }
-
 body.products #rightpage .reference article h1 {
   font-size: 20px;
-  border-top: solid 1px #4d4d4d;
+  border-top: solid 1px #474746;
   padding-top: 10px; }
-
 body.products #rightpage .reference article h2 {
-  font-size: 16px; }
-
+  font-size: 18px; }
 body.products #rightpage .reference article h3 {
   font-size: 14px; }
-
 body.products #rightpage .reference article h4 {
   font-size: 12px; }
-
-/*removing first / second iterations - border tops */
 body.products #rightpage h1:nth-of-type(2) {
   border-top: none;
   margin-top: 0; }
@@ -377,7 +366,7 @@ body.products #rightpage h1:nth-of-type(2) {
     list-style: none; }
   #nav-container li a {
     text-decoration: none;
-    color: #4d4d4d;
+    color: #474746;
     cursor: pointer; }
   #nav-container .nav > li > a {
     padding: 0.4em 1em; }
@@ -479,7 +468,7 @@ a {
 
 hr {
   height: 1px;
-  background: #ddd;
+  background: #d6d6d6;
   border: none;
   margin: 20px 0; }
 
@@ -912,7 +901,7 @@ footer h2 {
   float: left; }
 
 .infobox .row h4 {
-  color: #4d4d4d;
+  color: #474746;
   width: 35%;
   float: right;
   font-weight: 300;
@@ -923,7 +912,7 @@ footer h2 {
   color: #108ac0; }
 
 .infobox h4 {
-  color: #4d4d4d; }
+  color: #474746; }
 
 .infobox p {
   clear: both; }
@@ -993,7 +982,7 @@ footer h2 {
   margin: 0 0 15px 0;
   font-size: 14px;
   padding-left: 0;
-  color: #4d4d4d; }
+  color: #474746; }
 
 /* Content Layouts:  list boxes for (leftpage content) */
 .list-row, .list-row-header {
@@ -1060,7 +1049,7 @@ footer h2 {
 .list-row-header div a {
   text-decoration: none;
   font-size: 10px;
-  color: #4d4d4d; }
+  color: #474746; }
 
 /* Content layout: for nobar half page */
 .bg-grey, .bg-blue {
@@ -1229,7 +1218,7 @@ th {
   display: inline-block;
   padding: 0 3px 0 20px;
   vertical-align: middle;
-  color: #4d4d4d; }
+  color: #474746; }
 
 .icon_tw:after {
   font-family: FontAwesome;
@@ -1242,7 +1231,7 @@ th {
 .button.icon-slack a {
   background: #ffffff url(../images/icon-slack.png) no-repeat 10px 8px;
   padding-left: 30px;
-  color: #4d4d4d;
+  color: #474746;
   padding: 10px 10px 10px 40px; }
 
 .icon-slack a:hover, .icon-slack a:focus {
@@ -1267,7 +1256,7 @@ th {
 
 .catalog h2 {
   background: #e4ecf0;
-  color: #4d4d4d;
+  color: #474746;
   font-size: 20px;
   padding: 10px;
   margin: 0;
