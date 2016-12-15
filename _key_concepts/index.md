@@ -40,7 +40,7 @@ then published to their respective job queues.
 
 ![Job Scheduler]({{ "/assets/local/images/ppro_job_scheduler.svg" | relative_url }})
 
-An Event Consumer polls the bus, and retrieves messages of the the Kafka 
+An Event Consumer polls the bus, and retrieves messages off of the Kafka 
 queue. The event is passed to a Router module which determines (as per
 the configuration) what jobs are to be created from this event. For each
 type of job, the event is passed into the enricher module to be
