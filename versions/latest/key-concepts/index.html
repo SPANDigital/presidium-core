@@ -5,23 +5,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PlayerPro</title>
+    <title>Presidium</title>
 
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="/SPANDigital/playerpro-docs/versions/latest/assets/shared/css/reset.css" type="text/css" media="screen"/>
-    <link rel="stylesheet" href="/SPANDigital/playerpro-docs/versions/latest/assets/shared/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/SPANDigital/playerpro-docs/versions/latest/assets/shared/css/style.css" type="text/css" media="screen"/>
+    <link rel="stylesheet" href="/assets/shared/css/reset.css" type="text/css" media="screen"/>
+    <link rel="stylesheet" href="/assets/shared/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/shared/css/style.css" type="text/css" media="screen"/>
 
     <!-- Fonts -->
     <link href='http://fonts.googleapis.com/css?family=Roboto:300,500' rel='stylesheet' type='text/css'>
 
-    <script src="/SPANDigital/playerpro-docs/versions/latest/assets/shared/js/session-capture.js"></script>
+    <script src="/assets/shared/js/session-capture.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <script src="/SPANDigital/playerpro-docs/versions/latest/assets/shared/js/respond.min.js"></script>
+    <script src="/assets/shared/js/respond.min.js"></script>
 
     <!--[if lt IE 9]>
-    <script src="/SPANDigital/playerpro-docs/versions/latest/assets/shared/js/html5.js"></script>
+    <script src="/assets/shared/js/html5.js"></script>
     <![endif]-->
 
     <!--
@@ -29,9 +29,9 @@
 This file gets included in the <head></head> section of the main layout pages.  It allows you to add in additional
 overriding stylesheets and / or JavaScript libraries that you might require in your project.
 
-Note: Please prefix all the included links with /SPANDigital/playerpro-docs/versions/latest, for example:
+Note: Please prefix all the included links with , for example:
 
-      <link rel="stylesheet" href="/SPANDigital/playerpro-docs/versions/latest/assets/local/css/style.css" type="text/css" media="screen"/>
+      <link rel="stylesheet" href="/assets/local/css/style.css" type="text/css" media="screen"/>
 -->
 
 
@@ -60,7 +60,7 @@ Note: Please prefix all the included links with /SPANDigital/playerpro-docs/vers
 <section id="page-head">
 	<!--logo-->
 	<!--<header id="logo">-->
-			<!--<a href=""><img src="/SPANDigital/playerpro-docs/versions/latest/assets/local/images/company_logo.png" alt=""></a>-->
+			<!--<a href=""><img src="/assets/local/images/company_logo.png" alt=""></a>-->
 	<!--</header>-->
 	<!--menu-->
 	<!-- <nav id = "topnav">
@@ -86,477 +86,12 @@ Note: Please prefix all the included links with /SPANDigital/playerpro-docs/vers
 
                    <h1 class="primary">KEY CONCEPTS</h1>
 
-<h1 id="contents">Contents</h1>
-
-<ul>
-  <li><a href="#job-service">Job Service</a>
-    <ul>
-      <li><a href="#job-scheduler">Job Scheduler</a></li>
-      <li><a href="#job-manager">Job Manager</a>
-        <ul>
-          <li><a href="#prioritization">Prioritization</a></li>
-          <li><a href="#job-expiration">Job Expiration</a></li>
-          <li><a href="#deduplication">Deduplication</a>
-            <ul>
-              <li><a href="#three-ways-duplicates-occur">Three Ways Duplicates Occur</a></li>
-            </ul>
-          </li>
-          <li><a href="#dispatch">Dispatch</a></li>
-          <li><a href="#job-publisher">Job Publisher</a></li>
-        </ul>
-      </li>
-      <li><a href="#the-config-file">The Config File</a>
-        <ul>
-          <li><a href="#kafka-connection-settings-for-producers-and-consumers">Kafka Connection Settings For Producers And Consumers</a></li>
-          <li><a href="#job-scheduler-consumer-groups">Job Scheduler Consumer Groups</a></li>
-          <li><a href="#job-scheduler-routing-rules">Job Scheduler Routing Rules</a></li>
-          <li><a href="#job-scheduler-job-creation-enrichment-rules">Job Scheduler Job Creation (Enrichment Rules)</a></li>
-          <li><a href="#job-manager-job-consumer-config">Job Manager Job Consumer Config</a></li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-  <li><a href="#playerpro-api">PlayerPro API</a>
-    <ul>
-      <li><a href="#system-context">System Context</a></li>
-      <li><a href="#caching-middleware">Caching Middleware</a></li>
-      <li><a href="#cache-configuration-design">Cache Configuration Design</a>
-        <ul>
-          <li><a href="#cache-config-format">Cache Config Format</a></li>
-          <li><a href="#cache-logic">Cache Logic</a></li>
-          <li><a href="#rules">Rules</a></li>
-          <li><a href="#rational-for-rules">Rational For Rules</a></li>
-          <li><a href="#a-note-on-access-tokens">A Note On Access Tokens</a></li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-</ul>
-
-<h1 id="job-service">Job Service</h1>
-
-<h2 id="job-scheduler">Job Scheduler</h2>
-
-<p>The Job Scheduler consumes events and creates jobs from them, these are
-then published to their respective job queues.</p>
-
-<p><img src="/SPANDigital/playerpro-docs/versions/latest/assets/local/images/ppro_job_scheduler.svg" alt="Job Scheduler" /></p>
-
-<p>An Event Consumer polls the bus, and retrieves messages of the the Kafka 
-queue. The event is passed to a Router module which determines (as per
-the configuration) what jobs are to be created from this event. For each
-type of job, the event is passed into the enricher module to be
-converted into a job. Configuration rules supplied to the Job
-Scheduler determine the kinds of properties each job has - e.g. expiry
-time, priority level, due date, etc. Finally, the Job Publisher
-publishes each job to the correct topic queue.</p>
-
-<h2 id="job-manager">Job Manager</h2>
-
-<p>In the Job Manager, Job Consumers consume jobs from each topic queue and
-process them before dispatching them to their respective hooks.</p>
-
-<p><img src="/SPANDigital/playerpro-docs/versions/latest/assets/local/images/ppro_job_manager.svg" alt="Job Manager" /></p>
-
-<h3 id="prioritization">Prioritization</h3>
-
-<p>Prioritization, the first module in the Job Manager pipeline, ensures
-that higher priority jobs receive a greater share of resources than
-lower priority jobs.</p>
-
-<p><img src="/SPANDigital/playerpro-docs/versions/latest/assets/local/images/ppro_prioritization.svg" alt="Job Manager Prioritization" /></p>
-
-<p>Each topic queue has a set of Kafka Consumers per priority level range.
-Each of these Kafka Consumers uses a separate Consumer Group, such that
-every job is read once by a Kafka Consumer but is only processed if the
-job priority level matches the Kafka Consumer priority range.
-Each Kafka Consumer has a pool of Job Consumer workers, higher priority
-Kafka Consumers have more workers in their pool than lower priority
-Kafka Consumers. This means that the amount of available resources
-provided is a function of priority range.</p>
-
-<h3 id="job-expiration">Job Expiration</h3>
-
-<p>Each job that reaches the Expirer has an expiry that is set in the Job
-Scheduler. If the job has expired, it is dropped and no further
-processing occurs.</p>
-
-<h3 id="deduplication">Deduplication</h3>
-
-<p><img src="/SPANDigital/playerpro-docs/versions/latest/assets/local/images/ppro_deduplication.svg" alt="Deduplication" /></p>
-
-<p>The mechanism of job deduplication relies on a unique job hash which is
-generated at the enricher stage in the Job Scheduler. Configuration
-rules dictate what job fields form part of the unique job hash. Once a
-job reaches the deduper, its unique hash is used as a key in a Redis
-store  to determine if the job has already been processed. If the Job
-has not already been processed, the deduper, inserts the unique job
-hash, and provides an expiry time based on configuration rules supplied
-to the Job Manager.</p>
-
-<p>This method of deduplication is able to cover duplicates arising from
-the three causes discussed below.</p>
-
-<h4 id="three-ways-duplicates-occur">Three Ways Duplicates Occur</h4>
-
-<p><img src="/SPANDigital/playerpro-docs/versions/latest/assets/local/images/ppro_three_causes_of_duplication.svg" alt="Three Mechanisms" /></p>
-
-<ol>
-  <li>A Job Publisher does not receive an ACK due to a
-network error, and continues to publish a job repeatedly.</li>
-  <li>A Consumer crashes.</li>
-  <li>Identical events produce the same kind of job.</li>
-</ol>
-
-<h3 id="dispatch">Dispatch</h3>
-
-<p>If the job is not expired and is not a duplicate, the Dispatcher passes
-it on to the appropriate hook so that the job can be completed. Some
-hooks might produce other jobs as a by-product.</p>
-
-<h3 id="job-publisher">Job Publisher</h3>
-
-<p>Within the context of the Job Manager, the Job Publisher will publish
-jobs that are sent to it from a hook. The Job Publisher updates a
-generational count on a job to prevent a ‘combinatorial explosion’ of
-jobs. Jobs that exceed a set generational count are discarded.</p>
-
-<h2 id="the-config-file">The Config File</h2>
-
-<h3 id="kafka-connection-settings-for-producers-and-consumers">Kafka Connection Settings For Producers And Consumers</h3>
-
-<div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="s">kafka</span><span class="pi">:</span>
-  <span class="c1"># This section contains default kafka settings for all consumers and producers.</span>
-  <span class="s">consumer</span><span class="pi">:</span>
-    <span class="c1"># For available settings, refer to http://kafka-python.readthedocs.io/en/master/apidoc/KafkaConsumer.html</span>
-    <span class="s">bootstrap_servers</span><span class="pi">:</span>
-      <span class="pi">-</span> <span class="s1">'</span><span class="s">localhost:9090'</span>
-      <span class="pi">-</span> <span class="s1">'</span><span class="s">localhost:9091'</span>
-      <span class="pi">-</span> <span class="s1">'</span><span class="s">localhost:9092'</span>
-    <span class="s">enable_auto_commit</span><span class="pi">:</span> <span class="s">False</span>
-  <span class="s">producer</span><span class="pi">:</span>
-    <span class="c1"># For available settings, refer to http://kafka-python.readthedocs.io/en/master/apidoc/KafkaProducer.html</span>
-    <span class="s">bootstrap_servers</span><span class="pi">:</span>
-      <span class="pi">-</span> <span class="s1">'</span><span class="s">localhost:9090'</span>
-      <span class="pi">-</span> <span class="s1">'</span><span class="s">localhost:9091'</span>
-      <span class="pi">-</span> <span class="s1">'</span><span class="s">localhost:9092'</span>
-
-</code></pre>
-</div>
-
-<h3 id="job-scheduler-consumer-groups">Job Scheduler Consumer Groups</h3>
-
-<div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="s">job_scheduler</span><span class="pi">:</span>
-  <span class="s">kafka</span><span class="pi">:</span>
-    <span class="c1"># This section contains kafka configuration for job_scheduler consumer and producer.</span>
-    <span class="s">consumer</span><span class="pi">:</span>
-      <span class="c1"># For available settings, refer to http://kafka-python.readthedocs.io/en/master/apidoc/KafkaConsumer.html</span>
-      <span class="s">group_id</span><span class="pi">:</span> <span class="s1">'</span><span class="s">pp-evnt-cnsmr-grp'</span>
-      <span class="s">client_id</span><span class="pi">:</span> <span class="s1">'</span><span class="s">pp-evnt-cnsmr-clnt'</span>
-    <span class="s">producer</span><span class="pi">:</span>
-      <span class="c1"># For available settings, refer to http://kafka-python.readthedocs.io/en/master/apidoc/KafkaProducer.html</span>
-      <span class="s">client_id</span><span class="pi">:</span> <span class="s1">'</span><span class="s">pp-job-prdcr-clnt'</span>
-</code></pre>
-</div>
-<p>The same information is supplied under the <code class="highlighter-rouge">job_manager</code> section.</p>
-
-<h3 id="job-scheduler-routing-rules">Job Scheduler Routing Rules</h3>
-
-<p>By matching against a resource type and action type, the Job Scheduler
-can determine the kinds of jobs that need to be created. For example, in
-the snippet below if the event has a resource type of <code class="highlighter-rouge">PostsById</code>
-and an action type of either <code class="highlighter-rouge">Create</code>, <code class="highlighter-rouge">Update</code> or  <code class="highlighter-rouge">Delete</code>
-then a cache-related job will be created.</p>
-
-<div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="s">job_scheduler</span><span class="pi">:</span>
-  <span class="s">job_rules</span><span class="pi">:</span>
-    <span class="c1"># ...</span>
-    <span class="pi">-</span> <span class="pi">{</span> <span class="nv">action_type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">^(Create|Update|Delete)$"</span><span class="pi">,</span> <span class="nv">resource_type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">PostsById"</span><span class="pi">,</span> <span class="nv">topic</span><span class="pi">:</span> <span class="s2">"</span><span class="s">pp-cache"</span> <span class="pi">}</span>
-    <span class="c1"># ...</span>
-</code></pre>
-</div>
-
-<h3 id="job-scheduler-job-creation-enrichment-rules">Job Scheduler Job Creation (Enrichment Rules)</h3>
-
-<p>For a particular topic, candidate events are matched again by resource
-type and action type, providing a lower level of granularity with 
-respect to the kinds of jobs (and their properties) that can be created.
-In the snippet below, under the topic of <code class="highlighter-rouge">pp-cache</code>, for an
-<code class="highlighter-rouge">Update</code> of <code class="highlighter-rouge">PostsById</code>, the <code class="highlighter-rouge">key_fields</code> are those job
-fields which must be used as the ‘plaintext’ for unique hash generation.
-The <code class="highlighter-rouge">job_properties</code> dictionary, specifies certain attributes of the
-job, such as when it expires (5 min from now), or when it is due
-(immediately), or that this particular job type is an invalidation etc.</p>
-
-<div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="s">job_scheduler</span><span class="pi">:</span>
-  <span class="c1"># ...</span>
-<span class="s">enricher</span><span class="pi">:</span>
-<span class="s">topics</span><span class="pi">:</span>
-  <span class="s">pp-cache</span><span class="pi">:</span>
-    <span class="pi">-</span> <span class="s">match</span><span class="pi">:</span>
-        <span class="pi">{</span> <span class="nv">action_type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Update"</span><span class="pi">,</span> <span class="nv">resource_type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">PostsById"</span> <span class="pi">}</span>
-      <span class="s">key_fields</span><span class="pi">:</span>
-        <span class="pi">-</span> <span class="s1">'</span><span class="s">payload'</span>
-        <span class="pi">-</span> <span class="s1">'</span><span class="s">expires'</span>
-        <span class="pi">-</span> <span class="s1">'</span><span class="s">due'</span>
-        <span class="pi">-</span> <span class="s1">'</span><span class="s">priority'</span>
-        <span class="pi">-</span> <span class="s1">'</span><span class="s">job_type'</span>
-      <span class="s">job_properties</span><span class="pi">:</span>
-          <span class="pi">{</span> <span class="nv">superceedable</span><span class="pi">:</span> <span class="nv">True</span><span class="pi">,</span> <span class="nv">job_type</span><span class="pi">:</span> <span class="s1">'</span><span class="s">invalidate'</span><span class="pi">,</span> <span class="nv">priority</span><span class="pi">:</span> <span class="nv">1</span><span class="pi">,</span> <span class="nv">due</span><span class="pi">:</span> <span class="nv">0</span><span class="pi">,</span> <span class="nv">expires</span><span class="pi">:</span> <span class="nv">5</span> <span class="pi">}</span>
-<span class="s">common</span><span class="pi">:</span>
-  <span class="pi">-</span> <span class="s">match</span><span class="pi">:</span>
-      <span class="pi">{</span> <span class="nv">action_type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Read"</span><span class="pi">,</span> <span class="nv">resource_type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Heartbeat"</span> <span class="pi">}</span>
-    <span class="s">key_fields</span><span class="pi">:</span>
-      <span class="pi">-</span> <span class="s">timestamp</span>
-      <span class="pi">-</span> <span class="s">job_type</span>
-    <span class="s">job_properties</span><span class="pi">:</span>
-        <span class="pi">{</span> <span class="nv">superceedable</span><span class="pi">:</span> <span class="nv">False</span><span class="pi">,</span> <span class="nv">job_type</span><span class="pi">:</span> <span class="s1">'</span><span class="s">Heartbeat'</span><span class="pi">,</span> <span class="nv">priority</span><span class="pi">:</span> <span class="nv">1</span><span class="pi">,</span> <span class="nv">due</span><span class="pi">:</span> <span class="nv">0</span><span class="pi">,</span> <span class="nv">expires</span><span class="pi">:</span> <span class="nv">5</span> <span class="pi">}</span>
-<span class="s">defaults</span><span class="pi">:</span>
-    <span class="s">job_properties</span><span class="pi">:</span>
-        <span class="pi">{</span> <span class="nv">job_type</span><span class="pi">:</span> <span class="s1">'</span><span class="s">invalidate'</span><span class="pi">,</span> <span class="nv">due</span><span class="pi">:</span> <span class="nv">0</span><span class="pi">,</span> <span class="nv">expires</span><span class="pi">:</span> <span class="nv">5</span><span class="pi">,</span> <span class="nv">priority</span><span class="pi">:</span> <span class="nv">1</span><span class="pi">,</span> <span class="nv">superceedable</span><span class="pi">:</span> <span class="nv">False</span><span class="pi">,</span> <span class="nv">retry_limit</span><span class="pi">:</span> <span class="nv">3</span> <span class="pi">}</span>
-</code></pre>
-</div>
-
-<p>The <code class="highlighter-rouge">common</code> section applies to any topic, and in this case matches a
-<code class="highlighter-rouge">Heartbeat Read</code>, thus across any topic, heartbeats have the same
-<code class="highlighter-rouge">key_fields</code> and <code class="highlighter-rouge">job_properties</code>.</p>
-
-<h3 id="job-manager-deduplication-config">Job Manager Deduplication Config</h3>
-
-<div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="s">deduper</span><span class="pi">:</span>
-  <span class="c1"># the amount of time in milliseconds to store a job hash</span>
-  <span class="s">unique_id_expiry</span><span class="pi">:</span> <span class="s">60000</span>
-</code></pre>
-</div>
-
-<p>An unseen job’s unique hash will be cached for the specified time.</p>
-
-<h3 id="job-manager-generational-count-config">Job Manager Generational Count Config</h3>
-
-<div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="s">job_publisher</span><span class="pi">:</span>
-  <span class="s">generations_limit</span><span class="pi">:</span> <span class="s">3</span>
-</code></pre>
-</div>
-
-<p>Generational limit can be lowered or increased as required. High
-generational counts are not recommended as this may induce a
-‘combinatorial explosion’ in the service. The purpose of allowing
-second or third generation jobs, is specifically to support cases where
-job side effects need to be processed. It does not make sense to create
-a separate topic and hook to handle these jobs - especially when they
-exist within the same semantic space of the current topic, e.g. caching.
-Additionally, such jobs do not have their own ‘source of truth’ like
-other jobs do - the knowledge that another job needs to be created is in
-effect inferred from a job and not an event in this case.</p>
-
-<h3 id="job-manager-feed--cache-manager-sections">Job Manager Feed &amp; Cache Manager Sections</h3>
-
-<div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="s">feed_manager</span><span class="pi">:</span>
-  <span class="s">worker_url</span><span class="pi">:</span> <span class="s1">'</span><span class="s">http://localhost:8000?type={type}&amp;id={id}'</span>
-
-<span class="s">cache_manager</span><span class="pi">:</span>
-  <span class="s">ppro_user_id/token_endpoint</span><span class="pi">:</span> <span class="s1">'</span><span class="s">http://remote_url/post/affected_users/FNwDuWV98ZiwfvOUB9Tx?type={type}&amp;id={id}</span>
-  <span class="s">redis_url:</span><span class="nv"> </span><span class="s">'redis://localhost:6379/'</span>
-</code></pre>
-</div>
-
-<p>These sections provide the hook with extra information it might need to
-complete its task. For example, the cache hook queries an endpoint to
-retrieve all users affected by an invalidation with respect to some
-resource.</p>
-
-<h3 id="job-manager-creating-generational-jobs-config">Job Manager Creating Generational Jobs Config</h3>
-
-<p>If new cache jobs need to be created, the config for doing so is placed
-under the <code class="highlighter-rouge">cache_manager</code> heading.</p>
-
-<div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="s">cache_manager</span><span class="pi">:</span>
-  <span class="s">.</span>
-  <span class="s">.</span> 
-  <span class="s">.</span>
-  <span class="s">rules</span><span class="pi">:</span>
-  <span class="pi">-</span> <span class="s">match</span><span class="pi">:</span>
-      <span class="pi">{</span> <span class="nv">action_type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Update"</span><span class="pi">,</span> <span class="nv">resource_type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">PostsById"</span><span class="pi">,</span> <span class="nv">job_type</span><span class="pi">:</span> <span class="s1">'</span><span class="s">invalidate'</span> <span class="pi">}</span>
-    <span class="s">jobs</span><span class="pi">:</span>
-      <span class="pi">-</span> <span class="pi">{</span> <span class="nv">others_affected</span><span class="pi">:</span> <span class="nv">True</span><span class="pi">,</span> <span class="nv">entity_type</span><span class="pi">:</span> <span class="s1">'</span><span class="s">Post'</span><span class="pi">,</span> <span class="nv">entity_id_offset</span><span class="pi">:</span> <span class="nv">1</span><span class="pi">,</span> <span class="nv">params</span><span class="pi">:</span> <span class="pi">{</span><span class="nv">type</span><span class="pi">:</span> <span class="s1">'</span><span class="s">type'</span><span class="pi">,</span> <span class="nv">id</span><span class="pi">:</span> <span class="s1">'</span><span class="s">entity'</span><span class="pi">},</span>  <span class="nv">topic</span><span class="pi">:</span> <span class="s1">'</span><span class="s">pp-cache'</span><span class="pi">,</span> <span class="nv">update_fields</span><span class="pi">:</span> <span class="pi">{</span> <span class="nv">superceedable</span><span class="pi">:</span> <span class="nv">True</span><span class="pi">,</span> <span class="nv">job_type</span><span class="pi">:</span> <span class="s1">'</span><span class="s">invalidate'</span><span class="pi">,</span> <span class="nv">priority</span><span class="pi">:</span> <span class="nv">1</span><span class="pi">,</span> <span class="nv">due</span><span class="pi">:</span> <span class="nv">0</span><span class="pi">,</span> <span class="nv">expires</span><span class="pi">:</span> <span class="nv">5</span><span class="pi">}</span> <span class="pi">}</span>
-  <span class="pi">-</span> <span class="s">match</span><span class="pi">:</span>
-      <span class="pi">{</span> <span class="nv">action_type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Update"</span><span class="pi">,</span> <span class="nv">resource_type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Post"</span><span class="pi">,</span> <span class="nv">job_type</span><span class="pi">:</span> <span class="s1">'</span><span class="s">invalidate'</span> <span class="pi">}</span>
-    <span class="s">jobs</span><span class="pi">:</span>
-      <span class="c1"># type and id in the source url corresponds to type and entity in the external api call respectively.</span>
-      <span class="c1"># params is a dict with params to look at on the source url, with a mapping between the job service</span>
-      <span class="c1"># and ppro's api endpoint. others_affected indicates to the hook that an external api must be queried to find</span>
-      <span class="c1"># data for new jobs to be created.</span>
-      <span class="c1"># Adding entity_type and entity_id_offset tells the cache hook to look at the url path to get the entity ID.</span>
-      <span class="c1"># e.g. entity_type: Post, entity_id_offset: 1 -- /posts/&lt;int:post_id&gt;</span>
-      <span class="pi">-</span> <span class="pi">{</span> <span class="nv">others_affected</span><span class="pi">:</span> <span class="nv">True</span><span class="pi">,</span> <span class="nv">params</span><span class="pi">:</span> <span class="pi">{</span><span class="nv">type</span><span class="pi">:</span> <span class="s1">'</span><span class="s">type'</span><span class="pi">,</span> <span class="nv">id</span><span class="pi">:</span> <span class="s1">'</span><span class="s">entity'</span><span class="pi">},</span>  <span class="nv">topic</span><span class="pi">:</span> <span class="s1">'</span><span class="s">cache'</span><span class="pi">,</span> <span class="nv">update_fields</span><span class="pi">:</span> <span class="pi">{</span> <span class="nv">superceedable</span><span class="pi">:</span> <span class="nv">True</span><span class="pi">,</span> <span class="nv">job_type</span><span class="pi">:</span> <span class="s1">'</span><span class="s">invalidate'</span><span class="pi">,</span> <span class="nv">priority</span><span class="pi">:</span> <span class="nv">1</span><span class="pi">,</span> <span class="nv">due</span><span class="pi">:</span> <span class="nv">0</span><span class="pi">,</span> <span class="nv">expires</span><span class="pi">:</span> <span class="nv">5</span><span class="pi">}</span> <span class="pi">}</span>
-      <span class="pi">-</span> <span class="pi">{</span> <span class="nv">others_affected</span><span class="pi">:</span> <span class="nv">False</span><span class="pi">,</span> <span class="nv">topic</span><span class="pi">:</span> <span class="s1">'</span><span class="s">feed'</span><span class="pi">,</span> <span class="nv">update_fields</span><span class="pi">:</span> <span class="pi">{</span> <span class="nv">superceedable</span><span class="pi">:</span> <span class="nv">False</span><span class="pi">,</span> <span class="nv">job_type</span><span class="pi">:</span> <span class="s1">'</span><span class="s">feed'</span><span class="pi">,</span> <span class="nv">priority</span><span class="pi">:</span> <span class="nv">1</span><span class="pi">,</span> <span class="nv">due</span><span class="pi">:</span> <span class="nv">0</span><span class="pi">,</span> <span class="nv">expires</span><span class="pi">:</span> <span class="nv">5</span><span class="pi">}</span> <span class="pi">}</span>
-      <span class="pi">-</span> <span class="pi">{</span> <span class="nv">others_affected</span><span class="pi">:</span> <span class="nv">False</span><span class="pi">,</span> <span class="nv">topic</span><span class="pi">:</span> <span class="s1">'</span><span class="s">cache'</span><span class="pi">,</span> <span class="nv">update_fields</span><span class="pi">:</span> <span class="pi">{</span> <span class="nv">superceedable</span><span class="pi">:</span> <span class="nv">False</span><span class="pi">,</span> <span class="nv">job_type</span><span class="pi">:</span> <span class="s1">'</span><span class="s">invalidate'</span><span class="pi">,</span> <span class="nv">priority</span><span class="pi">:</span> <span class="nv">1</span><span class="pi">,</span> <span class="nv">due</span><span class="pi">:</span> <span class="nv">0</span><span class="pi">,</span> <span class="nv">expires</span><span class="pi">:</span> <span class="nv">5</span><span class="pi">}</span> <span class="pi">}</span>
-</code></pre>
-</div>
-
-<p>The cache hook matches the current job against resource, action and job
-type. If a match exists, the config specifies information required to
-assist in job generation. In this case for and Update to PostsById, we
-have a new kind of job to create. Below is a list if attributes and
-their meaning:</p>
-
-<ol>
-  <li><code class="highlighter-rouge">others_affected</code> this tells the hook that there is a set of jobs
- that need to be created - which prompts it to call the external API.</li>
-  <li><code class="highlighter-rouge">entity_type</code> is the type of entity associated with this resource
- type.</li>
-  <li><code class="highlighter-rouge">entity_id_offset</code> is the position in the <code class="highlighter-rouge">resource_url</code> path
- (the <code class="highlighter-rouge">resource_url</code> is a property on the job)
- that provides the the entity id.</li>
-  <li><code class="highlighter-rouge">params</code> indicate which query parameters on the ‘resource_url’
- provide the <code class="highlighter-rouge">type</code> and <code class="highlighter-rouge">entity_id</code> - required for calling
- the API.
- The dictionary here is actually to provide a mapping between the
- query parameter names in the <code class="highlighter-rouge">resource_url</code> (the <code class="highlighter-rouge">resource_url</code> 
- is a property on the job) and the query
- parameter names in the API call, which are different.</li>
-  <li><code class="highlighter-rouge">topic</code>  - the job queue these new jobs will be published to.</li>
-  <li><code class="highlighter-rouge">update_fields</code>  are the fields that need to be updated with
-the specified values. A new job inherits the parent’s attributes,
-this mechanism allows for that to be overridden.</li>
-</ol>
-
-<p>Note that <code class="highlighter-rouge">entity_type</code> and <code class="highlighter-rouge">entity_id_offset</code> are used when the
-<code class="highlighter-rouge">resource_url</code> (the <code class="highlighter-rouge">resource_url</code> is a property on the job) does 
-not have any query parameters. The <code class="highlighter-rouge">params</code>dictionary is used when 
-query parameters exist.</p>
-
-<h3 id="job-manager-job-consumer-config">Job Manager Job Consumer Config</h3>
-
-<div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="s">job_consumers</span><span class="pi">:</span>
-  <span class="pi">-</span> <span class="s">name</span><span class="pi">:</span> <span class="s1">'</span><span class="s">Mock</span><span class="nv"> </span><span class="s">Job</span><span class="nv"> </span><span class="s">Consumer'</span>
-    <span class="s">topics</span><span class="pi">:</span>
-      <span class="pi">-</span> <span class="s1">'</span><span class="s">pp-mock'</span>
-    <span class="s">serializing_function</span><span class="pi">:</span> <span class="s">ppro.models.event.Event.deserialize</span>
-    <span class="s">hook</span><span class="pi">:</span> <span class="s">ppro.job_manager.hook.mock.MockHook</span>
-    <span class="s">priority_ranges</span><span class="pi">:</span>
-      <span class="pi">-</span> <span class="pi">{</span><span class="nv">range</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0</span><span class="pi">,</span> <span class="nv">5</span><span class="pi">],</span> <span class="nv">pool_size</span><span class="pi">:</span> <span class="nv">5</span><span class="pi">}</span>
-      <span class="pi">-</span> <span class="pi">{</span><span class="nv">range</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">6</span><span class="pi">,</span> <span class="nv">10</span><span class="pi">],</span> <span class="nv">pool_size</span><span class="pi">:</span> <span class="nv">2</span><span class="pi">}</span>
-      <span class="pi">-</span> <span class="pi">{</span><span class="nv">range</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">11</span><span class="pi">,</span> <span class="nv">15</span><span class="pi">],</span> <span class="nv">pool_size</span><span class="pi">:</span> <span class="nv">1</span><span class="pi">}</span>
-</code></pre>
-</div>
-
-<p>This configuration snippet describes how a how a topic is assigned
-priority ranges for Kafka Consumers, as well the hook in which jobs in
-this topic will be executed. <code class="highlighter-rouge">pp-mock</code> has three priority ranges,
-and each is assigned a pool of workers - generally, the higher the
-priority the more resources assigned.</p>
-
-<h1 id="playerpro-api">PlayerPro API</h1>
-
-<h2 id="system-context">System Context</h2>
-
-<p><img src="/SPANDigital/playerpro-docs/versions/latest/assets/local/images/ppro_api_system_context.svg" alt="API System Context" /></p>
-
-<h2 id="caching-middleware">Caching Middleware</h2>
-
-<p>In the PlayerPro API, in order to provide significant performance
-improvements a flexible caching middleware has been added. The Caching
-Middleware supports the three main semantics of cache usage: get, set
-and delete.</p>
-
-<h2 id="cache-configuration-design">Cache Configuration Design</h2>
-
-<p>A cache decorator is applied on all endpoints in API, this is done by
-adding it to the Flask Resource method_decorators array field:</p>
-
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">method_decorators</span> <span class="o">=</span> <span class="p">[</span><span class="n">authenticate</span><span class="p">,</span> <span class="n">handle_error</span><span class="p">,</span> <span class="n">cache</span><span class="p">()]</span>
-</code></pre>
-</div>
-
-<p>The Cache Middleware is bypassed if no entry in the config matches the
-endpoint’s HTTP method and url path.</p>
-
-<h3 id="cache-config-format">Cache Config Format</h3>
-
-<p>Caching in the PlayerPro API relies on rules to determine how an
-endpoint should be cached, the mechanisms around this are displayed
-below, and covered briefly as follows:</p>
-
-<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">  
-   </span><span class="nt">"&lt;METHOD&gt;/path/"</span><span class="p">:{</span><span class="w">  
-      </span><span class="nt">"defaults"</span><span class="p">:{</span><span class="w">  
-         </span><span class="nt">"action"</span><span class="p">:</span><span class="s2">"&lt;cache&gt; || &lt;invalidate&gt;"</span><span class="p">,</span><span class="w">
-         </span><span class="nt">"session"</span><span class="p">:</span><span class="s2">"&lt;bool&gt;"</span><span class="p">,</span><span class="w">
-         </span><span class="nt">"expires"</span><span class="p">:</span><span class="s2">"&lt;milliseconds ms&gt;"</span><span class="p">,</span><span class="w">
-         </span><span class="nt">"xx"</span><span class="p">:</span><span class="s2">"&lt;bool&gt;"</span><span class="p">,</span><span class="w">
-         </span><span class="nt">"nx"</span><span class="p">:</span><span class="s2">"&lt;bool&gt;"</span><span class="w">
-      </span><span class="p">},</span><span class="w">
-      </span><span class="nt">"overrides"</span><span class="p">:{</span><span class="w">  
-         </span><span class="nt">"rules"</span><span class="p">:[</span><span class="w">  
-            </span><span class="p">{</span><span class="w">  
-               </span><span class="nt">"rule"</span><span class="p">:</span><span class="s2">"&lt;rule&gt;"</span><span class="p">,</span><span class="w">
-               </span><span class="nt">"action"</span><span class="p">:</span><span class="s2">"&lt;cache&gt; ||&lt;invalidate&gt;"</span><span class="p">,</span><span class="w">
-               </span><span class="nt">"session"</span><span class="p">:</span><span class="s2">"&lt;bool&gt;"</span><span class="p">,</span><span class="w">
-               </span><span class="nt">"expires"</span><span class="p">:</span><span class="s2">"&lt;milliseconds ms&gt;"</span><span class="p">,</span><span class="w">
-               </span><span class="nt">"etc"</span><span class="p">:</span><span class="s2">"etc"</span><span class="w">
-            </span><span class="p">}</span><span class="w">
-         </span><span class="p">]</span><span class="w">
-      </span><span class="p">}</span><span class="w">
-   </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
-</div>
-
-<h3 id="cache-logic">Cache Logic</h3>
-
-<p><img src="/SPANDigital/playerpro-docs/versions/latest/assets/local/images/ppro_cache_logic_flow.svg" alt="Cache Configuration" /></p>
-
-<h3 id="rules">Rules</h3>
-
-<ol>
-  <li>The structure of a rule pattern is:
- <code class="highlighter-rouge">&lt;query_param&gt;:&lt;value&gt;&amp;&lt;query_param&gt;:&lt;value&gt;&amp;&lt;query_param&gt;:&lt;value&gt;...</code>
- Where value is a single word, a comma separated list, or the
- <code class="highlighter-rouge">*</code> wildcard. E.g. <code class="highlighter-rouge">'type:Group&amp;id:*'</code></li>
-  <li>If no rules are supplied for an endpoint then then the API uses any
- defaults that may be available.</li>
-  <li>If a rule is specified, then only APIv2 calls that agree with the
- rule are cached. If there are more query parameters e.g. ‘filter_by’
- that are not specified in the rule, then defaults are used.</li>
-  <li>Rules must be fully scoped. If a query parameter relies on another
- query parameter in the url string for meaning, then it must be
- included in the scope of the rules. E.g. <code class="highlighter-rouge">type=Group</code> relies on
- <code class="highlighter-rouge">id=&lt;id&gt;</code>.</li>
-  <li>Rules are passed a list of strings. The cache key is simply the
- request url, with any query parameters re-arranged in alphabetical
- order, and the values for those query parameters also ordered
- alphabetically.</li>
-</ol>
-
-<h3 id="rational-for-rules">Rational For Rules</h3>
-
-<p>If we explicitly mark an endpoint for caching, we need to be able to
-differentiate between what is to be cached and what is not to be cached,
-especially in the case of complex endpoints such as GET /posts where
-query parameters effectively change the endpoint definition.</p>
-
-<p>Merely caching by endpoint url doesn’t allow us to stop caching in
-certain cases - perhaps we don’t want to cache anything with ‘filter_by’
-in it. Hence, the need to introduce rules.</p>
-
-<p>The burden of responsibility is on the shoulders of the programmer to
-clearly define which endpoints are to be cached, by being explicit about
-the HTTP method and the url path expected.</p>
-
-<h3 id="a-note-on-access-tokens">A Note On Access Tokens</h3>
-
-<p>A note on use of <code class="highlighter-rouge">access_token</code> query parameter:</p>
-
-<p>The <code class="highlighter-rouge">access_token</code> parameter is present on some PlayerPro API
-endpoints (this is strongly advised against by the
-<a href="https://tools.ietf.org/html/rfc6750#page-13">Oauth2 RFC</a>), when caching
-by user, if the <code class="highlighter-rouge">access_token</code>  does not exist on the url, then it
-will be pulled from the request header. If no <code class="highlighter-rouge">access_token</code> is
-found, then the cache is bypassed. The access token query parameter is
-always ignored when checking the rules supplied for the endpoint match
-the url’s query parameters.</p>
-
+<article>
+	<h2 id="no-content">No Content</h2>
+	<div class="article-content">
+		Crickets... There is no content defined for this area at this time.
+	</div>	
+</article>
 
 
                 </article>
@@ -566,17 +101,13 @@ the url’s query parameters.</p>
                 <!--Product Logo-->
                 <article>
                     
-                        <a href="index.html" class="sublogo"><img src="/SPANDigital/playerpro-docs/versions/latest/assets/local/images/project_logo.png" alt=""></a>
+                        <a href="index.html" class="sublogo"><img src="/assets/local/images/project_logo.png" alt=""></a>
                     
                     <h4>Version</h4>
 
                     <div id="bar-select">
                         <select>
-                            <option value="/SPANDigital/playerpro-docs/versions/latest/versions/latest/">Latest</option>
-                            
-                                <option value="/SPANDigital/playerpro-docs/versions/latest/versions/"></option>
-                            
-                                <option value="/SPANDigital/playerpro-docs/versions/latest/versions/"></option>
+                            <option value="/versions/latest/">Latest</option>
                             
                         </select>
                     </div>
@@ -594,7 +125,7 @@ the url’s query parameters.</p>
         
         
         <li>
-            <a href="/SPANDigital/playerpro-docs/versions/latest/#overview" data-target="#overview">Overview</a>
+            <a href="/#overview" data-target="#overview">Overview</a>
             <ul>
                 
             </ul>
@@ -608,7 +139,7 @@ the url’s query parameters.</p>
         
         
         <li>
-            <a href="/SPANDigital/playerpro-docs/versions/latest/key-concepts#key-concepts" data-target="#key-concepts">Key Concepts</a>
+            <a href="/key-concepts#key-concepts" data-target="#key-concepts">Key Concepts</a>
             <ul>
                 
             </ul>
@@ -622,7 +153,7 @@ the url’s query parameters.</p>
         
         
         <li>
-            <a href="/SPANDigital/playerpro-docs/versions/latest/prerequisites#prerequisites" data-target="#prerequisites">Prerequisites</a>
+            <a href="/prerequisites#prerequisites" data-target="#prerequisites">Prerequisites</a>
             <ul>
                 
             </ul>
@@ -636,7 +167,7 @@ the url’s query parameters.</p>
         
         
         <li>
-            <a href="/SPANDigital/playerpro-docs/versions/latest/getting-started#getting-started" data-target="#getting-started">Getting started</a>
+            <a href="/getting-started#getting-started" data-target="#getting-started">Getting started</a>
             <ul>
                 
             </ul>
@@ -650,20 +181,20 @@ the url’s query parameters.</p>
         
         
         <li>
-            <a href="/SPANDigital/playerpro-docs/versions/latest/references#reference" data-target="#reference">Reference</a>
+            <a href="/references#reference" data-target="#reference">Reference</a>
             <ul>
                 
                 
                 
                 <li>
-                    <a onclick="$('#dropdown-menu-api').toggleClass('hidden');" >
-                        API
+                    <a onclick="$('#dropdown-menu-lorem').toggleClass('hidden');" >
+                        Lorem
                         <span class="caret"></span>
                     </a>
-                    <ul id="dropdown-menu-api" class="hidden">
+                    <ul id="dropdown-menu-lorem" class="hidden">
                         
                         <li class="sub-menu-item">
-                            <a href="/SPANDigital/playerpro-docs/versions/latest/references#playerpro-python-flask-api" data-target="#playerpro-python-flask-api">PlayerPro Python/FLASK API</a>
+                            <a href="/references#lorem-ipsum" data-target="#lorem-ipsum">Lorem Ipsum</a>
                         </li>
                         
                     </ul>
@@ -681,7 +212,7 @@ the url’s query parameters.</p>
         
         
         <li>
-            <a href="/SPANDigital/playerpro-docs/versions/latest/cookbook#cookbook" data-target="#cookbook">Cookbook</a>
+            <a href="/cookbook#cookbook" data-target="#cookbook">Cookbook</a>
             <ul>
                 
             </ul>
@@ -692,33 +223,10 @@ the url’s query parameters.</p>
         
 
         
-        <li>
-            <a onclick="$('#dropdown-menu-tools').toggleClass('hidden');" >
-                Tools
-                <span class="caret"></span>
-            </a>
-            <ul id="dropdown-menu-tools" class="hidden">
-                
-                <li class="sub-menu-item">
-                    <a href="/SPANDigital/playerpro-docs/versions/latest/tools#integrated-development-environment"  data-target="#integrated-development-environment">Integrated Development Environment</a>
-                </li>
-                
-                <li class="sub-menu-item">
-                    <a href="/SPANDigital/playerpro-docs/versions/latest/tools#rest-client"  data-target="#rest-client">REST Client</a>
-                </li>
-                
-            </ul>
-        </li>
-        
-        
-        
-        
-
-        
         
         
         <li>
-            <a href="/SPANDigital/playerpro-docs/versions/latest/testing#testing-debugging" data-target="#testing-debugging">Testing & Debugging</a>
+            <a href="/tools#tools" data-target="#tools">Tools</a>
             <ul>
                 
             </ul>
@@ -729,20 +237,25 @@ the url’s query parameters.</p>
         
 
         
+        
+        
         <li>
-            <a onclick="$('#dropdown-menu-updates').toggleClass('hidden');" >
-                Updates
-                <span class="caret"></span>
-            </a>
-            <ul id="dropdown-menu-updates" class="hidden">
+            <a href="/testing#testing-debugging" data-target="#testing-debugging">Testing & Debugging</a>
+            <ul>
                 
-                <li class="sub-menu-item">
-                    <a href="/SPANDigital/playerpro-docs/versions/latest/updates#job-service-0-1-2"  data-target="#job-service-0-1-2">Job Service 0.1.2</a>
-                </li>
-                
-                <li class="sub-menu-item">
-                    <a href="/SPANDigital/playerpro-docs/versions/latest/updates#api-3-1-4"  data-target="#api-3-1-4">API 3.1.4</a>
-                </li>
+            </ul>
+        </li>
+        
+        
+        
+        
+
+        
+        
+        
+        <li>
+            <a href="/updates#updates" data-target="#updates">Updates</a>
+            <ul>
                 
             </ul>
         </li>
@@ -752,10 +265,10 @@ the url’s query parameters.</p>
 </nav>
 
 
-<!--href="/SPANDigital/playerpro-docs/versions/latest#"></a>-->
+<!--href="#"></a>-->
                     <article>
                         <h4>Contact the team</h4>
-						<span class="button icon-slack"><a href="https://spandigital.slack.com/messages/player-pro/" target="_blank">player-pro</a></span>
+						<span class="button icon-slack"><a href="https://spandigital.slack.com/messages/span-presidium" target="_blank">span-presidium</a></span>
                     </article>
                 </div>
             </aside>

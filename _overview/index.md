@@ -1,76 +1,20 @@
 ---
 title: "Overview"
 id: "overview" 
-author: "dominicfollett"
+author: "author"
 ---
 
-# PlayerPro Overall System Architecture
+# Lorem
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam quis viverra magna. In id orci eu orci elementum ornare ac at turpis. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam purus dolor, malesuada nec lorem sit amet, venenatis lobortis lectus. Suspendisse consectetur eros et nulla vehicula sodales. Vestibulum fermentum erat odio, id sollicitudin lectus sollicitudin ut. Maecenas sollicitudin leo massa, quis blandit erat convallis eget.
 
-![Overall Architecture]({{ "/assets/local/images/ppro_architecture_overview.svg" | relative_url }})
+## Ipsum
+Aenean accumsan mi non leo sodales posuere. Etiam efficitur facilisis placerat. Quisque pretium tellus ex, sollicitudin tempus velit rhoncus placerat. Phasellus est ex, blandit sit amet tristique ut, ornare at est. Sed eget euismod quam. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Ut suscipit odio quis lacus blandit rhoncus. Curabitur leo dolor, fermentum nec feugiat vel, tincidunt in mauris. Vivamus hendrerit neque massa, id gravida nisl sollicitudin sit amet. Proin in orci sapien. Cras vitae elit sapien. Vestibulum sit amet ante sed nisl pellentesque elementum. Donec nec auctor eros. Praesent et mattis arcu. Phasellus tempus odio nisl, non efficitur leo varius eu. In volutpat lorem velit, vitae mollis leo sollicitudin non.
 
-# PlayerPro API
+### Dolor
+Aliquam elit tortor, gravida et placerat posuere, accumsan non neque. Vivamus ut molestie quam. Vivamus eros dolor, mollis et porttitor at, aliquet semper lorem. Nam venenatis odio non iaculis bibendum. Duis accumsan ut lacus vitae placerat. Duis in diam felis. In hac habitasse platea dictumst. Quisque eu maximus tortor, eu placerat orci. Nullam ornare enim eget interdum pharetra. Donec eget risus vitae eros congue porttitor vitae eu est. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nulla eget auctor dui. Donec erat mi, gravida fringilla interdum non, volutpat sodales ipsum.
 
-PlayerPro currently provides an API that offers much of the
-functionality that one can perform on their website as well. Their
-endpoints are partially grouped into themes. The response data from the
-endpoints contains large amounts of irrelevant and confusing
-information. Their conventions regarding request parameters, errors,
-data formats etc are not always consistent. By and large the API is
-difficult to use and does not provide a good end user experience.
+#### Sit
+In rutrum lacinia congue. Mauris laoreet ultrices massa, et porttitor ipsum malesuada eu. Nunc eget laoreet quam. Donec porttitor augue ac convallis porttitor. Donec eu vehicula lacus. Curabitur non sem sed ante ultrices tempor in eu nisl. Cras tincidunt vulputate dui quis tristique. Pellentesque dignissim quis diam sed lobortis. Praesent scelerisque nisi sed ipsum facilisis luctus.
 
-## Interface Design
-
-A clean and intuitive user experience requires considerable thought and
-thus we use an design-first workflow in combination with suitable tool
-support such as Swagger. We’ve chosen to use Swagger to design the API
-interface. Swagger gives us a complete toolchain necessary to build and
-manage a REST API. Furthermore, this gives us a clean framework in
-which to:
-
-* Design clean URLs
-* Clearly define request parameters and response objects
-* Manage headers
-* Generate client side code in a number of languages
-* Generate documentation
-
-
-# PlayerPro Job Service
-
-The PlayerPro Job Service, is a fully scalable service that allows
-tightly coupled behaviours between the PHP Symfony App and the PlayerPro
-API to be separated or abstracted out for handling via an asynchronous
-mechanism - the result of which is improved throughput and scalability
-across the PlayerPro Product.
-
-The Job Service consists of an event bus (implemented as a Kafka queue, 
-with a publish-subscribe pattern) that handles the transport of event
-messages published by PHP Symfony and/or the PlayerPro API.
-Additionally, a job queue handles the transport of enriched events 
-(jobs) from the event consumer pipeline. Events are enriched or
-'converted' into jobs through the application of configuration rules
-supplied to the service. These jobs, in turn, are handled by a job
-consumer pipeline where its termination culminates in changes to various
-services and their resources, for example: webhooks, cache invalidation,
-user feed generation and more.
-
-
-## Supporting Scale
-
-With PlayerPro's continued growth as a leader in football social media,
-need has arisen to address the scalability concerns inherent large,
-monolithic services.
-
-### Through Decoupling:
-
-The design of the PlayerPro Job Service supports iteratively decoupling
-computationally expensive behaviours from the PlayerPro PHP Symfony and,
-in stead, handling these in a distributed and highly scalable manner.
-
-
-### Through Asynchronicity:
-
-Through the use of an asynchronous Job Service, actions that would
-normally block - and, as a consequence ruin the quality of services, can
-now be handled in a way that does not prevent the timely processing of
-other (perhaps higher priority) work.
-
+# Amet
+Ut sit amet dapibus purus, at auctor quam. Donec non placerat eros, sed dignissim purus. Proin finibus ultrices mattis. Aliquam quis dapibus felis. Vivamus mollis condimentum justo at pellentesque. Morbi faucibus in mi in efficitur. Proin mattis est lectus, at imperdiet risus consectetur a. Curabitur ac pulvinar justo. Suspendisse at efficitur massa, sed volutpat lorem. Nullam lacinia orci dolor, eget vehicula neque interdum eu. Aliquam fringilla lorem nunc, sit amet congue purus luctus nec. Phasellus at scelerisque risus. Praesent eros diam, malesuada id egestas eget, sollicitudin in tellus.

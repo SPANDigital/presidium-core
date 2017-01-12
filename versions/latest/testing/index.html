@@ -5,23 +5,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PlayerPro</title>
+    <title>Presidium</title>
 
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="/SPANDigital/playerpro-docs/versions/latest/assets/shared/css/reset.css" type="text/css" media="screen"/>
-    <link rel="stylesheet" href="/SPANDigital/playerpro-docs/versions/latest/assets/shared/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/SPANDigital/playerpro-docs/versions/latest/assets/shared/css/style.css" type="text/css" media="screen"/>
+    <link rel="stylesheet" href="/assets/shared/css/reset.css" type="text/css" media="screen"/>
+    <link rel="stylesheet" href="/assets/shared/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/shared/css/style.css" type="text/css" media="screen"/>
 
     <!-- Fonts -->
     <link href='http://fonts.googleapis.com/css?family=Roboto:300,500' rel='stylesheet' type='text/css'>
 
-    <script src="/SPANDigital/playerpro-docs/versions/latest/assets/shared/js/session-capture.js"></script>
+    <script src="/assets/shared/js/session-capture.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <script src="/SPANDigital/playerpro-docs/versions/latest/assets/shared/js/respond.min.js"></script>
+    <script src="/assets/shared/js/respond.min.js"></script>
 
     <!--[if lt IE 9]>
-    <script src="/SPANDigital/playerpro-docs/versions/latest/assets/shared/js/html5.js"></script>
+    <script src="/assets/shared/js/html5.js"></script>
     <![endif]-->
 
     <!--
@@ -29,9 +29,9 @@
 This file gets included in the <head></head> section of the main layout pages.  It allows you to add in additional
 overriding stylesheets and / or JavaScript libraries that you might require in your project.
 
-Note: Please prefix all the included links with /SPANDigital/playerpro-docs/versions/latest, for example:
+Note: Please prefix all the included links with , for example:
 
-      <link rel="stylesheet" href="/SPANDigital/playerpro-docs/versions/latest/assets/local/css/style.css" type="text/css" media="screen"/>
+      <link rel="stylesheet" href="/assets/local/css/style.css" type="text/css" media="screen"/>
 -->
 
 
@@ -60,7 +60,7 @@ Note: Please prefix all the included links with /SPANDigital/playerpro-docs/vers
 <section id="page-head">
 	<!--logo-->
 	<!--<header id="logo">-->
-			<!--<a href=""><img src="/SPANDigital/playerpro-docs/versions/latest/assets/local/images/company_logo.png" alt=""></a>-->
+			<!--<a href=""><img src="/assets/local/images/company_logo.png" alt=""></a>-->
 	<!--</header>-->
 	<!--menu-->
 	<!-- <nav id = "topnav">
@@ -86,183 +86,12 @@ Note: Please prefix all the included links with /SPANDigital/playerpro-docs/vers
 
                    <h1 class="primary">TESTING AND DEBUGGING</h1>
 
-<ul>
-  <li><a href="#playerpro-job-service">PlayerPro job Service</a>
-    <ul>
-      <li><a href="#testing">Testing</a>
-        <ul>
-          <li><a href="#run-unit-tests">Run Unit Tests</a></li>
-          <li><a href="#run-integration-tests">Run Integration Tests</a></li>
-          <li><a href="#run-all-tests">Run All Tests</a></li>
-          <li><a href="#travis-ci">Travis CI</a></li>
-          <li><a href="#deployment-considerations">Deployment Considerations</a>
-            <ul>
-              <li><a href="#ansible----2110">Ansible &gt;= 2.1.1.0</a></li>
-              <li><a href="#prepare-servers">Prepare servers</a></li>
-              <li><a href="#install-kafka">Install Kafka</a></li>
-              <li><a href="#deploy-job-service">Deploy Job Service</a></li>
-            </ul>
-          </li>
-          <li><a href="#kafka-developer-notes">Kafka Developer Notes</a>
-            <ul>
-              <li><a href="#using-kafka-on-mac">Using Kafka On Mac</a></li>
-              <li><a href="#publish-dummy-events">Publish Dummy Events</a></li>
-              <li><a href="#kafka-tools">Kafka Tools</a></li>
-            </ul>
-          </li>
-          <li><a href="#sanity-checks">Sanity Checks</a></li>
-        </ul>
-      </li>
-      <li><a href="#debugging">Debugging</a></li>
-    </ul>
-  </li>
-  <li><a href="#playerpro-api">PlayerPro API</a>
-    <ul>
-      <li><a href="#running-tests">Running Tests</a></li>
-      <li><a href="#debugging-1">Debugging</a></li>
-    </ul>
-  </li>
-</ul>
-
-<h1 id="playerpro-job-service">PlayerPro Job Service</h1>
-
-<h2 id="testing">Testing</h2>
-
-<h3 id="run-unit-tests">Run Unit Tests</h3>
-
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>python -m unittest discover tests
-</code></pre>
-</div>
-
-<h3 id="run-integration-tests">Run Integration Tests</h3>
-
-<p>Currently integration tests rely on zookeeper, kafka, job_service and overlord all running. 
-Furthermore integration tests rely on <code class="highlighter-rouge">feed_manager.worker_url</code> being set to: 
-http://localhost:8000?type={type}&amp;id={id}</p>
-
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>python -m unittest discover integration_tests
-</code></pre>
-</div>
-
-<h3 id="run-all-tests">Run All Tests</h3>
-
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>python -m unittest discover
-</code></pre>
-</div>
-
-<p><strong>Remember to specify tests, specifically with python3.5 the imports
-will work, but your mocks will fail.</strong></p>
-
-<h3 id="deployment-considerations">Deployment Considerations</h3>
-
-<h4 id="ansible--2110">Ansible &gt;= 2.1.1.0</h4>
-<p>Ensure your ansible is up to date, check version:</p>
-
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>ansible-playbook --version
-</code></pre>
-</div>
-
-<p>http://docs.ansible.com/ansible/intro_installation.html</p>
-
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>sudo pip install ansible
-</code></pre>
-</div>
-
-<h4 id="prepare-servers">Prepare servers</h4>
-<p>Configure network and provision servers in EC2, with basic configuration in place.</p>
-
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>ansible-playbook -i aws_host/ec2.py prepare_servers.yml -e <span class="s2">"@vars/span.yml"</span> --private-key<span class="o">=</span>aws-load_testing-private.pem
-</code></pre>
-</div>
-
-<h4 id="install-kafka">Install Kafka</h4>
-<p>Install Kafka on servers</p>
-
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>ansible-playbook -i kafka-testing-inventory install_kafka.yml -e <span class="s2">"@vars/span.yml"</span> --private-key<span class="o">=</span>aws-load_testing-private.pem --user<span class="o">=</span>ubuntu
-</code></pre>
-</div>
-
-<h4 id="deploy-job-service">Deploy Job Service</h4>
-<p>Install Job Service on servers</p>
-
-<h3 id="kafka-developer-notes">Kafka Developer Notes</h3>
-
-<h4 id="using-kafka-on-mac">Using Kafka On Mac</h4>
-
-<p>If you’ve used Brew to install kafka, you can easily start/stop kafka:</p>
-
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>brew services restart kafka
-</code></pre>
-</div>
-
-<p>You can edit kafka config here:</p>
-
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>vi /usr/local/etc/kafka/server.properties
-</code></pre>
-</div>
-
-<p><strong>Disclaimer:</strong> brew doesn’t always have the latest version of Kafka,
-rather download the latest version and run as per:
-http://kafka.apache.org/quickstart</p>
-
-<h4 id="publish-dummy-events">Publish Dummy Events</h4>
-
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>./produce_event.py --json sample/mock_event.json --loops 100
-</code></pre>
-</div>
-
-<h4 id="kafka-tools">Kafka Tools</h4>
-<p>List consumer groups</p>
-
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>bin/kafka-run-class.sh kafka.admin.ConsumerGroupCommand --bootstrap-server localhost:9092 --list
-</code></pre>
-</div>
-
-<p>Get some basic info about a particular group:</p>
-
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>bin/kafka-run-class.sh kafka.admin.ConsumerGroupCommand --bootstrap-server localhost:9092 --describe --group playerpro-event-consumer-group
-</code></pre>
-</div>
-
-<p>and</p>
-
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>bin/kafka-run-class.sh kafka.admin.ConsumerGroupCommand --bootstrap-server localhost:9092 --describe --group playerpro-job-consumer-group
-</code></pre>
-</div>
-
-<h3 id="sanity-checks">Sanity Checks</h3>
-
-<h4 id="check-that-events-are-being-received-and-processed">Check that events are being received and processed</h4>
-<p>If correctly configured, all transactions with the PlayerPro API will result in events being published
-to the incoming events topic that the job service is listening to. Using the <a href="#kafka-tools">Kafka Tools</a>
-one can confirm that events are being received and processed, and that jobs are being recieved and 
-processed.</p>
-
-<h2 id="debugging">Debugging</h2>
-<p>The Job Service can be run using pdb (or using an IDE) on a development machine, with events injected
-using produce_event.py to assist in running through various scenarios.</p>
-
-<p>In all other environments, the log files generated by the application can be utilised to debug this system.</p>
-
-<h1 id="playerpro-api">PlayerPro API</h1>
-
-<h2 id="running-tests">Running Tests</h2>
-
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>python tests/run_tests.py
-</code></pre>
-</div>
-
-<p>OR</p>
-
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>python -m unittest discover
-</code></pre>
-</div>
-
-<h2 id="debugging-1">Debugging</h2>
-<p>The python api can be run using pdb (or using and IDE) on a development machine, with transaction created
-using an application such as curl (on *nix environments), <a href="https://www.getpostman.com/">Postman</a> or 
-<a href="https://paw.cloud/">Paw</a>.</p>
-
+<article>
+	<h2 id="no-content">No Content</h2>
+	<div class="article-content">
+		Crickets... There is no content defined for this area at this time.
+	</div>	
+</article>
 
 
                 </article>
@@ -272,17 +101,13 @@ using an application such as curl (on *nix environments), <a href="https://www.g
                 <!--Product Logo-->
                 <article>
                     
-                        <a href="index.html" class="sublogo"><img src="/SPANDigital/playerpro-docs/versions/latest/assets/local/images/project_logo.png" alt=""></a>
+                        <a href="index.html" class="sublogo"><img src="/assets/local/images/project_logo.png" alt=""></a>
                     
                     <h4>Version</h4>
 
                     <div id="bar-select">
                         <select>
-                            <option value="/SPANDigital/playerpro-docs/versions/latest/versions/latest/">Latest</option>
-                            
-                                <option value="/SPANDigital/playerpro-docs/versions/latest/versions/"></option>
-                            
-                                <option value="/SPANDigital/playerpro-docs/versions/latest/versions/"></option>
+                            <option value="/versions/latest/">Latest</option>
                             
                         </select>
                     </div>
@@ -300,7 +125,7 @@ using an application such as curl (on *nix environments), <a href="https://www.g
         
         
         <li>
-            <a href="/SPANDigital/playerpro-docs/versions/latest/#overview" data-target="#overview">Overview</a>
+            <a href="/#overview" data-target="#overview">Overview</a>
             <ul>
                 
             </ul>
@@ -314,7 +139,7 @@ using an application such as curl (on *nix environments), <a href="https://www.g
         
         
         <li>
-            <a href="/SPANDigital/playerpro-docs/versions/latest/key-concepts#key-concepts" data-target="#key-concepts">Key Concepts</a>
+            <a href="/key-concepts#key-concepts" data-target="#key-concepts">Key Concepts</a>
             <ul>
                 
             </ul>
@@ -328,7 +153,7 @@ using an application such as curl (on *nix environments), <a href="https://www.g
         
         
         <li>
-            <a href="/SPANDigital/playerpro-docs/versions/latest/prerequisites#prerequisites" data-target="#prerequisites">Prerequisites</a>
+            <a href="/prerequisites#prerequisites" data-target="#prerequisites">Prerequisites</a>
             <ul>
                 
             </ul>
@@ -342,7 +167,7 @@ using an application such as curl (on *nix environments), <a href="https://www.g
         
         
         <li>
-            <a href="/SPANDigital/playerpro-docs/versions/latest/getting-started#getting-started" data-target="#getting-started">Getting started</a>
+            <a href="/getting-started#getting-started" data-target="#getting-started">Getting started</a>
             <ul>
                 
             </ul>
@@ -356,20 +181,20 @@ using an application such as curl (on *nix environments), <a href="https://www.g
         
         
         <li>
-            <a href="/SPANDigital/playerpro-docs/versions/latest/references#reference" data-target="#reference">Reference</a>
+            <a href="/references#reference" data-target="#reference">Reference</a>
             <ul>
                 
                 
                 
                 <li>
-                    <a onclick="$('#dropdown-menu-api').toggleClass('hidden');" >
-                        API
+                    <a onclick="$('#dropdown-menu-lorem').toggleClass('hidden');" >
+                        Lorem
                         <span class="caret"></span>
                     </a>
-                    <ul id="dropdown-menu-api" class="hidden">
+                    <ul id="dropdown-menu-lorem" class="hidden">
                         
                         <li class="sub-menu-item">
-                            <a href="/SPANDigital/playerpro-docs/versions/latest/references#playerpro-python-flask-api" data-target="#playerpro-python-flask-api">PlayerPro Python/FLASK API</a>
+                            <a href="/references#lorem-ipsum" data-target="#lorem-ipsum">Lorem Ipsum</a>
                         </li>
                         
                     </ul>
@@ -387,7 +212,7 @@ using an application such as curl (on *nix environments), <a href="https://www.g
         
         
         <li>
-            <a href="/SPANDigital/playerpro-docs/versions/latest/cookbook#cookbook" data-target="#cookbook">Cookbook</a>
+            <a href="/cookbook#cookbook" data-target="#cookbook">Cookbook</a>
             <ul>
                 
             </ul>
@@ -398,33 +223,10 @@ using an application such as curl (on *nix environments), <a href="https://www.g
         
 
         
-        <li>
-            <a onclick="$('#dropdown-menu-tools').toggleClass('hidden');" >
-                Tools
-                <span class="caret"></span>
-            </a>
-            <ul id="dropdown-menu-tools" class="hidden">
-                
-                <li class="sub-menu-item">
-                    <a href="/SPANDigital/playerpro-docs/versions/latest/tools#integrated-development-environment"  data-target="#integrated-development-environment">Integrated Development Environment</a>
-                </li>
-                
-                <li class="sub-menu-item">
-                    <a href="/SPANDigital/playerpro-docs/versions/latest/tools#rest-client"  data-target="#rest-client">REST Client</a>
-                </li>
-                
-            </ul>
-        </li>
-        
-        
-        
-        
-
-        
         
         
         <li>
-            <a href="/SPANDigital/playerpro-docs/versions/latest/testing#testing-debugging" data-target="#testing-debugging">Testing & Debugging</a>
+            <a href="/tools#tools" data-target="#tools">Tools</a>
             <ul>
                 
             </ul>
@@ -435,20 +237,25 @@ using an application such as curl (on *nix environments), <a href="https://www.g
         
 
         
+        
+        
         <li>
-            <a onclick="$('#dropdown-menu-updates').toggleClass('hidden');" >
-                Updates
-                <span class="caret"></span>
-            </a>
-            <ul id="dropdown-menu-updates" class="hidden">
+            <a href="/testing#testing-debugging" data-target="#testing-debugging">Testing & Debugging</a>
+            <ul>
                 
-                <li class="sub-menu-item">
-                    <a href="/SPANDigital/playerpro-docs/versions/latest/updates#job-service-0-1-2"  data-target="#job-service-0-1-2">Job Service 0.1.2</a>
-                </li>
-                
-                <li class="sub-menu-item">
-                    <a href="/SPANDigital/playerpro-docs/versions/latest/updates#api-3-1-4"  data-target="#api-3-1-4">API 3.1.4</a>
-                </li>
+            </ul>
+        </li>
+        
+        
+        
+        
+
+        
+        
+        
+        <li>
+            <a href="/updates#updates" data-target="#updates">Updates</a>
+            <ul>
                 
             </ul>
         </li>
@@ -458,10 +265,10 @@ using an application such as curl (on *nix environments), <a href="https://www.g
 </nav>
 
 
-<!--href="/SPANDigital/playerpro-docs/versions/latest#"></a>-->
+<!--href="#"></a>-->
                     <article>
                         <h4>Contact the team</h4>
-						<span class="button icon-slack"><a href="https://spandigital.slack.com/messages/player-pro/" target="_blank">player-pro</a></span>
+						<span class="button icon-slack"><a href="https://spandigital.slack.com/messages/span-presidium" target="_blank">span-presidium</a></span>
                     </article>
                 </div>
             </aside>

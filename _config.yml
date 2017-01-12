@@ -1,8 +1,9 @@
 #
 # Collections for content articles
 #
+
 collections:
-#    best_practices:
+    best_practices:
     getting_started:
     key_concepts:
     overview:
@@ -16,11 +17,11 @@ collections:
     typical_scenarios:
     updates:
 
-baseurl: /SPANDigital/playerpro-docs/versions/latest
-name: PlayerPro
+baseurl:
+name: Presidium
 logo: /assets/local/images/project_logo.png
-slack_url: https://spandigital.slack.com/messages/player-pro/
-slack_channel: player-pro
+slack_url: https://spandigital.slack.com/messages/span-presidium
+slack_channel: span-presidium
 
 #
 # Exclude the following files from the generated site
@@ -29,8 +30,7 @@ exclude: [
     "README.md",
     "LICENSE",
     "_TEMPLATE.md",
-    ".gitignore",
-    "_best_practices"
+    ".gitignore"
 ]
 
 #
