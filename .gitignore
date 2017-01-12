@@ -1,3 +1,8 @@
-_site/
-.sass-cache/
 .jekyll-metadata
+_site
+site
+src/_site
+.idea
+.DS_Store
+/versions/draft
+.sass-cache

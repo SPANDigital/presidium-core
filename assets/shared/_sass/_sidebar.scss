@@ -1,0 +1,81 @@
+/* This is a partial. */
+
+@import 'general';
+
+/* Styles for navigation in sidebar. */
+#nav-container {
+  min-width: 222px;
+  h2 {
+    padding: 0 1em;
+  }
+  li {
+    list-style: None;
+     &.active {
+       a {
+         font-weight: 500;
+       }
+      background: #e4ecf0 url(../images/subnav_bg.png) right center no-repeat;
+      ul li a {
+        font-weight: 300;
+        &:hover {
+          background: None;
+          font-weight: 500;
+        }
+      }
+    }
+    a {
+      text-decoration: None;
+      color: $secondary-color;
+      cursor: pointer;
+      &:hover, &:focus {
+        background: #e4ecf0 url(../images/subnav_bg.png) right center no-repeat;
+        font-weight: 500;
+      }
+    }
+  }
+  .nav > li > a {
+    padding: 0.4em 1em;
+  }
+  ul ul {
+    li {
+      &.active {
+        background: None;
+      }
+      a {
+        padding-left: 8%;
+        display: block;
+        width: 100%;
+        word-wrap: break-word;
+        margin-left: 1.5em;
+        font-weight: 300;
+        &:hover, &focus {
+          background: None;
+          font-weight: 500;
+        }
+      }
+      &:hover, &:focus {
+        background: #e4ecf0;
+      }
+    }
+    ul li {
+      a {
+        padding-left: 8%;
+        display: block;
+        width: 100%;
+        word-wrap: break-word;
+        margin-left: 2.5em;
+        font-weight: 300;
+        font-style: italic;
+        font-size: 0.9em;
+      }
+      &:hover, &:focus {
+        background: None;
+      }
+    }
+  }
+}
+
+.opened {
+  background: #e4ecf0 url(../images/subnav_bg.png) right center no-repeat;
+  font-weight: 500;
+}

@@ -1,0 +1,52 @@
+#
+# Collections for content articles
+#
+collections:
+#    best_practices:
+    getting_started:
+    key_concepts:
+    overview:
+    prerequisites:
+    recipes:
+    references:
+        output: true
+        permalink: /reference/:path/
+    testing:
+    tools:
+    typical_scenarios:
+    updates:
+
+baseurl: /SPANDigital/playerpro-docs/versions/latest
+name: PlayerPro
+logo: /assets/local/images/project_logo.png
+slack_url: https://spandigital.slack.com/messages/player-pro/
+slack_channel: player-pro
+
+#
+# Exclude the following files from the generated site
+#
+exclude: [
+    "README.md",
+    "LICENSE",
+    "_TEMPLATE.md",
+    ".gitignore",
+    "_best_practices"
+]
+
+#
+# System wide defaults
+#
+defaults:
+    -
+        scope:
+            path: ""
+        values:
+            logo: ""
+            layout: "default"
+            github-url: "https://github.com/"
+
+#
+# Sass settings
+#
+sass:
+    sass_dir: assets/shared/_sass

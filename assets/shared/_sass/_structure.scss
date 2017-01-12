@@ -1,0 +1,100 @@
+/* Main structure. */
+#holder {
+  max-width: 1116px;
+  margin: 0 auto;
+  width: auto;
+}
+
+.mainholder {
+  min-width: 960px;
+  background: #faf9f7;
+}
+
+.products .mainholder {
+  background: #faf9f7 url(../images/bg.png) repeat-y scroll 19.3% 0;
+}
+
+/* Structure: header nav and top */
+#page-head {
+  max-height: 50px;
+  background: #2774ba;
+  overflow: hidden;
+}
+
+#logo {
+  margin: auto 0;
+  float: left;
+}
+
+// nav#topnav ul li a:hover //
+nav#topnav {
+  width: auto;
+  margin: 1em;
+  ul {
+    list-style: None;
+    li {
+      display: inline;
+      line-height: 2em;
+      height: 50px;
+      a {
+        text-decoration: none;
+        color: #7abfff;
+        margin: 0 0.8em;
+        font-size: 15px;
+        &:hover {}
+      }
+    }
+  }
+}
+
+nav#topnav ul li.active a {
+  @extend nav#topnav;
+  color: #fff;
+  border-bottom: 3px solid #fff;
+  padding-bottom: 10px;
+}
+
+#page-image {
+  &.high {
+    height: 260px;
+  }
+  &.short {
+    height: 160px;
+  }
+  h1 {
+    color: #fff;
+    font-size: 44px;
+    padding: 115px 0 0 60px;
+    text-transform: uppercase;
+  }
+  &.high h1 {
+    text-transform: none;
+    padding: 60px 0 0 60px;
+  }
+  p {
+    color: #fff;
+    padding: 1em 0 0 60px;
+    width: 400px;
+  }
+}
+
+/* Structure: no bar */
+#nobar {
+  clear: both;
+  padding: 0 20px 0 50px;
+  article {
+    float: left;
+    padding: 1em;
+  }
+}
+
+#rightpage article {
+  padding: 1em 2em;
+}
+
+.divider {
+  height: 1px;
+  border-bottom: solid 1px $quinary-color;
+  margin: 10px 0;
+  clear: both;
+}
