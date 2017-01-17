@@ -86,14 +86,11 @@ Note: Please prefix all the included links with , for example:
 
                    <h1 class="primary">REFERENCE</h1>
 
-<h1 class="secondary">LOREM</h1>
-
 <article>
-<ul>
-  <li><a href="../reference/lorem/lipsum.html">Lorem Ipsum</a></li>
-</ul>
-
-
+	<h2 id="no-content">No Content</h2>
+	<div class="article-content">
+		Crickets... There is no content defined for this area at this time.
+	</div>	
 </article>
 
 
@@ -188,23 +185,6 @@ Note: Please prefix all the included links with , for example:
             <a href="/references#reference" data-target="#reference">Reference</a>
             <ul>
                 
-                
-                
-                <li>
-                    <a onclick="$('#dropdown-menu-lorem').toggleClass('hidden');" >
-                        Lorem
-                        <span class="caret"></span>
-                    </a>
-                    <ul id="dropdown-menu-lorem" class="hidden">
-                        
-                        <li class="sub-menu-item">
-                            <a href="/references#lorem-ipsum" data-target="#lorem-ipsum">Lorem Ipsum</a>
-                        </li>
-                        
-                    </ul>
-                </li>
-                
-                
             </ul>
         </li>
         
@@ -293,6 +273,7 @@ so not to break layout - is also hidden in the style.css footer-->
 
     </div>
 
+    <script src="/assets/shared/js/bundle.js"></script>
     <script>
         $(document).ready(function() {
             $('#nav-container').affix({
