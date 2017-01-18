@@ -7,6 +7,6 @@ src/_site
 /versions/draft
 .sass-cache
 public
-assets/shared/js/bundle.js
+assets/shared/js/presidium.js
 node_modules
 npm-debug.log
