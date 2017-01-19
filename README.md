@@ -82,7 +82,7 @@ devDependencies section.
 
 ### Syntax Highlighting 
 
-Corpus uses [prism.js](http://prismjs.com/) to handle all code highlighting. 
+Presidium uses [prism.js](http://prismjs.com/) to handle all code highlighting. 
 
 To use prism, use the normal [fenced code blocks](https://help.github.com/articles/github-flavored-markdown/#fenced-code-blocks) as in Github Flavored Markdown. 
 

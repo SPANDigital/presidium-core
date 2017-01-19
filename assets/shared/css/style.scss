@@ -2,14 +2,13 @@
 # This ensures Jekyll reads the file to be transformed into CSS later.
 # Only Main files contain this front matter, not partials.
 ---
-
+@import 'reset';
 @import 'general';
 @import 'structure';
 @import 'mainbar';
 @import 'sidebar';
 @import 'footer';
 @import 'syntax';
-@import 'reset';
 
 .light {
   color: #8fd3f4;
