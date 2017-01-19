@@ -1,9 +1,9 @@
 {% assign portalurl = site.portalurl %}
 {% assign baseurl = site.baseurl %}
-<!DOCTYPE HTML>
+<!doctype html>
 <html>
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ site.name }}</title>
 
@@ -15,11 +15,6 @@
     <!-- Fonts -->
     <link href='http://fonts.googleapis.com/css?family=Roboto:300,500' rel='stylesheet' type='text/css'>
 
-    <script src="{{ site.baseurl }}/assets/shared/js/session-capture.js"></script>
-    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>-->
-    <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>-->
-    <script src="{{ site.baseurl }}/assets/shared/js/respond.min.js"></script>
-
     <!--[if lt IE 9]>
     <script src="{{ site.baseurl }}/assets/shared/js/html5.js"></script>
     <![endif]-->
@@ -27,68 +22,45 @@
     {% include head.html %}
 </head>
 <body class="products">
+<div id="holder" class="mainholder">
 
-    <div id="holder" class="mainholder">
+    {% include header.html %}
 
-        <!-- Results panel -->
-        <div id="wrapper">
-            <div id="sidebar-wrapper">
-                <aside>
-                    <article>
-                        <h2>Definition</h2>
-                        <p>content here for results</p>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec pretium metus vitae urna pharetra fermentum. Nunc convallis ligula nec accumsan mollis.</p>
-                        <div class="divider"></div>
-                        <h2>Results formula</h2>
-                        <p> Something here <span class="light">A highlight</span><br>
-                    </article>
-                </aside>
-            </div>
-        </div>
+    <!--CONTENT with sidebar left-->
+    <section id="onebar" class="leftbar">
 
-        {% include header.html %}
-
-        <!--CONTENT with sidebar left-->
-        <section id="onebar" class="leftbar">
-            <!--CONTENT right-->
-
-            <section id="rightpage">
-                <article id="{{ page.title | slugify }}" class="reference">
-					<!--<a href="#menu-toggle" class="togglebut" id="menu-toggle">Toggle Results Panel</a>-->
-
-                   {{ content }}
-
-                </article>
-            </section>
-
-            <aside>
-                <!--Product Logo-->
-                <article>
-                    {% if site.logo %}
-                        <a href="index.html" class="sublogo"><img src="{{ site.baseurl}}{{ site.logo }}" alt=""></a>
-                    {% else %}
-                        <h1>{{ site.name | upcase }}</h1>
-                    {% endif %}
-                    <h4>Version</h4>
-
-                    <div id="bar-select">
-                        <select>
-                            <option value="{{ site.baseurl }}/versions/latest/">Latest</option>
-                            {% for update in site.updates %}
-                                <option value="{{ site.baseurl }}/versions/{{ update.version_number }}">{{ update.version_number }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                </article>
-                <div id="nav-container">
-                    {% include navigation.html %}
-                </div>
-            </aside>
+        <!--CONTENT right-->
+        <section id="rightpage">
+            <article id="{{ page.title | slugify }}" class="reference">
+                {{ content }}
+            </article>
         </section>
 
-        {% include footer.html %}
-    </div>
+        <aside>
+            <!--Product Logo-->
+            <article>
+                {% if site.logo %}
+                <a href="index.html" class="sublogo"><img src="{{ site.baseurl}}{{ site.logo }}" alt=""></a>
+                {% else %}
+                <h1>{{ site.name | upcase }}</h1>
+                {% endif %}
+            </article>
+            <!-- Navigation -->
+            <div id="nav-container">
+            </div>
+        </aside>
 
-    <script src="{{ site.baseurl }}/assets/shared/js/presidium.js"></script>
+    </section>
+
+    <!-- Footer -->
+    {% include footer.html %}
+</div>
+
+<!-- Components -->
+<script src="{{ site.baseurl }}/assets/shared/js/presidium.js"></script>
+<script>
+    window.presidium.menu.load('nav-container');
+</script>
 
 </body>
+</html>
