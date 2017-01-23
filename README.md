@@ -25,59 +25,6 @@ $ jekyll serve -s . -d versions/latest
 4. View the site in a local browser at http://127.0.0.1:4000/.
 5. Edit the site using [GitHub Flavored Markdown](https://help.github.com/articles/github-flavored-markdown/) as needed.
 
-## Integrating Jekyll and Webpack
-
-### Install npm
-
-#### On Ubuntu
-
-```sh
-$ sudo install npm -g
-```
-
-#### On Mac
-
-Note: Homebrew and Xcode is required.
-
-```sh
-$ brew install node
-```
-
-Verify:
-
-```sh
-$ node -v
-$ npm -v
-```
-
-Update:
-
-```sh
-$ brew update
-$ brew upgrade node
-```
-
-#### NB: Version
-
-The version must be ```>= 3.0 ``` this version prevents installation of
-multiple copies of dependencies in the node_modules directory and
-significantly reduces npm's footprint.
-
-### Install Webpack
-
-```sh
-$ npm install webpack -g
-```
-
-### Install Dependencies
-
-```sh
-$ npm install webpack babel-core babel-loader babel-preset-es2015 babel-preset-react react react-addons-update react-dom --save-dev
-```
-
-The save-dev flag will write the packages to the package.json
-devDependencies section.
-
 ## Usage 
 
 ### Syntax Highlighting 
