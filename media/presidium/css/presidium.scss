@@ -1,0 +1,10 @@
+---
+# This ensures Jekyll reads the file to be transformed into CSS later.
+# Only Main files contain this front matter, not partials.
+---
+
+//@import 'reset';
+@import 'themes/simplex/variables';
+@import 'bootstrap/bootstrap';
+@import 'themes/simplex/bootswatch';
+@import 'navbar';

@@ -1,5 +1,6 @@
 {% assign portalurl = site.portalurl %}
 {% assign baseurl = site.baseurl %}
+
 <!doctype html>
 <html>
 <head>
@@ -8,57 +9,39 @@
     <title>{{ site.name }}</title>
 
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="{{ site.baseurl }}/assets/shared/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{{ site.baseurl }}/assets/shared/css/style.css" type="text/css" media="screen"/>
+    <link rel="stylesheet" href="{{ site.baseurl }}/media/presidium/css/presidium.css" type="text/css" media="screen"/>
 
-    <!-- Fonts -->
-    <link href='http://fonts.googleapis.com/css?family=Roboto:300,500' rel='stylesheet' type='text/css'>
 
-    <!--[if lt IE 9]>
-    <script src="{{ site.baseurl }}/assets/shared/js/html5.js"></script>
-    <![endif]-->
+    <!--todo package deps-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
-    {% include head.html %}
 </head>
-<body class="products">
-<div id="holder" class="mainholder">
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-1"></div>
 
-    {% include header.html %}
+        <div id="nav-container" class="col-sm-3 col-lg-2"></div>
 
-    <!--CONTENT with sidebar left-->
-    <section id="onebar" class="leftbar">
+        <div class="col-sm-9 col-lg-8">
 
-        <!--CONTENT right-->
-        <section id="rightpage">
-            <article id="{{ page.title | slugify }}" class="reference">
-                {{ content }}
-            </article>
-        </section>
-
-        <aside>
-            <!--Product Logo-->
-            <article>
-                {% if site.logo %}
-                <a href="index.html" class="sublogo"><img src="{{ site.baseurl}}{{ site.logo }}" alt=""></a>
-                {% else %}
-                <h1>{{ site.name | upcase }}</h1>
-                {% endif %}
-            </article>
-            <!-- Navigation -->
-            <div id="nav-container">
-            </div>
-        </aside>
-
-    </section>
-
-    <!-- Footer -->
-    {% include footer.html %}
+            <!-- your page content -->
+            <section>
+                <article id="{{ page.title | slugify }}" class="reference">
+                    {{ content }}
+                </article>
+            </section>
+        </div>
+        <div class="col-lg-1"></div>
+    </div>
 </div>
 
 <!-- Components -->
-<script src="{{ site.baseurl }}/assets/shared/js/presidium.js"></script>
+<script src="{{ site.baseurl }}/media/presidium/js/presidium.js"></script>
 <script>
-    window.presidium.menu.load('nav-container');
+    var baseurl = "{{ site.baseurl }}";
+    window.presidium.menu.load(baseurl, 'nav-container');
 </script>
 
 </body>
