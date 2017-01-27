@@ -1,5 +1,5 @@
 
-baseurl: /
+baseurl:
 name: Presidium
 
 #
@@ -40,7 +40,7 @@ defaults:
             path: ""
         values:
             logo: ""
-            layout: "default"
+            layout: "container"
             github-url: "https://github.com/"
 
 #
