@@ -1,13 +1,13 @@
 ---
 title: Contribution
-author: virtualtraveler
+author: presidium
 permalink: /contribution/
 --- 
 
 <h1 class="primary">{{ page.title | upcase }}</h1>
 
 {% for article in site.contribution %}
-{{ article.content }}
+    {{ article.content }}
 {% else %}
-{% include empty-article.html %}
+    {% include empty-article.html %}
 {% endfor %}

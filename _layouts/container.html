@@ -6,31 +6,25 @@
     <title>{{ site.name }}</title>
 
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="{{ site.baseurl }}/media/presidium/css/presidium.css" type="text/css" media="screen"/>
-
-
-    <!--todo remove and implement in presidium-js-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{ site.baseurl }}/media/css/presidium.css" type="text/css" media="screen"/>
 
 </head>
 <body>
+
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-1"></div>
         <div id="nav-container" class="col-sm-3 col-lg-2"></div>
-        <div class="col-sm-9 col-lg-8">
+        <div class="content col-sm-9 col-lg-8">
             {% include content.html %}
         </div>
         <div class="col-lg-1"></div>
     </div>
 </div>
-
 <!-- Components -->
-<script src="{{ site.baseurl }}/media/presidium/js/presidium.js"></script>
+<script src="{{ site.baseurl }}/media/js/presidium.js"></script>
 <script>
-    var baseurl = "{{ site.baseurl }}";
-    window.presidium.menu.load(baseurl, 'nav-container');
+    window.presidium.menu.load({% include menu.liquid %}, 'nav-container');
 </script>
 
 </body>

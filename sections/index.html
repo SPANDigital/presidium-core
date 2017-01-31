@@ -1,0 +1,9 @@
+---
+permalink: /
+---
+
+<h1 class="primary">{{ site.titles.overview | upcase }}</h1>
+
+{% for article in site.overview %}
+    {{ article.content }}
+{% endfor %}

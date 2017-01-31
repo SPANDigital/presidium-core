@@ -4136,6 +4136,10 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
+	var _menu_item = __webpack_require__(181);
+
+	var _menu_item2 = _interopRequireDefault(_menu_item);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -4144,208 +4148,106 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+	/**
+	 * A two level boostrap menu. Doesn't rely on bootstrap or jquery js.
+	 */
 	var Menu = function (_Component) {
 	    _inherits(Menu, _Component);
 
-	    function Menu() {
+	    function Menu(props) {
 	        _classCallCheck(this, Menu);
 
-	        return _possibleConstructorReturn(this, (Menu.__proto__ || Object.getPrototypeOf(Menu)).apply(this, arguments));
+	        var _this = _possibleConstructorReturn(this, (Menu.__proto__ || Object.getPrototypeOf(Menu)).call(this, props));
+
+	        _this.state = {
+	            expand: false
+	        };
+	        return _this;
 	    }
 
 	    _createClass(Menu, [{
-	        key: 'path',
-	        value: function path(target) {
-	            return this.props.baseurl + target;
-	        }
-	    }, {
-	        key: 'isActive',
-	        value: function isActive(path) {
-	            return this.props.pageurl == path ? "active" : "";
-	        }
-	    }, {
 	        key: 'render',
 	        value: function render() {
-	            return (
-	                //TODO Break up into components and generate dynamically
+	            var _this2 = this;
+
+	            var menu = this.props.menu;
+	            return _react2.default.createElement(
+	                'nav',
+	                { className: 'navbar navbar-default navbar-fixed-side' },
 	                _react2.default.createElement(
-	                    'nav',
-	                    { className: 'navbar navbar-default navbar-fixed-side' },
+	                    'div',
+	                    { className: 'container' },
 	                    _react2.default.createElement(
 	                        'div',
-	                        { className: 'container' },
+	                        { className: 'navbar-header' },
 	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'navbar-header' },
-	                            _react2.default.createElement(
-	                                'a',
-	                                { href: './', className: 'navbar-brand' },
-	                                _react2.default.createElement('img', { src: this.path("/media/images/logo.png"), alt: '' })
-	                            ),
-	                            _react2.default.createElement(
-	                                'button',
-	                                { className: 'navbar-toggle', 'data-target': '.navbar-collapse', 'data-toggle': 'collapse' },
-	                                _react2.default.createElement(
-	                                    'span',
-	                                    { className: 'sr-only' },
-	                                    'Toggle navigation'
-	                                ),
-	                                _react2.default.createElement('span', { className: 'icon-bar' }),
-	                                _react2.default.createElement('span', { className: 'icon-bar' }),
-	                                _react2.default.createElement('span', { className: 'icon-bar' })
-	                            )
+	                            'a',
+	                            { href: './', className: 'navbar-brand' },
+	                            _react2.default.createElement('img', { src: menu.baseUrl + "media/images/logo.png", alt: '' })
 	                        ),
 	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'collapse navbar-collapse' },
+	                            'button',
+	                            { className: 'navbar-toggle', onClick: function onClick() {
+	                                    return _this2.toggleExpand();
+	                                } },
 	                            _react2.default.createElement(
-	                                'ul',
-	                                { className: 'nav navbar-nav' },
-	                                _react2.default.createElement(
-	                                    'li',
-	                                    { className: this.isActive("/") },
-	                                    _react2.default.createElement(
-	                                        'a',
-	                                        { href: this.path("/") },
-	                                        'Overview'
-	                                    )
-	                                ),
-	                                _react2.default.createElement(
-	                                    'li',
-	                                    { className: this.isActive("/key-concepts/") },
-	                                    _react2.default.createElement(
-	                                        'a',
-	                                        { href: this.path("/key-concepts/") },
-	                                        'Key Concepts'
-	                                    )
-	                                ),
-	                                _react2.default.createElement(
-	                                    'li',
-	                                    { className: this.isActive("/prerequisites/") },
-	                                    _react2.default.createElement(
-	                                        'a',
-	                                        { href: this.path("/prerequisites/") },
-	                                        'Prerequisites'
-	                                    )
-	                                ),
-	                                _react2.default.createElement(
-	                                    'li',
-	                                    { className: this.isActive("/getting-started/") },
-	                                    _react2.default.createElement(
-	                                        'a',
-	                                        { href: this.path("/getting-started/") },
-	                                        'Getting started'
-	                                    )
-	                                ),
-	                                _react2.default.createElement(
-	                                    'li',
-	                                    null,
-	                                    _react2.default.createElement(
-	                                        'a',
-	                                        { href: this.path("/references") },
-	                                        'Reference'
-	                                    )
-	                                ),
-	                                _react2.default.createElement(
-	                                    'li',
-	                                    null,
-	                                    _react2.default.createElement(
-	                                        'a',
-	                                        { href: this.path("/cookbook") },
-	                                        'Cookbook'
-	                                    )
-	                                ),
-	                                _react2.default.createElement(
-	                                    'li',
-	                                    null,
-	                                    _react2.default.createElement(
-	                                        'a',
-	                                        { href: this.path("/tools") },
-	                                        'Tools'
-	                                    )
-	                                ),
-	                                _react2.default.createElement(
-	                                    'li',
-	                                    null,
-	                                    _react2.default.createElement(
-	                                        'a',
-	                                        { href: this.path("/testing") },
-	                                        'Testing & Debugging'
-	                                    )
-	                                ),
-	                                _react2.default.createElement(
-	                                    'li',
-	                                    null,
-	                                    _react2.default.createElement(
-	                                        'a',
-	                                        { href: this.path("/updates") },
-	                                        'Updates'
-	                                    )
-	                                ),
-	                                _react2.default.createElement(
-	                                    'li',
-	                                    { className: 'dropdown' },
-	                                    _react2.default.createElement(
-	                                        'a',
-	                                        { className: 'dropdown-toggle', 'data-toggle': 'dropdown', href: '#' },
-	                                        'References ',
-	                                        _react2.default.createElement('b', { className: 'caret' })
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'ul',
-	                                        { className: 'dropdown-menu' },
-	                                        _react2.default.createElement(
-	                                            'li',
-	                                            null,
-	                                            _react2.default.createElement(
-	                                                'a',
-	                                                { href: '#' },
-	                                                'Sub-page 1'
-	                                            )
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'li',
-	                                            null,
-	                                            _react2.default.createElement(
-	                                                'a',
-	                                                { href: '#' },
-	                                                'Sub-page 2'
-	                                            )
-	                                        ),
-	                                        _react2.default.createElement('li', { className: 'divider' }),
-	                                        _react2.default.createElement(
-	                                            'li',
-	                                            { className: 'dropdown-header' },
-	                                            'Sub Header'
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'li',
-	                                            null,
-	                                            _react2.default.createElement(
-	                                                'a',
-	                                                { href: '#' },
-	                                                'Sub-page 3'
-	                                            )
-	                                        )
-	                                    )
-	                                )
-	                            )
+	                                'span',
+	                                { className: 'sr-only' },
+	                                'Toggle navigation'
+	                            ),
+	                            _react2.default.createElement('span', { className: 'icon-bar' }),
+	                            _react2.default.createElement('span', { className: 'icon-bar' }),
+	                            _react2.default.createElement('span', { className: 'icon-bar' })
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: "collapse navbar-collapse " + (this.state.expand == true ? "in" : "") },
+	                        _react2.default.createElement(
+	                            'ul',
+	                            { className: 'nav navbar-nav' },
+	                            Object.keys(menu.structure).map(function (k) {
+	                                var item = menu.structure[k];
+	                                return _react2.default.createElement(_menu_item2.default, {
+	                                    key: k,
+	                                    item: item,
+	                                    baseUrl: menu.baseUrl,
+	                                    isActive: _this2.isActive(item.path)
+	                                });
+	                            })
 	                        )
 	                    )
 	                )
 	            );
+	        }
+	    }, {
+	        key: 'isActive',
+	        value: function isActive(page) {
+	            return this.state.currentPage == page;
+	        }
+	    }, {
+	        key: 'toggleExpand',
+	        value: function toggleExpand() {
+	            this.setState({ expand: !this.state.expand });
 	        }
 	    }]);
 
 	    return Menu;
 	}(_react.Component);
 
-	function loadMenu() {
-	    var baseurl = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "/";
-	    var pageurl = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "/";
-	    var element = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'nav-container';
+	Menu.propTypes = {
+	    menu: _react2.default.PropTypes.shape({
+	        structure: _react2.default.PropTypes.object,
+	        baseUrl: _react2.default.PropTypes.string,
+	        currentPage: _react2.default.PropTypes.string
+	    }).isRequired
+	};
 
-	    _reactDom2.default.render(_react2.default.createElement(Menu, { baseurl: baseurl, pageurl: pageurl }), document.getElementById(element));
+	function loadMenu() {
+	    var menu = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+	    var element = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'nav-container';
+
+	    _reactDom2.default.render(_react2.default.createElement(Menu, { menu: menu }), document.getElementById(element));
 	}
 
 	exports.Menu = Menu;
@@ -21730,6 +21632,142 @@
 
 	module.exports = ReactDOMInvalidARIAHook;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+
+/***/ },
+/* 179 */,
+/* 180 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.concat_path = concat_path;
+	/**
+	 * Concatenate uri with single slash
+	 */
+	function concat_path(base, target) {
+	    return base + forceTrailing(base) + removeLeading(target);
+	}
+
+	function forceTrailing(path) {
+	    return path == null ? "/" : path.substr(-1) != "/" ? "/" : "";
+	}
+	function removeLeading(path) {
+	    return path == null ? "" : path.substr(0, 1) == "/" ? path.substr(1) : path;
+	}
+
+/***/ },
+/* 181 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _path = __webpack_require__(180);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var MenuItem = function (_Component) {
+	    _inherits(MenuItem, _Component);
+
+	    function MenuItem(props) {
+	        _classCallCheck(this, MenuItem);
+
+	        var _this = _possibleConstructorReturn(this, (MenuItem.__proto__ || Object.getPrototypeOf(MenuItem)).call(this, props));
+
+	        _this.state = {
+	            path: (0, _path.concat_path)(props.baseUrl, props.item.path),
+	            isActive: props.isActive,
+	            expand: false,
+	            hasChildren: _this.props.item[1] != null
+	        };
+	        return _this;
+	    }
+
+	    _createClass(MenuItem, [{
+	        key: 'render',
+	        value: function render() {
+	            var _this2 = this;
+
+	            return _react2.default.createElement(
+	                'li',
+	                { className: (this.state.isActive ? "active" : "") + " " + (this.state.expand ? "open" : "") },
+	                _react2.default.createElement(
+	                    'a',
+	                    {
+	                        className: 'dropdown-toggle',
+	                        onClick: function onClick() {
+	                            return _this2.click();
+	                        } },
+	                    this.props.item.title,
+	                    this.state.hasChildren && _react2.default.createElement('b', { className: 'caret' })
+	                ),
+	                this.state.expand && _react2.default.createElement(
+	                    'ul',
+	                    { className: 'dropdown-menu' },
+	                    this.children(this.props.item)
+	                )
+	            );
+	        }
+	    }, {
+	        key: 'click',
+	        value: function click() {
+	            if (this.state.hasChildren) {
+	                this.setState({ expand: !this.state.expand });
+	            } else {
+	                window.location = this.state.path;
+	            }
+	        }
+	    }, {
+	        key: 'children',
+	        value: function children(parent) {
+	            var _this3 = this;
+
+	            return Object.keys(parent).filter(function (k) {
+	                return k >= 1;
+	            }).map(function (k) {
+	                var child = parent[k];
+	                var path = (0, _path.concat_path)(_this3.props.baseUrl, child.path);
+	                return _react2.default.createElement(
+	                    'li',
+	                    { key: k },
+	                    _react2.default.createElement(
+	                        'a',
+	                        { href: path },
+	                        child.title
+	                    )
+	                );
+	            });
+	        }
+	    }]);
+
+	    return MenuItem;
+	}(_react.Component);
+
+	exports.default = MenuItem;
+
+
+	MenuItem.propTypes = {
+	    item: _react2.default.PropTypes.object.isRequired,
+	    baseUrl: _react2.default.PropTypes.string.isRequired
+	};
 
 /***/ }
 /******/ ]);

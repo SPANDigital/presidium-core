@@ -1,0 +1,10 @@
+@import 'navbar';
+
+.content {
+
+  margin-top: 10px;
+
+  @media (min-width: $grid-float-breakpoint) {
+    margin-top: 40px;
+  }
+}
