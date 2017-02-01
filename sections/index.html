@@ -1,8 +1,9 @@
 ---
+title: Overview
 permalink: /
 ---
 
-<h1 class="primary">{{ site.titles.overview | upcase }}</h1>
+<h1 class="primary">{{ page.title | upcase }}</h1>
 
 {% for article in site.overview %}
     {{ article.content }}

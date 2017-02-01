@@ -2,9 +2,9 @@
 
 .content {
 
-  margin-top: 10px;
+  padding: 10px 20px;
 
   @media (min-width: $grid-float-breakpoint) {
-    margin-top: 40px;
+    padding: 60px 80px;
   }
 }

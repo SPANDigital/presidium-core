@@ -1,5 +1,5 @@
 {
-  structure : {{site.menu | jsonify}},
+  structure : {% include menu_structure.json %},
   baseUrl :  {% if site.baseurl == "" %} "/" {% else %} "{{ site.baseurl }}" {% endif %},
   currentPage : "{{page.url}}"
 }

@@ -4136,7 +4136,7 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _menu_item = __webpack_require__(181);
+	var _menu_item = __webpack_require__(179);
 
 	var _menu_item2 = _interopRequireDefault(_menu_item);
 
@@ -4206,10 +4206,9 @@
 	                        _react2.default.createElement(
 	                            'ul',
 	                            { className: 'nav navbar-nav' },
-	                            Object.keys(menu.structure).map(function (k) {
-	                                var item = menu.structure[k];
+	                            menu.structure.map(function (item) {
 	                                return _react2.default.createElement(_menu_item2.default, {
-	                                    key: k,
+	                                    key: item.path,
 	                                    item: item,
 	                                    baseUrl: menu.baseUrl,
 	                                    isActive: _this2.isActive(item.path)
@@ -4223,7 +4222,7 @@
 	    }, {
 	        key: 'isActive',
 	        value: function isActive(page) {
-	            return this.state.currentPage == page;
+	            return this.props.menu.currentPage == page;
 	        }
 	    }, {
 	        key: 'toggleExpand',
@@ -4237,7 +4236,7 @@
 
 	Menu.propTypes = {
 	    menu: _react2.default.PropTypes.shape({
-	        structure: _react2.default.PropTypes.object,
+	        structure: _react2.default.PropTypes.array,
 	        baseUrl: _react2.default.PropTypes.string,
 	        currentPage: _react2.default.PropTypes.string
 	    }).isRequired
@@ -21634,32 +21633,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 179 */,
-/* 180 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.concat_path = concat_path;
-	/**
-	 * Concatenate uri with single slash
-	 */
-	function concat_path(base, target) {
-	    return base + forceTrailing(base) + removeLeading(target);
-	}
-
-	function forceTrailing(path) {
-	    return path == null ? "/" : path.substr(-1) != "/" ? "/" : "";
-	}
-	function removeLeading(path) {
-	    return path == null ? "" : path.substr(0, 1) == "/" ? path.substr(1) : path;
-	}
-
-/***/ },
-/* 181 */
+/* 179 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21696,7 +21670,7 @@
 	            path: (0, _path.concat_path)(props.baseUrl, props.item.path),
 	            isActive: props.isActive,
 	            expand: false,
-	            hasChildren: _this.props.item[1] != null
+	            hasChildren: false //TODO this.props.item[1] != null
 	        };
 	        return _this;
 	    }
@@ -21768,6 +21742,30 @@
 	    item: _react2.default.PropTypes.object.isRequired,
 	    baseUrl: _react2.default.PropTypes.string.isRequired
 	};
+
+/***/ },
+/* 180 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.concat_path = concat_path;
+	/**
+	 * Concatenate uri with single slash
+	 */
+	function concat_path(base, target) {
+	    return base + forceTrailing(base) + removeLeading(target);
+	}
+
+	function forceTrailing(path) {
+	    return path == null ? "/" : path.substr(-1) != "/" ? "/" : "";
+	}
+	function removeLeading(path) {
+	    return path == null ? "" : path.substr(0, 1) == "/" ? path.substr(1) : path;
+	}
 
 /***/ }
 /******/ ]);

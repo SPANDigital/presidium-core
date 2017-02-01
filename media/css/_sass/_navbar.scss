@@ -71,6 +71,7 @@
           padding-top:    10px;
           padding-bottom: 10px;
           border-bottom: 1px solid $navbar-default-border;
+          cursor: pointer;
         }
       }
     }
@@ -117,6 +118,7 @@
 
         > .active > a {
           background-color: $navbar-default-link-active-bg;
+          border-color: $brand-primary;
           color: $navbar-default-link-active-color;
         }
       }
@@ -134,7 +136,7 @@
     .dropdown-menu > .dropdown-header {
       background-color: transparent !important;
       color: lighten($navbar-default-color, 15%) !important;
-      cursor: default;
+      cursor: pointer;
       font-size: 0.8em;
       text-transform: uppercase;
       border-bottom: none;
