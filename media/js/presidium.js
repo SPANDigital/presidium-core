@@ -4140,6 +4140,10 @@
 
 	var _menu_item2 = _interopRequireDefault(_menu_item);
 
+	var _paths = __webpack_require__(181);
+
+	var _paths2 = _interopRequireDefault(_paths);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -4182,9 +4186,14 @@
 	                        { className: 'navbar-header' },
 	                        _react2.default.createElement(
 	                            'a',
-	                            { href: './', className: 'navbar-brand' },
-	                            _react2.default.createElement('img', { src: menu.baseUrl + "media/images/logo.png", alt: '' })
+	                            { href: this.props.menu.baseUrl != null ? this.props.menu.baseUrl : "#", className: 'navbar-brand' },
+	                            _react2.default.createElement('img', { src: _paths2.default.concat(menu.baseUrl, "media/images/logo.png"), alt: '' })
 	                        ),
+	                        this.props.menu.brandName ? _react2.default.createElement(
+	                            'p',
+	                            { className: 'navbar-brand-name' },
+	                            this.props.menu.brandName
+	                        ) : "",
 	                        _react2.default.createElement(
 	                            'button',
 	                            { className: 'navbar-toggle', onClick: function onClick() {
@@ -4221,8 +4230,12 @@
 	        }
 	    }, {
 	        key: 'isActive',
-	        value: function isActive(page) {
-	            return this.props.menu.currentPage == page;
+	        value: function isActive(path) {
+	            if (this.props.menu.currentPage == "/") {
+	                return path == this.props.menu.currentPage;
+	            } else {
+	                return path.startsWith(this.props.menu.currentPage);
+	            }
 	        }
 	    }, {
 	        key: 'toggleExpand',
@@ -4236,6 +4249,7 @@
 
 	Menu.propTypes = {
 	    menu: _react2.default.PropTypes.shape({
+	        brandName: _react2.default.PropTypes.string,
 	        structure: _react2.default.PropTypes.array,
 	        baseUrl: _react2.default.PropTypes.string,
 	        currentPage: _react2.default.PropTypes.string
@@ -21648,7 +21662,9 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _path = __webpack_require__(180);
+	var _paths = __webpack_require__(181);
+
+	var _paths2 = _interopRequireDefault(_paths);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -21667,10 +21683,10 @@
 	        var _this = _possibleConstructorReturn(this, (MenuItem.__proto__ || Object.getPrototypeOf(MenuItem)).call(this, props));
 
 	        _this.state = {
-	            path: (0, _path.concat_path)(props.baseUrl, props.item.path),
+	            path: _paths2.default.concat(props.baseUrl, props.item.path),
 	            isActive: props.isActive,
 	            expand: false,
-	            hasChildren: false //TODO this.props.item[1] != null
+	            hasChildren: Object.prototype.hasOwnProperty.call(props.item, 'articles')
 	        };
 	        return _this;
 	    }
@@ -21714,18 +21730,15 @@
 	        value: function children(parent) {
 	            var _this3 = this;
 
-	            return Object.keys(parent).filter(function (k) {
-	                return k >= 1;
-	            }).map(function (k) {
-	                var child = parent[k];
-	                var path = (0, _path.concat_path)(_this3.props.baseUrl, child.path);
+	            return parent.articles.map(function (article) {
+	                var path = _paths2.default.concat(_this3.props.baseUrl, article.path);
 	                return _react2.default.createElement(
 	                    'li',
-	                    { key: k },
+	                    { key: path },
 	                    _react2.default.createElement(
 	                        'a',
 	                        { href: path },
-	                        child.title
+	                        article.title
 	                    )
 	                );
 	            });
@@ -21744,7 +21757,8 @@
 	};
 
 /***/ },
-/* 180 */
+/* 180 */,
+/* 181 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -21752,20 +21766,22 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.concat_path = concat_path;
 	/**
 	 * Concatenate uri with single slash
 	 */
-	function concat_path(base, target) {
-	    return base + forceTrailing(base) + removeLeading(target);
-	}
+	var path = {
+	    concat: function concat(base, target) {
+	        return base + path.forceTrailing(base) + path.removeLeading(target);
+	    },
+	    forceTrailing: function forceTrailing(path) {
+	        return path == null ? "/" : path.substr(-1) != "/" ? "/" : "";
+	    },
+	    removeLeading: function removeLeading(path) {
+	        return path == null ? "" : path.substr(0, 1) == "/" ? path.substr(1) : path;
+	    }
+	};
 
-	function forceTrailing(path) {
-	    return path == null ? "/" : path.substr(-1) != "/" ? "/" : "";
-	}
-	function removeLeading(path) {
-	    return path == null ? "" : path.substr(0, 1) == "/" ? path.substr(1) : path;
-	}
+	exports.default = path;
 
 /***/ }
 /******/ ]);

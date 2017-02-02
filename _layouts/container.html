@@ -5,8 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ site.name }}</title>
 
-    <!-- Stylesheets -->
-    <link rel="stylesheet" href="{{ site.baseurl }}/media/css/presidium.css" type="text/css" media="screen"/>
+    <link rel="stylesheet" href="{{ site.baseurl | append: '/media/css/presidium.css' | replace: '//','/'}}" type="text/css" media="screen"/>
 
 </head>
 <body>
@@ -22,7 +21,7 @@
     </div>
 </div>
 <!-- Components -->
-<script src="{{ site.baseurl }}/media/js/presidium.js"></script>
+<script src="{{ site.baseurl | append: '/media/js/presidium.js' | replace: '//','/'}}"></script>
 <script>
     window.presidium.menu.load({% include menu.json %}, 'nav-container');
 </script>
