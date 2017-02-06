@@ -21,6 +21,7 @@
     $navbar-default-link-hover-bg: darken($navbar-default-bg, 3%);
     $navbar-inverse-link-hover-bg: lighten($navbar-inverse-bg, 5%);
     $navbar-inverse-border: lighten($navbar-inverse-bg, 8%);
+    $navbar-sub-color: lighten($navbar-default-border, 4%);
 
     position: fixed;
     margin: 0 -15px;
@@ -116,7 +117,10 @@
             color: $navbar-default-link-color;
             padding-top:    10px;
             padding-bottom: 10px;
+            padding-left: 30px;
             white-space: nowrap;
+            border-bottom: 1px solid $navbar-sub-color;
+
             &:hover, &:focus {
               background-image: none;
             }
