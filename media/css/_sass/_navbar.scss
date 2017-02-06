@@ -116,6 +116,7 @@
             color: $navbar-default-link-color;
             padding-top:    10px;
             padding-bottom: 10px;
+            white-space: nowrap;
             &:hover, &:focus {
               background-image: none;
             }
