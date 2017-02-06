@@ -4140,7 +4140,7 @@
 
 	var _menu_item2 = _interopRequireDefault(_menu_item);
 
-	var _paths = __webpack_require__(181);
+	var _paths = __webpack_require__(180);
 
 	var _paths2 = _interopRequireDefault(_paths);
 
@@ -4187,7 +4187,7 @@
 	                        _react2.default.createElement(
 	                            'a',
 	                            { href: this.props.menu.baseUrl != null ? this.props.menu.baseUrl : "#", className: 'navbar-brand' },
-	                            _react2.default.createElement('img', { src: _paths2.default.concat(menu.baseUrl, "media/images/logo.png"), alt: '' })
+	                            _react2.default.createElement('img', { src: _paths2.default.concat(menu.baseUrl, menu.logo), alt: '' })
 	                        ),
 	                        this.props.menu.brandName ? _react2.default.createElement(
 	                            'p',
@@ -4220,22 +4220,13 @@
 	                                    key: item.path,
 	                                    item: item,
 	                                    baseUrl: menu.baseUrl,
-	                                    isActive: _this2.isActive(item.path)
+	                                    currentPage: menu.currentPage
 	                                });
 	                            })
 	                        )
 	                    )
 	                )
 	            );
-	        }
-	    }, {
-	        key: 'isActive',
-	        value: function isActive(path) {
-	            if (this.props.menu.currentPage == "/") {
-	                return path == this.props.menu.currentPage;
-	            } else {
-	                return path.startsWith(this.props.menu.currentPage);
-	            }
 	        }
 	    }, {
 	        key: 'toggleExpand',
@@ -21662,7 +21653,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _paths = __webpack_require__(181);
+	var _paths = __webpack_require__(180);
 
 	var _paths2 = _interopRequireDefault(_paths);
 
@@ -21682,11 +21673,14 @@
 
 	        var _this = _possibleConstructorReturn(this, (MenuItem.__proto__ || Object.getPrototypeOf(MenuItem)).call(this, props));
 
+	        var path = _paths2.default.concat(props.baseUrl, props.item.path);
+	        var isActive = _this.isActive(path, _this.props.currentPage);
+	        var hasChildren = Object.prototype.hasOwnProperty.call(props.item, 'articles');
 	        _this.state = {
-	            path: _paths2.default.concat(props.baseUrl, props.item.path),
-	            isActive: props.isActive,
-	            expand: false,
-	            hasChildren: Object.prototype.hasOwnProperty.call(props.item, 'articles')
+	            path: path,
+	            isActive: isActive,
+	            hasChildren: hasChildren,
+	            expand: isActive && hasChildren
 	        };
 	        return _this;
 	    }
@@ -21698,18 +21692,25 @@
 
 	            return _react2.default.createElement(
 	                'li',
-	                { className: (this.state.isActive ? "active" : "") + " " + (this.state.expand ? "open" : "") },
+	                {
+	                    key: this.state.path,
+	                    className: (this.state.isActive ? "active" : "") + " " + (this.state.expand ? "open" : "") },
 	                _react2.default.createElement(
 	                    'a',
-	                    {
-	                        className: 'dropdown-toggle',
-	                        onClick: function onClick() {
-	                            return _this2.click();
-	                        } },
-	                    this.props.item.title,
-	                    this.state.hasChildren && _react2.default.createElement('b', { className: 'caret' })
+	                    { className: 'dropdown-toggle' },
+	                    _react2.default.createElement(
+	                        'span',
+	                        { onClick: function onClick() {
+	                                return _this2.navigate();
+	                            } },
+	                        this.props.item.title
+	                    ),
+	                    this.state.hasChildren && _react2.default.createElement('span', { onClick: function onClick() {
+	                            return _this2.toggleExpand();
+	                        },
+	                        className: this.state.expand ? "glyphicon glyphicon-chevron-down" : "glyphicon glyphicon-chevron-right" })
 	                ),
-	                this.state.expand && _react2.default.createElement(
+	                this.state.expand && this.state.hasChildren && _react2.default.createElement(
 	                    'ul',
 	                    { className: 'dropdown-menu' },
 	                    this.children(this.props.item)
@@ -21717,12 +21718,26 @@
 	            );
 	        }
 	    }, {
-	        key: 'click',
-	        value: function click() {
+	        key: 'isActive',
+	        value: function isActive(path, currentPage) {
+	            if (currentPage == "/") {
+	                return path == currentPage;
+	            } else {
+	                return path.startsWith(currentPage);
+	            }
+	        }
+	    }, {
+	        key: 'navigate',
+	        value: function navigate() {
+	            if (!this.state.isActive) {
+	                window.location = this.state.path;
+	            }
+	        }
+	    }, {
+	        key: 'toggleExpand',
+	        value: function toggleExpand() {
 	            if (this.state.hasChildren) {
 	                this.setState({ expand: !this.state.expand });
-	            } else {
-	                window.location = this.state.path;
 	            }
 	        }
 	    }, {
@@ -21753,12 +21768,12 @@
 
 	MenuItem.propTypes = {
 	    item: _react2.default.PropTypes.object.isRequired,
-	    baseUrl: _react2.default.PropTypes.string.isRequired
+	    baseUrl: _react2.default.PropTypes.string.isRequired,
+	    currentPage: _react2.default.PropTypes.string.isRequired
 	};
 
 /***/ },
-/* 180 */,
-/* 181 */
+/* 180 */
 /***/ function(module, exports) {
 
 	"use strict";
