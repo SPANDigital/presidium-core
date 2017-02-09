@@ -8,6 +8,7 @@ permalink: /getting-started/
 {% for article in site.getting_started %}
     <span id="{{ article.title | slugify}}"></span>
     {{ article.content }}
+    <hr/>
 {% else %}
     {% include empty-article.html %}
 {% endfor %}

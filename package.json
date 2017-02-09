@@ -2,6 +2,7 @@
   "name": "presidium-core",
   "version": "0.0.1",
   "description": "Presidium technical documentation template for Jekyll",
+  "license": "apache-2.0",
   "authors": [
     {
       "name": "Paco Mendes",

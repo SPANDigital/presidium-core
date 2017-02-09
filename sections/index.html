@@ -8,4 +8,5 @@ permalink: /
 {% for article in site.overview %}
     <span id="{{ article.title | slugify}}"></span>
     {{ article.content }}
+    <hr/>
 {% endfor %}

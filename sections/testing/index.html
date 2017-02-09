@@ -9,6 +9,7 @@ permalink: /testing/
 {% for article in site.testing %}
     <span id="{{ article.title | slugify}}"></span>
     {{ article.content }}
+    <hr/>
 {% else %}
     {% include empty-article.html %}
 {% endfor %}

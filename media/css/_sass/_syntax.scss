@@ -3,6 +3,15 @@ code {
     font-size: $font-size-small;
   }
 }
+
+//Code block captions
+.highlighter-rouge + p > em {
+  display: block;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+
 /*
 Taken from : source: https://github.com/mojombo/tpw/blob/master/css/syntax.css
 This is css for code highlighting.

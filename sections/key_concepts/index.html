@@ -8,6 +8,7 @@ permalink: /key-concepts/
 {% for concept in site.key_concepts %}
     <span id="{{ concept.title | slugify}}"></span>
     {{ concept.content }}
+    <hr/>
 {% else %}
     {% include empty-article.html %}
 {% endfor %}

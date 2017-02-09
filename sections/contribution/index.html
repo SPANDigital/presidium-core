@@ -9,6 +9,7 @@ permalink: /contribution/
 {% for article in site.contribution %}
     <span id="{{ article.title | slugify}}"></span>
     {{ article.content }}
+    <hr/>
 {% else %}
     {% include empty-article.html %}
 {% endfor %}

@@ -14,6 +14,7 @@ permalink: /references/
         <span id="{{ item.title | slugify}}"></span>
         {{ item.content }}
         </article>
+        <hr/>
 {% endfor %}
 {% else %}
     {% include empty-article.html %}

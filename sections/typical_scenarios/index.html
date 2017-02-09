@@ -10,7 +10,7 @@ permalink: /typical-scenarios/
     <h1 id="{{ scenario.title | slugify }}" class="secondary">{{ scenario.title }}</h1>
     <article>
         <div class="article-meta">
-            {% if practice.author %}    
+            {% if practice.author %}
                 <a href="{{ page.github-url }}{{ scenario.author }}" class="post-author">
                     <img src="{{ page.github-url }}{{ scenario.author }}.png" class="avatar" alt="{{ scenario.author }} avatar" width="24" height="24">
                     {{ scenario.author }}
@@ -22,6 +22,7 @@ permalink: /typical-scenarios/
           {{ scenario.content }}
         </div>
     </article>
+    <hr/>
 {% else %}
     {% include empty-article.html %}
 {% endfor %}

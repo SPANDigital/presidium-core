@@ -1,0 +1,18 @@
+.content {
+
+  img {
+    max-width: 100%;
+    display: block;
+    padding: 10px;
+    margin: 10px auto 5px auto;
+    border: 1px solid $table-border-color;
+    border-radius: 0;
+
+    // Caption
+    + em {
+      display: block;
+      text-align: center;
+      margin-bottom: 5px;
+    }
+  }
+}

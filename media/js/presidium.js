@@ -21674,7 +21674,8 @@
 	        var _this = _possibleConstructorReturn(this, (MenuItem.__proto__ || Object.getPrototypeOf(MenuItem)).call(this, props));
 
 	        var path = _paths2.default.concat(props.baseUrl, props.item.path);
-	        var isActive = _this.isActive(path, _this.props.currentPage);
+	        var current = _paths2.default.concat(props.baseUrl, props.currentPage);
+	        var isActive = _this.isActive(path, current);
 	        var hasChildren = Object.prototype.hasOwnProperty.call(props.item, 'articles');
 	        _this.state = {
 	            path: path,
@@ -21697,16 +21698,16 @@
 	                    className: (this.state.isActive ? "active" : "") + " " + (this.state.expand ? "open" : "") },
 	                _react2.default.createElement(
 	                    'a',
-	                    { className: 'dropdown-toggle' },
+	                    { onClick: function onClick(e) {
+	                            return _this2.navigate(e);
+	                        }, className: 'dropdown-toggle' },
 	                    _react2.default.createElement(
 	                        'span',
-	                        { onClick: function onClick() {
-	                                return _this2.navigate();
-	                            } },
+	                        null,
 	                        this.props.item.title
 	                    ),
-	                    this.state.hasChildren && _react2.default.createElement('span', { onClick: function onClick() {
-	                            return _this2.toggleExpand();
+	                    this.state.hasChildren && _react2.default.createElement('span', { onClick: function onClick(e) {
+	                            return _this2.toggleExpand(e);
 	                        },
 	                        className: this.state.expand ? "glyphicon glyphicon-chevron-down" : "glyphicon glyphicon-chevron-right" })
 	                ),
@@ -21720,7 +21721,7 @@
 	    }, {
 	        key: 'isActive',
 	        value: function isActive(path, currentPage) {
-	            if (currentPage == "/") {
+	            if (currentPage == this.props.baseUrl) {
 	                return path == currentPage;
 	            } else {
 	                return path.startsWith(currentPage);
@@ -21728,14 +21729,15 @@
 	        }
 	    }, {
 	        key: 'navigate',
-	        value: function navigate() {
+	        value: function navigate(e) {
 	            if (!this.state.isActive) {
 	                window.location = this.state.path;
 	            }
 	        }
 	    }, {
 	        key: 'toggleExpand',
-	        value: function toggleExpand() {
+	        value: function toggleExpand(e) {
+	            e.stopPropagation();
 	            if (this.state.hasChildren) {
 	                this.setState({ expand: !this.state.expand });
 	            }
