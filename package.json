@@ -1,13 +1,14 @@
 {
   "name": "presidium-core",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Presidium technical documentation template for Jekyll",
   "license": "apache-2.0",
   "authors": [
     {
       "name": "Paco Mendes",
       "email": "paco.mendes@spandigital.com"
-    }, {
+    },
+    {
       "name": "Dominic Follett-Smith",
       "email": "dominic@spandigital.com"
     }
@@ -19,6 +20,5 @@
   "bugs": {
     "url": "https://github.com/SPANDigital/presidium-core/issues"
   },
-  "scripts": {
-  }
+  "scripts": {}
 }
