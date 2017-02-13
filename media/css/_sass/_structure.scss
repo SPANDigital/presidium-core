@@ -16,4 +16,9 @@ footer {
   }
 }
 
+.article table{
+  @extend .table, .table-striped, .table-bordered;
+}
+
+
 
