@@ -16,7 +16,7 @@ footer {
   }
 }
 
-.article table{
+table{
   @extend .table, .table-striped, .table-bordered;
 }
 
