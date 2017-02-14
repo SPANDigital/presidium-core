@@ -4,10 +4,10 @@ author: "presidium"
 permalink: /tools/
 ---
 
-<h1 class="primary">{{ page.title | upcase }}</h1>
+<h1>{{ page.title | upcase }}</h1>
 
 {% for tool in site.tools %}
-<h1 id="{{ tool.title | slugify }}" class="secondary">{{ tool.title }}</h1>
+<h2 id="{{ tool.title | slugify }}">{{ tool.title }}</h2>
 <article>
       <div class="article-meta">
           {% if practice.author %}

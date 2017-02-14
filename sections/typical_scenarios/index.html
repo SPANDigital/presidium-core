@@ -4,10 +4,10 @@ author: "presidium"
 permalink: /typical-scenarios/
 ---
 
-<h1 class="primary">{{ page.title | upcase }}</h1>
+<h1>{{ page.title | upcase }}</h1>
 
 {% for scenario in site.typical_scenarios %}
-    <h1 id="{{ scenario.title | slugify }}" class="secondary">{{ scenario.title }}</h1>
+    <h2 id="{{ scenario.title | slugify }}">{{ scenario.title }}</h2>
     <article>
         <div class="article-meta">
             {% if practice.author %}

@@ -4,10 +4,10 @@ author: "presidium"
 permalink: /testing/
 ---
 
-<h1 class="primary">{{ page.title | upcase }}</h1>
+<h1>{{ page.title | upcase }}</h1>
 
 {% for article in site.testing %}
-    <span id="{{ article.title | slugify}}"></span>
+    <h2 id="{{ article.title | slugify}}">{{ article.title }}</h2>
     {{ article.content }}
     <hr/>
 {% else %}

@@ -4,10 +4,10 @@ author: "presidium"
 permalink: /updates/
 ---
 
-<h1 class="primary">{{ page.title | upcase }}</h1>
+<h1>{{ page.title | upcase }}</h1>
 
 {% for update in site.updates reversed %}
-    <h1 id="{{ update.title | slugify }}" class="secondary">{{ update.title }}</h1>
+    <h1 id="{{ update.title | slugify }}">{{ update.title }}</h1>
     <article>
         <div class="article-meta">
             <a href="{{ page.github-url }}{{ update.author }}" class="post-author">

@@ -1,8 +1,10 @@
 .content {
   padding: 10px 20px;
+  margin-top: 50px;
 
   @media (min-width: $grid-float-breakpoint) {
     position : inherit;
+    margin-top: 0;
     padding: 60px 80px;
   }
 }
