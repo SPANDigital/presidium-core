@@ -21,16 +21,14 @@
   }{% if section != site.menu.last%},{% endif %}
 
   {% else %}
-  {% assign section_name = section.title | slugify %}
-  {% assign page_name = page.title | slugify %}
   {
     "title" : "{{ section.title }}",
     "path" : "{{ baseurl }}{{ section.path }}",
     "level" : 1,
     "groups" : [
       {% for group in groups %}
-      {% assign articles = site[section.collection] | where: "category", group.name %}
       {% if group.name.size > 0 %}
+      {% assign articles = site[section.collection] | where: "category", group.name %}
       {
         "title" : "{{ group.name }}",
         "path"  : "{{ baseurl }}{{ section.path }}#{{ group.name | slugify }}",
@@ -49,8 +47,7 @@
       {% endfor %}
     ],
     "articles" : [
-      {% assign by_category = site[section.collection] | group_by: 'category' %}
-      {% for grouping in by_category %}
+      {% for grouping in groups %}
         {% if grouping.name == "" %}
           {% for article in grouping.items %}
             {
