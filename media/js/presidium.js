@@ -4220,7 +4220,11 @@
 	                                    key: item.path,
 	                                    item: item,
 	                                    baseUrl: menu.baseUrl,
-	                                    currentPage: menu.currentPage
+	                                    currentPage: menu.currentPage,
+	                                    expanded: true,
+	                                    navigate: function navigate() {
+	                                        return _this2.toggleExpand();
+	                                    }
 	                                });
 	                            })
 	                        )
@@ -21665,6 +21669,9 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+	/**
+	 * Menu item that may have one or more articles or groups of articles
+	 */
 	var MenuItem = function (_Component) {
 	    _inherits(MenuItem, _Component);
 
@@ -21676,47 +21683,78 @@
 	        var path = _paths2.default.concat(props.baseUrl, props.item.path);
 	        var current = _paths2.default.concat(props.baseUrl, props.currentPage);
 	        var isActive = _this.isActive(path, current);
-	        var hasChildren = Object.prototype.hasOwnProperty.call(props.item, 'articles');
+	        var hasArticles = _this.hasItems(props.item, 'articles');
+	        var hasGroups = _this.hasItems(props.item, 'groups');
+
 	        _this.state = {
 	            path: path,
 	            isActive: isActive,
-	            hasChildren: hasChildren,
-	            expand: isActive && hasChildren
+	            hasArticles: hasArticles,
+	            hasGroups: hasGroups,
+	            isExpanded: _this.props.expanded && isActive && (hasArticles || hasGroups)
 	        };
 	        return _this;
 	    }
 
 	    _createClass(MenuItem, [{
+	        key: 'hasItems',
+	        value: function hasItems(item, property) {
+	            return Object.prototype.hasOwnProperty.call(item, property) && item[property].length > 0;
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
 	            var _this2 = this;
 
 	            return _react2.default.createElement(
 	                'li',
-	                {
-	                    key: this.state.path,
-	                    className: (this.state.isActive ? "active" : "") + " " + (this.state.expand ? "open" : "") },
+	                { key: this.state.path, className: this.liClass(this.state.isActive, this.state.isExpanded) },
 	                _react2.default.createElement(
 	                    'a',
 	                    { onClick: function onClick(e) {
 	                            return _this2.navigate(e);
-	                        }, className: 'dropdown-toggle' },
+	                        }, className: this.levelClass(this.props.item.level) + " dropdown-toggle" },
+	                    this.expander(),
 	                    _react2.default.createElement(
 	                        'span',
 	                        null,
 	                        this.props.item.title
-	                    ),
-	                    this.state.hasChildren && _react2.default.createElement('span', { onClick: function onClick(e) {
-	                            return _this2.toggleExpand(e);
-	                        },
-	                        className: this.state.expand ? "glyphicon glyphicon-chevron-down" : "glyphicon glyphicon-chevron-right" })
+	                    )
 	                ),
-	                this.state.expand && this.state.hasChildren && _react2.default.createElement(
+	                _react2.default.createElement(
 	                    'ul',
 	                    { className: 'dropdown-menu' },
-	                    this.children(this.props.item)
+	                    this.state.isExpanded && this.state.hasArticles && this.articles(),
+	                    this.state.isExpanded && this.state.hasGroups && this.groups()
 	                )
 	            );
+	        }
+	    }, {
+	        key: 'levelClass',
+	        value: function levelClass(level) {
+	            switch (level) {
+	                case 1:
+	                    return 'level-one';
+	                case 2:
+	                    return 'level-two';
+	                case 3:
+	                    return 'level-three';
+	            }
+	            return "";
+	        }
+	    }, {
+	        key: 'liClass',
+	        value: function liClass() {
+	            return (this.state.isActive ? "active" : "") + " " + (this.state.isExpanded ? "open" : "");
+	        }
+	    }, {
+	        key: 'expander',
+	        value: function expander() {
+	            var _this3 = this;
+
+	            return this.state.hasGroups || this.state.hasArticles ? _react2.default.createElement('span', { onClick: function onClick(e) {
+	                    return _this3.toggleExpand(e);
+	                }, className: this.state.isExpanded ? "glyphicon glyphicon-chevron-down" : "glyphicon glyphicon-chevron-right" }) : _react2.default.createElement('span', { className: 'expand-placeholder' });
 	        }
 	    }, {
 	        key: 'isActive',
@@ -21738,23 +21776,34 @@
 	        key: 'toggleExpand',
 	        value: function toggleExpand(e) {
 	            e.stopPropagation();
-	            if (this.state.hasChildren) {
-	                this.setState({ expand: !this.state.expand });
+	            if (this.state.hasArticles || this.state.hasGroups) {
+	                this.setState({ isExpanded: !this.state.isExpanded });
 	            }
 	        }
 	    }, {
-	        key: 'children',
-	        value: function children(parent) {
-	            var _this3 = this;
+	        key: 'groups',
+	        value: function groups() {
+	            var _this4 = this;
 
-	            return parent.articles.map(function (article) {
-	                var path = _paths2.default.concat(_this3.props.baseUrl, article.path);
+	            return this.props.item.groups.map(function (item) {
+	                return _react2.default.createElement(MenuItem, { key: item.path, item: item, baseUrl: _this4.props.baseUrl, currentPage: _this4.props.currentPage, expanded: false });
+	            });
+	        }
+	    }, {
+	        key: 'articles',
+	        value: function articles() {
+	            var _this5 = this;
+
+	            var active = this.state.isActive ? "active" : "";
+	            return this.props.item.articles.map(function (article) {
+
+	                var path = _paths2.default.concat(_this5.props.baseUrl, article.path);
 	                return _react2.default.createElement(
 	                    'li',
-	                    { key: path },
+	                    { key: path, className: active },
 	                    _react2.default.createElement(
 	                        'a',
-	                        { href: path },
+	                        { href: path, className: _this5.levelClass(article.level) },
 	                        article.title
 	                    )
 	                );
@@ -21771,7 +21820,12 @@
 	MenuItem.propTypes = {
 	    item: _react2.default.PropTypes.object.isRequired,
 	    baseUrl: _react2.default.PropTypes.string.isRequired,
-	    currentPage: _react2.default.PropTypes.string.isRequired
+	    currentPage: _react2.default.PropTypes.string.isRequired,
+	    expanded: _react2.default.PropTypes.bool
+	};
+
+	MenuItem.defaultProps = {
+	    expanded: false
 	};
 
 /***/ },

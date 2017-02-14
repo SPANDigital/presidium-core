@@ -4,10 +4,10 @@ author: "presidium"
 permalink: /recipes/
 ---
 
-<h1 class="primary">{{ page.title | upcase }}</h1>
+<h1>{{ page.title | upcase }}</h1>
 
 {% for recipe in site.recipes %}
-    <h1 id="{{ recipe.title | slugify }}" class="secondary">{{ recipe.title }}</h1>
+    <h2 id="{{ recipe.title | slugify }}">{{ recipe.title }}</h2>
     <article>
         <div class="article-meta">
             {% if practice.author %}

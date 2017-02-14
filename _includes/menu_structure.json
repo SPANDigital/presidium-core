@@ -8,11 +8,13 @@
   {
     "title" : "{{ section.title }}",
     "path" : "{{ baseurl }}{{section.path}}",
+    "level" : 1,
     "articles" : [
       {% for article in ungrouped_articles %}
       {
         "title" : "{{ article.title }}",
-        "path" : "{{ baseurl }}{{ section.path }}#{{ article.title | slugify}}"
+        "path" : "{{ baseurl }}{{ section.path }}#{{ article.title | slugify}}",
+        "level" : 2
       }{% if article != ungrouped_articles.last%},{% endif %}
       {% endfor %}
     ]
@@ -24,25 +26,43 @@
   {
     "title" : "{{ section.title }}",
     "path" : "{{ baseurl }}{{ section.path }}",
+    "level" : 1,
     "groups" : [
       {% for group in groups %}
       {% assign articles = site[section.collection] | where: "category", group.name %}
       {% if group.name.size > 0 %}
       {
         "title" : "{{ group.name }}",
-        "path"  : "#",
+        "path"  : "{{ baseurl }}{{ section.path }}#{{ group.name | slugify }}",
+        "level" : 2,
         "articles" : [
           {% for article in articles %}
           {
             "title" : "{{ article.title }}",
-            "path" : "{{ baseurl }}{{ section.path }}#{{ article.title | slugify}}"
+            "path" : "{{ baseurl }}{{ section.path }}#{{ article.title | slugify}}",
+            "level" : 3
           }{% if article != articles.last%},{% endif %}
           {% endfor %}
         ]
       }{% if group != groups.last%},{% endif %}
       {% endif %}
       {% endfor %}
+    ],
+    "articles" : [
+      {% assign by_category = site[section.collection] | group_by: 'category' %}
+      {% for grouping in by_category %}
+        {% if grouping.name == "" %}
+          {% for article in grouping.items %}
+            {
+            "title" : "{{ article.title }}",
+            "path" : "{{ baseurl }}{{ section.path }}#{{ article.title | slugify}}",
+            "level" : 2
+            }{% if article != grouping.items.last%},{% endif %}
+          {% endfor %}
+        {% endif %}
+      {% endfor %}
     ]
+
   }{% if section != site.menu.last%},{% endif %}
   {% endif %}
   {% endfor %}
