@@ -1,13 +1,14 @@
 ---
 title: Best Practices
-author: presidium
 permalink: /best-practices/
+layout: container
 ---
 
 <h1>{{ page.title | upcase }}</h1>
 
-{% for practice in site.best_practices %}
-    <h2 id="{{ practice.title | slugify }}">{{ practice.title }}</h2>
+{% for practice in site.best-practices %}
+    <span id="{{ practice.title | slugify }}" class="anchor"></span>
+    <h2>{{ practice.title }}</h2>
     <article>
         <div class="article-meta">
             {% if practice.author %}

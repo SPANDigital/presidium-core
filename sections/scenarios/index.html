@@ -1,13 +1,14 @@
 ---
 title: "Typical Scenarios"
-author: "presidium"
 permalink: /scenarios/
+layout: container
 ---
 
 <h1>{{ page.title | upcase }}</h1>
 
 {% for scenario in site.scenarios %}
-    <h2 id="{{ scenario.title | slugify }}">{{ scenario.title }}</h2>
+    <span id="{{ scenario.title | slugify }}" class="anchor"></span>
+    <h2>{{ scenario.title }}</h2>
     <article>
         <div class="article-meta">
             {% if practice.author %}

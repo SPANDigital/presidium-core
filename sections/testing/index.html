@@ -1,13 +1,14 @@
 ---
 title: "Testing and Debugging"
-author: "presidium"
 permalink: /testing/
+layout: container
 ---
 
 <h1>{{ page.title | upcase }}</h1>
 
 {% for article in site.testing %}
-    <h2 id="{{ article.title | slugify}}">{{ article.title }}</h2>
+    <span id="{{ article.title | slugify }}" class="anchor"></span>
+    <h2>{{ article.title }}</h2>
     {{ article.content }}
     <hr/>
 {% else %}
