@@ -6,16 +6,10 @@ permalink: /reference/
 
 <h1>{{ page.title | upcase }}</h1>
 
-{% assign groups = site.reference | group_by: "category" | sort_by: "name" %}
-{% for group in groups %}
-    <h2>{{ group.name | upcase }}</h2>
-    {% for item in group.items %}
-        <article>
-        <span id="{{ item.title | slugify}}"></span>
-        {{ item.content }}
-        </article>
+{% for article in site.reference %}
+        <h2 id="{{ article.title | slugify}}">{{ article.title }}</h2>
+        {{ article.content }}
         <hr/>
-{% endfor %}
 {% else %}
     {% include empty-article.html %}
 {% endfor %}
