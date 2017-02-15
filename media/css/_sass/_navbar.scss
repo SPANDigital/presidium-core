@@ -3,11 +3,20 @@ $navbar-inverse-link-hover-bg: lighten($navbar-inverse-bg, 5%);
 $navbar-inverse-border: lighten($navbar-inverse-bg, 8%);
 $navbar-sub-color: lighten($navbar-default-border, 4%);
 
+//Fixed navbar mobile
 #nav-container {
   position: fixed;
   right: 0;
   left: 0;
+  top: 0;
   z-index: 1030;
+}
+
+span.anchor {
+  display: block;
+  position: relative;
+  top: -60px;
+  visibility: hidden;
 }
 
 @media (min-width: $grid-float-breakpoint) {
@@ -17,7 +26,13 @@ $navbar-sub-color: lighten($navbar-default-border, 4%);
     margin-bottom: 50px;
     border: 1px solid transparent;
   }
+
+  span.anchor {
+    top: -10px;
+  }
 }
+
+
 
 .navbar-nav {
 

@@ -1,13 +1,14 @@
 ---
 title: "Recipes"
-author: "presidium"
 permalink: /recipes/
+layout: container
 ---
 
 <h1>{{ page.title | upcase }}</h1>
 
 {% for recipe in site.recipes %}
-    <h2 id="{{ recipe.title | slugify }}">{{ recipe.title }}</h2>
+    <span id="{{ recipe.title | slugify }}" class="anchor"></span>
+    <h2>{{ recipe.title }}</h2>
     <article>
         <div class="article-meta">
             {% if practice.author %}

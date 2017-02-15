@@ -4222,7 +4222,7 @@
 	                                    baseUrl: menu.baseUrl,
 	                                    currentPage: menu.currentPage,
 	                                    expanded: true,
-	                                    navigate: function navigate() {
+	                                    onNavigate: function onNavigate() {
 	                                        return _this2.toggleExpand();
 	                                    }
 	                                });
@@ -21773,6 +21773,13 @@
 	            }
 	        }
 	    }, {
+	        key: 'navigateArticle',
+	        value: function navigateArticle(path, e) {
+	            debugger;
+	            window.location = path;
+	            this.props.onNavigate(e);
+	        }
+	    }, {
 	        key: 'toggleExpand',
 	        value: function toggleExpand(e) {
 	            e.stopPropagation();
@@ -21786,7 +21793,7 @@
 	            var _this4 = this;
 
 	            return this.props.item.groups.map(function (item) {
-	                return _react2.default.createElement(MenuItem, { key: item.path, item: item, baseUrl: _this4.props.baseUrl, currentPage: _this4.props.currentPage, expanded: false });
+	                return _react2.default.createElement(MenuItem, { key: item.path, item: item, baseUrl: _this4.props.baseUrl, currentPage: _this4.props.currentPage, expanded: false, onNavigate: _this4.props.onNavigate });
 	            });
 	        }
 	    }, {
@@ -21803,7 +21810,9 @@
 	                    { key: path, className: active },
 	                    _react2.default.createElement(
 	                        'a',
-	                        { href: path, className: _this5.levelClass(article.level) },
+	                        { onClick: function onClick() {
+	                                return _this5.navigateArticle(path);
+	                            }, href: path, className: _this5.levelClass(article.level) },
 	                        article.title
 	                    )
 	                );
@@ -21821,7 +21830,8 @@
 	    item: _react2.default.PropTypes.object.isRequired,
 	    baseUrl: _react2.default.PropTypes.string.isRequired,
 	    currentPage: _react2.default.PropTypes.string.isRequired,
-	    expanded: _react2.default.PropTypes.bool
+	    expanded: _react2.default.PropTypes.bool,
+	    onNavigate: _react2.default.PropTypes.func
 	};
 
 	MenuItem.defaultProps = {

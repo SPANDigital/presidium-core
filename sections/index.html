@@ -1,12 +1,14 @@
 ---
 title: Overview
 permalink: /
+layout: container
 ---
 
 <h1>{{ page.title | upcase }}</h1>
 
 {% for article in site.overview %}
-    <h2 id="{{ article.title | slugify}}">{{ article.title }}</h2>
+    <span id="{{ article.title | slugify }}" class="anchor"></span>
+    <h2>{{ article.title }}</h2>
     {{ article.content }}
     <hr/>
 {% endfor %}

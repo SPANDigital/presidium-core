@@ -1,13 +1,14 @@
 ---
 title: "Tools"
-author: "presidium"
 permalink: /tools/
+layout: container
 ---
 
 <h1>{{ page.title | upcase }}</h1>
 
 {% for tool in site.tools %}
-<h2 id="{{ tool.title | slugify }}">{{ tool.title }}</h2>
+<span id="{{ tool.title | slugify }}" class="anchor"></span>
+<h2>{{ tool.title }}</h2>
 <article>
       <div class="article-meta">
           {% if practice.author %}
