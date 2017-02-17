@@ -4,21 +4,21 @@ permalink: /recipes/
 layout: container
 ---
 
-{% for recipe in site.recipes %}
-    <span id="{{ recipe.title | slugify }}" class="anchor"></span>
-    <h2>{{ recipe.title }}</h2>
+{% for article in site.recipes %}
+    <span id="{{ article.title | slugify }}" class="anchor"></span>
+    <h2>{{ article.title }}</h2>
     {% include status.html %}
     <article>
         <div class="article-meta">
             {% if practice.author %}
-                <a href="{{ page.github-url }}{{ recipe.author }}" class="post-author">
-                <img src="{{ page.github-url }}{{ recipe.author }}.png" class="avatar" alt="{{ recipe.author }} avatar" width="24" height="24">
-                {{ recipe.author }}</a>
+                <a href="{{ page.github-url }}{{ article.author }}" class="post-author">
+                <img src="{{ page.github-url }}{{ article.author }}.png" class="avatar" alt="{{ article.author }} avatar" width="24" height="24">
+                {{ article.author }}</a>
             {% endif %}
-            <span class="date">{{recipe.publication-date}}</span>
+            <span class="date">{{article.publication-date}}</span>
         </div>
         <div class="article-content">
-            {{ recipe.content }}
+            {{ article.content }}
         </div>
     </article>
     <hr/>
