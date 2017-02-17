@@ -6,8 +6,8 @@ layout: container
 
 {% for article in site.updates reversed %}
     <span id="{{ article.title | slugify }}" class="anchor"></span>
-    <h2>{{ article.title }}</h2>
     {% include status.html %}
+    <h2>{{ article.title }}</h2>
     <article>
         <div class="article-meta">
             <a href="{{ page.github-url }}{{ article.author }}" class="post-author">
