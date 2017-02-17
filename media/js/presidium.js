@@ -21775,7 +21775,6 @@
 	    }, {
 	        key: 'navigateArticle',
 	        value: function navigateArticle(path, e) {
-	            debugger;
 	            window.location = path;
 	            this.props.onNavigate(e);
 	        }

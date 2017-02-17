@@ -33,35 +33,29 @@ span.anchor {
 }
 
 
+.navbar-default {
+  .navbar-nav {
 
-.navbar-nav {
+    .open {
+      > a {
+        color: $navbar-default-color;
+        background-color: $navbar-default-bg ;
+        &:hover, &:focus {
+          background-color: $navbar-default-link-hover-bg ;
+        }
+      }
+    }
 
-  .open {
-    > a {
-      color: $navbar-default-color;
-      background-color: $navbar-default-bg !important;
-      &:hover, &:focus {
-        background-color: $navbar-default-link-hover-bg !important;
+    .active {
+      > a {
+        color: $navbar-default-link-hover-color;
+        background-color: $navbar-default-link-active-bg ;
+        &:hover, &:focus {
+          background-color: $navbar-default-link-hover-bg ;
+        }
       }
     }
   }
-
-  .active {
-    > a {
-      color: $navbar-default-color;
-      background-color: $navbar-default-link-active-bg !important;
-      &:hover, &:focus {
-        background-color: $navbar-default-link-hover-bg !important;
-      }
-    }
-    &.open > a {
-      background-color: $navbar-default-link-active-bg;
-      &:hover, &:focus {
-        background-color: $navbar-default-link-active-bg;
-      }
-    }
-  }
-
 }
 
 .navbar-fixed-side {
@@ -124,7 +118,7 @@ span.anchor {
 
       .navbar-brand-name {
         display: block;
-        padding: 10px 0;
+        padding: 10px 5px 20px 5px;
         margin: 0;
         text-transform: uppercase;
         text-align: center;
@@ -145,12 +139,12 @@ span.anchor {
       .navbar-nav {
         float: none;
         margin: 0 (-$navbar-padding-horizontal);
-
+        padding-top: 12px;
         > li {
           float: none;
           > a {
-            padding-top:    10px;
-            padding-bottom: 10px;
+            padding-top:    12px;
+            padding-bottom: 12px;
           }
         }
       }
