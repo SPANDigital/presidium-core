@@ -4,22 +4,22 @@ permalink: /scenarios/
 layout: container
 ---
 
-{% for scenario in site.scenarios %}
+{% for article in site.scenarios %}
     <span id="{{ scenario.title | slugify }}" class="anchor"></span>
-    <h2>{{ scenario.title }}</h2>
+    <h2>{{ article.title }}</h2>
     {% include status.html %}
     <article>
         <div class="article-meta">
             {% if practice.author %}
-                <a href="{{ page.github-url }}{{ scenario.author }}" class="post-author">
-                    <img src="{{ page.github-url }}{{ scenario.author }}.png" class="avatar" alt="{{ scenario.author }} avatar" width="24" height="24">
-                    {{ scenario.author }}
+                <a href="{{ page.github-url }}{{ article.author }}" class="post-author">
+                    <img src="{{ page.github-url }}{{ article.author }}.png" class="avatar" alt="{{ article.author }} avatar" width="24" height="24">
+                    {{ article.author }}
                 </a>
             {% endif %}
-          <span class="date">{{scenario.publication-date}}</span>
+          <span class="date">{{article.publication-date}}</span>
         </div>
         <div class="article-content">
-          {{ scenario.content }}
+          {{ article.content }}
         </div>
     </article>
     <hr/>
