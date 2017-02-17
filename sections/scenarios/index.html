@@ -5,7 +5,7 @@ layout: container
 ---
 
 {% for article in site.scenarios %}
-    <span id="{{ scenario.title | slugify }}" class="anchor"></span>
+    <span id="{{ article.title | slugify }}" class="anchor"></span>
     <h2>{{ article.title }}</h2>
     {% include status.html %}
     <article>
