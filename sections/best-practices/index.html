@@ -4,23 +4,22 @@ permalink: /best-practices/
 layout: container
 ---
 
-<h1>{{ page.title | upcase }}</h1>
-
-{% for practice in site.best-practices %}
-    <span id="{{ practice.title | slugify }}" class="anchor"></span>
-    <h2>{{ practice.title }}</h2>
+{% for article in site.best-practices %}
+    <span id="{{ article.title | slugify }}" class="anchor"></span>
+    <h2>{{ article.title }}</h2>
+    {% include status.html %}
     <article>
         <div class="article-meta">
-            {% if practice.author %}
-                 <a href="{{ page.github-url }}{{ practice.author }}" class="post-author">
-                    <img src="{{ page.github-url }}{{ practice.author }}.png" class="avatar" alt="{{ practice.author }} avatar" width="24" height="24">
-                    {{ practice.author }}
+            {% if article.author %}
+                 <a href="{{ page.github-url }}{{ article.author }}" class="post-author">
+                    <img src="{{ page.github-url }}{{ article.author }}.png" class="avatar" alt="{{ article.author }} avatar" width="24" height="24">
+                    {{ article.author }}
                  </a>
             {% endif %}
-             <span class="date">{{practice.publication-date}}</span>
+             <span class="date">{{article.publication-date}}</span>
         </div>
         <div class="article-content">
-           {{ practice.content }}
+           {{ article.content }}
         </div>
     </article>
     <hr/>

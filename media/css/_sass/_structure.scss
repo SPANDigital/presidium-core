@@ -7,6 +7,45 @@
     margin-top: 0;
     padding: 60px 80px;
   }
+
+}
+
+// Articles
+.content {
+  .page-title {
+    text-transform: uppercase;
+    margin-top: 0;
+    margin-bottom: 0px;
+  }
+
+  hr {
+    margin-top: 40px;
+    margin-bottom: 20px;
+  }
+
+  section {
+    > h2 {
+      display: inline-block;
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+
+    .label {
+      vertical-align: middle;
+      float: right;
+    }
+    article {
+      margin-top : 20px;
+    }
+  }
+  article {
+    h1, h2, h3, h4, h5, h6 {
+      text-transform: none;
+    }
+    h1, .h1 { font-size: $font-size-h3; }
+    h2, .h2 { font-size: $font-size-h4; }
+    h3, .h3, h4, .h4, h5, .h5, h6, .h6 { font-size: $font-size-h5; }
+  }
 }
 
 footer {

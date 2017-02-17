@@ -4,13 +4,8 @@ permalink: /testing/
 layout: container
 ---
 
-<h1>{{ page.title | upcase }}</h1>
-
 {% for article in site.testing %}
-    <span id="{{ article.title | slugify }}" class="anchor"></span>
-    <h2>{{ article.title }}</h2>
-    {{ article.content }}
-    <hr/>
+    {% include article.html %}
 {% else %}
     {% include empty-article.html %}
 {% endfor %}

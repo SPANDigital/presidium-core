@@ -4,11 +4,10 @@ permalink: /scenarios/
 layout: container
 ---
 
-<h1>{{ page.title | upcase }}</h1>
-
 {% for scenario in site.scenarios %}
     <span id="{{ scenario.title | slugify }}" class="anchor"></span>
     <h2>{{ scenario.title }}</h2>
+    {% include status.html %}
     <article>
         <div class="article-meta">
             {% if practice.author %}

@@ -4,21 +4,20 @@ permalink: /updates/
 layout: container
 ---
 
-<h1>{{ page.title | upcase }}</h1>
-
-{% for update in site.updates reversed %}
-    <span id="{{ update.title | slugify }}" class="anchor"></span>
-    <h1>{{ update.title }}</h1>
+{% for article in site.updates reversed %}
+    <span id="{{ article.title | slugify }}" class="anchor"></span>
+    <h2>{{ article.title }}</h2>
+    {% include status.html %}
     <article>
         <div class="article-meta">
-            <a href="{{ page.github-url }}{{ update.author }}" class="post-author">
-                <img src="{{ page.github-url }}{{ update.author }}.png" class="avatar" alt="{{ update.author }} avatar" width="24" height="24">
-                {{ update.author }}
+            <a href="{{ page.github-url }}{{ article.author }}" class="post-author">
+                <img src="{{ page.github-url }}{{ article.author }}.png" class="avatar" alt="{{ article.author }} avatar" width="24" height="24">
+                {{ article.author }}
             </a>
-            <span class="date">{{update.publication-date}}</span>
+            <span class="date">{{article.publication-date}}</span>
         </div>
         <div class="article-content">
-            {{ update.content }}
+            {{ article.content }}
         </div>
     </article>
     <hr />
