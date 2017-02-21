@@ -1,0 +1,6 @@
+---
+title: "Menu"
+permalink: "/menu.json"
+layout: content
+---
+{% include menu.json %}

@@ -1,0 +1,16 @@
+[{% for section in site.structure %} {
+  {% assign articles = site[section.collection] %}
+  {% assign path =  site.baseurl | append: section.path | replace: '//','/' %}
+  "title" : "{{ section.title }}",
+  "path" : "{{ path }}",
+  "collection" : "{{ section.collection }}",
+  "articles" : [
+{% for article in articles %}{
+    {% assign slug = article.title | slugify %}
+    "id": "{{article.id}}",
+    "title" : "{{ article.title }}",
+    "path" : "{{path | append: '#' | append: slug}}",
+    "category": "{{article.category}}"
+}{% if article != articles.last%},{% endif %}
+{% endfor %}]}{% if section != site.structure.last%},{% endif %}
+{% endfor %}]
