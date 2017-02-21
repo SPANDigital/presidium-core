@@ -4140,9 +4140,11 @@
 
 	var _menu_item2 = _interopRequireDefault(_menu_item);
 
-	var _paths = __webpack_require__(180);
+	var _paths = __webpack_require__(181);
 
 	var _paths2 = _interopRequireDefault(_paths);
+
+	var _menu_structure = __webpack_require__(180);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -4153,7 +4155,7 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	/**
-	 * A two level boostrap menu. Doesn't rely on bootstrap or jquery js.
+	 * A two level boostrap menu. Doesn't rely on bootstrap.js or jquery js.
 	 */
 	var Menu = function (_Component) {
 	    _inherits(Menu, _Component);
@@ -4216,16 +4218,9 @@
 	                            'ul',
 	                            { className: 'nav navbar-nav' },
 	                            menu.structure.map(function (item) {
-	                                return _react2.default.createElement(_menu_item2.default, {
-	                                    key: item.path,
-	                                    item: item,
-	                                    baseUrl: menu.baseUrl,
-	                                    currentPage: menu.currentPage,
-	                                    expanded: true,
-	                                    onNavigate: function onNavigate() {
+	                                return _react2.default.createElement(_menu_item2.default, { key: item.id, item: item, onNavigate: function onNavigate() {
 	                                        return _this2.toggleExpand();
-	                                    }
-	                                });
+	                                    } });
 	                            })
 	                        )
 	                    )
@@ -4245,15 +4240,18 @@
 	Menu.propTypes = {
 	    menu: _react2.default.PropTypes.shape({
 	        brandName: _react2.default.PropTypes.string,
-	        structure: _react2.default.PropTypes.array,
-	        baseUrl: _react2.default.PropTypes.string,
-	        currentPage: _react2.default.PropTypes.string
+	        structure: _react2.default.PropTypes.array
 	    }).isRequired
 	};
 
 	function loadMenu() {
 	    var menu = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 	    var element = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'nav-container';
+
+
+	    menu.structure = menu.structure.map(function (section) {
+	        return (0, _menu_structure.groupByCategory)(section);
+	    });
 
 	    _reactDom2.default.render(_react2.default.createElement(Menu, { menu: menu }), document.getElementById(element));
 	}
@@ -21657,9 +21655,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _paths = __webpack_require__(180);
-
-	var _paths2 = _interopRequireDefault(_paths);
+	var _menu_structure = __webpack_require__(180);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -21680,26 +21676,32 @@
 
 	        var _this = _possibleConstructorReturn(this, (MenuItem.__proto__ || Object.getPrototypeOf(MenuItem)).call(this, props));
 
-	        var path = _paths2.default.concat(props.baseUrl, props.item.path);
-	        var current = _paths2.default.concat(props.baseUrl, props.currentPage);
-	        var isActive = _this.isActive(path, current);
-	        var hasArticles = _this.hasItems(props.item, 'articles');
-	        var hasGroups = _this.hasItems(props.item, 'groups');
+	        var path = props.item.path;
+	        var isActive = _this.isActive();
+	        var hasChildren = props.item.children.length > 0;
 
 	        _this.state = {
 	            path: path,
 	            isActive: isActive,
-	            hasArticles: hasArticles,
-	            hasGroups: hasGroups,
-	            isExpanded: _this.props.expanded && isActive && (hasArticles || hasGroups)
+	            hasChildren: hasChildren,
+	            isExpanded: isActive && hasChildren
 	        };
 	        return _this;
 	    }
 
 	    _createClass(MenuItem, [{
-	        key: 'hasItems',
-	        value: function hasItems(item, property) {
-	            return Object.prototype.hasOwnProperty.call(item, property) && item[property].length > 0;
+	        key: 'isActive',
+	        value: function isActive() {
+	            var item = this.props.item;
+	            switch (item.type) {
+	                case _menu_structure.MENU_TYPE.SECTION:
+	                case _menu_structure.MENU_TYPE.ARTICLE:
+	                    return item.path == window.location.pathname;
+	                case _menu_structure.MENU_TYPE.CATEGORY:
+	                // return item.children.findIndex(child => child.path == (window.location.pathname + window.location.hash)) > -1
+	                default:
+	                    return false;
+	            }
 	        }
 	    }, {
 	        key: 'render',
@@ -21712,7 +21714,7 @@
 	                _react2.default.createElement(
 	                    'a',
 	                    { onClick: function onClick(e) {
-	                            return _this2.navigate(e);
+	                            return _this2.clickParent(e);
 	                        }, className: this.levelClass(this.props.item.level) + " dropdown-toggle" },
 	                    this.expander(),
 	                    _react2.default.createElement(
@@ -21724,10 +21726,47 @@
 	                _react2.default.createElement(
 	                    'ul',
 	                    { className: 'dropdown-menu' },
-	                    this.state.isExpanded && this.state.hasArticles && this.articles(),
-	                    this.state.isExpanded && this.state.hasGroups && this.groups()
+	                    this.state.isExpanded && this.state.hasChildren && this.children()
 	                )
 	            );
+	        }
+	    }, {
+	        key: 'children',
+	        value: function children() {
+	            var _this3 = this;
+
+	            return this.props.item.children.map(function (item) {
+	                switch (item.type) {
+	                    case _menu_structure.MENU_TYPE.CATEGORY:
+	                        return _react2.default.createElement(MenuItem, { key: item.title, item: item, onNavigate: _this3.props.onNavigate });
+
+	                    case _menu_structure.MENU_TYPE.ARTICLE:
+	                        return _react2.default.createElement(
+	                            'li',
+	                            { key: item.id, className: _this3.state.isActive ? "active" : "" },
+	                            _react2.default.createElement(
+	                                'a',
+	                                { onClick: function onClick() {
+	                                        return _this3.clickChild(item.path);
+	                                    }, href: item.path, className: _this3.levelClass(item.level) },
+	                                item.title
+	                            )
+	                        );
+	                }
+	            });
+	        }
+	    }, {
+	        key: 'expander',
+	        value: function expander() {
+	            var _this4 = this;
+
+	            if (this.state.hasChildren) {
+	                return _react2.default.createElement('span', { onClick: function onClick(e) {
+	                        return _this4.toggleExpand(e);
+	                    }, className: this.state.isExpanded ? "glyphicon glyphicon-chevron-down" : "glyphicon glyphicon-chevron-right" });
+	            } else {
+	                return _react2.default.createElement('span', { className: 'expand-placeholder' });
+	            }
 	        }
 	    }, {
 	        key: 'levelClass',
@@ -21748,33 +21787,18 @@
 	            return (this.state.isActive ? "active" : "") + " " + (this.state.isExpanded ? "open" : "");
 	        }
 	    }, {
-	        key: 'expander',
-	        value: function expander() {
-	            var _this3 = this;
-
-	            return this.state.hasGroups || this.state.hasArticles ? _react2.default.createElement('span', { onClick: function onClick(e) {
-	                    return _this3.toggleExpand(e);
-	                }, className: this.state.isExpanded ? "glyphicon glyphicon-chevron-down" : "glyphicon glyphicon-chevron-right" }) : _react2.default.createElement('span', { className: 'expand-placeholder' });
-	        }
-	    }, {
-	        key: 'isActive',
-	        value: function isActive(path, currentPage) {
-	            if (currentPage == this.props.baseUrl) {
-	                return path == currentPage;
+	        key: 'clickParent',
+	        value: function clickParent(e) {
+	            if (this.state.isActive && this.props.item.type == _menu_structure.MENU_TYPE.SECTION) {
+	                this.toggleExpand(e);
 	            } else {
-	                return path.startsWith(currentPage);
-	            }
-	        }
-	    }, {
-	        key: 'navigate',
-	        value: function navigate(e) {
-	            if (!this.state.isActive) {
 	                window.location = this.state.path;
 	            }
 	        }
 	    }, {
-	        key: 'navigateArticle',
-	        value: function navigateArticle(path, e) {
+	        key: 'clickChild',
+	        value: function clickChild(path, e) {
+	            // this.setState({isActive : this.isActive()});
 	            window.location = path;
 	            this.props.onNavigate(e);
 	        }
@@ -21782,40 +21806,9 @@
 	        key: 'toggleExpand',
 	        value: function toggleExpand(e) {
 	            e.stopPropagation();
-	            if (this.state.hasArticles || this.state.hasGroups) {
+	            if (this.state.hasChildren) {
 	                this.setState({ isExpanded: !this.state.isExpanded });
 	            }
-	        }
-	    }, {
-	        key: 'groups',
-	        value: function groups() {
-	            var _this4 = this;
-
-	            return this.props.item.groups.map(function (item) {
-	                return _react2.default.createElement(MenuItem, { key: item.path, item: item, baseUrl: _this4.props.baseUrl, currentPage: _this4.props.currentPage, expanded: false, onNavigate: _this4.props.onNavigate });
-	            });
-	        }
-	    }, {
-	        key: 'articles',
-	        value: function articles() {
-	            var _this5 = this;
-
-	            var active = this.state.isActive ? "active" : "";
-	            return this.props.item.articles.map(function (article) {
-
-	                var path = _paths2.default.concat(_this5.props.baseUrl, article.path);
-	                return _react2.default.createElement(
-	                    'li',
-	                    { key: path, className: active },
-	                    _react2.default.createElement(
-	                        'a',
-	                        { onClick: function onClick() {
-	                                return _this5.navigateArticle(path);
-	                            }, href: path, className: _this5.levelClass(article.level) },
-	                        article.title
-	                    )
-	                );
-	            });
 	        }
 	    }]);
 
@@ -21827,18 +21820,89 @@
 
 	MenuItem.propTypes = {
 	    item: _react2.default.PropTypes.object.isRequired,
-	    baseUrl: _react2.default.PropTypes.string.isRequired,
-	    currentPage: _react2.default.PropTypes.string.isRequired,
-	    expanded: _react2.default.PropTypes.bool,
 	    onNavigate: _react2.default.PropTypes.func
-	};
-
-	MenuItem.defaultProps = {
-	    expanded: false
 	};
 
 /***/ },
 /* 180 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.groupByCategory = groupByCategory;
+	var level1 = 1;
+	var level2 = 2;
+	var level3 = 3;
+
+	var MENU_TYPE = exports.MENU_TYPE = {
+	    SECTION: 'section',
+	    CATEGORY: 'category',
+	    ARTICLE: 'article'
+	};
+
+	function menuSection(item, children) {
+	    return {
+	        type: MENU_TYPE.SECTION,
+	        id: item.path,
+	        level: level1,
+	        title: item.title,
+	        path: item.path,
+	        children: children
+	    };
+	}
+
+	function menuArticle(article, level) {
+	    return {
+	        type: MENU_TYPE.ARTICLE,
+	        id: article.id,
+	        path: article.path,
+	        title: article.title,
+	        level: level
+	    };
+	}
+
+	function menuCategory(section, category, path, level) {
+	    return {
+	        type: MENU_TYPE.CATEGORY,
+	        id: section.path + category,
+	        level: level,
+	        title: category,
+	        path: path, // first article in category
+	        children: []
+	    };
+	}
+
+	/**
+	 *  Group section articles by category maintaining the original order.
+	 *  Ensures only one group of articles exists in a section.
+	 */
+	function groupByCategory(section) {
+
+	    var children = [];
+	    var categories = {};
+	    var category = void 0;
+
+	    section.articles.forEach(function (item) {
+
+	        category = item.category;
+	        if (category === "") {
+	            children.push(menuArticle(item, level2));
+	        } else {
+	            if (!categories[category]) {
+	                categories[category] = menuCategory(section, item.category, item.path, level2);
+	                children.push(categories[category]);
+	            }
+	            categories[category].children.push(menuArticle(item, level3));
+	        }
+	    });
+	    return menuSection(section, children);
+	}
+
+/***/ },
+/* 181 */
 /***/ function(module, exports) {
 
 	"use strict";
