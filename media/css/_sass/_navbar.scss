@@ -3,65 +3,30 @@ $navbar-inverse-link-hover-bg: lighten($navbar-inverse-bg, 5%);
 $navbar-inverse-border: lighten($navbar-inverse-bg, 8%);
 $navbar-sub-color: lighten($navbar-default-border, 4%);
 
-//Fixed navbar mobile
+
 #nav-container {
+
   position: fixed;
   right: 0;
   left: 0;
   top: 0;
   z-index: 1030;
-}
 
-span.anchor {
-  display: block;
-  position: relative;
-  top: -60px;
-  visibility: hidden;
-}
-
-@media (min-width: $grid-float-breakpoint) {
-  #nav-container {
+  @media (min-width: $grid-float-breakpoint) {
     position: relative;
     min-height: 50px;
     margin-bottom: 50px;
     border: 1px solid transparent;
   }
 
-  span.anchor {
-    top: -10px;
-  }
-}
-
-
-.navbar-default {
-  .navbar-nav {
-
-    .open {
-      > a {
-        color: $navbar-default-color;
-        background-color: $navbar-default-bg ;
-        &:hover, &:focus {
-          background-color: $navbar-default-link-hover-bg ;
-        }
-      }
-    }
-
-    .active {
-      > a {
-        color: $navbar-default-link-hover-color;
-        background-color: $navbar-default-link-active-bg ;
-        &:hover, &:focus {
-          background-color: $navbar-default-link-hover-bg ;
-        }
-      }
-    }
-  }
-}
-
-.navbar-fixed-side {
+  .navbar-fixed-side {
 
     .navbar-brand, .navbar-brand-name {
       display: none;
+    }
+
+    a {
+      cursor: pointer;
     }
 
     .expand-placeholder {
@@ -73,17 +38,12 @@ span.anchor {
       font-size: 0.8em;
     }
 
-    a {
-      cursor: pointer;
-    }
-
     @media (max-width: $grid-float-breakpoint) {
       margin-left: -15px;
       margin-right: -15px;
     }
 
     @media (min-width: $grid-float-breakpoint) {
-
       position: fixed;
       margin: 0 -15px;
       height: 100vh;
@@ -136,19 +96,6 @@ span.anchor {
         border-top: 1px solid $navbar-default-border;
       }
 
-      .navbar-nav {
-        float: none;
-        margin: 0 (-$navbar-padding-horizontal);
-        padding-top: 12px;
-        > li {
-          float: none;
-          > a {
-            padding-top:    12px;
-            padding-bottom: 12px;
-          }
-        }
-      }
-
       .navbar-text {
         float: none;
         margin-left: 0;
@@ -160,6 +107,40 @@ span.anchor {
       }
 
       .navbar-nav {
+
+        float: none;
+        margin: 0 (-$navbar-padding-horizontal);
+        padding-top: 12px;
+        > li {
+          float: none;
+          > a {
+            padding-top:    12px;
+            padding-bottom: 12px;
+          }
+        }
+
+        .open {
+          > a {
+            color: $navbar-default-link-color;
+            background-color: $navbar-default-bg;
+            &:hover {
+              color: $navbar-default-link-hover-color;
+              background-color: $navbar-default-bg;
+            }
+            &:focus {
+              color: $navbar-default-link-color;
+              background-color: $navbar-default-bg;
+            }
+          }
+        }
+
+        .on-page {
+          > a {
+            color: $navbar-default-link-hover-color;
+            cursor: default;
+            font-weight: bold;
+          }
+        }
 
         .dropdown-menu {
           position: static;
@@ -177,13 +158,8 @@ span.anchor {
               color: $navbar-default-link-color;
               padding-top:    10px;
               padding-bottom: 10px;
-
               white-space: normal;
               border: 0;
-
-              &:hover, &:focus {
-                background-image: none;
-              }
 
               &.level-two {
                 padding-left: 30px;
@@ -192,22 +168,38 @@ span.anchor {
                 padding-left: 50px;
               }
             }
+
+          }
+
+          .on-article {
+            > a {
+              color: $navbar-default-link-hover-color;
+              background-color: $navbar-default-link-hover-bg ;
+              &:hover, &:focus {
+                background-color: $navbar-default-link-hover-bg ;
+              }
+            }
           }
 
         }
 
         .dropdown-toggle {
           &:hover, &:focus {
-            background-color: $navbar-default-link-hover-bg;
-            color: $navbar-default-link-hover-color;
+            background-color: transparent;
+            color: $navbar-default-link-color;
             border-color: $navbar-default-border
           }
         }
 
         > li > a, .dropdown-menu > li > a {
-          &:hover, &:focus {
-            background-color: $navbar-default-link-hover-bg;
+          &:hover {
+            background-color: transparent;
             color: $navbar-default-link-hover-color;
+            border-color: $navbar-default-border;
+          }
+          &:focus {
+            background-color: transparent;
+            color: $navbar-default-link-color;
             border-color: $navbar-default-border;
           }
         }
@@ -226,3 +218,4 @@ span.anchor {
 
     }
   }
+}

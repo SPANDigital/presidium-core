@@ -59,6 +59,7 @@
 	        load: _menu.loadMenu
 	    }
 	};
+
 	window.presidium = presidium;
 
 /***/ },
@@ -4146,6 +4147,10 @@
 
 	var _menu_structure = __webpack_require__(180);
 
+	var _gumshoe = __webpack_require__(182);
+
+	var _gumshoe2 = _interopRequireDefault(_gumshoe);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -4220,6 +4225,8 @@
 	                            menu.structure.map(function (item) {
 	                                return _react2.default.createElement(_menu_item2.default, { key: item.id, item: item, onNavigate: function onNavigate() {
 	                                        return _this2.toggleExpand();
+	                                    }, spy: function spy() {
+	                                        return _this2.props.spy();
 	                                    } });
 	                            })
 	                        )
@@ -4244,6 +4251,18 @@
 	    }).isRequired
 	};
 
+	function _spy() {
+
+	    _gumshoe2.default.init({
+	        selector: '[data-gumshoe] a', // Default link selector (must use a valid CSS selector)
+	        selectorHeader: '[data-gumshoe-header]', // Fixed header selector (must use a valid CSS selector)
+	        container: window, // The element to spy on scrolling in (must be a valid DOM Node)
+	        offset: 100, // Distance in pixels to offset calculations
+	        activeClass: 'on-article', // Class to apply to active navigation link and it's parent list item
+	        callback: function callback(nav) {} // Callback to run after setting active link
+	    });
+	}
+
 	function loadMenu() {
 	    var menu = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 	    var element = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'nav-container';
@@ -4253,7 +4272,11 @@
 	        return (0, _menu_structure.groupByCategory)(section);
 	    });
 
-	    _reactDom2.default.render(_react2.default.createElement(Menu, { menu: menu }), document.getElementById(element));
+	    _reactDom2.default.render(_react2.default.createElement(Menu, { menu: menu, spy: function spy() {
+	            return _spy();
+	        } }), document.getElementById(element));
+
+	    _spy();
 	}
 
 	exports.Menu = Menu;
@@ -21676,27 +21699,24 @@
 
 	        var _this = _possibleConstructorReturn(this, (MenuItem.__proto__ || Object.getPrototypeOf(MenuItem)).call(this, props));
 
-	        var path = props.item.path;
-	        var isActive = _this.isActive();
+	        var onPage = _this.onPage();
 	        var hasChildren = props.item.children.length > 0;
 
 	        _this.state = {
-	            path: path,
-	            isActive: isActive,
+	            onPage: onPage,
 	            hasChildren: hasChildren,
-	            isExpanded: isActive && hasChildren
+	            isExpanded: onPage && hasChildren
 	        };
 	        return _this;
 	    }
 
 	    _createClass(MenuItem, [{
-	        key: 'isActive',
-	        value: function isActive() {
-	            var item = this.props.item;
-	            switch (item.type) {
+	        key: 'onPage',
+	        value: function onPage() {
+	            switch (this.props.item.type) {
 	                case _menu_structure.MENU_TYPE.SECTION:
 	                case _menu_structure.MENU_TYPE.ARTICLE:
-	                    return item.path == window.location.pathname;
+	                    return this.props.item.path == window.location.pathname;
 	                case _menu_structure.MENU_TYPE.CATEGORY:
 	                // return item.children.findIndex(child => child.path == (window.location.pathname + window.location.hash)) > -1
 	                default:
@@ -21708,24 +21728,25 @@
 	        value: function render() {
 	            var _this2 = this;
 
+	            var item = this.props.item;
 	            return _react2.default.createElement(
 	                'li',
-	                { key: this.state.path, className: this.liClass(this.state.isActive, this.state.isExpanded) },
+	                { key: item.id, className: this.liClass() },
 	                _react2.default.createElement(
 	                    'a',
 	                    { onClick: function onClick(e) {
 	                            return _this2.clickParent(e);
-	                        }, className: this.levelClass(this.props.item.level) + " dropdown-toggle" },
+	                        }, href: item.path, className: this.levelClass(item.level) + "" },
 	                    this.expander(),
 	                    _react2.default.createElement(
 	                        'span',
 	                        null,
-	                        this.props.item.title
+	                        item.title
 	                    )
 	                ),
 	                _react2.default.createElement(
 	                    'ul',
-	                    { className: 'dropdown-menu' },
+	                    { className: 'dropdown-menu', 'data-gumshoe': true },
 	                    this.state.isExpanded && this.state.hasChildren && this.children()
 	                )
 	            );
@@ -21738,17 +21759,17 @@
 	            return this.props.item.children.map(function (item) {
 	                switch (item.type) {
 	                    case _menu_structure.MENU_TYPE.CATEGORY:
-	                        return _react2.default.createElement(MenuItem, { key: item.title, item: item, onNavigate: _this3.props.onNavigate });
+	                        return _react2.default.createElement(MenuItem, { key: item.title, item: item, onNavigate: _this3.props.onNavigate, spy: _this3.props.spy });
 
 	                    case _menu_structure.MENU_TYPE.ARTICLE:
 	                        return _react2.default.createElement(
 	                            'li',
-	                            { key: item.id, className: _this3.state.isActive ? "active" : "" },
+	                            { key: item.id },
 	                            _react2.default.createElement(
 	                                'a',
 	                                { onClick: function onClick() {
 	                                        return _this3.clickChild(item.path);
-	                                    }, href: item.path, className: _this3.levelClass(item.level) },
+	                                    }, href: item.slug, className: _this3.levelClass(item.level) },
 	                                item.title
 	                            )
 	                        );
@@ -21784,21 +21805,20 @@
 	    }, {
 	        key: 'liClass',
 	        value: function liClass() {
-	            return (this.state.isActive ? "active" : "") + " " + (this.state.isExpanded ? "open" : "");
+	            return (this.state.onPage ? "on-page" : "") + " " + (this.state.isExpanded ? "open" : "");
 	        }
 	    }, {
 	        key: 'clickParent',
 	        value: function clickParent(e) {
-	            if (this.state.isActive && this.props.item.type == _menu_structure.MENU_TYPE.SECTION) {
-	                this.toggleExpand(e);
-	            } else {
-	                window.location = this.state.path;
+	            //e.stopPropagation();
+	            e.preventDefault();
+	            if (!this.isOnSection()) {
+	                window.location = this.props.item.path;
 	            }
 	        }
 	    }, {
 	        key: 'clickChild',
 	        value: function clickChild(path, e) {
-	            // this.setState({isActive : this.isActive()});
 	            window.location = path;
 	            this.props.onNavigate(e);
 	        }
@@ -21806,9 +21826,15 @@
 	        key: 'toggleExpand',
 	        value: function toggleExpand(e) {
 	            e.stopPropagation();
-	            if (this.state.hasChildren) {
+	            e.preventDefault();
+	            if (this.state.hasChildren && !this.isOnSection()) {
 	                this.setState({ isExpanded: !this.state.isExpanded });
 	            }
+	        }
+	    }, {
+	        key: 'isOnSection',
+	        value: function isOnSection() {
+	            return this.state.onPage && this.props.item.type == _menu_structure.MENU_TYPE.SECTION;
 	        }
 	    }]);
 
@@ -21843,13 +21869,14 @@
 	    ARTICLE: 'article'
 	};
 
-	function menuSection(item, children) {
+	function menuSection(section, children) {
 	    return {
 	        type: MENU_TYPE.SECTION,
-	        id: item.path,
+	        id: section.path,
 	        level: level1,
-	        title: item.title,
-	        path: item.path,
+	        title: section.title,
+	        slug: section.slug,
+	        path: section.path,
 	        children: children
 	    };
 	}
@@ -21859,6 +21886,7 @@
 	        type: MENU_TYPE.ARTICLE,
 	        id: article.id,
 	        path: article.path,
+	        slug: article.slug,
 	        title: article.title,
 	        level: level
 	    };
@@ -21870,6 +21898,7 @@
 	        id: section.path + category,
 	        level: level,
 	        title: category,
+	        slug: path,
 	        path: path, // first article in category
 	        children: []
 	    };
@@ -21926,6 +21955,14 @@
 	};
 
 	exports.default = path;
+
+/***/ },
+/* 182 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(global) {/*! gumshoe v3.3.2 | (c) 2016 Chris Ferdinandi | MIT License | http://github.com/cferdinandi/gumshoe */
+	!(function(e,t){ true?!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_FACTORY__ = (t(e)), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)):"object"==typeof exports?module.exports=t(e):e.gumshoe=t(e)})("undefined"!=typeof global?global:this.window||this.global,(function(e){"use strict";var t,n,o,r,a,c,i={},l="querySelector"in document&&"addEventListener"in e&&"classList"in document.createElement("_"),s=[],u={selector:"[data-gumshoe] a",selectorHeader:"[data-gumshoe-header]",container:e,offset:0,activeClass:"active",callback:function(){}},f=function(e,t,n){if("[object Object]"===Object.prototype.toString.call(e))for(var o in e)Object.prototype.hasOwnProperty.call(e,o)&&t.call(n,e[o],o,e);else for(var r=0,a=e.length;r<a;r++)t.call(n,e[r],r,e)},d=function(){var e={},t=!1,n=0,o=arguments.length;"[object Boolean]"===Object.prototype.toString.call(arguments[0])&&(t=arguments[0],n++);for(var r=function(n){for(var o in n)Object.prototype.hasOwnProperty.call(n,o)&&(t&&"[object Object]"===Object.prototype.toString.call(n[o])?e[o]=d(!0,e[o],n[o]):e[o]=n[o])};n<o;n++){var a=arguments[n];r(a)}return e},v=function(e){return Math.max(e.scrollHeight,e.offsetHeight,e.clientHeight)},m=function(){return Math.max(document.body.scrollHeight,document.documentElement.scrollHeight,document.body.offsetHeight,document.documentElement.offsetHeight,document.body.clientHeight,document.documentElement.clientHeight)},g=function(e){var n=0;if(e.offsetParent){do n+=e.offsetTop,e=e.offsetParent;while(e)}else n=e.offsetTop;return n=n-a-t.offset,n>=0?n:0},h=function(t){var n=t.getBoundingClientRect();return n.top>=0&&n.left>=0&&n.bottom<=(e.innerHeight||document.documentElement.clientHeight)&&n.right<=(e.innerWidth||document.documentElement.clientWidth)},p=function(){s.sort((function(e,t){return e.distance>t.distance?-1:e.distance<t.distance?1:0}))};i.setDistances=function(){o=m(),a=r?v(r)+g(r):0,f(s,(function(e){e.distance=g(e.target)})),p()};var b=function(){var e=document.querySelectorAll(t.selector);f(e,(function(e){if(e.hash){var t=document.querySelector(e.hash);t&&s.push({nav:e,target:t,parent:"li"===e.parentNode.tagName.toLowerCase()?e.parentNode:null,distance:0})}}))},y=function(){c&&(c.nav.classList.remove(t.activeClass),c.parent&&c.parent.classList.remove(t.activeClass))},H=function(e){y(),e.nav.classList.add(t.activeClass),e.parent&&e.parent.classList.add(t.activeClass),t.callback(e),c={nav:e.nav,parent:e.parent}};i.getCurrentNav=function(){var n=e.pageYOffset;if(e.innerHeight+n>=o&&h(s[0].target))return H(s[0]),s[0];for(var r=0,a=s.length;r<a;r++){var c=s[r];if(c.distance<=n)return H(c),c}y(),t.callback()};var C=function(){f(s,(function(e){e.nav.classList.contains(t.activeClass)&&(c={nav:e.nav,parent:e.parent})}))};i.destroy=function(){t&&(t.container.removeEventListener("resize",L,!1),t.container.removeEventListener("scroll",L,!1),s=[],t=null,n=null,o=null,r=null,a=null,c=null)};var L=function(e){n||(n=setTimeout((function(){n=null,"scroll"===e.type&&i.getCurrentNav(),"resize"===e.type&&(i.setDistances(),i.getCurrentNav())}),66))};return i.init=function(e){l&&(i.destroy(),t=d(u,e||{}),r=document.querySelector(t.selectorHeader),b(),0!==s.length&&(C(),i.setDistances(),i.getCurrentNav(),t.container.addEventListener("resize",L,!1),t.container.addEventListener("scroll",L,!1)))},i}));
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }
 /******/ ]);

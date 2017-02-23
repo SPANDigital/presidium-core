@@ -2,6 +2,7 @@
   {% assign articles = site[section.collection] %}
   {% assign path =  site.baseurl | append: section.path | replace: '//','/' %}
   "title" : "{{ section.title }}",
+  "slug" : "{{ section.title | slugify }}",
   "path" : "{{ path }}",
   "collection" : "{{ section.collection }}",
   "articles" : [
@@ -10,6 +11,7 @@
     "id": "{{article.id}}",
     "title" : "{{ article.title }}",
     "path" : "{{path | append: '#' | append: slug}}",
+    "slug" : "{{'#' | append: slug}}",
     "category": "{{article.category}}"
 }{% if article != articles.last%},{% endif %}
 {% endfor %}]}{% if section != site.structure.last%},{% endif %}
