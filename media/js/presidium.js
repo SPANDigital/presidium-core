@@ -59,7 +59,6 @@
 	        load: _menu.loadMenu
 	    }
 	};
-
 	window.presidium = presidium;
 
 /***/ },
@@ -4225,8 +4224,6 @@
 	                            menu.structure.map(function (item) {
 	                                return _react2.default.createElement(_menu_item2.default, { key: item.id, item: item, onNavigate: function onNavigate() {
 	                                        return _this2.toggleExpand();
-	                                    }, spy: function spy() {
-	                                        return _this2.props.spy();
 	                                    } });
 	                            })
 	                        )
@@ -4251,8 +4248,7 @@
 	    }).isRequired
 	};
 
-	function _spy() {
-
+	function spy() {
 	    _gumshoe2.default.init({
 	        selector: '[data-gumshoe] a', // Default link selector (must use a valid CSS selector)
 	        selectorHeader: '[data-gumshoe-header]', // Fixed header selector (must use a valid CSS selector)
@@ -4272,11 +4268,9 @@
 	        return (0, _menu_structure.groupByCategory)(section);
 	    });
 
-	    _reactDom2.default.render(_react2.default.createElement(Menu, { menu: menu, spy: function spy() {
-	            return _spy();
-	        } }), document.getElementById(element));
+	    _reactDom2.default.render(_react2.default.createElement(Menu, { menu: menu }), document.getElementById(element));
 
-	    _spy();
+	    spy();
 	}
 
 	exports.Menu = Menu;
@@ -21759,7 +21753,7 @@
 	            return this.props.item.children.map(function (item) {
 	                switch (item.type) {
 	                    case _menu_structure.MENU_TYPE.CATEGORY:
-	                        return _react2.default.createElement(MenuItem, { key: item.title, item: item, onNavigate: _this3.props.onNavigate, spy: _this3.props.spy });
+	                        return _react2.default.createElement(MenuItem, { key: item.title, item: item, onNavigate: _this3.props.onNavigate });
 
 	                    case _menu_structure.MENU_TYPE.ARTICLE:
 	                        return _react2.default.createElement(
@@ -21810,7 +21804,6 @@
 	    }, {
 	        key: 'clickParent',
 	        value: function clickParent(e) {
-	            //e.stopPropagation();
 	            e.preventDefault();
 	            if (!this.isOnSection()) {
 	                window.location = this.props.item.path;
