@@ -1,4 +1,5 @@
 .content {
+  position: relative;
   padding: 10px 20px;
   margin-top: 50px;
 
@@ -24,6 +25,18 @@
   }
 
   section {
+
+    span.anchor {
+      display: block;
+      position: relative;
+      top: -60px;
+      visibility: hidden;
+
+      @media (min-width: $grid-float-breakpoint) {
+        top: -10px;
+      }
+    }
+
     > h2 {
       display: inline-block;
       margin-top: 10px;
@@ -49,12 +62,12 @@
 }
 
 footer {
+  .spacer {
+    height: 40vh;
+  }
   left: 0px;
   text-align: center;
   width: 100%;
-  div {
-    margin-top: 100px;
-  }
 }
 
 table{
