@@ -4140,7 +4140,7 @@
 
 	var _menu_item2 = _interopRequireDefault(_menu_item);
 
-	var _paths = __webpack_require__(181);
+	var _paths = __webpack_require__(182);
 
 	var _paths2 = _interopRequireDefault(_paths);
 
@@ -4179,50 +4179,46 @@
 	            var menu = this.props.menu;
 	            return _react2.default.createElement(
 	                'nav',
-	                { className: 'navbar' },
+	                null,
 	                _react2.default.createElement(
 	                    'div',
-	                    { className: 'container' },
+	                    { className: 'navbar-header' },
 	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'navbar-header' },
-	                        _react2.default.createElement(
-	                            'a',
-	                            { href: this.props.menu.baseUrl != null ? this.props.menu.baseUrl : "#", className: 'brand' },
-	                            _react2.default.createElement('img', { src: _paths2.default.concat(menu.baseUrl, menu.logo), alt: '' })
-	                        ),
-	                        this.props.menu.brandName ? _react2.default.createElement(
-	                            'p',
-	                            { className: 'brand-name' },
-	                            this.props.menu.brandName
-	                        ) : "",
-	                        _react2.default.createElement(
-	                            'button',
-	                            { className: 'navbar-toggle', onClick: function onClick() {
-	                                    return _this2.toggleExpand();
-	                                } },
-	                            _react2.default.createElement(
-	                                'span',
-	                                { className: 'sr-only' },
-	                                'Toggle navigation'
-	                            ),
-	                            _react2.default.createElement('span', { className: 'icon-bar' }),
-	                            _react2.default.createElement('span', { className: 'icon-bar' }),
-	                            _react2.default.createElement('span', { className: 'icon-bar' })
-	                        )
+	                        'a',
+	                        { href: this.props.menu.baseUrl != null ? this.props.menu.baseUrl : "#", className: 'brand' },
+	                        _react2.default.createElement('img', { src: _paths2.default.concat(menu.baseUrl, menu.logo), alt: '' })
+	                    ),
+	                    this.props.menu.brandName && _react2.default.createElement(
+	                        'p',
+	                        { className: 'brand-name' },
+	                        this.props.menu.brandName
 	                    ),
 	                    _react2.default.createElement(
-	                        'div',
-	                        { className: "navbar-items" + (this.state.expanded == true ? " in" : "") },
+	                        'button',
+	                        { className: 'toggle', onClick: function onClick() {
+	                                return _this2.toggleExpand();
+	                            } },
 	                        _react2.default.createElement(
-	                            'ul',
-	                            null,
-	                            menu.structure.map(function (item) {
-	                                return _react2.default.createElement(_menu_item2.default, { key: item.id, item: item, onNavigate: function onNavigate() {
-	                                        return _this2.toggleExpand();
-	                                    } });
-	                            })
-	                        )
+	                            'span',
+	                            { className: 'sr-only' },
+	                            'Toggle navigation'
+	                        ),
+	                        _react2.default.createElement('span', { className: 'icon-bar' }),
+	                        _react2.default.createElement('span', { className: 'icon-bar' }),
+	                        _react2.default.createElement('span', { className: 'icon-bar' })
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: "navbar-items" + (this.state.expanded == true ? " expanded" : "") },
+	                    _react2.default.createElement(
+	                        'ul',
+	                        null,
+	                        menu.structure.map(function (item) {
+	                            return _react2.default.createElement(_menu_item2.default, { key: item.id, item: item, onNavigate: function onNavigate() {
+	                                    return _this2.toggleExpand();
+	                                } });
+	                        })
 	                    )
 	                )
 	            );
@@ -21657,7 +21653,7 @@
 
 	var _menu_structure = __webpack_require__(180);
 
-	var _gumshoe = __webpack_require__(183);
+	var _gumshoe = __webpack_require__(181);
 
 	var _gumshoe2 = _interopRequireDefault(_gumshoe);
 
@@ -21857,6 +21853,7 @@
 	    }, {
 	        key: 'clickChild',
 	        value: function clickChild(path) {
+	            this.props.onNavigate();
 	            window.location = path;
 	        }
 	    }]);
@@ -21958,33 +21955,6 @@
 
 /***/ },
 /* 181 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	/**
-	 * Concatenate uri with single slash
-	 */
-	var path = {
-	    concat: function concat(base, target) {
-	        return base + path.forceTrailing(base) + path.removeLeading(target);
-	    },
-	    forceTrailing: function forceTrailing(path) {
-	        return path == null ? "/" : path.substr(-1) != "/" ? "/" : "";
-	    },
-	    removeLeading: function removeLeading(path) {
-	        return path == null ? "" : path.substr(0, 1) == "/" ? path.substr(1) : path;
-	    }
-	};
-
-	exports.default = path;
-
-/***/ },
-/* 182 */,
-/* 183 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(global) {'use strict';
@@ -22375,6 +22345,32 @@
 		return gumshoe;
 	});
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
+
+/***/ },
+/* 182 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	/**
+	 * Concatenate uri with single slash
+	 */
+	var path = {
+	    concat: function concat(base, target) {
+	        return base + path.forceTrailing(base) + path.removeLeading(target);
+	    },
+	    forceTrailing: function forceTrailing(path) {
+	        return path == null ? "/" : path.substr(-1) != "/" ? "/" : "";
+	    },
+	    removeLeading: function removeLeading(path) {
+	        return path == null ? "" : path.substr(0, 1) == "/" ? path.substr(1) : path;
+	    }
+	};
+
+	exports.default = path;
 
 /***/ }
 /******/ ]);

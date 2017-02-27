@@ -1,25 +1,20 @@
 $navbar-default-link-hover-bg: darken($navbar-default-bg, 3%);
-$navbar-inverse-link-hover-bg: lighten($navbar-inverse-bg, 5%);
-$navbar-inverse-border: lighten($navbar-inverse-bg, 8%);
-$navbar-sub-color: lighten($navbar-default-border, 4%);
-
 
 #nav-container {
+  position: relative;
 
-  position: fixed;
-  right: 0;
-  left: 0;
-  top: 0;
-  z-index: 1030;
-
-  @media (min-width: $grid-float-breakpoint) {
-    position: relative;
-    min-height: 50px;
-    margin-bottom: 50px;
-    border: 1px solid transparent;
+  @media (max-width: $grid-float-breakpoint) {
+    position: fixed;
+    right: 0;
+    left: 0;
+    top: 0;
+    z-index: 1030;
+    margin-left: -15px;
+    margin-right: -15px;
   }
 
-  .navbar {
+  nav {
+    background-color: $navbar-default-bg;
 
     @media (min-width: $grid-float-breakpoint) {
       position: fixed;
@@ -27,57 +22,98 @@ $navbar-sub-color: lighten($navbar-default-border, 4%);
       height: 100vh;
       width: 260px;
       overflow: auto;
-      border-top-width: 0;
-      border-bottom-width: 0;
-      border-radius: 0;
+      border: 0;
+    }
 
-      .container {
-        width: auto;
-        padding-left: 0;
-        padding-right: 0;
-      }
+    .navbar-header {
+      float: none;
 
-      .navbar-header {
+      .brand {
         float: none;
-        .brand {
+        margin: 0 auto;
+        height: auto;
+        padding: 0px;
+
+        img {
           display: block;
           float: none;
           margin: 0 auto;
-          height: auto;
-          padding: 0px;
-          img {
-            display: block;
-            float: none;
-            margin: 0 auto;
-            width: 100%;
+          width: 100%;
+
+          @media (max-width: $grid-float-breakpoint) {
+            display: none;
           }
         }
+      }
 
-        .brand-name {
-          display: block;
-          padding: 10px 5px 20px 5px;
-          margin: 0;
-          text-transform: uppercase;
-          text-align: center;
-          color: $navbar-default-brand-color;
+      .brand-name {
+        color: $navbar-default-brand-color;
+        display: block;
+        padding: 10px 5px 20px 5px;
+        margin: 0;
+        text-transform: uppercase;
+        text-align: center;
+
+        @media (max-width: $grid-float-breakpoint) {
+          float: left;
+          max-width: 80%;
+          padding: 0 10px;
+          font-size: 14px;
+          @include navbar-vertical-align(14px);
         }
       }
 
-      .navbar-items {
-        width: 100%;
-        border-top: 1px solid $navbar-default-border;
-        padding: 10px 15px;
-        margin-right: 0;
-        margin-left: 0;
+      .toggle {
+        @media (min-width: $grid-float-breakpoint) {
+          display: none;
+        }
 
-        display: block !important;
-        height: auto !important;
-        overflow: visible !important;
+        position: relative;
+        float: right;
+        margin-right: 15px;
+        padding: 9px 10px;
+        @include navbar-vertical-align(34px);
+        background-color: transparent;
+        background-image: none; // Reset unusual Firefox-on-Android default style; see https://github.com/necolas/normalize.css/issues/214
+        border: 1px solid transparent;
+        border-radius: $border-radius-base;
+
+        &:focus {
+          outline: 0;
+        }
+
+        &:hover {
+          background-color: $navbar-default-link-hover-bg;
+        }
+
+        .icon-bar {
+          background-color: $navbar-default-brand-color;
+          display: block;
+          width: 22px;
+          height: 2px;
+          border-radius: 1px;
+        }
+        .icon-bar + .icon-bar {
+          margin-top: 4px;
+        }
       }
     }
-    
-    .brand, .brand-name {
-      display: none;
+
+    .navbar-items {
+      width: 100%;
+      border-top: 1px solid $navbar-default-border;
+      padding: 10px 15px;
+      margin-right: 0;
+      margin-left: 0;
+
+      @media (max-width: $grid-float-breakpoint) {
+        &.expanded {
+          display : block;
+          max-height: 70vh;
+          overflow-y: auto;
+        }
+        display: none;
+      }
     }
 
     ul {
@@ -127,19 +163,21 @@ $navbar-sub-color: lighten($navbar-default-border, 4%);
 
         .menu-title {
           flex: 1;
+          @media (max-width: $grid-float-breakpoint) {
+            font-size: 16px;
+          }
+
           a {
             color: $navbar-default-link-color;
             &:hover, &:focus {
               color: $navbar-default-link-hover-color;
               text-decoration: none;
             }
-
           }
 
           .on-article {
             color: $navbar-default-link-hover-color;
           }
-
         }
 
         &.in-section {
@@ -150,7 +188,6 @@ $navbar-sub-color: lighten($navbar-default-border, 4%);
               cursor: default;
               font-weight: bold;
             }
-
           }
         }
 
@@ -175,13 +212,5 @@ $navbar-sub-color: lighten($navbar-default-border, 4%);
       margin-right: 5px;
       font-size: 0.8em;
     }
-
-    @media (max-width: $grid-float-breakpoint) {
-      margin-left: -15px;
-      margin-right: -15px;
-    }
-
-
-
   }
 }

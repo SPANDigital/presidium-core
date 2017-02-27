@@ -1,7 +1,7 @@
 .content {
   position: relative;
   padding: 10px 20px;
-  margin-top: 50px;
+  margin-top: 80px;
 
   @media (min-width: $grid-float-breakpoint) {
     position : inherit;
@@ -29,7 +29,7 @@
     span.anchor {
       display: block;
       position: relative;
-      top: -60px;
+      top: -70px;
       visibility: hidden;
 
       @media (min-width: $grid-float-breakpoint) {
