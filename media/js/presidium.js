@@ -4146,10 +4146,6 @@
 
 	var _menu_structure = __webpack_require__(180);
 
-	var _gumshoe = __webpack_require__(182);
-
-	var _gumshoe2 = _interopRequireDefault(_gumshoe);
-
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -4170,7 +4166,7 @@
 	        var _this = _possibleConstructorReturn(this, (Menu.__proto__ || Object.getPrototypeOf(Menu)).call(this, props));
 
 	        _this.state = {
-	            expand: false
+	            expanded: false
 	        };
 	        return _this;
 	    }
@@ -4183,7 +4179,7 @@
 	            var menu = this.props.menu;
 	            return _react2.default.createElement(
 	                'nav',
-	                { className: 'navbar navbar-default navbar-fixed-side' },
+	                { className: 'navbar' },
 	                _react2.default.createElement(
 	                    'div',
 	                    { className: 'container' },
@@ -4192,12 +4188,12 @@
 	                        { className: 'navbar-header' },
 	                        _react2.default.createElement(
 	                            'a',
-	                            { href: this.props.menu.baseUrl != null ? this.props.menu.baseUrl : "#", className: 'navbar-brand' },
+	                            { href: this.props.menu.baseUrl != null ? this.props.menu.baseUrl : "#", className: 'brand' },
 	                            _react2.default.createElement('img', { src: _paths2.default.concat(menu.baseUrl, menu.logo), alt: '' })
 	                        ),
 	                        this.props.menu.brandName ? _react2.default.createElement(
 	                            'p',
-	                            { className: 'navbar-brand-name' },
+	                            { className: 'brand-name' },
 	                            this.props.menu.brandName
 	                        ) : "",
 	                        _react2.default.createElement(
@@ -4217,10 +4213,10 @@
 	                    ),
 	                    _react2.default.createElement(
 	                        'div',
-	                        { className: "collapse navbar-collapse " + (this.state.expand == true ? "in" : "") },
+	                        { className: "navbar-items" + (this.state.expanded == true ? " in" : "") },
 	                        _react2.default.createElement(
 	                            'ul',
-	                            { className: 'nav navbar-nav' },
+	                            null,
 	                            menu.structure.map(function (item) {
 	                                return _react2.default.createElement(_menu_item2.default, { key: item.id, item: item, onNavigate: function onNavigate() {
 	                                        return _this2.toggleExpand();
@@ -4234,7 +4230,7 @@
 	    }, {
 	        key: 'toggleExpand',
 	        value: function toggleExpand() {
-	            this.setState({ expand: !this.state.expand });
+	            this.setState({ expanded: !this.state.expanded });
 	        }
 	    }]);
 
@@ -4248,17 +4244,6 @@
 	    }).isRequired
 	};
 
-	function spy() {
-	    _gumshoe2.default.init({
-	        selector: '[data-gumshoe] a', // Default link selector (must use a valid CSS selector)
-	        selectorHeader: '[data-gumshoe-header]', // Fixed header selector (must use a valid CSS selector)
-	        container: window, // The element to spy on scrolling in (must be a valid DOM Node)
-	        offset: 100, // Distance in pixels to offset calculations
-	        activeClass: 'on-article', // Class to apply to active navigation link and it's parent list item
-	        callback: function callback(nav) {} // Callback to run after setting active link
-	    });
-	}
-
 	function loadMenu() {
 	    var menu = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 	    var element = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'nav-container';
@@ -4269,8 +4254,6 @@
 	    });
 
 	    _reactDom2.default.render(_react2.default.createElement(Menu, { menu: menu }), document.getElementById(element));
-
-	    spy();
 	}
 
 	exports.Menu = Menu;
@@ -21674,6 +21657,10 @@
 
 	var _menu_structure = __webpack_require__(180);
 
+	var _gumshoe = __webpack_require__(183);
+
+	var _gumshoe2 = _interopRequireDefault(_gumshoe);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -21683,7 +21670,7 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	/**
-	 * Menu item that may have one or more articles or groups of articles
+	 * Menu item that may have one or more articles or nested groups of articles.
 	 */
 	var MenuItem = function (_Component) {
 	    _inherits(MenuItem, _Component);
@@ -21693,78 +21680,133 @@
 
 	        var _this = _possibleConstructorReturn(this, (MenuItem.__proto__ || Object.getPrototypeOf(MenuItem)).call(this, props));
 
-	        var onPage = _this.onPage();
+	        var isRootSection = _this.isRootSection();
 	        var hasChildren = props.item.children.length > 0;
 
 	        _this.state = {
-	            onPage: onPage,
+	            isRootSection: isRootSection,
+	            inSection: isRootSection || _this.props.inSection,
 	            hasChildren: hasChildren,
-	            isExpanded: onPage && hasChildren
+	            activeArticle: _this.props.activeArticle,
+	            isExpanded: isRootSection && hasChildren
 	        };
 	        return _this;
 	    }
 
 	    _createClass(MenuItem, [{
-	        key: 'onPage',
-	        value: function onPage() {
-	            switch (this.props.item.type) {
-	                case _menu_structure.MENU_TYPE.SECTION:
-	                case _menu_structure.MENU_TYPE.ARTICLE:
-	                    return this.props.item.path == window.location.pathname;
-	                case _menu_structure.MENU_TYPE.CATEGORY:
-	                // return item.children.findIndex(child => child.path == (window.location.pathname + window.location.hash)) > -1
-	                default:
-	                    return false;
+	        key: 'isRootSection',
+	        value: function isRootSection() {
+	            return this.props.item.type == _menu_structure.MENU_TYPE.SECTION && this.props.item.path == window.location.pathname;
+	        }
+	    }, {
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            if (this.state.isRootSection) {
+	                this.initializeScrollSpy();
 	            }
+	        }
+	    }, {
+	        key: 'initializeScrollSpy',
+	        value: function initializeScrollSpy() {
+	            var _this2 = this;
+
+	            _gumshoe2.default.init({
+	                selector: '[data-spy] a',
+	                selectorHeader: '[data-gumshoe-header]',
+	                container: window,
+	                offset: 100,
+	                activeClass: 'on-article',
+	                callback: function callback(active) {
+	                    if (active) {
+	                        var activeArticle = active.nav.getAttribute("href");
+	                        if (_this2.state.activeArticle !== activeArticle) {
+	                            _this2.setState({ activeArticle: activeArticle });
+	                        }
+	                    }
+	                }
+	            });
+	        }
+	    }, {
+	        key: 'componentWillReceiveProps',
+	        value: function componentWillReceiveProps(props) {
+	            this.setState({ activeArticle: props.activeArticle });
 	        }
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            var _this2 = this;
+	            var _this3 = this;
 
 	            var item = this.props.item;
 	            return _react2.default.createElement(
 	                'li',
-	                { key: item.id, className: this.liClass() },
+	                { key: item.id, className: this.isActive() ? "in-section" : "" },
 	                _react2.default.createElement(
-	                    'a',
-	                    { onClick: function onClick(e) {
-	                            return _this2.clickParent(e);
-	                        }, href: item.path, className: this.levelClass(item.level) + "" },
-	                    this.expander(),
+	                    'div',
+	                    { className: "menu-row " + this.levelClass(item.level) },
 	                    _react2.default.createElement(
-	                        'span',
-	                        null,
-	                        item.title
+	                        'div',
+	                        { className: 'menu-expander' },
+	                        this.expander()
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'menu-title' },
+	                        _react2.default.createElement(
+	                            'a',
+	                            { onClick: function onClick(e) {
+	                                    return _this3.clickParent(e);
+	                                } },
+	                            item.title
+	                        )
 	                    )
 	                ),
 	                _react2.default.createElement(
 	                    'ul',
-	                    { className: 'dropdown-menu', 'data-gumshoe': true },
-	                    this.state.isExpanded && this.state.hasChildren && this.children()
+	                    { 'data-spy': true, className: this.state.isExpanded ? "dropdown expanded" : "dropdown" },
+	                    this.children()
 	                )
 	            );
 	        }
 	    }, {
+	        key: 'isActive',
+	        value: function isActive() {
+	            var _this4 = this;
+
+	            if (this.state.isRootSection) return true;else {
+	                if (this.state.inSection && this.props.item.type == _menu_structure.MENU_TYPE.CATEGORY) {
+	                    return this.props.item.children.findIndex(function (child) {
+	                        return child.slug == _this4.state.activeArticle;
+	                    }) > -1;
+	                }
+	            }
+	        }
+	    }, {
 	        key: 'children',
 	        value: function children() {
-	            var _this3 = this;
+	            var _this5 = this;
 
 	            return this.props.item.children.map(function (item) {
 	                switch (item.type) {
 	                    case _menu_structure.MENU_TYPE.CATEGORY:
-	                        return _react2.default.createElement(MenuItem, { key: item.title, item: item, onNavigate: _this3.props.onNavigate });
-
+	                        return _react2.default.createElement(MenuItem, { key: item.title, item: item, inSection: _this5.state.inSection, activeArticle: _this5.state.activeArticle, onNavigate: _this5.props.onNavigate });
 	                    case _menu_structure.MENU_TYPE.ARTICLE:
 	                        return _react2.default.createElement(
 	                            'li',
 	                            { key: item.id },
 	                            _react2.default.createElement(
-	                                'a',
-	                                { onClick: function onClick() {
-	                                        return _this3.clickChild(item.path);
-	                                    }, href: item.slug, className: _this3.levelClass(item.level) },
-	                                item.title
+	                                'div',
+	                                { className: "menu-row " + _this5.levelClass(item.level) },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'menu-title' },
+	                                    _react2.default.createElement(
+	                                        'a',
+	                                        { onClick: function onClick() {
+	                                                return _this5.clickChild(item.path);
+	                                            }, href: item.slug },
+	                                        item.title
+	                                    )
+	                                )
 	                            )
 	                        );
 	                }
@@ -21773,14 +21815,14 @@
 	    }, {
 	        key: 'expander',
 	        value: function expander() {
-	            var _this4 = this;
+	            var _this6 = this;
 
 	            if (this.state.hasChildren) {
 	                return _react2.default.createElement('span', { onClick: function onClick(e) {
-	                        return _this4.toggleExpand(e);
+	                        return _this6.toggleExpand(e);
 	                    }, className: this.state.isExpanded ? "glyphicon glyphicon-chevron-down" : "glyphicon glyphicon-chevron-right" });
 	            } else {
-	                return _react2.default.createElement('span', { className: 'expand-placeholder' });
+	                return "";
 	            }
 	        }
 	    }, {
@@ -21797,37 +21839,25 @@
 	            return "";
 	        }
 	    }, {
-	        key: 'liClass',
-	        value: function liClass() {
-	            return (this.state.onPage ? "on-page" : "") + " " + (this.state.isExpanded ? "open" : "");
+	        key: 'toggleExpand',
+	        value: function toggleExpand() {
+	            if (this.state.hasChildren) {
+	                this.setState({ isExpanded: !this.state.isExpanded });
+	            }
 	        }
 	    }, {
 	        key: 'clickParent',
 	        value: function clickParent(e) {
-	            e.preventDefault();
-	            if (!this.isOnSection()) {
+	            if (this.state.isRootSection) {
+	                e.stopPropagation();
+	            } else {
 	                window.location = this.props.item.path;
 	            }
 	        }
 	    }, {
 	        key: 'clickChild',
-	        value: function clickChild(path, e) {
+	        value: function clickChild(path) {
 	            window.location = path;
-	            this.props.onNavigate(e);
-	        }
-	    }, {
-	        key: 'toggleExpand',
-	        value: function toggleExpand(e) {
-	            e.stopPropagation();
-	            e.preventDefault();
-	            if (this.state.hasChildren && !this.isOnSection()) {
-	                this.setState({ isExpanded: !this.state.isExpanded });
-	            }
-	        }
-	    }, {
-	        key: 'isOnSection',
-	        value: function isOnSection() {
-	            return this.state.onPage && this.props.item.type == _menu_structure.MENU_TYPE.SECTION;
 	        }
 	    }]);
 
@@ -21839,7 +21869,10 @@
 
 	MenuItem.propTypes = {
 	    item: _react2.default.PropTypes.object.isRequired,
+	    inSection: _react2.default.PropTypes.bool,
+	    activeArticle: _react2.default.PropTypes.string,
 	    onNavigate: _react2.default.PropTypes.func
+
 	};
 
 /***/ },
@@ -21950,11 +21983,397 @@
 	exports.default = path;
 
 /***/ },
-/* 182 */
+/* 182 */,
+/* 183 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(global) {/*! gumshoe v3.3.2 | (c) 2016 Chris Ferdinandi | MIT License | http://github.com/cferdinandi/gumshoe */
-	!(function(e,t){ true?!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_FACTORY__ = (t(e)), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)):"object"==typeof exports?module.exports=t(e):e.gumshoe=t(e)})("undefined"!=typeof global?global:this.window||this.global,(function(e){"use strict";var t,n,o,r,a,c,i={},l="querySelector"in document&&"addEventListener"in e&&"classList"in document.createElement("_"),s=[],u={selector:"[data-gumshoe] a",selectorHeader:"[data-gumshoe-header]",container:e,offset:0,activeClass:"active",callback:function(){}},f=function(e,t,n){if("[object Object]"===Object.prototype.toString.call(e))for(var o in e)Object.prototype.hasOwnProperty.call(e,o)&&t.call(n,e[o],o,e);else for(var r=0,a=e.length;r<a;r++)t.call(n,e[r],r,e)},d=function(){var e={},t=!1,n=0,o=arguments.length;"[object Boolean]"===Object.prototype.toString.call(arguments[0])&&(t=arguments[0],n++);for(var r=function(n){for(var o in n)Object.prototype.hasOwnProperty.call(n,o)&&(t&&"[object Object]"===Object.prototype.toString.call(n[o])?e[o]=d(!0,e[o],n[o]):e[o]=n[o])};n<o;n++){var a=arguments[n];r(a)}return e},v=function(e){return Math.max(e.scrollHeight,e.offsetHeight,e.clientHeight)},m=function(){return Math.max(document.body.scrollHeight,document.documentElement.scrollHeight,document.body.offsetHeight,document.documentElement.offsetHeight,document.body.clientHeight,document.documentElement.clientHeight)},g=function(e){var n=0;if(e.offsetParent){do n+=e.offsetTop,e=e.offsetParent;while(e)}else n=e.offsetTop;return n=n-a-t.offset,n>=0?n:0},h=function(t){var n=t.getBoundingClientRect();return n.top>=0&&n.left>=0&&n.bottom<=(e.innerHeight||document.documentElement.clientHeight)&&n.right<=(e.innerWidth||document.documentElement.clientWidth)},p=function(){s.sort((function(e,t){return e.distance>t.distance?-1:e.distance<t.distance?1:0}))};i.setDistances=function(){o=m(),a=r?v(r)+g(r):0,f(s,(function(e){e.distance=g(e.target)})),p()};var b=function(){var e=document.querySelectorAll(t.selector);f(e,(function(e){if(e.hash){var t=document.querySelector(e.hash);t&&s.push({nav:e,target:t,parent:"li"===e.parentNode.tagName.toLowerCase()?e.parentNode:null,distance:0})}}))},y=function(){c&&(c.nav.classList.remove(t.activeClass),c.parent&&c.parent.classList.remove(t.activeClass))},H=function(e){y(),e.nav.classList.add(t.activeClass),e.parent&&e.parent.classList.add(t.activeClass),t.callback(e),c={nav:e.nav,parent:e.parent}};i.getCurrentNav=function(){var n=e.pageYOffset;if(e.innerHeight+n>=o&&h(s[0].target))return H(s[0]),s[0];for(var r=0,a=s.length;r<a;r++){var c=s[r];if(c.distance<=n)return H(c),c}y(),t.callback()};var C=function(){f(s,(function(e){e.nav.classList.contains(t.activeClass)&&(c={nav:e.nav,parent:e.parent})}))};i.destroy=function(){t&&(t.container.removeEventListener("resize",L,!1),t.container.removeEventListener("scroll",L,!1),s=[],t=null,n=null,o=null,r=null,a=null,c=null)};var L=function(e){n||(n=setTimeout((function(){n=null,"scroll"===e.type&&i.getCurrentNav(),"resize"===e.type&&(i.setDistances(),i.getCurrentNav())}),66))};return i.init=function(e){l&&(i.destroy(),t=d(u,e||{}),r=document.querySelector(t.selectorHeader),b(),0!==s.length&&(C(),i.setDistances(),i.getCurrentNav(),t.container.addEventListener("resize",L,!1),t.container.addEventListener("scroll",L,!1)))},i}));
+	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(global) {'use strict';
+
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+	/*!
+	 * gumshoe v3.3.2: A simple, framework-agnostic scrollspy script.
+	 * (c) 2016 Chris Ferdinandi
+	 * MIT License
+	 * http://github.com/cferdinandi/gumshoe
+	 */
+
+	(function (root, factory) {
+		if (true) {
+			!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory(root)), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+		} else if ((typeof exports === 'undefined' ? 'undefined' : _typeof(exports)) === 'object') {
+			module.exports = factory(root);
+		} else {
+			root.gumshoe = factory(root);
+		}
+	})(typeof global !== 'undefined' ? global : undefined.window || undefined.global, function (root) {
+
+		'use strict';
+
+		//
+		// Variables
+		//
+
+		var gumshoe = {}; // Object for public APIs
+		var supports = 'querySelector' in document && 'addEventListener' in root && 'classList' in document.createElement('_'); // Feature test
+		var navs = []; // Array for nav elements
+		var settings, eventTimeout, docHeight, header, headerHeight, currentNav;
+
+		// Default settings
+		var defaults = {
+			selector: '[data-gumshoe] a',
+			selectorHeader: '[data-gumshoe-header]',
+			container: root,
+			offset: 0,
+			activeClass: 'active',
+			callback: function callback() {}
+		};
+
+		//
+		// Methods
+		//
+
+		/**
+	  * A simple forEach() implementation for Arrays, Objects and NodeLists.
+	  * @private
+	  * @author Todd Motto
+	  * @link   https://github.com/toddmotto/foreach
+	  * @param {Array|Object|NodeList} collection Collection of items to iterate
+	  * @param {Function}              callback   Callback function for each iteration
+	  * @param {Array|Object|NodeList} scope      Object/NodeList/Array that forEach is iterating over (aka `this`)
+	  */
+		var forEach = function forEach(collection, callback, scope) {
+			if (Object.prototype.toString.call(collection) === '[object Object]') {
+				for (var prop in collection) {
+					if (Object.prototype.hasOwnProperty.call(collection, prop)) {
+						callback.call(scope, collection[prop], prop, collection);
+					}
+				}
+			} else {
+				for (var i = 0, len = collection.length; i < len; i++) {
+					callback.call(scope, collection[i], i, collection);
+				}
+			}
+		};
+
+		/**
+	  * Merge two or more objects. Returns a new object.
+	  * @private
+	  * @param {Boolean}  deep     If true, do a deep (or recursive) merge [optional]
+	  * @param {Object}   objects  The objects to merge together
+	  * @returns {Object}          Merged values of defaults and options
+	  */
+		var extend = function extend() {
+
+			// Variables
+			var extended = {};
+			var deep = false;
+			var i = 0;
+			var length = arguments.length;
+
+			// Check if a deep merge
+			if (Object.prototype.toString.call(arguments[0]) === '[object Boolean]') {
+				deep = arguments[0];
+				i++;
+			}
+
+			// Merge the object into the extended object
+			var merge = function merge(obj) {
+				for (var prop in obj) {
+					if (Object.prototype.hasOwnProperty.call(obj, prop)) {
+						// If deep merge and property is an object, merge properties
+						if (deep && Object.prototype.toString.call(obj[prop]) === '[object Object]') {
+							extended[prop] = extend(true, extended[prop], obj[prop]);
+						} else {
+							extended[prop] = obj[prop];
+						}
+					}
+				}
+			};
+
+			// Loop through each object and conduct a merge
+			for (; i < length; i++) {
+				var obj = arguments[i];
+				merge(obj);
+			}
+
+			return extended;
+		};
+
+		/**
+	  * Get the height of an element.
+	  * @private
+	  * @param  {Node} elem The element to get the height of
+	  * @return {Number}    The element's height in pixels
+	  */
+		var getHeight = function getHeight(elem) {
+			return Math.max(elem.scrollHeight, elem.offsetHeight, elem.clientHeight);
+		};
+
+		/**
+	  * Get the document element's height
+	  * @private
+	  * @returns {Number}
+	  */
+		var getDocumentHeight = function getDocumentHeight() {
+			return Math.max(document.body.scrollHeight, document.documentElement.scrollHeight, document.body.offsetHeight, document.documentElement.offsetHeight, document.body.clientHeight, document.documentElement.clientHeight);
+		};
+
+		/**
+	  * Get an element's distance from the top of the Document.
+	  * @private
+	  * @param  {Node} elem The element
+	  * @return {Number}    Distance from the top in pixels
+	  */
+		var getOffsetTop = function getOffsetTop(elem) {
+			var location = 0;
+			if (elem.offsetParent) {
+				do {
+					location += elem.offsetTop;
+					elem = elem.offsetParent;
+				} while (elem);
+			} else {
+				location = elem.offsetTop;
+			}
+			location = location - headerHeight - settings.offset;
+			return location >= 0 ? location : 0;
+		};
+
+		/**
+	  * Determine if an element is in the viewport
+	  * @param  {Node}    elem The element
+	  * @return {Boolean}      Returns true if element is in the viewport
+	  */
+		var isInViewport = function isInViewport(elem) {
+			var distance = elem.getBoundingClientRect();
+			return distance.top >= 0 && distance.left >= 0 && distance.bottom <= (root.innerHeight || document.documentElement.clientHeight) && distance.right <= (root.innerWidth || document.documentElement.clientWidth);
+		};
+
+		/**
+	  * Arrange nagivation elements from furthest from the top to closest
+	  * @private
+	  */
+		var sortNavs = function sortNavs() {
+			navs.sort(function (a, b) {
+				if (a.distance > b.distance) {
+					return -1;
+				}
+				if (a.distance < b.distance) {
+					return 1;
+				}
+				return 0;
+			});
+		};
+
+		/**
+	  * Calculate the distance of elements from the top of the document
+	  * @public
+	  */
+		gumshoe.setDistances = function () {
+
+			// Calculate distances
+			docHeight = getDocumentHeight(); // The document
+			headerHeight = header ? getHeight(header) + getOffsetTop(header) : 0; // The fixed header
+			forEach(navs, function (nav) {
+				nav.distance = getOffsetTop(nav.target); // Each navigation target
+			});
+
+			// When done, organization navigation elements
+			sortNavs();
+		};
+
+		/**
+	  * Get all navigation elements and store them in an array
+	  * @private
+	  */
+		var getNavs = function getNavs() {
+
+			// Get all navigation links
+			var navLinks = document.querySelectorAll(settings.selector);
+
+			// For each link, create an object of attributes and push to an array
+			forEach(navLinks, function (nav) {
+				if (!nav.hash) return;
+				var target = document.querySelector(nav.hash);
+				if (!target) return;
+				navs.push({
+					nav: nav,
+					target: target,
+					parent: nav.parentNode.tagName.toLowerCase() === 'li' ? nav.parentNode : null,
+					distance: 0
+				});
+			});
+		};
+
+		/**
+	  * Remove the activation class from the currently active navigation element
+	  * @private
+	  */
+		var deactivateCurrentNav = function deactivateCurrentNav() {
+			if (currentNav) {
+				currentNav.nav.classList.remove(settings.activeClass);
+				if (currentNav.parent) {
+					currentNav.parent.classList.remove(settings.activeClass);
+				}
+			}
+		};
+
+		/**
+	  * Add the activation class to the currently active navigation element
+	  * @private
+	  * @param  {Node} nav The currently active nav
+	  */
+		var activateNav = function activateNav(nav) {
+
+			// If a current Nav is set, deactivate it
+			deactivateCurrentNav();
+
+			// Activate the current target's navigation element
+			nav.nav.classList.add(settings.activeClass);
+			if (nav.parent) {
+				nav.parent.classList.add(settings.activeClass);
+			}
+
+			settings.callback(nav); // Callback after methods are run
+
+			// Set new currentNav
+			currentNav = {
+				nav: nav.nav,
+				parent: nav.parent
+			};
+		};
+
+		/**
+	  * Determine which navigation element is currently active and run activation method
+	  * @public
+	  * @returns {Object} The current nav data.
+	  */
+		gumshoe.getCurrentNav = function () {
+
+			// Get current position from top of the document
+			var position = root.pageYOffset;
+
+			// If at the bottom of the page and last section is in the viewport, activate the last nav
+			if (root.innerHeight + position >= docHeight && isInViewport(navs[0].target)) {
+				activateNav(navs[0]);
+				return navs[0];
+			}
+
+			// Otherwise, loop through each nav until you find the active one
+			for (var i = 0, len = navs.length; i < len; i++) {
+				var nav = navs[i];
+				if (nav.distance <= position) {
+					activateNav(nav);
+					return nav;
+				}
+			}
+
+			// If no active nav is found, deactivate the current nav
+			deactivateCurrentNav();
+			settings.callback();
+		};
+
+		/**
+	  * If nav element has active class on load, set it as currently active navigation
+	  * @private
+	  */
+		var setInitCurrentNav = function setInitCurrentNav() {
+			forEach(navs, function (nav) {
+				if (nav.nav.classList.contains(settings.activeClass)) {
+					currentNav = {
+						nav: nav.nav,
+						parent: nav.parent
+					};
+				}
+			});
+		};
+
+		/**
+	  * Destroy the current initialization.
+	  * @public
+	  */
+		gumshoe.destroy = function () {
+
+			// If plugin isn't already initialized, stop
+			if (!settings) return;
+
+			// Remove event listeners
+			settings.container.removeEventListener('resize', eventThrottler, false);
+			settings.container.removeEventListener('scroll', eventThrottler, false);
+
+			// Reset variables
+			navs = [];
+			settings = null;
+			eventTimeout = null;
+			docHeight = null;
+			header = null;
+			headerHeight = null;
+			currentNav = null;
+		};
+
+		/**
+	  * On window scroll and resize, only run events at a rate of 15fps for better performance
+	  * @private
+	  * @param  {Function} eventTimeout Timeout function
+	  * @param  {Object} settings
+	  */
+		var eventThrottler = function eventThrottler(event) {
+			if (!eventTimeout) {
+				eventTimeout = setTimeout(function () {
+
+					eventTimeout = null; // Reset timeout
+
+					// If scroll event, get currently active nav
+					if (event.type === 'scroll') {
+						gumshoe.getCurrentNav();
+					}
+
+					// If resize event, recalculate distances and then get currently active nav
+					if (event.type === 'resize') {
+						gumshoe.setDistances();
+						gumshoe.getCurrentNav();
+					}
+				}, 66);
+			}
+		};
+
+		/**
+	  * Initialize Plugin
+	  * @public
+	  * @param {Object} options User settings
+	  */
+		gumshoe.init = function (options) {
+
+			// feature test
+			if (!supports) return;
+
+			// Destroy any existing initializations
+			gumshoe.destroy();
+
+			// Set variables
+			settings = extend(defaults, options || {}); // Merge user options with defaults
+			header = document.querySelector(settings.selectorHeader); // Get fixed header
+			getNavs(); // Get navigation elements
+
+			// If no navigation elements exist, stop running gumshoe
+			if (navs.length === 0) return;
+
+			// Run init methods
+			setInitCurrentNav();
+			gumshoe.setDistances();
+			gumshoe.getCurrentNav();
+
+			// Listen for events
+			settings.container.addEventListener('resize', eventThrottler, false);
+			settings.container.addEventListener('scroll', eventThrottler, false);
+		};
+
+		//
+		// Public APIs
+		//
+
+		return gumshoe;
+	});
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }
