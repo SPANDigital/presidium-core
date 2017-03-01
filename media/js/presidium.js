@@ -21847,6 +21847,7 @@
 	            if (this.state.isRootSection) {
 	                e.stopPropagation();
 	            } else {
+	                this.props.onNavigate();
 	                window.location = this.props.item.path;
 	            }
 	        }
