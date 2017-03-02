@@ -50,9 +50,9 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _menu = __webpack_require__(186);
+	var _menu = __webpack_require__(32);
 
-	var _modal = __webpack_require__(185);
+	var _modal = __webpack_require__(183);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -4121,7 +4121,146 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 32 */,
+/* 32 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.loadMenu = exports.Menu = undefined;
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(33);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _menuItem = __webpack_require__(179);
+
+	var _menuItem2 = _interopRequireDefault(_menuItem);
+
+	var _paths = __webpack_require__(182);
+
+	var _paths2 = _interopRequireDefault(_paths);
+
+	var _menuStructure = __webpack_require__(180);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	/**
+	 * A two level boostrap menu. Doesn't rely on bootstrap.js or jquery js.
+	 */
+	var Menu = function (_Component) {
+	    _inherits(Menu, _Component);
+
+	    function Menu(props) {
+	        _classCallCheck(this, Menu);
+
+	        var _this = _possibleConstructorReturn(this, (Menu.__proto__ || Object.getPrototypeOf(Menu)).call(this, props));
+
+	        _this.state = {
+	            expanded: false
+	        };
+	        return _this;
+	    }
+
+	    _createClass(Menu, [{
+	        key: 'render',
+	        value: function render() {
+	            var _this2 = this;
+
+	            var menu = this.props.menu;
+	            return _react2.default.createElement(
+	                'nav',
+	                null,
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'navbar-header' },
+	                    _react2.default.createElement(
+	                        'a',
+	                        { href: this.props.menu.baseUrl != null ? this.props.menu.baseUrl : "#", className: 'brand' },
+	                        _react2.default.createElement('img', { src: _paths2.default.concat(menu.baseUrl, menu.logo), alt: '' })
+	                    ),
+	                    this.props.menu.brandName && _react2.default.createElement(
+	                        'p',
+	                        { className: 'brand-name' },
+	                        this.props.menu.brandName
+	                    ),
+	                    _react2.default.createElement(
+	                        'button',
+	                        { className: 'toggle', onClick: function onClick() {
+	                                return _this2.toggleExpand();
+	                            } },
+	                        _react2.default.createElement(
+	                            'span',
+	                            { className: 'sr-only' },
+	                            'Toggle navigation'
+	                        ),
+	                        _react2.default.createElement('span', { className: 'icon-bar' }),
+	                        _react2.default.createElement('span', { className: 'icon-bar' }),
+	                        _react2.default.createElement('span', { className: 'icon-bar' })
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: "navbar-items" + (this.state.expanded == true ? " expanded" : "") },
+	                    _react2.default.createElement(
+	                        'ul',
+	                        null,
+	                        menu.structure.map(function (item) {
+	                            return _react2.default.createElement(_menuItem2.default, { key: item.id, item: item, onNavigate: function onNavigate() {
+	                                    return _this2.toggleExpand();
+	                                } });
+	                        })
+	                    )
+	                )
+	            );
+	        }
+	    }, {
+	        key: 'toggleExpand',
+	        value: function toggleExpand() {
+	            this.setState({ expanded: !this.state.expanded });
+	        }
+	    }]);
+
+	    return Menu;
+	}(_react.Component);
+
+	Menu.propTypes = {
+	    menu: _react2.default.PropTypes.shape({
+	        brandName: _react2.default.PropTypes.string,
+	        structure: _react2.default.PropTypes.array
+	    }).isRequired
+	};
+
+	function loadMenu() {
+	    var menu = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+	    var element = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'presidium-navigation';
+
+
+	    menu.structure = menu.structure.map(function (section) {
+	        return (0, _menuStructure.groupByCategory)(section);
+	    });
+
+	    _reactDom2.default.render(_react2.default.createElement(Menu, { menu: menu }), document.getElementById(element));
+	}
+
+	exports.Menu = Menu;
+	exports.loadMenu = loadMenu;
+
+/***/ },
 /* 33 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -21502,212 +21641,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 179 */,
-/* 180 */,
-/* 181 */,
-/* 182 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	/**
-	 * Concatenate uri with single slash
-	 */
-	var path = {
-	    concat: function concat(base, target) {
-	        return base + path.forceTrailing(base) + path.removeLeading(target);
-	    },
-	    forceTrailing: function forceTrailing(path) {
-	        return path == null ? "/" : path.substr(-1) != "/" ? "/" : "";
-	    },
-	    removeLeading: function removeLeading(path) {
-	        return path == null ? "" : path.substr(0, 1) == "/" ? path.substr(1) : path;
-	    }
-	};
-
-	exports.default = path;
-
-/***/ },
-/* 183 */,
-/* 184 */,
-/* 185 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.init = init;
-	/**
-	 * An image modal that attaches to all images in an article.
-	 */
-	function init() {
-	    var modal = document.getElementById("presidium-modal");
-	    var placeholder = document.querySelector("#presidium-modal img");
-	    var caption = document.querySelector("#presidium-modal .modal-caption");
-
-	    window.addEventListener('keyup', function (e) {
-	        if (e.keyCode === 27) {
-	            modal.style.display = "none";
-	        }
-	    });
-
-	    document.querySelectorAll('#presidium-content article img').forEach(function (img) {
-	        img.className += ' ' + 'scalable';
-	        img.onclick = function () {
-	            modal.style.display = "block";
-	            placeholder.src = this.src;
-	            caption.innerHTML = this.alt;
-	        };
-	    });
-	}
-
-/***/ },
-/* 186 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.loadMenu = exports.Menu = undefined;
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactDom = __webpack_require__(33);
-
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-
-	var _menuItem = __webpack_require__(187);
-
-	var _menuItem2 = _interopRequireDefault(_menuItem);
-
-	var _paths = __webpack_require__(182);
-
-	var _paths2 = _interopRequireDefault(_paths);
-
-	var _menuStructure = __webpack_require__(188);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	/**
-	 * A two level boostrap menu. Doesn't rely on bootstrap.js or jquery js.
-	 */
-	var Menu = function (_Component) {
-	    _inherits(Menu, _Component);
-
-	    function Menu(props) {
-	        _classCallCheck(this, Menu);
-
-	        var _this = _possibleConstructorReturn(this, (Menu.__proto__ || Object.getPrototypeOf(Menu)).call(this, props));
-
-	        _this.state = {
-	            expanded: false
-	        };
-	        return _this;
-	    }
-
-	    _createClass(Menu, [{
-	        key: 'render',
-	        value: function render() {
-	            var _this2 = this;
-
-	            var menu = this.props.menu;
-	            return _react2.default.createElement(
-	                'nav',
-	                null,
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'navbar-header' },
-	                    _react2.default.createElement(
-	                        'a',
-	                        { href: this.props.menu.baseUrl != null ? this.props.menu.baseUrl : "#", className: 'brand' },
-	                        _react2.default.createElement('img', { src: _paths2.default.concat(menu.baseUrl, menu.logo), alt: '' })
-	                    ),
-	                    this.props.menu.brandName && _react2.default.createElement(
-	                        'p',
-	                        { className: 'brand-name' },
-	                        this.props.menu.brandName
-	                    ),
-	                    _react2.default.createElement(
-	                        'button',
-	                        { className: 'toggle', onClick: function onClick() {
-	                                return _this2.toggleExpand();
-	                            } },
-	                        _react2.default.createElement(
-	                            'span',
-	                            { className: 'sr-only' },
-	                            'Toggle navigation'
-	                        ),
-	                        _react2.default.createElement('span', { className: 'icon-bar' }),
-	                        _react2.default.createElement('span', { className: 'icon-bar' }),
-	                        _react2.default.createElement('span', { className: 'icon-bar' })
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: "navbar-items" + (this.state.expanded == true ? " expanded" : "") },
-	                    _react2.default.createElement(
-	                        'ul',
-	                        null,
-	                        menu.structure.map(function (item) {
-	                            return _react2.default.createElement(_menuItem2.default, { key: item.id, item: item, onNavigate: function onNavigate() {
-	                                    return _this2.toggleExpand();
-	                                } });
-	                        })
-	                    )
-	                )
-	            );
-	        }
-	    }, {
-	        key: 'toggleExpand',
-	        value: function toggleExpand() {
-	            this.setState({ expanded: !this.state.expanded });
-	        }
-	    }]);
-
-	    return Menu;
-	}(_react.Component);
-
-	Menu.propTypes = {
-	    menu: _react2.default.PropTypes.shape({
-	        brandName: _react2.default.PropTypes.string,
-	        structure: _react2.default.PropTypes.array
-	    }).isRequired
-	};
-
-	function loadMenu() {
-	    var menu = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-	    var element = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'presidium-navigation';
-
-
-	    menu.structure = menu.structure.map(function (section) {
-	        return (0, _menuStructure.groupByCategory)(section);
-	    });
-
-	    _reactDom2.default.render(_react2.default.createElement(Menu, { menu: menu }), document.getElementById(element));
-	}
-
-	exports.Menu = Menu;
-	exports.loadMenu = loadMenu;
-
-/***/ },
-/* 187 */
+/* 179 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21722,9 +21656,9 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _menuStructure = __webpack_require__(188);
+	var _menuStructure = __webpack_require__(180);
 
-	var _scrollSpy = __webpack_require__(189);
+	var _scrollSpy = __webpack_require__(181);
 
 	var _scrollSpy2 = _interopRequireDefault(_scrollSpy);
 
@@ -21863,6 +21797,7 @@
 	                            _react2.default.createElement(
 	                                'div',
 	                                { className: "menu-row " + _this5.levelClass(item.level) },
+	                                _react2.default.createElement('div', { className: 'menu-expander' }),
 	                                _react2.default.createElement(
 	                                    'div',
 	                                    { className: 'menu-title' },
@@ -21945,7 +21880,7 @@
 	};
 
 /***/ },
-/* 188 */
+/* 180 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -22026,7 +21961,7 @@
 	}
 
 /***/ },
-/* 189 */
+/* 181 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(global) {'use strict';
@@ -22417,6 +22352,66 @@
 		return gumshoe;
 	});
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
+
+/***/ },
+/* 182 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	/**
+	 * Concatenate uri with single slash
+	 */
+	var path = {
+	    concat: function concat(base, target) {
+	        return base + path.forceTrailing(base) + path.removeLeading(target);
+	    },
+	    forceTrailing: function forceTrailing(path) {
+	        return path == null ? "/" : path.substr(-1) != "/" ? "/" : "";
+	    },
+	    removeLeading: function removeLeading(path) {
+	        return path == null ? "" : path.substr(0, 1) == "/" ? path.substr(1) : path;
+	    }
+	};
+
+	exports.default = path;
+
+/***/ },
+/* 183 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.init = init;
+	/**
+	 * An image modal that attaches to all images in an article.
+	 */
+	function init() {
+	    var modal = document.getElementById("presidium-modal");
+	    var placeholder = document.querySelector("#presidium-modal img");
+	    var caption = document.querySelector("#presidium-modal .modal-caption");
+
+	    window.addEventListener('keyup', function (e) {
+	        if (e.keyCode === 27) {
+	            modal.style.display = "none";
+	        }
+	    });
+
+	    document.querySelectorAll('#presidium-content article img').forEach(function (img) {
+	        img.className += ' ' + 'scalable';
+	        img.onclick = function () {
+	            modal.style.display = "block";
+	            placeholder.src = this.src;
+	            caption.innerHTML = this.alt;
+	        };
+	    });
+	}
 
 /***/ }
 /******/ ]);
