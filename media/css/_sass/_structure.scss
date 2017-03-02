@@ -75,4 +75,10 @@ table{
 }
 
 
+blockquote {
+  @extend .well;
+  font-size: inherit;
+}
+
+
 
