@@ -5,6 +5,7 @@
   "slug" : "{{ section.title | slugify }}",
   "path" : "{{ path }}",
   "collection" : "{{ section.collection }}",
+  "expandable" : {% if section.expandable == nil %}true{% else %}{{section.expandable}}{% endif %},
   "articles" : [
 {% for article in articles %}{
     {% assign slug = article.title | slugify %}
@@ -12,7 +13,8 @@
     "title" : "{{ article.title }}",
     "path" : "{{path | append: '#' | append: slug}}",
     "slug" : "{{'#' | append: slug}}",
-    "category": "{{article.category}}"
+    "category": "{{article.category}}",
+    "filter": {% if article.filter.first%} {{article.filter | jsonify}} {% elsif article.filter | size > 0%} ["{{article.filter}}"] {% else %} [] {% endif %}
 }{% if article != articles.last%},{% endif %}
 {% endfor %}]}{% if section != site.structure.last%},{% endif %}
 {% endfor %}]

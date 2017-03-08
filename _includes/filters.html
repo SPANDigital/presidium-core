@@ -1,0 +1,11 @@
+{% if site.filter %}
+    {% for filter in article.filter %}
+        <div class="article-filter">
+            <span title="Article Filter" class="label">{{filter}}</span>
+        </div>
+    {% else %}
+        <div class="article-filter">
+            <span title="Article Filter" class="label">{{site.filter.all}}</span>
+        </div>
+    {% endfor %}
+{% endif %}

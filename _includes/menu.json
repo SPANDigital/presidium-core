@@ -3,5 +3,15 @@
   brandName : "{{ site.name }}",
   baseUrl :  {% if site.baseurl == "" %} "/" {% else %} "{{ site.baseurl }}/" {% endif %},
   currentPage : "{{ site.baseurl | append: page.url | replace: '//','/'}}",
+  filter: { {% if site.filter != nil %}
+              label: "{{site.filter.label}}",
+              all: "{{site.filter.all}}",
+              options: {{site.filter.options | jsonify}}
+            {% else %}
+              label: "",
+              all: "",
+              options: []
+            {% endif %}
+            },
   structure : {% include menu-structure.json %}
 }

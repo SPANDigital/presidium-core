@@ -43,10 +43,22 @@
       margin-bottom: 10px;
     }
 
-    .label {
-      vertical-align: middle;
-      float: right;
+    .article-status {
+      margin-top:20px;
+      .label {
+      }
     }
+
+    .article-filter {
+      float: right;
+      margin-left: 5px;
+      margin-top: 5px;
+      .label {
+        line-height: 15px;
+        background-color: $gray-light;
+      }
+    }
+
     article {
       margin-top : 20px;
     }
