@@ -106,6 +106,15 @@ $navbar-default-link-hover-bg: darken($navbar-default-bg, 3%);
       margin-right: 0;
       margin-left: 0;
 
+      .filter {
+        margin-left: 5px;
+        margin-right: 5px;
+        .control-label {
+          font-size: 12px;
+          font-weight: normal;
+        }
+      }
+
       @media (max-width: $grid-float-breakpoint) {
         &.expanded {
           display : block;
@@ -136,6 +145,10 @@ $navbar-default-link-hover-bg: darken($navbar-default-bg, 3%);
         float: none;
         position: relative;
         display: block;
+
+        &.hidden {
+          display: none;
+        }
 
         &.in-section {
           .level-one {

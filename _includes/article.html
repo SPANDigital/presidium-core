@@ -1,6 +1,14 @@
-<span id="{{ article.title | slugify }}" class="anchor"></span>
-{% include status.html %}
-<h2>{{ article.title }}</h2>
+{% if article.filter | size > 0%}
+    <div class="article" data-filter="{{article.filter | join: ','}}">
+{% else %}
+    <div class="article" data-filter="{{site.filter.all}}">
+{% endif %}
 
+
+<span id="{{ article.title | slugify }}" class="anchor"></span>
+{% include filters.html %}
+<h2>{{ article.title }}</h2>
+{% include status.html %}
 <article>{{ article.content }}</article>
 <hr/>
+</div>
