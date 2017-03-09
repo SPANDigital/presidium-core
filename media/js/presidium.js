@@ -4163,10 +4163,13 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+	/**
+	 * Locale storage key
+	 */
 	var FILTER_SELECTED_RECORD = "filter.selected";
 
 	/**
-	 * A two level boostrap menu. Doesn't rely on bootstrap.js or jquery js.
+	 * Root navigation menu.
 	 */
 
 	var Menu = function (_Component) {
@@ -4304,8 +4307,8 @@
 	        key: 'onFilter',
 	        value: function onFilter(e) {
 	            var selected = e.target.value;
-	            var filter = Object.assign({}, this.state.filter, { selected: selected });
 	            this.filterArticles(selected);
+	            var filter = Object.assign({}, this.state.filter, { selected: selected });
 	            this.setState({ filter: filter });
 	            sessionStorage.setItem('filter.selected', selected);
 	        }
@@ -4335,7 +4338,7 @@
 	Menu.propTypes = {
 	    menu: _react2.default.PropTypes.shape({
 	        brandName: _react2.default.PropTypes.string,
-	        structure: _react2.default.PropTypes.array
+	        filter: _react2.default.PropTypes.object
 	    }).isRequired
 	};
 
@@ -21814,7 +21817,7 @@
 
 	            _scrollSpy2.default.init({
 	                selector: '[data-spy] a',
-	                selectorHeader: '[data-gumshoe-header]',
+	                selectorTarget: "#presidium-content .article > .anchor",
 	                container: window,
 	                offset: 100,
 	                activeClass: 'on-article',
@@ -21915,7 +21918,9 @@
 	        value: function isActive() {
 	            var _this6 = this;
 
-	            if (this.state.isRootSection) return true;else {
+	            if (this.state.isRootSection) {
+	                return true;
+	            } else {
 	                if (this.state.inSection && this.props.item.type == _menuStructure.MENU_TYPE.CATEGORY) {
 	                    return this.props.item.children.findIndex(function (child) {
 	                        return child.slug == _this6.state.activeArticle;
@@ -21973,6 +21978,10 @@
 	            } else {
 	                this.props.onNavigate();
 	                window.location = this.props.item.path;
+
+	                if (this.props.item.type == _menuStructure.MENU_TYPE.CATEGORY && !this.state.isExpanded) {
+	                    this.setState({ isExpanded: true });
+	                }
 	            }
 	        }
 	    }, {
@@ -21993,8 +22002,8 @@
 	    item: _react2.default.PropTypes.object.isRequired,
 	    inSection: _react2.default.PropTypes.bool,
 	    activeArticle: _react2.default.PropTypes.string,
-	    onNavigate: _react2.default.PropTypes.func
-
+	    onNavigate: _react2.default.PropTypes.func,
+	    filter: _react2.default.PropTypes.object
 	};
 
 /***/ },
@@ -22146,6 +22155,7 @@
 		var defaults = {
 			selector: '[data-gumshoe] a',
 			selectorHeader: '[data-gumshoe-header]',
+			selectorTarget: '',
 			container: root,
 			offset: 0,
 			activeClass: 'active',
@@ -22317,7 +22327,8 @@
 			// For each link, create an object of attributes and push to an array
 			forEach(navLinks, function (nav) {
 				if (!nav.hash) return;
-				var target = document.querySelector(nav.hash);
+				//Restrict nav targets
+				var target = document.querySelector(settings.selectorTarget + nav.hash);
 				if (!target) return;
 				navs.push({
 					nav: nav,
