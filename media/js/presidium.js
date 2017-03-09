@@ -4182,7 +4182,7 @@
 	            filter: _this.menuFilter(),
 	            expanded: false
 	        };
-	        _this.toggleArticles(_this.state.filter.selected);
+	        _this.filterArticles(_this.state.filter.selected);
 	        return _this;
 	    }
 
@@ -4305,13 +4305,13 @@
 	        value: function onFilter(e) {
 	            var selected = e.target.value;
 	            var filter = Object.assign({}, this.state.filter, { selected: selected });
-	            this.toggleArticles(selected);
+	            this.filterArticles(selected);
 	            this.setState({ filter: filter });
 	            sessionStorage.setItem('filter.selected', selected);
 	        }
 	    }, {
-	        key: 'toggleArticles',
-	        value: function toggleArticles(selected) {
+	        key: 'filterArticles',
+	        value: function filterArticles(selected) {
 	            var _this4 = this;
 
 	            document.querySelectorAll('#presidium-content .article').forEach(function (article) {
