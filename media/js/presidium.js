@@ -4208,6 +4208,8 @@
 	                    selected = filter.all;
 	                    sessionStorage.setItem(FILTER_SELECTED_RECORD, selected);
 	                }
+	            } else {
+	                selected = filter.all;
 	            }
 	            return {
 	                label: filter.label,
@@ -4241,7 +4243,7 @@
 	                    _react2.default.createElement(
 	                        'button',
 	                        { className: 'toggle', onClick: function onClick() {
-	                                return _this2.toggleExpand();
+	                                return _this2.toggleMenu();
 	                            } },
 	                        _react2.default.createElement(
 	                            'span',
@@ -4262,7 +4264,7 @@
 	                        null,
 	                        this.state.structure.map(function (item) {
 	                            return _react2.default.createElement(_menuItem2.default, { key: item.id, item: item, filter: _this2.state.filter, onNavigate: function onNavigate() {
-	                                    return _this2.toggleExpand();
+	                                    return _this2.collapseMenu();
 	                                } });
 	                        })
 	                    )
@@ -4270,9 +4272,14 @@
 	            );
 	        }
 	    }, {
-	        key: 'toggleExpand',
-	        value: function toggleExpand() {
+	        key: 'toggleMenu',
+	        value: function toggleMenu() {
 	            this.setState({ expanded: !this.state.expanded });
+	        }
+	    }, {
+	        key: 'collapseMenu',
+	        value: function collapseMenu() {
+	            this.setState({ expanded: false });
 	        }
 	    }, {
 	        key: 'renderFilter',
@@ -4310,7 +4317,7 @@
 	            this.filterArticles(selected);
 	            var filter = Object.assign({}, this.state.filter, { selected: selected });
 	            this.setState({ filter: filter });
-	            sessionStorage.setItem('filter.selected', selected);
+	            sessionStorage.setItem(FILTER_SELECTED_RECORD, selected);
 	        }
 	    }, {
 	        key: 'filterArticles',
@@ -4322,8 +4329,8 @@
 	                    article.style.display = "block";
 	                    return;
 	                }
-	                var filter = article.getAttribute('data-filter').split(",");
-	                if (filter.includes(selected) || filter.includes(_this4.state.filter.all)) {
+	                var filters = article.getAttribute('data-filters').split(",");
+	                if (filters.includes(selected) || filters.includes(_this4.state.filter.all)) {
 	                    article.style.display = "block";
 	                } else {
 	                    article.style.display = "none";
@@ -21822,11 +21829,9 @@
 	                offset: 100,
 	                activeClass: 'on-article',
 	                callback: function callback(active) {
-	                    if (active) {
-	                        var activeArticle = active.nav.getAttribute("href");
-	                        if (_this2.state.activeArticle !== activeArticle) {
-	                            _this2.setState({ activeArticle: activeArticle });
-	                        }
+	                    var activeArticle = active ? active.nav.getAttribute("data-id") : undefined;
+	                    if (_this2.state.activeArticle !== activeArticle) {
+	                        _this2.setState({ activeArticle: activeArticle });
 	                    }
 	                }
 	            });
@@ -21862,7 +21867,7 @@
 	                ),
 	                this.state.isExpandable && _react2.default.createElement(
 	                    'ul',
-	                    { 'data-spy': true, className: this.state.isExpanded ? "dropdown expanded" : "dropdown" },
+	                    { 'data-spy': this.state.isRootSection, className: this.state.isExpanded ? "dropdown expanded" : "dropdown" },
 	                    this.children()
 	                )
 	            );
@@ -21891,7 +21896,7 @@
 	                                        'a',
 	                                        { onClick: function onClick() {
 	                                                return _this4.clickChild(item.path);
-	                                            }, href: item.slug },
+	                                            }, 'data-id': item.id, href: item.slug },
 	                                        item.title
 	                                    )
 	                                )
@@ -21914,30 +21919,10 @@
 	            }
 	        }
 	    }, {
-	        key: 'isActive',
-	        value: function isActive() {
-	            var _this6 = this;
-
-	            if (this.state.isRootSection) {
-	                return true;
-	            } else {
-	                if (this.state.inSection && this.props.item.type == _menuStructure.MENU_TYPE.CATEGORY) {
-	                    return this.props.item.children.findIndex(function (child) {
-	                        return child.slug == _this6.state.activeArticle;
-	                    }) > -1;
-	                }
-	            }
-	        }
-	    }, {
-	        key: 'inFilter',
-	        value: function inFilter(item) {
-	            return this.props.filter.selected == this.props.filter.all || item.filter.has(this.props.filter.all) || item.filter.has(this.props.filter.selected);
-	        }
-	    }, {
 	        key: 'parentStyle',
 	        value: function parentStyle(item) {
 	            var style = "";
-	            if (this.isActive()) {
+	            if (this.inSection()) {
 	                style += "in-section";
 	            }
 	            if (!this.inFilter(item)) {
@@ -21960,8 +21945,44 @@
 	                    return 'level-two';
 	                case 3:
 	                    return 'level-three';
+	                case 4:
+	                    return 'level-four';
 	            }
 	            return "";
+	        }
+	    }, {
+	        key: 'inSection',
+	        value: function inSection() {
+	            if (!this.state.inSection) {
+	                //Eliminates most cases
+	                return false;
+	            }
+	            return this.state.isRootSection || this.state.hasChildren && this.containsArticle();
+	        }
+	    }, {
+	        key: 'containsArticle',
+	        value: function containsArticle() {
+	            var _this6 = this;
+
+	            if (!this.state.activeArticle) {
+	                return false;
+	            }
+	            return this.props.item.children.find(function (child) {
+	                if (child.type == _menuStructure.MENU_TYPE.ARTICLE && child.id == _this6.state.activeArticle) {
+	                    return true;
+	                } else if (child.children) {
+	                    return child.children.find(function (article) {
+	                        if (article.id == _this6.state.activeArticle) {
+	                            return true;
+	                        }
+	                    });
+	                }
+	            });
+	        }
+	    }, {
+	        key: 'inFilter',
+	        value: function inFilter(item) {
+	            return this.props.filter.selected == this.props.filter.all || item.filters.has(this.props.filter.all) || item.filters.has(this.props.filter.selected);
 	        }
 	    }, {
 	        key: 'toggleExpand',
@@ -22006,22 +22027,34 @@
 	    filter: _react2.default.PropTypes.object
 	};
 
+	MenuItem.defaultProps = {
+	    inSection: false
+	};
+
 /***/ },
 /* 180 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	exports.MENU_TYPE = undefined;
 	exports.groupByCategory = groupByCategory;
+
+	var _paths = __webpack_require__(182);
+
+	var _paths2 = _interopRequireDefault(_paths);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 	var level1 = 1;
-	var level2 = 2;
-	var level3 = 3;
+	var LEVEL_2 = 2;
+	var LEVEL_3 = 3;
+	var LEVEL_4 = 4;
 
 	var MENU_TYPE = exports.MENU_TYPE = {
 	    SECTION: 'section',
@@ -22029,7 +22062,7 @@
 	    ARTICLE: 'article'
 	};
 
-	function menuSection(section, children, filter) {
+	function menuSection(section) {
 	    return {
 	        type: MENU_TYPE.SECTION,
 	        id: section.path,
@@ -22038,22 +22071,24 @@
 	        title: section.title,
 	        slug: section.slug,
 	        path: section.path,
-	        children: children,
-	        filter: filter
+	        categories: {},
+	        children: [],
+	        filters: new Set()
 	    };
 	}
 
-	function menuCategory(section, category, path, level) {
+	function menuCategory(key, id, path, level) {
 	    return {
 	        type: MENU_TYPE.CATEGORY,
-	        id: section.path + category,
+	        id: id,
 	        level: level,
 	        expandable: true,
-	        title: category,
+	        title: key,
 	        slug: path,
 	        path: path,
+	        categories: {},
 	        children: [],
-	        filter: new Set()
+	        filters: new Set()
 	    };
 	}
 
@@ -22066,53 +22101,70 @@
 	        title: article.title,
 	        level: level,
 	        expandable: false,
-	        filter: article.filter.length > 0 ? new Set(article.filter) : new Set([defaultFilter])
+	        filters: article.filters.length > 0 ? new Set(article.filters) : new Set([defaultFilter])
 	    };
 	}
 
 	/**
 	 * Returns a new Set of the merged current and additional filters.
-	 * Merges the default filter ff no additional filters are provided.
+	 * Merges the default filters ff no additional filters are provided.
 	 */
-	function mergeFilters(current, additional, defaultFilter) {
+	function mergeSets(current, additional, defaultFilter) {
 	    if (additional.length > 0) {
 	        return new Set([].concat(_toConsumableArray(current), _toConsumableArray(additional)));
 	    } else {
-	        return new Set([].concat(_toConsumableArray(current), [defaultFilter]));
+	        return defaultFilter ? new Set([].concat(_toConsumableArray(current), [defaultFilter])) : current;
 	    }
 	}
+	/**
+	 * Creates or gets a category.
+	 */
+	function getOrCreateCategory(section, key, path, level) {
+	    var category = void 0;
+	    if (section.categories[key]) {
+	        category = section.categories[key];
+	    } else {
+	        var id = _paths2.default.concat(section.id, key);
+	        category = menuCategory(key, id, path, level);
+	        section.categories[key] = category;
+	        section.children.push(category);
+	    }
+	    return category;
+	}
 
+	function hasSub(categories) {
+	    return categories.length > 1;
+	}
 	/**
 	 *  Build the menu structure maintaining the provided order.
-	 *  Group articles in a section by a distinct category
-	 *  Filters for each level are composed from filters of all children
+	 *  Group articles in a section by a distinct category and optional sub category
+	 *  Filters for each subsection are merged to a parents for filtering.
 	 */
-	function groupByCategory(section, defaultFilter) {
+	function groupByCategory(root, defaultFilter) {
 
-	    var categories = {};
-	    var children = [];
-	    var sectionFilter = new Set();
+	    var section = menuSection(root);
 
-	    section.articles.forEach(function (article) {
+	    root.articles.forEach(function (article) {
 
-	        sectionFilter = mergeFilters(sectionFilter, article.filter, defaultFilter);
+	        section.filters = mergeSets(section.filters, article.filters, defaultFilter);
 
-	        if (article.category === "") {
-	            children.push(menuArticle(article, level2, defaultFilter));
+	        if (!article.category) {
+	            section.children.push(menuArticle(article, LEVEL_2, defaultFilter));
 	        } else {
-	            var category = void 0;
-	            if (categories[article.category]) {
-	                category = categories[article.category];
+	            var categories = article.category.split('/');
+	            var category = getOrCreateCategory(section, categories[0], article.path, LEVEL_2);
+	            category.filters = mergeSets(category.filters, article.filters, defaultFilter);
+
+	            if (!hasSub(categories)) {
+	                category.children.push(menuArticle(article, LEVEL_3, defaultFilter));
 	            } else {
-	                category = menuCategory(section, article.category, article.path, level2);
-	                categories[article.category] = category;
-	                children.push(category);
+	                var subCategory = getOrCreateCategory(category, categories[1], article.path, LEVEL_3);
+	                subCategory.filters = mergeSets(subCategory.filters, article.filters, defaultFilter);
+	                subCategory.children.push(menuArticle(article, LEVEL_4, defaultFilter));
 	            }
-	            category.filter = mergeFilters(category.filter, article.filter, defaultFilter);
-	            category.children.push(menuArticle(article, level3, defaultFilter));
 	        }
 	    });
-	    return menuSection(section, children, sectionFilter);
+	    return section;
 	}
 
 /***/ },

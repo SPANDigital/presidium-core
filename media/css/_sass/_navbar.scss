@@ -167,6 +167,16 @@ $navbar-default-link-hover-bg: darken($navbar-default-bg, 3%);
               color: $navbar-default-link-hover-color;
             }
           }
+
+          .in-section {
+            .level-three {
+              color: $navbar-default-link-hover-color;
+              a {
+                color: $navbar-default-link-hover-color;
+              }
+            }
+          }
+
         }
       }
     }
@@ -180,6 +190,9 @@ $navbar-default-link-hover-bg: darken($navbar-default-bg, 3%);
       }
       &.level-three {
         padding-left: 50px;
+      }
+      &.level-four {
+        padding-left: 70px;
       }
     }
 

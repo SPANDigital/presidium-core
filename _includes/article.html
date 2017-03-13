@@ -1,7 +1,7 @@
 {% if article.filter | size > 0%}
-    <div class="article" data-filter="{{article.filter | join: ','}}">
+    <div class="article" data-filters="{{article.filters | join: ','}}">
 {% else %}
-    <div class="article" data-filter="{{site.filter.all}}">
+    <div class="article" data-filters="{{site.filters.all}}">
 {% endif %}
 
 

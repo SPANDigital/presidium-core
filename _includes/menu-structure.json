@@ -14,7 +14,7 @@
     "path" : "{{path | append: '#' | append: slug}}",
     "slug" : "{{'#' | append: slug}}",
     "category": "{{article.category}}",
-    "filter": {% if article.filter.first%} {{article.filter | jsonify}} {% elsif article.filter | size > 0%} ["{{article.filter}}"] {% else %} [] {% endif %}
+    "filters": {% if article.filters.first%} {{article.filters | jsonify}} {% elsif article.filters | size > 0%} ["{{article.filters}}"] {% else %} [] {% endif %}
 }{% if article != articles.last%},{% endif %}
 {% endfor %}]}{% if section != site.structure.last%},{% endif %}
 {% endfor %}]
