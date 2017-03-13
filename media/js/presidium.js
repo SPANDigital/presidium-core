@@ -21749,6 +21749,8 @@
 	    value: true
 	});
 
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _react = __webpack_require__(1);
@@ -21805,8 +21807,11 @@
 	    }, {
 	        key: 'componentWillReceiveProps',
 	        value: function componentWillReceiveProps(props) {
+	            //Propagate active article and filter down the chain
+	            //TODO move higher
+	            var activeArticle = this.state.isRootSection ? this.state.activeArticle : props.activeArticle;
 	            this.setState({
-	                activeArticle: props.activeArticle, //Sub menu scroll spy
+	                activeArticle: activeArticle,
 	                selectedFilter: props.filter.selected
 	            });
 	        }
@@ -21867,7 +21872,7 @@
 	                ),
 	                this.state.isExpandable && _react2.default.createElement(
 	                    'ul',
-	                    { 'data-spy': this.state.isRootSection, className: this.state.isExpanded ? "dropdown expanded" : "dropdown" },
+	                    _extends({}, this.spyOnMe(), { className: this.state.isExpanded ? "dropdown expanded" : "dropdown" }),
 	                    this.children()
 	                )
 	            );
@@ -21919,11 +21924,16 @@
 	            }
 	        }
 	    }, {
+	        key: 'spyOnMe',
+	        value: function spyOnMe() {
+	            return this.state.isRootSection ? { "data-spy": "" } : {};
+	        }
+	    }, {
 	        key: 'parentStyle',
 	        value: function parentStyle(item) {
 	            var style = "";
 	            if (this.inSection()) {
-	                style += "in-section";
+	                style += " in-section";
 	            }
 	            if (!this.inFilter(item)) {
 	                style += " hidden";
@@ -21933,7 +21943,7 @@
 	    }, {
 	        key: 'articleStyle',
 	        value: function articleStyle(item) {
-	            return this.inFilter(item) ? "" : "hidden";
+	            return this.inFilter(item) ? "" : " hidden";
 	        }
 	    }, {
 	        key: 'levelStyle',
@@ -21954,8 +21964,7 @@
 	        key: 'inSection',
 	        value: function inSection() {
 	            if (!this.state.inSection) {
-	                //Eliminates most cases
-	                return false;
+	                return false; //most cases
 	            }
 	            return this.state.isRootSection || this.state.hasChildren && this.containsArticle();
 	        }

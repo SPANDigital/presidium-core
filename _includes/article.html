@@ -1,9 +1,8 @@
-{% if article.filter | size > 0%}
+{% if article.filters | size > 0 %}
     <div class="article" data-filters="{{article.filters | join: ','}}">
 {% else %}
-    <div class="article" data-filters="{{site.filters.all}}">
+    <div class="article" data-filters="{{site.filter.all}}">
 {% endif %}
-
 
 <span id="{{ article.title | slugify }}" class="anchor"></span>
 {% include filters.html %}
