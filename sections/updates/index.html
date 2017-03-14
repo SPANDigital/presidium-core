@@ -4,7 +4,7 @@ permalink: /updates/
 layout: container
 ---
 
-{% for article in site.updates reversed %}
+{% for article in site.updates %}
     {% include article.html %}
 {% else %}
     {% include empty-article.html %}
