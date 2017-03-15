@@ -4225,48 +4225,52 @@
 
 	            var menu = this.props.menu;
 	            return _react2.default.createElement(
-	                'nav',
-	                null,
+	                'div',
+	                { className: 'scrollable-container' },
 	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'navbar-header' },
+	                    'nav',
+	                    null,
 	                    _react2.default.createElement(
-	                        'a',
-	                        { href: this.props.menu.baseUrl != null ? this.props.menu.baseUrl : "#", className: 'brand' },
-	                        _react2.default.createElement('img', { src: _paths2.default.concat(menu.baseUrl, menu.logo), alt: '' })
-	                    ),
-	                    this.props.menu.brandName && _react2.default.createElement(
-	                        'p',
-	                        { className: 'brand-name' },
-	                        this.props.menu.brandName
-	                    ),
-	                    _react2.default.createElement(
-	                        'button',
-	                        { className: 'toggle', onClick: function onClick() {
-	                                return _this2.toggleMenu();
-	                            } },
+	                        'div',
+	                        { className: 'navbar-header' },
 	                        _react2.default.createElement(
-	                            'span',
-	                            { className: 'sr-only' },
-	                            'Toggle navigation'
+	                            'a',
+	                            { href: this.props.menu.baseUrl != null ? this.props.menu.baseUrl : "#", className: 'brand' },
+	                            _react2.default.createElement('img', { src: _paths2.default.concat(menu.baseUrl, menu.logo), alt: '' })
 	                        ),
-	                        _react2.default.createElement('span', { className: 'icon-bar' }),
-	                        _react2.default.createElement('span', { className: 'icon-bar' }),
-	                        _react2.default.createElement('span', { className: 'icon-bar' })
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: "navbar-items" + (this.state.expanded == true ? " expanded" : "") },
-	                    this.renderFilter(),
+	                        this.props.menu.brandName && _react2.default.createElement(
+	                            'p',
+	                            { className: 'brand-name' },
+	                            this.props.menu.brandName
+	                        ),
+	                        _react2.default.createElement(
+	                            'button',
+	                            { className: 'toggle', onClick: function onClick() {
+	                                    return _this2.toggleMenu();
+	                                } },
+	                            _react2.default.createElement(
+	                                'span',
+	                                { className: 'sr-only' },
+	                                'Toggle navigation'
+	                            ),
+	                            _react2.default.createElement('span', { className: 'icon-bar' }),
+	                            _react2.default.createElement('span', { className: 'icon-bar' }),
+	                            _react2.default.createElement('span', { className: 'icon-bar' })
+	                        )
+	                    ),
 	                    _react2.default.createElement(
-	                        'ul',
-	                        null,
-	                        this.state.structure.map(function (item) {
-	                            return _react2.default.createElement(_menuItem2.default, { key: item.id, item: item, filter: _this2.state.filter, onNavigate: function onNavigate() {
-	                                    return _this2.collapseMenu();
-	                                } });
-	                        })
+	                        'div',
+	                        { className: "navbar-items" + (this.state.expanded == true ? " expanded" : "") },
+	                        this.renderFilter(),
+	                        _react2.default.createElement(
+	                            'ul',
+	                            null,
+	                            this.state.structure.map(function (item) {
+	                                return _react2.default.createElement(_menuItem2.default, { key: item.id, item: item, filter: _this2.state.filter, onNavigate: function onNavigate() {
+	                                        return _this2.collapseMenu();
+	                                    } });
+	                            })
+	                        )
 	                    )
 	                )
 	            );
