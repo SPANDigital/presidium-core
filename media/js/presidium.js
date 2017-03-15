@@ -4145,7 +4145,7 @@
 
 	var _menuItem2 = _interopRequireDefault(_menuItem);
 
-	var _paths = __webpack_require__(182);
+	var _paths = __webpack_require__(181);
 
 	var _paths2 = _interopRequireDefault(_paths);
 
@@ -21759,7 +21759,7 @@
 
 	var _menuStructure = __webpack_require__(180);
 
-	var _scrollSpy = __webpack_require__(181);
+	var _scrollSpy = __webpack_require__(182);
 
 	var _scrollSpy2 = _interopRequireDefault(_scrollSpy);
 
@@ -21808,7 +21808,6 @@
 	        key: 'componentWillReceiveProps',
 	        value: function componentWillReceiveProps(props) {
 	            //Propagate active article and filter down the chain
-	            //TODO move higher
 	            var activeArticle = this.state.isRootSection ? this.state.activeArticle : props.activeArticle;
 	            this.setState({
 	                activeArticle: activeArticle,
@@ -21852,7 +21851,9 @@
 	                { key: item.id, className: this.parentStyle(item) },
 	                _react2.default.createElement(
 	                    'div',
-	                    { className: "menu-row " + this.levelStyle(item.level) },
+	                    { onClick: function onClick(e) {
+	                            return _this3.clickParent(e);
+	                        }, className: "menu-row " + this.levelClass(item.level) },
 	                    _react2.default.createElement(
 	                        'div',
 	                        { className: 'menu-expander' },
@@ -21863,9 +21864,7 @@
 	                        { className: 'menu-title' },
 	                        _react2.default.createElement(
 	                            'a',
-	                            { onClick: function onClick(e) {
-	                                    return _this3.clickParent(e);
-	                                } },
+	                            null,
 	                            item.title
 	                        )
 	                    )
@@ -21889,19 +21888,19 @@
 	                    case _menuStructure.MENU_TYPE.ARTICLE:
 	                        return _react2.default.createElement(
 	                            'li',
-	                            { key: item.id, className: _this4.articleStyle(item) },
+	                            { key: item.id, className: _this4.childStyle(item) },
 	                            _react2.default.createElement(
 	                                'div',
-	                                { className: "menu-row " + _this4.levelStyle(item.level) },
+	                                { onClick: function onClick() {
+	                                        return _this4.clickChild(item.path);
+	                                    }, className: "menu-row " + _this4.articleStyle(item) },
 	                                _react2.default.createElement('div', { className: 'menu-expander' }),
 	                                _react2.default.createElement(
 	                                    'div',
 	                                    { className: 'menu-title' },
 	                                    _react2.default.createElement(
 	                                        'a',
-	                                        { onClick: function onClick() {
-	                                                return _this4.clickChild(item.path);
-	                                            }, 'data-id': item.id, href: item.slug },
+	                                        { 'data-id': item.id, href: item.slug },
 	                                        item.title
 	                                    )
 	                                )
@@ -21933,7 +21932,19 @@
 	        value: function parentStyle(item) {
 	            var style = "";
 	            if (this.inSection()) {
-	                style += " in-section";
+	                style += this.state.isExpanded ? " in-section expanded" : " in-section";
+	            }
+	            if (!this.inFilter(item)) {
+	                style += " hidden";
+	            }
+	            return style;
+	        }
+	    }, {
+	        key: 'childStyle',
+	        value: function childStyle(item) {
+	            var style = "";
+	            if (this.state.activeArticle == item.id) {
+	                style += " on-article";
 	            }
 	            if (!this.inFilter(item)) {
 	                style += " hidden";
@@ -21943,20 +21954,25 @@
 	    }, {
 	        key: 'articleStyle',
 	        value: function articleStyle(item) {
-	            return this.inFilter(item) ? "" : " hidden";
+	            return this.levelClass(item.level) + this.activeClass(item);
 	        }
 	    }, {
-	        key: 'levelStyle',
-	        value: function levelStyle(level) {
+	        key: 'activeClass',
+	        value: function activeClass(item) {
+	            return this.state.activeArticle == item.id ? ' on-article' : '';
+	        }
+	    }, {
+	        key: 'levelClass',
+	        value: function levelClass(level) {
 	            switch (level) {
 	                case 1:
-	                    return 'level-one';
+	                    return ' level-one';
 	                case 2:
-	                    return 'level-two';
+	                    return ' level-two';
 	                case 3:
-	                    return 'level-three';
+	                    return ' level-three';
 	                case 4:
-	                    return 'level-four';
+	                    return ' level-four';
 	            }
 	            return "";
 	        }
@@ -21995,7 +22011,8 @@
 	        }
 	    }, {
 	        key: 'toggleExpand',
-	        value: function toggleExpand() {
+	        value: function toggleExpand(e) {
+	            e.stopPropagation();
 	            if (this.state.hasChildren) {
 	                this.setState({ isExpanded: !this.state.isExpanded });
 	            }
@@ -22052,7 +22069,7 @@
 	exports.MENU_TYPE = undefined;
 	exports.groupByCategory = groupByCategory;
 
-	var _paths = __webpack_require__(182);
+	var _paths = __webpack_require__(181);
 
 	var _paths2 = _interopRequireDefault(_paths);
 
@@ -22178,6 +22195,32 @@
 
 /***/ },
 /* 181 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	/**
+	 * Concatenate uri with single slash
+	 */
+	var path = {
+	    concat: function concat(base, target) {
+	        return base + path.forceTrailing(base) + path.removeLeading(target);
+	    },
+	    forceTrailing: function forceTrailing(path) {
+	        return path == null ? "/" : path.substr(-1) != "/" ? "/" : "";
+	    },
+	    removeLeading: function removeLeading(path) {
+	        return path == null ? "" : path.substr(0, 1) == "/" ? path.substr(1) : path;
+	    }
+	};
+
+	exports.default = path;
+
+/***/ },
+/* 182 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(global) {'use strict';
@@ -22570,32 +22613,6 @@
 		return gumshoe;
 	});
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
-
-/***/ },
-/* 182 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	/**
-	 * Concatenate uri with single slash
-	 */
-	var path = {
-	    concat: function concat(base, target) {
-	        return base + path.forceTrailing(base) + path.removeLeading(target);
-	    },
-	    forceTrailing: function forceTrailing(path) {
-	        return path == null ? "/" : path.substr(-1) != "/" ? "/" : "";
-	    },
-	    removeLeading: function removeLeading(path) {
-	        return path == null ? "" : path.substr(0, 1) == "/" ? path.substr(1) : path;
-	    }
-	};
-
-	exports.default = path;
 
 /***/ },
 /* 183 */

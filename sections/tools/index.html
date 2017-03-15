@@ -5,24 +5,7 @@ layout: container
 ---
 
 {% for article in site.tools %}
-    <span id="{{ article.title | slugify }}" class="anchor"></span>
-    {% include status.html %}
-    <h2>{{ article.title }}</h2>
-    <article>
-          <div class="article-meta">
-              {% if practice.author %}
-                  <a href="{{ page.github-url }}{{ scenario.author }}" class="post-author">
-                      <img src="{{ page.github-url }}{{ scenario.author }}.png" class="avatar" alt="{{ scenario.author }} avatar" width="24" height="24">
-                      {{ scenario.author }}
-                  </a>
-              {% endif %}
-              <span class="date">{{scenario.publication-date}}</span>
-          </div>
-          <div class="article-content">
-              {{ article.content }}
-          </div>
-      </article>
-      <hr/>
+    {% include article.html %}
 {% else %}
     {% include empty-article.html %}
 {% endfor %}

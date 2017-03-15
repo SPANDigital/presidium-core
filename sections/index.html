@@ -6,4 +6,6 @@ layout: container
 
 {% for article in site.overview %}
     {% include article.html %}
+{% else %}
+    {% include empty-article.html %}
 {% endfor %}
