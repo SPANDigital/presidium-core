@@ -122,10 +122,8 @@ $navbar-default-border-level-4: darken($navbar-default-bg, 20%);
         }
       }
 
-      > ul {
-        > li:first-child {
-          border-top: 1px solid $navbar-default-border-level-1;
-        }
+      > ul:first-of-type {
+        border: 1px solid $navbar-default-border-level-1;
       }
 
       @media (max-width: $grid-float-breakpoint) {
