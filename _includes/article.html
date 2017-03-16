@@ -1,11 +1,11 @@
-{% if article.filters | size > 0 %}
-    <div class="article" data-filters="{{article.filters | join: ','}}">
+{% if article.roles | size > 0 %}
+    <div class="article" data-roles="{{article.roles | join: ','}}">
 {% else %}
-    <div class="article" data-filters="{{site.filter.all}}">
+    <div class="article" data-roles="{{site.roles.all}}">
 {% endif %}
 
 <span id="{{ article.title | slugify }}" class="anchor"></span>
-{% include filters.html %}
+{% include roles.html %}
 <h2>{{ article.title }}</h2>
 {% include status.html %}
 <article>{{ article.content }}</article>

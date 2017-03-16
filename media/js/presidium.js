@@ -4166,7 +4166,7 @@
 	/**
 	 * Locale storage key
 	 */
-	var FILTER_SELECTED_RECORD = "filter.selected";
+	var SELECTED_ROLE = "role.selected";
 
 	/**
 	 * Root navigation menu.
@@ -4182,40 +4182,40 @@
 
 	        _this.state = {
 	            structure: _this.menuStructure(),
-	            filter: _this.menuFilter(),
+	            roles: _this.roleFilter(),
 	            expanded: false
 	        };
-	        _this.filterArticles(_this.state.filter.selected);
+	        _this.filterByRole(_this.state.roles.selected);
 	        return _this;
 	    }
 
 	    _createClass(Menu, [{
 	        key: 'menuStructure',
 	        value: function menuStructure() {
-	            var all = this.props.menu.filter.all;
+	            var allRoles = this.props.menu.roles.all;
 	            return this.props.menu.structure.map(function (section) {
-	                return (0, _menuStructure.groupByCategory)(section, all);
+	                return (0, _menuStructure.groupByCategory)(section, allRoles);
 	            });
 	        }
 	    }, {
-	        key: 'menuFilter',
-	        value: function menuFilter() {
+	        key: 'roleFilter',
+	        value: function roleFilter() {
 	            var selected;
-	            var filter = this.props.menu.filter;
-	            if (filter.options.length > 0) {
-	                selected = sessionStorage.getItem(FILTER_SELECTED_RECORD);
+	            var roles = this.props.menu.roles;
+	            if (roles.options.length > 0) {
+	                selected = sessionStorage.getItem(SELECTED_ROLE);
 	                if (!selected) {
-	                    selected = filter.all;
-	                    sessionStorage.setItem(FILTER_SELECTED_RECORD, selected);
+	                    selected = roles.all;
+	                    sessionStorage.setItem(SELECTED_ROLE, selected);
 	                }
 	            } else {
-	                selected = filter.all;
+	                selected = roles.all;
 	            }
 	            return {
-	                label: filter.label,
-	                all: filter.all,
+	                label: roles.label,
+	                all: roles.all,
 	                selected: selected,
-	                options: [filter.all].concat(_toConsumableArray(filter.options))
+	                options: [roles.all].concat(_toConsumableArray(roles.options))
 	            };
 	        }
 	    }, {
@@ -4266,7 +4266,7 @@
 	                            'ul',
 	                            null,
 	                            this.state.structure.map(function (item) {
-	                                return _react2.default.createElement(_menuItem2.default, { key: item.id, item: item, filter: _this2.state.filter, onNavigate: function onNavigate() {
+	                                return _react2.default.createElement(_menuItem2.default, { key: item.id, item: item, roles: _this2.state.roles, onNavigate: function onNavigate() {
 	                                        return _this2.collapseMenu();
 	                                    } });
 	                            })
@@ -4290,51 +4290,51 @@
 	        value: function renderFilter() {
 	            var _this3 = this;
 
-	            return this.state.filter.selected && _react2.default.createElement(
+	            return this.state.roles.selected && _react2.default.createElement(
 	                'div',
 	                { className: 'filter form-group' },
-	                this.state.filter.label && _react2.default.createElement(
+	                this.state.roles.label && _react2.default.createElement(
 	                    'label',
-	                    { className: 'control-label', htmlFor: 'filter-select' },
-	                    this.state.filter.label,
+	                    { className: 'control-label', htmlFor: 'roles-select' },
+	                    this.state.roles.label,
 	                    ':'
 	                ),
 	                _react2.default.createElement(
 	                    'select',
-	                    { id: 'filter-select', className: 'form-control', value: this.state.filter.selected, onChange: function onChange(e) {
-	                            return _this3.onFilter(e);
+	                    { id: 'roles-select', className: 'form-control', value: this.state.roles.selected, onChange: function onChange(e) {
+	                            return _this3.onFilterRole(e);
 	                        } },
-	                    this.state.filter.options.map(function (filter) {
+	                    this.state.roles.options.map(function (role) {
 	                        return _react2.default.createElement(
 	                            'option',
-	                            { key: filter, value: filter },
-	                            filter
+	                            { key: role, value: role },
+	                            role
 	                        );
 	                    })
 	                )
 	            );
 	        }
 	    }, {
-	        key: 'onFilter',
-	        value: function onFilter(e) {
+	        key: 'onFilterRole',
+	        value: function onFilterRole(e) {
 	            var selected = e.target.value;
-	            this.filterArticles(selected);
-	            var filter = Object.assign({}, this.state.filter, { selected: selected });
-	            this.setState({ filter: filter });
-	            sessionStorage.setItem(FILTER_SELECTED_RECORD, selected);
+	            this.filterByRole(selected);
+	            var roles = Object.assign({}, this.state.roles, { selected: selected });
+	            this.setState({ roles: roles });
+	            sessionStorage.setItem(SELECTED_ROLE, selected);
 	        }
 	    }, {
-	        key: 'filterArticles',
-	        value: function filterArticles(selected) {
+	        key: 'filterByRole',
+	        value: function filterByRole(selected) {
 	            var _this4 = this;
 
 	            document.querySelectorAll('#presidium-content .article').forEach(function (article) {
-	                if (selected == _this4.state.filter.all) {
+	                if (selected == _this4.state.roles.all) {
 	                    article.style.display = "block";
 	                    return;
 	                }
-	                var filters = article.getAttribute('data-filters').split(",");
-	                if (filters.includes(selected) || filters.includes(_this4.state.filter.all)) {
+	                var roles = article.getAttribute('data-roles').split(",");
+	                if (roles.includes(selected) || roles.includes(_this4.state.roles.all)) {
 	                    article.style.display = "block";
 	                } else {
 	                    article.style.display = "none";
@@ -4349,7 +4349,7 @@
 	Menu.propTypes = {
 	    menu: _react2.default.PropTypes.shape({
 	        brandName: _react2.default.PropTypes.string,
-	        filter: _react2.default.PropTypes.object
+	        roles: _react2.default.PropTypes.object
 	    }).isRequired
 	};
 
@@ -21796,7 +21796,7 @@
 	            hasChildren: hasChildren,
 	            activeArticle: _this.props.activeArticle,
 	            isExpanded: isRootSection && hasChildren,
-	            selectedFilter: _this.props.filter.selected
+	            selectedRole: _this.props.roles.selected
 	        };
 	        return _this;
 	    }
@@ -21811,17 +21811,17 @@
 	    }, {
 	        key: 'componentWillReceiveProps',
 	        value: function componentWillReceiveProps(props) {
-	            //Propagate active article and filter down the chain
+	            //Propagate active article and roles down the menu chain
 	            var activeArticle = this.state.isRootSection ? this.state.activeArticle : props.activeArticle;
 	            this.setState({
 	                activeArticle: activeArticle,
-	                selectedFilter: props.filter.selected
+	                selectedRole: props.roles.selected
 	            });
 	        }
 	    }, {
 	        key: 'componentDidUpdate',
 	        value: function componentDidUpdate(prevProps, prevState) {
-	            if (this.state.isRootSection && prevState.selectedFilter != this.state.selectedFilter) {
+	            if (this.state.isRootSection && prevState.selectedRole != this.state.selectedRole) {
 	                this.initializeScrollSpy();
 	            }
 	        }
@@ -21888,7 +21888,7 @@
 	            return this.props.item.children.map(function (item) {
 	                switch (item.type) {
 	                    case _menuStructure.MENU_TYPE.CATEGORY:
-	                        return _react2.default.createElement(MenuItem, { key: item.title, item: item, filter: _this4.props.filter, inSection: _this4.state.inSection, activeArticle: _this4.state.activeArticle, onNavigate: _this4.props.onNavigate });
+	                        return _react2.default.createElement(MenuItem, { key: item.title, item: item, roles: _this4.props.roles, inSection: _this4.state.inSection, activeArticle: _this4.state.activeArticle, onNavigate: _this4.props.onNavigate });
 	                    case _menuStructure.MENU_TYPE.ARTICLE:
 	                        return _react2.default.createElement(
 	                            'li',
@@ -21938,7 +21938,7 @@
 	            if (this.inSection()) {
 	                style += this.state.isExpanded ? " in-section expanded" : " in-section";
 	            }
-	            if (!this.inFilter(item)) {
+	            if (!this.hasRole(item)) {
 	                style += " hidden";
 	            }
 	            return style;
@@ -21950,7 +21950,7 @@
 	            if (this.state.activeArticle == item.id) {
 	                style += " on-article";
 	            }
-	            if (!this.inFilter(item)) {
+	            if (!this.hasRole(item)) {
 	                style += " hidden";
 	            }
 	            return style;
@@ -22009,9 +22009,9 @@
 	            });
 	        }
 	    }, {
-	        key: 'inFilter',
-	        value: function inFilter(item) {
-	            return this.props.filter.selected == this.props.filter.all || item.filters.has(this.props.filter.all) || item.filters.has(this.props.filter.selected);
+	        key: 'hasRole',
+	        value: function hasRole(item) {
+	            return this.props.roles.selected == this.props.roles.all || item.roles.has(this.props.roles.all) || item.roles.has(this.props.roles.selected);
 	        }
 	    }, {
 	        key: 'toggleExpand',
@@ -22054,7 +22054,7 @@
 	    inSection: _react2.default.PropTypes.bool,
 	    activeArticle: _react2.default.PropTypes.string,
 	    onNavigate: _react2.default.PropTypes.func,
-	    filter: _react2.default.PropTypes.object
+	    roles: _react2.default.PropTypes.object
 	};
 
 	MenuItem.defaultProps = {
@@ -22081,7 +22081,7 @@
 
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
-	var level1 = 1;
+	var LEVEL_1 = 1;
 	var LEVEL_2 = 2;
 	var LEVEL_3 = 3;
 	var LEVEL_4 = 4;
@@ -22096,14 +22096,14 @@
 	    return {
 	        type: MENU_TYPE.SECTION,
 	        id: section.path,
-	        level: level1,
+	        level: LEVEL_1,
 	        expandable: section.expandable,
 	        title: section.title,
 	        slug: section.slug,
 	        path: section.path,
 	        categories: {},
 	        children: [],
-	        filters: new Set()
+	        roles: new Set()
 	    };
 	}
 
@@ -22118,11 +22118,11 @@
 	        path: path,
 	        categories: {},
 	        children: [],
-	        filters: new Set()
+	        roles: new Set()
 	    };
 	}
 
-	function menuArticle(article, level, defaultFilter) {
+	function menuArticle(article, level, defaultRole) {
 	    return {
 	        type: MENU_TYPE.ARTICLE,
 	        id: article.id,
@@ -22131,13 +22131,13 @@
 	        title: article.title,
 	        level: level,
 	        expandable: false,
-	        filters: article.filters.length > 0 ? new Set(article.filters) : new Set([defaultFilter])
+	        roles: article.roles.length > 0 ? new Set(article.roles) : new Set([defaultRole])
 	    };
 	}
 
 	/**
 	 * Returns a new Set of the merged current and additional filters.
-	 * Merges the default filters ff no additional filters are provided.
+	 * Merges the default filters if no additional filters are provided.
 	 */
 	function mergeSets(current, additional, defaultFilter) {
 	    if (additional.length > 0) {
@@ -22170,27 +22170,27 @@
 	 *  Group articles in a section by a distinct category and optional sub category
 	 *  Filters for each subsection are merged to a parents for filtering.
 	 */
-	function groupByCategory(root, defaultFilter) {
+	function groupByCategory(root, defaultRole) {
 
 	    var section = menuSection(root);
 
 	    root.articles.forEach(function (article) {
 
-	        section.filters = mergeSets(section.filters, article.filters, defaultFilter);
+	        section.roles = mergeSets(section.roles, article.roles, defaultRole);
 
 	        if (!article.category) {
-	            section.children.push(menuArticle(article, LEVEL_2, defaultFilter));
+	            section.children.push(menuArticle(article, LEVEL_2, defaultRole));
 	        } else {
 	            var categories = article.category.split('/');
 	            var category = getOrCreateCategory(section, categories[0], article.path, LEVEL_2);
-	            category.filters = mergeSets(category.filters, article.filters, defaultFilter);
+	            category.roles = mergeSets(category.roles, article.roles, defaultRole);
 
 	            if (!hasSub(categories)) {
-	                category.children.push(menuArticle(article, LEVEL_3, defaultFilter));
+	                category.children.push(menuArticle(article, LEVEL_3, defaultRole));
 	            } else {
 	                var subCategory = getOrCreateCategory(category, categories[1], article.path, LEVEL_3);
-	                subCategory.filters = mergeSets(subCategory.filters, article.filters, defaultFilter);
-	                subCategory.children.push(menuArticle(article, LEVEL_4, defaultFilter));
+	                subCategory.roles = mergeSets(subCategory.roles, article.roles, defaultRole);
+	                subCategory.children.push(menuArticle(article, LEVEL_4, defaultRole));
 	            }
 	        }
 	    });
