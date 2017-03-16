@@ -22092,7 +22092,7 @@
 	    ARTICLE: 'article'
 	};
 
-	function menuSection(section) {
+	function menuSection(section, defaultRole) {
 	    return {
 	        type: MENU_TYPE.SECTION,
 	        id: section.path,
@@ -22103,7 +22103,7 @@
 	        path: section.path,
 	        categories: {},
 	        children: [],
-	        roles: new Set()
+	        roles: new Set([defaultRole])
 	    };
 	}
 
@@ -22172,7 +22172,7 @@
 	 */
 	function groupByCategory(root, defaultRole) {
 
-	    var section = menuSection(root);
+	    var section = menuSection(root, defaultRole);
 
 	    root.articles.forEach(function (article) {
 
