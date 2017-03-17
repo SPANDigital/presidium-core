@@ -43,19 +43,26 @@
       margin-bottom: 10px;
     }
 
-    .article-status {
-      margin-top:20px;
-      .label {
+    .article-header {
+      width: 100%;
+      padding: 10px 0;
+      > div {
+        display: inline-block;
+        vertical-align: middle;
+        margin-left: 10px;
+        &:first-child {
+          margin-left: 0px;
+        }
+        .label {
+          line-height: 15px;
+        }
       }
-    }
 
-    .article-role {
-      float: right;
-      margin-left: 5px;
-      margin-top: 5px;
-      .label {
-        line-height: 15px;
-        background-color: $gray-light;
+      .article-role {
+        float: right;
+        .label {
+          background-color: $gray-light;
+        }
       }
     }
 

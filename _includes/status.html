@@ -1,5 +1,4 @@
-
-{% if site.show-status == true or site.show-status == nil %}
+{% if site.show.status == true or site.show.status == nil %}
     <div class="article-status">
     {% case article.status %}
     {% when 'draft' %}

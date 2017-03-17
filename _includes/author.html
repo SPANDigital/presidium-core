@@ -1,0 +1,9 @@
+{% if site.show.author == true or site.show.author == nil %}
+    {% if article.author %}
+        {% if site.external.authors-url %}
+            <div class="article-author">Author: <a href="{{site.external.authors-url.}}{{article.author}}">{{article.author}}</a></div>
+        {% else %}
+            <div class="article-author">Author: {{article.author}}</div>
+        {% endif %}
+    {% endif %}
+{% endif %}

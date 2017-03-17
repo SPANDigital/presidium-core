@@ -5,9 +5,8 @@
 {% endif %}
 
 <span id="{{ article.title | slugify }}" class="anchor"></span>
-{% include roles.html %}
 <h2>{{ article.title }}</h2>
-{% include status.html %}
+<div class="article-header">{% include author.html %} {% include status.html %} {% include roles.html %}</div>
 <article>{{ article.content }}</article>
 <hr/>
 </div>
