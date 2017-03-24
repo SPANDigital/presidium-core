@@ -3,6 +3,9 @@
   "version": "0.0.32",
   "description": "Presidium technical documentation template for Jekyll",
   "license": "Apache-2.0",
+  "bin": {
+    "presidium": "bin/presidium.js"
+  },
   "authors": [
     {
       "name": "Paco Mendes",
@@ -20,5 +23,15 @@
   "bugs": {
     "url": "https://github.com/SPANDigital/presidium-core/issues"
   },
-  "scripts": {}
+  "scripts": {
+    "test": "mocha --debug-brk --recursive"
+  },
+  "dependencies": {
+    "front-matter": "^2.1.2",
+    "js-yaml": "^3.8.2",
+    "mocha": "^3.2.0",
+    "shelljs": "^0.7.7",
+    "yargs": "^7.0.2"
+  },
+  "devDependencies": {}
 }
