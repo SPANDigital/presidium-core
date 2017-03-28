@@ -26,18 +26,18 @@ external:
 # - collection: The collection to use for generating a sub menu of articles (REQUIRED).
 #
 structure:
-  - title: "Overview"
-    path: "/"
-    collection: overview
-    expandable: false
+#  - title: "Overview"
+#    path: "/"
+#    collection: overview
+#    expandable: false
 
   - title: "Key Concepts"
     path: "/key-concepts/"
     collection: key-concepts
 
-  - title: "Reference"
-    path: "/reference/"
-    collection: reference
+#  - title: "Reference"
+#    path: "/reference/"
+#    collection: reference
 
 #
 # Optional filters that may be used to filter articles by role.

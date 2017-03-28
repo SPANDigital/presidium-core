@@ -22176,6 +22176,10 @@
 
 	    root.articles.forEach(function (article) {
 
+	        if (article.id.endsWith("index")) {
+	            return;
+	        }
+
 	        section.roles = mergeSets(section.roles, article.roles, defaultRole);
 
 	        if (!article.category) {

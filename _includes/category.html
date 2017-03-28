@@ -1,0 +1,7 @@
+<div class="article">
+    <span id="{{ article.title | slugify }}" class="anchor"></span>
+    <a href="{{article.title}}"><h2>{{ article.title }}</h2></a>
+    <div class="article-header">{% include author.html %} {% include status.html %} {% include roles.html %}</div>
+    <article>{{ article.content }}</article>
+    <hr/>
+</div>
