@@ -1,36 +1,43 @@
 const fs = require('fs-extra');
 const path = require('path');
-
-const INDEX_TEMPLATE = "index.html";
-
 const menu = require('./menu');
 const parser = require('./parser');
+
+const INDEX_TEMPLATE = "index.html";
 
 const structure = module.exports;
 
 /**
- * Traverses a content directory and builds a presidium site template
+ * Traverses a content directory and builds a presidium site template sections
  * @param config jekyll site config
  * @param sections path to write template sections
  */
-structure.build = function (config = "_config.yml", sections = "sections") {
-    fs.emptydirSync(sections);
+structure.build = function (config = "_config.yml") {
+
+    //TODO move defauts to config parser
+    const includesPath = config['include-path'] ? config['include-path'] : "_includes";
+    const sectionsPath = config['section-path'] ? config['section-path'] : "sections";
+
+    fs.emptydirSync(sectionsPath);
     const template = buildTemplate(config);
 
+    fs.mkdirsSync(includesPath);
+    writeMenu(template.menu, path.join(includesPath, "menu1.json"));
+
     template.pages.forEach(page => {
-        writeTemplate(config, page, sections);
+        writeTemplate(config, page, sectionsPath);
     });
 };
 
 function buildTemplate(config) {
     const site = {
-        menu: menu.builder(config),
+        menu: menu.init(config),
         pages: new Map()
     };
 
     const contentPath = config["content-path"] ? config["content-path"] : "content";
 
-    config.structure.map(sectionConf => {
+    config.sections.map(sectionConf => {
         const section = parser.parseSection(config, sectionConf);
         const sectionPath = path.join(contentPath, section.path);
         if (!fs.existsSync(sectionPath)) {
@@ -45,7 +52,8 @@ function buildTemplate(config) {
         traverseSectionArticlesSync(contentPath, sectionPath, section.url, section.collection, site, parent);
     });
 
-    console.log(require('util').inspect(site.menu, {depth : null}));
+    console.log(require('util').inspect(site.menu, {depth: null}));
+
     return site;
 }
 
@@ -86,6 +94,7 @@ function createCategoryArticle(category) {
     return {
         title: category.title,
         path: category.path,
+        slug: category.slug,
         isCategory: true
     }
 }
@@ -99,14 +108,21 @@ function writeTemplate(config, page, destination) {
     fs.writeFileSync(path.join(pagePath, INDEX_TEMPLATE), template);
 }
 
+function writeMenu(menu, destination) {
+    const json = JSON.stringify(menu, (key, value)=> {
+        //Ignore circular parent references
+        return (key == "parent") ? undefined : value;
+    });
+    fs.writeFileSync(destination, json);
+}
+
 function pageTemplate(pageUrl, page) {
 
-return `---
+    return `---
 title: ${page.title}
-permalink: ${pageUrl}
+permalink: /${pageUrl}/
 layout: container
 ---
-{{page.title}}
 ${includedArticles(page)}`;
 }
 
@@ -115,7 +131,8 @@ function includedArticles(page, collection) {
         return "{% include empty-article.html %}"
     } else {
         return page.articles.map(article => {
-            return `{% assign article = site.${page.collection} | where:"path", "${article.path}"  | first %}` +
+            return  `{% assign article = site.${ page.collection } | where:"path", "${ article.path }"  | first %}` +
+                    `{% assign slug = "${ article.slug }" %}` +
                 (article.isCategory ? "{% include category.html %}" : "{% include article.html %}");
         }).join("\r\n")
     }

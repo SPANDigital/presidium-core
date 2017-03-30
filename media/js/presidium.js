@@ -4181,7 +4181,7 @@
 	        var _this = _possibleConstructorReturn(this, (Menu.__proto__ || Object.getPrototypeOf(Menu)).call(this, props));
 
 	        _this.state = {
-	            structure: _this.menuStructure(),
+	            structure: _this.props.menu.children,
 	            roles: _this.roleFilter(),
 	            expanded: false
 	        };
@@ -4190,14 +4190,6 @@
 	    }
 
 	    _createClass(Menu, [{
-	        key: 'menuStructure',
-	        value: function menuStructure() {
-	            var allRoles = this.props.menu.roles.all;
-	            return this.props.menu.structure.map(function (section) {
-	                return (0, _menuStructure.groupByCategory)(section, allRoles);
-	            });
-	        }
-	    }, {
 	        key: 'roleFilter',
 	        value: function roleFilter() {
 	            var selected;
@@ -21896,7 +21888,7 @@
 	                            _react2.default.createElement(
 	                                'div',
 	                                { onClick: function onClick() {
-	                                        return _this4.clickChild(item.path);
+	                                        return _this4.clickChild(item.url);
 	                                    }, className: "menu-row " + _this4.articleStyle(item) },
 	                                _react2.default.createElement('div', { className: 'menu-expander' }),
 	                                _react2.default.createElement(
@@ -21904,7 +21896,7 @@
 	                                    { className: 'menu-title' },
 	                                    _react2.default.createElement(
 	                                        'a',
-	                                        { 'data-id': item.id, href: item.slug },
+	                                        { 'data-id': item.id, href: '#' + item.slug },
 	                                        item.title
 	                                    )
 	                                )
@@ -22028,7 +22020,7 @@
 	                e.stopPropagation();
 	            } else {
 	                this.props.onNavigate();
-	                window.location = this.props.item.path;
+	                window.location = this.props.item.url;
 
 	                if (this.props.item.type == _menuStructure.MENU_TYPE.CATEGORY && !this.state.isExpanded) {
 	                    this.setState({ isExpanded: true });

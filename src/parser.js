@@ -19,17 +19,16 @@ parser.parseSection = function (siteConf, sectionConf) {
 };
 
 parser.parseCategory = function (basePath, filePath, sectionUrl) {
-
-    const index = path.join(filePath, INDEX_SOURCE);
-
     let categoryTitle = path.parse(filePath).name;
     let categoryPath = path.relative(basePath, filePath);
 
+    const index = path.join(filePath, INDEX_SOURCE);
     if (fs.existsSync(index)) {
         const content = fs.readFileSync(index, {encoding: "utf8", flat: "r"});
         const attributes = fm(content).attributes;
         if (attributes && attributes.title) {
             categoryTitle = attributes.title;
+            categoryPath = path.relative(basePath, index);
         } else {
             throw new Error("A title is required in a category index.")
         }
@@ -38,7 +37,7 @@ parser.parseCategory = function (basePath, filePath, sectionUrl) {
     const slug = slugify(categoryTitle.toLowerCase());
     return {
         title: categoryTitle,
-        path: path.join(categoryPath, "/"),
+        path: categoryPath,
         slug: slug,
         url: path.join(sectionUrl, slug, "/")
     }

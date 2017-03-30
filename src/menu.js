@@ -9,8 +9,12 @@ menu.TYPE = {
     ARTICLE:  'article'
 };
 
+menu.init = function(config) {
+    return new Menu(config);
+};
+
 /**
- * Menu builder for traversing a menu tree. Appends items to the menu tree using the structure.
+ * Builds a menu treeA Menu init for traversing a menu tree. Appends items to the menu tree using the structure.
  *
  * Sections are root nodes than may have articles and categories
  * Categories group articles
@@ -26,22 +30,19 @@ menu.TYPE = {
  * @param config jekyll site config
  * @constructor
  */
-var MenuBuilder = function(config) {
-    this.siteConfig = config;
-    this.menu = {
-        logo: this.siteConfig.logo,
-        baseUrl: url.resolve(this.siteConfig.baseurl, "/"),
-        roles: this.siteRoles(),
-        children: []
-    }
+var Menu = function(config) {
+    this.logo = config.logo;
+    this.baseUrl = path.join(config.baseurl, "/");
+    this.roles =  this.siteRoles(config);
+    this.children = [];
 };
 
-MenuBuilder.prototype.siteRoles = function() {
-    return this.siteConfig.roles ?
+Menu.prototype.siteRoles = function(config) {
+    return config.roles ?
     {
-        label: this.siteConfig.roles.label,
-        all: this.siteConfig.roles.all,
-        options: this.siteConfig.roles.options
+        label: config.roles.label,
+        all: config.roles.all,
+        options: config.roles.options
     } : {
         label: "",
         all: "",
@@ -49,7 +50,7 @@ MenuBuilder.prototype.siteRoles = function() {
     }
 };
 
-MenuBuilder.prototype.addSection = function(props) {
+Menu.prototype.addSection = function(props) {
     var section = {
         type: menu.TYPE.SECTION,
         id: props.path,
@@ -61,29 +62,29 @@ MenuBuilder.prototype.addSection = function(props) {
         roles : [],
         children : []
     };
-    this.menu.children.push(section);
+    this.children.push(section);
     return section;
 };
 
-MenuBuilder.prototype.addCategory = function(parent, props) {
+Menu.prototype.addCategory = function(node, props) {
     var category = {
         type: menu.TYPE.CATEGORY,
         id: props.path,
-        level: parent.level + 1,
+        level: node.level + 1,
         expandable: true,
         title: props.title,
         slug: props.slug,
         path: props.path,
         url: props.url,
         roles : [],
-        parent: parent,
+        parent: node,
         children: [],
     };
-    parent.children.push(category);
+    node.children.push(category);
     return category;
 };
 
-MenuBuilder.prototype.addArticle = function(parent, props) {
+Menu.prototype.addArticle = function(node, props) {
     var article = {
         type: menu.TYPE.ARTICLE,
         id: props.id,
@@ -91,27 +92,23 @@ MenuBuilder.prototype.addArticle = function(parent, props) {
         url: props.url,
         slug: props.slug,
         title: props.title,
-        parent: parent,
-        level: parent.level + 1,
+        parent: node,
+        level: node.level + 1,
         expandable: false,
-        roles: props.roles.length > 0 ? props.roles : [this.menu.roles.all]
+        roles: props.roles.length > 0 ? props.roles : [this.roles.all]
     };
-    parent.children.push(article);
-    MenuBuilder.propagateRoles(article);
+    node.children.push(article);
+    Menu.propagateRoles(article);
     return article;
 };
 
 /**
- * Traverses up all parent nodes in a tree and merges distinct roles.
+ * Visits all parent nodes in a tree and merges distinct roles.
  * @param node
  */
-MenuBuilder.propagateRoles = function(node) {
+Menu.propagateRoles = function(node) {
     if (node.parent) {
         node.parent.roles = Array.from(new Set([...node.parent.roles, ...node.roles]));
-        MenuBuilder.propagateRoles(node.parent);
+        Menu.propagateRoles(node.parent);
     }
-};
-
-menu.builder = function(config) {
-    return new MenuBuilder(config);
 };
