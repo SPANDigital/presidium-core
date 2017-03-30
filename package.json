@@ -30,9 +30,11 @@
     "front-matter": "^2.1.2",
     "fs-extra": "^2.1.2",
     "js-yaml": "^3.8.2",
-    "mocha": "^3.2.0",
     "shelljs": "^0.7.7",
+    "slugify": "^1.1.0",
     "yargs": "^7.0.2"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "mocha": "^3.2.0",
+  }
 }

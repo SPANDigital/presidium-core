@@ -1,218 +1,122 @@
-const yaml = require('js-yaml');
 const fs = require('fs-extra');
 const path = require('path');
-const fm = require('front-matter');
+
+const INDEX_TEMPLATE = "index.html";
+
+const menu = require('./menu');
+const parser = require('./parser');
 
 const structure = module.exports;
 
-const INDEX_SOURCE = "index.md";
-const INDEX_TEMPLATE = "index.html";
-const IGNORE_ARTICLE = {include : false};
+/**
+ * Traverses a content directory and builds a presidium site template
+ * @param config jekyll site config
+ * @param sections path to write template sections
+ */
+structure.build = function (config = "_config.yml", sections = "sections") {
+    fs.emptydirSync(sections);
+    const template = buildTemplate(config);
 
-structure.build = function(config = "_config.yml", source = "content", destination = "sections") {
-
-    console.log(`Deleting section templates in: ${destination}`);
-    fs.emptydirSync(destination);
-
-    const menu = siteMenu(config);
-
-    config.structure.map(section => {
-        const structure = traverseSync(source, section, menu);
-
-        structure.pages.forEach(page => {
-            writeTemplate(section.collection, page, destination);
-        });
-
-        menu.structure.concat(structure.items)
+    template.pages.forEach(page => {
+        writeTemplate(config, page, sections);
     });
-
-    console.log(JSON.stringify(menu.structure));
 };
 
-
-function traverseSync(basePath, section, menu) {
-    const contentPath = path.join(basePath, `_${section.collection}`);
-    const url = path.join(section.path, "/");
-
-    console.log(`Processing articles in collection: ${contentPath}`);
-
-    var pages = new Map();
-
-    menu.structure.push({
-        type: "section",
-        title: section.title,
-        path: path.join(menu.baseUrl, url),
-        expandable: section.expandable? section.expandable : true,
-
-    });
-    pages.set(url, createPage(section.title, url, []));
-    traverseArticlesSync(basePath, contentPath, url, pages);
-    return {
-        pages: pages
+function buildTemplate(config) {
+    const site = {
+        menu: menu.builder(config),
+        pages: new Map()
     };
+
+    const contentPath = config["content-path"] ? config["content-path"] : "content";
+
+    config.structure.map(sectionConf => {
+        const section = parser.parseSection(config, sectionConf);
+        const sectionPath = path.join(contentPath, section.path);
+        if (!fs.existsSync(sectionPath)) {
+            throw new Error(`Expected site section content directory not found: '${sectionPath}'`);
+        }
+
+        const sectionPage = createPage(section.title, section.url, section.collection, section.articles);
+        site.pages.set(section.url, sectionPage);
+
+        const parent = site.menu.addSection(section);
+
+        traverseSectionArticlesSync(contentPath, sectionPath, section.url, section.collection, site, parent);
+    });
+
+    console.log(require('util').inspect(site.menu, {depth : null}));
+    return site;
 }
 
-function traverseArticlesSync(basePath, contentPath, url, pages) {
+function traverseSectionArticlesSync(contentPath, sectionPath, sectionUrl, collection, site, menuNode) {
+    fs.readdirSync(sectionPath).map(file => {
+        const filePath = path.join(sectionPath, file);
 
-    fs.readdirSync(contentPath).map(file => {
-
-        const filePath = path.join(contentPath, file);
         if (fs.statSync(filePath).isDirectory()) {
+            const category = parser.parseCategory(contentPath, filePath, sectionUrl);
 
-            const category = parseCategory(basePath, filePath);
-            //Add category pointer to parent page
-            pages.get(url).articles.push(category);
+            const parentPage = site.pages.get(sectionUrl);
+            parentPage.articles.push(createCategoryArticle(category));
 
-            //Create new page and traverse children
-            const subUrl = path.join(url, encodeURI(category.title.toLowerCase().replace(/ /g, '-')), "/");
-            pages.set(subUrl, createPage(category.title, subUrl, []));
-            traverseArticlesSync(basePath, filePath, subUrl, pages)
+            site.pages.set(category.url, createPage(category.title, category.url, collection, []));
+            const categoryNode = site.menu.addCategory(menuNode, category);
 
+            traverseSectionArticlesSync(contentPath, filePath, category.url, collection, site, categoryNode)
         } else {
-            const article = parseArticle(basePath, filePath);
-            if (!article.include) {
-                return;
+            const article = parser.parseArticle(contentPath, filePath, sectionUrl);
+            if (article.include) {
+                site.pages.get(sectionUrl).articles.push(article);
+                site.menu.addArticle(menuNode, article);
             }
-            pages.get(url).articles.push(article);
         }
     });
-    return pages;
 }
 
-function parseCategory(basePath, directoryPath) {
-
-    const index = path.join(directoryPath, INDEX_SOURCE);
-    if (fs.existsSync(index)) {
-        const content = fs.readFileSync(index, { encoding: "utf8", flat: "r" });
-        const attributes = fm(content).attributes;
-        if (attributes && attributes.title) {
-            return {
-                title: attributes.title,
-                path: path.relative(basePath, index),
-                isCategory: true
-            }
-        } else {
-            throw new Error("A title is required in a category index.")
-        }
-    } else {
-        //Default to directory name if no index is provided...
-        return {
-            title: path.parse(directoryPath).name,
-            path: path.relative(basePath, directoryPath),
-            isCategory: true
-        }
-    }
-}
-
-function createPage(title, url, articles) {
+function createPage(title, url, collection, articles = []) {
     return {
         title: title,
         url: url,
+        collection: collection,
         articles: articles
     }
 }
 
-function parseArticle(basePath, filePath) {
-    const file = path.parse(filePath).base;
-    if (file == INDEX_SOURCE) {
-        return IGNORE_ARTICLE;
+function createCategoryArticle(category) {
+    return {
+        title: category.title,
+        path: category.path,
+        isCategory: true
     }
-
-    //May need to optimize once working on larger file sets
-    const content = fs.readFileSync(filePath, { encoding: "utf8", flat: "r" });
-    const attributes = fm(content).attributes;
-
-    if (attributes && attributes.title) {
-        return {
-            include: true,
-            title: attributes.title,
-            path: path.relative(basePath, filePath)
-        };
-    }
-    return IGNORE_ARTICLE;
 }
 
-function writeTemplate(collection, page, destination) {
-    const pagePath = path.join(destination, page.url);
-    const template = pageTemplate(collection, page);
+function writeTemplate(config, page, destination) {
+    const pageUrl = path.relative(config.baseurl, page.url);
+
+    const pagePath = path.join(destination, pageUrl);
+    const template = pageTemplate(pageUrl, page);
     fs.mkdirsSync(pagePath);
     fs.writeFileSync(path.join(pagePath, INDEX_TEMPLATE), template);
 }
 
-function pageTemplate(collection, page) {
-    console.log(`Generating page template: ${JSON.stringify(page)}`);
+function pageTemplate(pageUrl, page) {
 
 return `---
 title: ${page.title}
-permalink: ${page.url}
+permalink: ${pageUrl}
 layout: container
 ---
-${includedArticles(collection, page)}`;
+{{page.title}}
+${includedArticles(page)}`;
 }
 
-function includedArticles(collection, page) {
+function includedArticles(page, collection) {
     if (page.articles.length <= 0) {
         return "{% include empty-article.html %}"
     } else {
         return page.articles.map(article => {
-            return `{% assign article = site.${collection} | where:"path", "${article.path}"  | first %}` +
+            return `{% assign article = site.${page.collection} | where:"path", "${article.path}"  | first %}` +
                 (article.isCategory ? "{% include category.html %}" : "{% include article.html %}");
         }).join("\r\n")
     }
-}
-
-
-
-function rolesMenu(config) {
-        return config.roles ?
-        {
-            label: config.roles.label,
-            all: config.roles.all,
-            options: config.roles.options
-        } : {
-            label: "",
-            all: "",
-            options: []
-    }
-}
-function siteMenu(config) {
-
-    return {
-        logo: config.logo,
-        baseUrl: path.join(config.baseurl, "/"),
-        roles: rolesMenu(config),
-        structure : []
-    };
-    console.log(`Menu: ${JSON.stringify(menu)}`);
-
-    // {
-    //     logo : "media/images/logo.png",
-    //         brandName : "Presidium",
-    //     baseUrl :   "/presidium/" ,
-    //     currentPage : "/presidium/key-concepts/structure/",
-    //     roles: {
-    //     label: "Show documentation for",
-    //         all: "All Roles",
-    //         options: ["Business Analyst","Developer","Tester"]
-    //
-    // },
-    //     structure : [ {
-    //
-    //
-    //         "title" : "Overview",
-    //         "slug" : "overview",
-    //         "path" : "/presidium/",
-    //         "collection" : "overview",
-    //         "expandable" : false,
-    //         "articles" : [
-    //             {
-    //
-    //                 "id": "/overview/index",
-    //                 "title" : "Overview",
-    //                 "path" : "/presidium/#overview",
-    //                 "slug" : "#overview",
-    //                 "category": "",
-    //                 "roles":  []
-    //             }
-    //         ]},
 }

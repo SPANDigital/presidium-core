@@ -24,10 +24,12 @@ describe('Generate Site Structure', function() {
 
 
     describe('Group By Section', function() {
-        const path = "./test/structure/dist/src/sections/";
-        fs.emptydirSync(path);
         var siteConfig = config.load("./test/structure/_config.yml");
-        structure.build(siteConfig, "./test/structure/content/", path);
+
+        const targetPath = "./test/structure/dist/src/sections/";
+        fs.emptydirSync(targetPath);
+
+        structure.build(siteConfig, targetPath);
     });
 
 });

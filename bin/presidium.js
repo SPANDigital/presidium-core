@@ -10,7 +10,7 @@ var argv = yargs.usage("$0 command")
         var siteConfig = config.load("_config.yml");
 
         // shell.exec("pwd");
-        structure.build(siteConfig, "./content/", "./dist/src/sections/");
+        structure.build(siteConfig, "./dist/src/sections/");
     })
     .demand(1, "must provide a valid command")
     .help("h").alias("h", "help")
