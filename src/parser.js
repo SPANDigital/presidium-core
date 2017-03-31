@@ -2,11 +2,16 @@ const fs = require('fs-extra');
 const path = require('path');
 const fm = require('front-matter');
 const slugify = require('slugify');
+const slug = require('slug');
 
 const INDEX_SOURCE = "index.md";
 const IGNORE_ARTICLE = {include: false};
 
 const parser = module.exports;
+
+parser.slug = function(value) {
+    return slug(value, { mode: "rfc3986" });
+};
 
 parser.parseSection = function (siteConf, sectionConf) {
     return {
@@ -34,8 +39,9 @@ parser.parseCategory = function (basePath, filePath, sectionUrl) {
         }
     }
 
-    const slug = slugify(categoryTitle.toLowerCase());
+    const slug = parser.slug(categoryTitle);
     return {
+        id: categoryPath,
         title: categoryTitle,
         path: categoryPath,
         slug: slug,
@@ -54,7 +60,7 @@ parser.parseArticle = function (basePath, filePath, sectionUrl) {
     const attributes = fm(content).attributes;
 
     if (attributes && attributes.title) {
-        const slug = slugify(attributes.title.toLowerCase());
+        const slug = parser.slug(attributes.title);
         const articlePath = path.relative(basePath, filePath);
         return {
             id: articlePath,

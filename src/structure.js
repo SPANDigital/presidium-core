@@ -4,6 +4,7 @@ const menu = require('./menu');
 const parser = require('./parser');
 
 const INDEX_TEMPLATE = "index.html";
+const MENU_STRUCTURE = "menu.json";
 
 const structure = module.exports;
 
@@ -14,7 +15,7 @@ const structure = module.exports;
  */
 structure.build = function (config = "_config.yml") {
 
-    //TODO move defauts to config parser
+    //TODO move defaults to config parser
     const includesPath = config['include-path'] ? config['include-path'] : "_includes";
     const sectionsPath = config['section-path'] ? config['section-path'] : "sections";
 
@@ -22,7 +23,7 @@ structure.build = function (config = "_config.yml") {
     const template = buildTemplate(config);
 
     fs.mkdirsSync(includesPath);
-    writeMenu(template.menu, path.join(includesPath, "menu1.json"));
+    writeMenu(template.menu, path.join(includesPath, MENU_STRUCTURE));
 
     template.pages.forEach(page => {
         writeTemplate(config, page, sectionsPath);
@@ -92,6 +93,7 @@ function createPage(title, url, collection, articles = []) {
 
 function createCategoryArticle(category) {
     return {
+        id: category.id,
         title: category.title,
         path: category.path,
         slug: category.slug,
@@ -118,7 +120,7 @@ function writeMenu(menu, destination) {
 
 function pageTemplate(pageUrl, page) {
 
-    return `---
+return `---
 title: ${page.title}
 permalink: /${pageUrl}/
 layout: container
@@ -132,7 +134,10 @@ function includedArticles(page, collection) {
     } else {
         return page.articles.map(article => {
             return  `{% assign article = site.${ page.collection } | where:"path", "${ article.path }"  | first %}` +
-                    `{% assign slug = "${ article.slug }" %}` +
+                    `{% assign article-id = "${ article.id }" %}` +
+                    `{% assign article-slug = "${ article.slug }" %}` +
+                    `{% assign article-url = "${ article.url }" %}` +
+
                 (article.isCategory ? "{% include category.html %}" : "{% include article.html %}");
         }).join("\r\n")
     }

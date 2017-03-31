@@ -1,4 +1,4 @@
 ---
-title: Analyst and Developer
+title: Analyst & Developer
 ---
 Analyst and developer role descriptor

@@ -4,7 +4,7 @@
     <div class="article" data-roles="{{site.roles.all}}">
 {% endif %}
 
-<span id="{{ slug }}" class="anchor"></span>
+<span id="{{article-slug}}" data-id="{{article-id}}" class="anchor"></span>
 <h2>{{ article.title }}</h2>
 <div class="article-header">{% include author.html %} {% include status.html %} {% include roles.html %}</div>
 <article>{{ article.content }}</article>

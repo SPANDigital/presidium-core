@@ -69,7 +69,7 @@ Menu.prototype.addSection = function(props) {
 Menu.prototype.addCategory = function(node, props) {
     var category = {
         type: menu.TYPE.CATEGORY,
-        id: props.path,
+        id: props.id,
         level: node.level + 1,
         expandable: true,
         title: props.title,

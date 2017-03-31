@@ -1,6 +1,6 @@
 <div class="article">
-    <span id="{{ slug }}" class="anchor"></span>
-    <a href="{{article.title}}"><h2>{{ article.title }}</h2></a>
+    <span id="{{ article-slug }}" data-id="{{article-id}}" class="anchor"></span>
+    <a href="{{article-url}}"><h2>{{ article.title }}</h2></a>
     <div class="article-header">{% include author.html %} {% include status.html %} {% include roles.html %}</div>
     <article>{{ article.content }}</article>
     <hr/>

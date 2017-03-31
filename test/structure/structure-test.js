@@ -29,7 +29,7 @@ describe('Generate Site Structure', function() {
         const targetPath = "./test/structure/dist/src/sections/";
         fs.emptydirSync(targetPath);
 
-        structure.build(siteConfig, targetPath);
+        structure.build(siteConfig);
     });
 
 });
