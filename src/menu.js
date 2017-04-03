@@ -103,7 +103,7 @@ Menu.prototype.addArticle = function(node, props) {
 };
 
 /**
- * Visits all parent nodes in a tree and merges distinct roles.
+ * Visits all parent nodes in a tree and merge distinct roles.
  * @param node
  */
 Menu.propagateRoles = function(node) {

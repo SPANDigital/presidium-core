@@ -1,3 +1,4 @@
+$navbar-selected-bg-level-1: $navbar-default-bg;
 $navbar-selected-bg-level-2: darken($navbar-default-bg, 8%);
 $navbar-selected-bg-level-3: darken($navbar-default-bg, 12%);
 $navbar-selected-bg-level-4: darken($navbar-default-bg, 16%);
@@ -162,6 +163,10 @@ $navbar-default-border-level-4: darken($navbar-default-bg, 20%);
           display: none;
         }
 
+        li > .level-one {
+          background-color: $navbar-selected-bg-level-1;
+        }
+
         li > .level-two {
           background-color: $navbar-selected-bg-level-2;
         }
@@ -189,20 +194,39 @@ $navbar-default-border-level-4: darken($navbar-default-bg, 20%);
         }
 
         li.on-article {
-          .menu-row {
+          > .menu-row {
             background-color: $navbar-default-link-hover-color;
-            .menu-title a {
+            border-bottom: 1px $navbar-default-link-hover-color solid;
+            .menu-title > a, .menu-expander {
               color: $navbar-default-link-hover-bg;
+            }
+          }
+        }
+
+        &.on-page {
+          cursor: default;
+          > .menu-row {
+            .menu-title > a {
+              cursor: default;
+            }
+            .menu-expander {
+              cursor: pointer;
             }
           }
         }
 
         &.in-section {
           .level-one {
-            color: $navbar-default-link-hover-color;
-            a {
+            background-color: $navbar-default-link-hover-color;
+            .menu-title > a, .menu-expander {
+              color: $navbar-default-link-hover-bg;
+              font-weight: bold;
+            }
+          }
+          &.expanded > .level-one {
+            background-color: $navbar-selected-bg-level-1;
+            .menu-title > a, .menu-expander {
               color: $navbar-default-link-hover-color;
-              cursor: default;
               font-weight: bold;
             }
           }
@@ -218,7 +242,7 @@ $navbar-default-border-level-4: darken($navbar-default-bg, 20%);
           &.expanded > .level-two {
             background-color: $navbar-selected-bg-level-2;
             .menu-title > a, .menu-expander {
-              color: $navbar-default-link-color;
+              color: $navbar-default-link-hover-color;
             }
           }
 
@@ -232,7 +256,7 @@ $navbar-default-border-level-4: darken($navbar-default-bg, 20%);
             &.expanded > .level-three {
               background-color: $navbar-selected-bg-level-3;
               .menu-title > a, .menu-expander {
-                color: $navbar-default-link-color;
+                color: $navbar-default-link-hover-color;
               }
             }
           }

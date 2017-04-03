@@ -14,16 +14,20 @@ parser.slug = function(value) {
 };
 
 parser.parseSection = function (siteConf, sectionConf) {
+    const sectionPath = path.join(`_${sectionConf.collection}`, "/");
+    const sectionUrl = path.join(siteConf.baseurl, sectionConf.path);
+
     return {
         title: sectionConf.title,
-        path: path.join(`_${sectionConf.collection}`, "/"),
-        url: path.join(siteConf.baseurl, sectionConf.path),
+        path: sectionPath,
+        url: sectionUrl,
         collection: sectionConf.collection,
+        roles: [],
         articles: []
     }
 };
 
-parser.parseCategory = function (basePath, filePath, sectionUrl) {
+parser.parseCategory = function (basePath, filePath, sectionUrl, collection) {
     let categoryTitle = path.parse(filePath).name;
     let categoryPath = path.relative(basePath, filePath);
 
@@ -45,7 +49,8 @@ parser.parseCategory = function (basePath, filePath, sectionUrl) {
         title: categoryTitle,
         path: categoryPath,
         slug: slug,
-        url: path.join(sectionUrl, slug, "/")
+        url: path.join(sectionUrl, slug, "/"),
+        collection: collection
     }
 };
 

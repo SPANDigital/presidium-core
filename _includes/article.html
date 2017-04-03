@@ -1,12 +1,12 @@
-{% if article.roles | size > 0 %}
-    <div class="article" data-roles="{{article.roles | join: ','}}">
-{% else %}
-    <div class="article" data-roles="{{site.roles.all}}">
-{% endif %}
-
+<div class="article" data-roles="{{article-roles}}">
 <span id="{{article-slug}}" data-id="{{article-id}}" class="anchor"></span>
-<h2>{{ article.title }}</h2>
-<div class="article-header">{% include author.html %} {% include status.html %} {% include roles.html %}</div>
-<article>{{ article.content }}</article>
+{% if article != nil %}
+    <h2>{{ article.title }}</h2>
+    <div class="article-header">{% include author.html %} {% include status.html %} {% include roles.html %}</div>
+    <article>{{ article.content }}</article>
+{% else %}
+    Article not found: {{article-id}}
+    Check that the collection is configured
+{% endif %}
 <hr/>
 </div>

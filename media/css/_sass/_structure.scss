@@ -43,6 +43,14 @@
       margin-bottom: 10px;
     }
 
+    .category {
+        a > span {
+          padding-left: 10px;
+          color: $link-color;
+          font-size: 80%;
+        }
+    }
+
     .article-header {
       width: 100%;
       padding: 10px 0;

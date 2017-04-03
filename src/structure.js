@@ -8,6 +8,11 @@ const MENU_STRUCTURE = "menu.json";
 
 const structure = module.exports;
 
+const PAGE_TYPE = {
+    SECTION: 'section',
+    CATEGORY: 'category',
+}
+
 /**
  * Traverses a content directory and builds a presidium site template sections
  * @param config jekyll site config
@@ -45,7 +50,7 @@ function buildTemplate(config) {
             throw new Error(`Expected site section content directory not found: '${sectionPath}'`);
         }
 
-        const sectionPage = createPage(section.title, section.url, section.collection, section.articles);
+        const sectionPage = createPage(section, PAGE_TYPE.SECTION, section.collection);
         site.pages.set(section.url, sectionPage);
 
         const parent = site.menu.addSection(section);
@@ -63,41 +68,41 @@ function traverseSectionArticlesSync(contentPath, sectionPath, sectionUrl, colle
         const filePath = path.join(sectionPath, file);
 
         if (fs.statSync(filePath).isDirectory()) {
-            const category = parser.parseCategory(contentPath, filePath, sectionUrl);
+            const category = parser.parseCategory(contentPath, filePath, sectionUrl, collection);
 
             const parentPage = site.pages.get(sectionUrl);
-            parentPage.articles.push(createCategoryArticle(category));
+            const categoryPage = createPage(category, PAGE_TYPE.CATEGORY);
 
-            site.pages.set(category.url, createPage(category.title, category.url, collection, []));
+            parentPage.articles.push(categoryPage);
+
+            site.pages.set(categoryPage.url, categoryPage);
             const categoryNode = site.menu.addCategory(menuNode, category);
 
             traverseSectionArticlesSync(contentPath, filePath, category.url, collection, site, categoryNode)
         } else {
             const article = parser.parseArticle(contentPath, filePath, sectionUrl);
             if (article.include) {
-                site.pages.get(sectionUrl).articles.push(article);
+                const page = site.pages.get(sectionUrl);
+                page.articles.push(article);
+                page.roles = Array.from(new Set([...page.roles, ...article.roles]));
+
                 site.menu.addArticle(menuNode, article);
             }
         }
     });
 }
 
-function createPage(title, url, collection, articles = []) {
+function createPage(item, type) {
     return {
-        title: title,
-        url: url,
-        collection: collection,
-        articles: articles
-    }
-}
-
-function createCategoryArticle(category) {
-    return {
-        id: category.id,
-        title: category.title,
-        path: category.path,
-        slug: category.slug,
-        isCategory: true
+        type: type,
+        id: item.id,
+        title: item.title,
+        path: item.path,
+        url: item.url,
+        slug: item.slug,
+        collection: item.collection,
+        roles: [],
+        articles: []
     }
 }
 
@@ -105,7 +110,7 @@ function writeTemplate(config, page, destination) {
     const pageUrl = path.relative(config.baseurl, page.url);
 
     const pagePath = path.join(destination, pageUrl);
-    const template = pageTemplate(pageUrl, page);
+    const template = pageTemplate(pageUrl, page, config.roles? config.roles.all : "");
     fs.mkdirsSync(pagePath);
     fs.writeFileSync(path.join(pagePath, INDEX_TEMPLATE), template);
 }
@@ -118,27 +123,27 @@ function writeMenu(menu, destination) {
     fs.writeFileSync(destination, json);
 }
 
-function pageTemplate(pageUrl, page) {
+function pageTemplate(pageUrl, page, defaultRole) {
 
 return `---
 title: ${page.title}
 permalink: /${pageUrl}/
 layout: container
 ---
-${includedArticles(page)}`;
+${includedArticles(page, defaultRole)}`;
 }
 
-function includedArticles(page, collection) {
+function includedArticles(page, defaultRole) {
     if (page.articles.length <= 0) {
         return "{% include empty-article.html %}"
     } else {
         return page.articles.map(article => {
-            return  `{% assign article = site.${ page.collection } | where:"path", "${ article.path }"  | first %}` +
-                    `{% assign article-id = "${ article.id }" %}` +
-                    `{% assign article-slug = "${ article.slug }" %}` +
-                    `{% assign article-url = "${ article.url }" %}` +
-
-                (article.isCategory ? "{% include category.html %}" : "{% include article.html %}");
+            return  `{% assign article = site.${ page.collection } | where:"path", "${ article.path }"  | first %}\r\n` +
+                    `{% assign article-id = "${ article.id }" %}\r\n` +
+                    `{% assign article-slug = "${ article.slug }" %}\r\n` +
+                    `{% assign article-url = "${ article.url }" %}\r\n` +
+                    `{% assign article-roles = "${ article.roles.length > 0 ? article.roles.join(',') : [defaultRole] }" %}\r\n` +
+                    (article.type == PAGE_TYPE.CATEGORY ? "{% include category.html %}\r\n" : "{% include article.html %}\r\n");
         }).join("\r\n")
     }
 }
