@@ -1,0 +1,6 @@
+---
+title: "glossary export"
+permalink: "/glossary.json"
+layout: content
+---
+{% include glossary.json %}
