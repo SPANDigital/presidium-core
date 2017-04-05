@@ -32,7 +32,7 @@ menu.init = function(config) {
  */
 var Menu = function(config) {
     this.logo = config.get('logo');
-    this.baseUrl = path.join(config.get("baseurl"), "/");
+    this.baseUrl = path.join(config.get('baseurl'), '/');
     this.roles =  this.siteRoles(config);
     this.children = [];
 };
@@ -44,8 +44,8 @@ Menu.prototype.siteRoles = function(config) {
         all: config.get('roles').all,
         options: config.get('roles').options
     } : {
-        label: "",
-        all: "",
+        label: '',
+        all: '',
         options: []
     }
 };

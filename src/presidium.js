@@ -1,7 +1,7 @@
+const shell = require('shelljs');
 const fs = require('fs-extra');
 const path = require('path');
 const structure = require('./structure');
-const shell = require('shelljs');
 
 const presidium = module.exports;
 
@@ -12,14 +12,16 @@ presidium.clean = function (config) {
     fs.mkdirsSync(dist);
 };
 
-presidium.requirements = function(config) {
-    shell.exec("presidium-requirements");
+presidium.requirements = function() {
+    //TODO move out of sh script
+    shell.exec('presidium-requirements');
 };
 
 presidium.install = function(config) {
     const dist = config.dist();
     fs.mkdirsSync(dist);
-    //TODO presidium.requirements(config);
+
+    presidium.requirements();
 
     shell.cd('.jekyll');
     shell.exec('bundle install --path=.bundle --deployment');
@@ -50,6 +52,7 @@ presidium.build = function(config) {
     console.log(`Building site...`);
     shell.cd('.jekyll');
     shell.exec(`bundle exec jekyll build --trace -s ../${config.distSrc()} -d ../${config.distSite()}`);
+    shell.cd('..');
 };
 
 presidium.serve = function(config) {
@@ -58,9 +61,10 @@ presidium.serve = function(config) {
     console.log(`Serving...`);
     shell.cd('.jekyll');
     shell.exec(`bundle exec jekyll serve --incremental --port 4001 -s ../${config.distSrc()} -d ../${config.distSite()}`);
+    shell.cd('..');
 };
 
 presidium.publish = function(config) {
-    console.log("Publishing to Github Pages...");
+    console.log('Publishing to Github Pages...');
     shell.exec(`git-directory-deploy --directory ${config.distSrc()}`);
 };

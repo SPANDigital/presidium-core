@@ -3,18 +3,18 @@ const path = require('path');
 const fm = require('front-matter');
 const slug = require('slug');
 
-const INDEX_SOURCE = "index.md";
+const INDEX_SOURCE = 'index.md';
 const IGNORE_ARTICLE = {include: false};
 
 const parser = module.exports;
 
 parser.slug = function(value) {
-    return slug(value, { mode: "rfc3986" });
+    return slug(value, { mode: 'rfc3986' });
 };
 
 parser.parseSection = function (siteConf, sectionConf) {
-    const sectionPath = path.join(`_${sectionConf.collection}`, "/");
-    const sectionUrl = path.join(siteConf.get("baseurl"), sectionConf.path);
+    const sectionPath = path.join(`_${sectionConf.collection}`, '/');
+    const sectionUrl = path.join(siteConf.get('baseurl'), sectionConf.path);
 
     return {
         title: sectionConf.title,
@@ -32,13 +32,13 @@ parser.parseCategory = function (basePath, filePath, sectionUrl, collection) {
 
     const index = path.join(filePath, INDEX_SOURCE);
     if (fs.existsSync(index)) {
-        const content = fs.readFileSync(index, {encoding: "utf8", flat: "r"});
+        const content = fs.readFileSync(index, {encoding: 'utf8', flat: 'r'});
         const attributes = fm(content).attributes;
         if (attributes && attributes.title) {
             categoryTitle = attributes.title;
             categoryPath = path.relative(basePath, index);
         } else {
-            throw new Error("A title is required in a category index.")
+            throw new Error('A title is required in a category index.')
         }
     }
 
@@ -48,7 +48,7 @@ parser.parseCategory = function (basePath, filePath, sectionUrl, collection) {
         title: categoryTitle,
         path: categoryPath,
         slug: slug,
-        url: path.join(sectionUrl, slug, "/"),
+        url: path.join(sectionUrl, slug, '/'),
         collection: collection
     }
 };
@@ -60,7 +60,7 @@ parser.parseArticle = function (basePath, filePath, sectionUrl) {
     }
 
     //May need to optimize once working on larger file sets
-    const content = fs.readFileSync(filePath, {encoding: "utf8", flat: "r"});
+    const content = fs.readFileSync(filePath, {encoding: 'utf8', flat: 'r'});
     const attributes = fm(content).attributes;
 
     if (attributes && attributes.title) {

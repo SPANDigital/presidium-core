@@ -3,15 +3,15 @@ const path = require('path');
 const menu = require('./menu');
 const parser = require('./parser');
 
-const INDEX_TEMPLATE = "index.html";
-const MENU_STRUCTURE = "menu.json";
+const INDEX_TEMPLATE = 'index.html';
+const MENU_STRUCTURE = 'menu.json';
 
 const structure = module.exports;
 
 const PAGE_TYPE = {
     SECTION: 'section',
     CATEGORY: 'category',
-}
+};
 
 /**
  * Traverses a content directory and builds a presidium site template sections
@@ -38,9 +38,9 @@ function buildTemplate(config) {
         pages: new Map()
     };
 
-    const contentPath = config.get("content-path", "content");
+    const contentPath = config.get('content-path', 'content');
 
-    config.get("sections").map(sectionConf => {
+    config.get('sections').map(sectionConf => {
         const section = parser.parseSection(config, sectionConf);
         const sectionPath = path.join(contentPath, section.path);
         if (!fs.existsSync(sectionPath)) {
@@ -107,7 +107,7 @@ function writeTemplate(config, page, destination) {
     const pageUrl = path.relative(config.get('baseurl'), page.url);
 
     const pagePath = path.join(destination, pageUrl);
-    const template = pageTemplate(pageUrl, page, config.get('roles')? config.get('roles').all : "");
+    const template = pageTemplate(pageUrl, page, config.get('roles')? config.get('roles').all : '');
     fs.mkdirsSync(pagePath);
     fs.writeFileSync(path.join(pagePath, INDEX_TEMPLATE), template);
 }
@@ -115,7 +115,7 @@ function writeTemplate(config, page, destination) {
 function writeMenu(menu, destination) {
     const json = JSON.stringify(menu, (key, value)=> {
         //Ignore circular parent references
-        return (key == "parent") ? undefined : value;
+        return (key == 'parent') ? undefined : value;
     });
     fs.writeFileSync(destination, json);
 }
@@ -132,7 +132,7 @@ ${includedArticles(page, defaultRole)}`;
 
 function includedArticles(page, defaultRole) {
     if (page.articles.length <= 0) {
-        return "{% include empty-article.html %}"
+        return '{% include empty-article.html %}'
     } else {
         return page.articles.map(article => {
             return  `{% assign article = site.${ page.collection } | where:"path", "${ article.path }"  | first %}\r\n` +
@@ -141,7 +141,7 @@ function includedArticles(page, defaultRole) {
                     `{% assign article-slug = "${ article.slug }" %}\r\n` +
                     `{% assign article-url = "${ article.url }" %}\r\n` +
                     `{% assign article-roles = "${ article.roles.length > 0 ? article.roles.join(',') : [defaultRole] }" %}\r\n` +
-                    (article.type == PAGE_TYPE.CATEGORY ? "{% include category.html %}\r\n" : "{% include article.html %}\r\n");
-        }).join("\r\n")
+                    (article.type == PAGE_TYPE.CATEGORY ? '{% include category.html %}\r\n' : '{% include article.html %}\r\n');
+        }).join('\r\n')
     }
 }
