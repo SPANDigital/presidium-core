@@ -16,22 +16,19 @@ const PAGE_TYPE = {
 /**
  * Traverses a content directory and builds a presidium site template sections
  * @param config jekyll site config
- * @param sections path to write template sections
  */
-structure.build = function (config = "_config.yml") {
+structure.build = function (config) {
 
-    //TODO move defaults to config parser
-    const includesPath = config['include-path'] ? config['include-path'] : "_includes";
-    const sectionsPath = config['section-path'] ? config['section-path'] : "sections";
+    console.log(`Generating sections in: ${config.distSections()}`);
 
-    fs.emptydirSync(sectionsPath);
+    fs.emptydirSync(config.distSections());
     const template = buildTemplate(config);
 
-    fs.mkdirsSync(includesPath);
-    writeMenu(template.menu, path.join(includesPath, MENU_STRUCTURE));
+    fs.mkdirsSync(config.distIncludes());
+    writeMenu(template.menu, path.join(config.distIncludes(), MENU_STRUCTURE));
 
     template.pages.forEach(page => {
-        writeTemplate(config, page, sectionsPath);
+        writeTemplate(config, page, config.distSections());
     });
 };
 
@@ -41,9 +38,9 @@ function buildTemplate(config) {
         pages: new Map()
     };
 
-    const contentPath = config["content-path"] ? config["content-path"] : "content";
+    const contentPath = config.get("content-path", "content");
 
-    config.sections.map(sectionConf => {
+    config.get("sections").map(sectionConf => {
         const section = parser.parseSection(config, sectionConf);
         const sectionPath = path.join(contentPath, section.path);
         if (!fs.existsSync(sectionPath)) {
@@ -58,7 +55,7 @@ function buildTemplate(config) {
         traverseSectionArticlesSync(contentPath, sectionPath, section.url, section.collection, site, parent);
     });
 
-    console.log(require('util').inspect(site.menu, {depth: null}));
+    // console.log(require('util').inspect(siteConfig.menu, {depth: null}));
 
     return site;
 }
@@ -107,10 +104,10 @@ function createPage(item, type) {
 }
 
 function writeTemplate(config, page, destination) {
-    const pageUrl = path.relative(config.baseurl, page.url);
+    const pageUrl = path.relative(config.get('baseurl'), page.url);
 
     const pagePath = path.join(destination, pageUrl);
-    const template = pageTemplate(pageUrl, page, config.roles? config.roles.all : "");
+    const template = pageTemplate(pageUrl, page, config.get('roles')? config.get('roles').all : "");
     fs.mkdirsSync(pagePath);
     fs.writeFileSync(path.join(pagePath, INDEX_TEMPLATE), template);
 }
@@ -140,6 +137,7 @@ function includedArticles(page, defaultRole) {
         return page.articles.map(article => {
             return  `{% assign article = site.${ page.collection } | where:"path", "${ article.path }"  | first %}\r\n` +
                     `{% assign article-id = "${ article.id }" %}\r\n` +
+                    `{% assign article-title = "${ article.title }" %}\r\n` +
                     `{% assign article-slug = "${ article.slug }" %}\r\n` +
                     `{% assign article-url = "${ article.url }" %}\r\n` +
                     `{% assign article-roles = "${ article.roles.length > 0 ? article.roles.join(',') : [defaultRole] }" %}\r\n` +

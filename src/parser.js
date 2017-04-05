@@ -1,7 +1,6 @@
 const fs = require('fs-extra');
 const path = require('path');
 const fm = require('front-matter');
-const slugify = require('slugify');
 const slug = require('slug');
 
 const INDEX_SOURCE = "index.md";
@@ -15,7 +14,7 @@ parser.slug = function(value) {
 
 parser.parseSection = function (siteConf, sectionConf) {
     const sectionPath = path.join(`_${sectionConf.collection}`, "/");
-    const sectionUrl = path.join(siteConf.baseurl, sectionConf.path);
+    const sectionUrl = path.join(siteConf.get("baseurl"), sectionConf.path);
 
     return {
         title: sectionConf.title,

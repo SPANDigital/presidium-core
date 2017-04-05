@@ -31,18 +31,18 @@ menu.init = function(config) {
  * @constructor
  */
 var Menu = function(config) {
-    this.logo = config.logo;
-    this.baseUrl = path.join(config.baseurl, "/");
+    this.logo = config.get('logo');
+    this.baseUrl = path.join(config.get("baseurl"), "/");
     this.roles =  this.siteRoles(config);
     this.children = [];
 };
 
 Menu.prototype.siteRoles = function(config) {
-    return config.roles ?
+    return config.get('roles') ?
     {
-        label: config.roles.label,
-        all: config.roles.all,
-        options: config.roles.options
+        label: config.get('roles').label,
+        all: config.get('roles').all,
+        options: config.get('roles').options
     } : {
         label: "",
         all: "",

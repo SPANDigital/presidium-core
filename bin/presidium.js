@@ -1,16 +1,38 @@
 #! /usr/bin/env node
-var shell = require("shelljs");
 var yargs = require("yargs");
-var structure = require("../src/structure");
+var shell = require("shelljs")
 var config = require("../src/config");
-var fs = require("fs-extra");
+var presidium = require("../src/presidium");
+
+var conf = config.load("_config.yml");
 
 var argv = yargs.usage("$0 command")
-    .command("structure", "Build site structure", function (yargs) {
-        var siteConfig = config.load("_config.yml");
-
-        // shell.exec("pwd");
-        structure.build(siteConfig, "./dist/src/sections/");
+    .command("requirements", "Install jekyll gems and npm dependencies", function (yargs) {
+        presidium.requirements(conf);
+    })
+    .command("clean", "Clean build directory", function (yargs) {
+        presidium.clean(conf);
+    })
+    .command("install", "Install jekyll gems and npm dependencies", function (yargs) {
+        presidium.install(conf);
+    })
+    .command("build", "Build site", function (yargs) {
+        presidium.generate(conf);
+        presidium.build(conf);
+    })
+    .command("serve", "Serve site", function (yargs) {
+        presidium.serve(conf);
+    })
+    .command("start", "Build and serve", function (yargs) {
+        presidium.clean(conf);
+        presidium.generate(conf);
+        presidium.serve(conf);
+    })
+    .command("publish", "Publish to Github Pages", function (yargs) {
+        presidium.clean(conf);
+        presidium.generate(conf);
+        presidium.build(conf);
+        presidium.publish(conf);
     })
     .demand(1, "must provide a valid command")
     .help("h").alias("h", "help")
