@@ -64,7 +64,7 @@ presidium.serve = function(config) {
     shell.cd('..');
 };
 
-presidium.publish = function(config) {
+presidium.ghPages = function(config) {
     console.log('Publishing to Github Pages...');
     shell.exec(`git-directory-deploy --directory ${config.distSrc()}`);
 };

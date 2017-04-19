@@ -53,6 +53,12 @@ Config.prototype.distSections = function() {
     return this.get('sections-path', path.join(this.distSrc(), 'sections/'));
 };
 
+Config.prototype.includeNestedArticles = function() {
+    return this.get('include-nested-articles', true);
+};
+
+
+
 
 
 

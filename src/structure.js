@@ -47,12 +47,12 @@ function buildTemplate(config) {
             throw new Error(`Expected site section content directory not found: '${sectionPath}'`);
         }
 
-        const sectionPage = createPage(section, PAGE_TYPE.SECTION, section.collection);
+        const sectionPage = createPage(section, PAGE_TYPE.SECTION);
         site.pages.set(section.url, sectionPage);
 
         const parent = site.menu.addSection(section);
 
-        traverseSectionArticlesSync(contentPath, sectionPath, section.url, section.collection, site, parent);
+        traverseSectionArticlesSync(config, contentPath, sectionPath, section.url, section.collection, site, parent);
     });
 
     // console.log(require('util').inspect(siteConfig.menu, {depth: null}));
@@ -60,7 +60,7 @@ function buildTemplate(config) {
     return site;
 }
 
-function traverseSectionArticlesSync(contentPath, sectionPath, sectionUrl, collection, site, menuNode) {
+function traverseSectionArticlesSync(config, contentPath, sectionPath, sectionUrl, collection, site, menuNode) {
     fs.readdirSync(sectionPath).map(file => {
         const filePath = path.join(sectionPath, file);
 
@@ -68,18 +68,20 @@ function traverseSectionArticlesSync(contentPath, sectionPath, sectionUrl, colle
             const category = parser.parseCategory(contentPath, filePath, sectionUrl, collection);
 
             const parentPage = site.pages.get(sectionUrl);
-            const categoryPage = createPage(category, PAGE_TYPE.CATEGORY);
-
-            parentPage.articles.push(categoryPage);
+            const categoryPage = createPage(category, PAGE_TYPE.CATEGORY, parentPage);
 
             site.pages.set(categoryPage.url, categoryPage);
             const categoryNode = site.menu.addCategory(menuNode, category);
 
-            traverseSectionArticlesSync(contentPath, filePath, category.url, collection, site, categoryNode)
+            traverseSectionArticlesSync(config, contentPath, filePath, category.url, collection, site, categoryNode)
         } else {
             const article = parser.parseArticle(contentPath, filePath, sectionUrl);
             if (article.include) {
                 const page = site.pages.get(sectionUrl);
+
+                if (config.includeNestedArticles()) {
+                    addToParents(page, article);
+                }
                 page.articles.push(article);
                 page.roles = Array.from(new Set([...page.roles, ...article.roles]));
 
@@ -89,7 +91,7 @@ function traverseSectionArticlesSync(contentPath, sectionPath, sectionUrl, colle
     });
 }
 
-function createPage(item, type) {
+function createPage(item, type, parent) {
     return {
         type: type,
         id: item.id,
@@ -99,7 +101,15 @@ function createPage(item, type) {
         slug: item.slug,
         collection: item.collection,
         roles: [],
-        articles: []
+        articles: [],
+        parent: parent
+    }
+}
+
+function addToParents(page, article) {
+    if (page && page.parent) {
+        page.parent.articles.push(article);
+        addToParents(page.parent, article);
     }
 }
 

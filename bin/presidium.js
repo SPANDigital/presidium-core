@@ -27,11 +27,11 @@ var argv = yargs.usage('$0 command')
         presidium.generate(conf);
         presidium.serve(conf);
     })
-    .command('publish', 'Publish to Github Pages', function (yargs) {
+    .command('gh-pages', 'Publish to Github Pages', function (yargs) {
         presidium.clean(conf);
         presidium.generate(conf);
         presidium.build(conf);
-        presidium.publish(conf);
+        presidium.ghPages(conf);
     })
     .demand(1, 'must provide a valid command')
     .help('h').alias('h', 'help')
