@@ -19,16 +19,16 @@ const PAGE_TYPE = {
  */
 structure.build = function (config) {
 
-    console.log(`Generating sections in: ${config.distSections()}`);
+    console.log(`Generating sections in: ${config.distSectionsPath()}`);
 
-    fs.emptydirSync(config.distSections());
+    fs.emptydirSync(config.distSectionsPath());
     const template = buildTemplate(config);
 
-    fs.mkdirsSync(config.distIncludes());
-    writeMenu(template.menu, path.join(config.distIncludes(), MENU_STRUCTURE));
+    fs.mkdirsSync(config.distIncludesPath());
+    writeMenu(template.menu, path.join(config.distIncludesPath(), MENU_STRUCTURE));
 
     template.pages.forEach(page => {
-        writeTemplate(config, page, config.distSections());
+        writeTemplate(config, page, config.distSectionsPath());
     });
 };
 

@@ -2,11 +2,12 @@ const shell = require('shelljs');
 const fs = require('fs-extra');
 const path = require('path');
 const structure = require('./structure');
+const cpx = require("cpx");
 
 const presidium = module.exports;
 
 presidium.clean = function (config) {
-    const dist = config.dist();
+    const dist = config.distPath();
     console.log(`Cleaning all files and folders in: ${dist}`);
     fs.removeSync(dist);
     fs.mkdirsSync(dist);
@@ -18,7 +19,7 @@ presidium.requirements = function() {
 };
 
 presidium.install = function(config) {
-    const dist = config.dist();
+    const dist = config.distPath();
     fs.mkdirsSync(dist);
 
     presidium.requirements();
@@ -29,18 +30,18 @@ presidium.install = function(config) {
 
 presidium.generate = function(config) {
     console.log(`Copy base templates...`);
-    fs.copySync('node_modules/presidium-core/_includes', config.distIncludes());
-    fs.copySync('node_modules/presidium-core/_layouts', config.distLayouts());
-    fs.copySync('node_modules/presidium-core/media', config.distMedia());
+    fs.copySync('node_modules/presidium-core/_includes', config.distIncludesPath());
+    fs.copySync('node_modules/presidium-core/_layouts', config.distLayoutsPath());
+    fs.copySync('node_modules/presidium-core/media', config.distMediaPath());
 
     console.log(`Copy config...`);
-    fs.copySync('_config.yml', path.join(config.distSrc(), '_config.yml'));
+    fs.copySync('_config.yml', path.join(config.distSrcPath(), '_config.yml'));
 
     console.log(`Copy media assets...`);
-    fs.copySync('media', config.distMedia());
+    fs.copySync('media', config.distMediaPath());
 
     console.log(`Copy content...`);
-    fs.copySync('./content', config.distSrc());
+    fs.copySync('./content', config.distSrcPath());
 
     console.log(`Generate sections and menu...`);
     structure.build(config);
@@ -51,20 +52,31 @@ presidium.build = function(config) {
 
     console.log(`Building site...`);
     shell.cd('.jekyll');
-    shell.exec(`bundle exec jekyll build --trace -s ../${config.distSrc()} -d ../${config.distSite()}`);
+    shell.exec(`bundle exec jekyll build --trace -s ../${config.distSrcPath()} -d ../${config.distSitePath()}`);
     shell.cd('..');
 };
 
-presidium.serve = function(config) {
-    presidium.generate(config);
+presidium.watch = function(config) {
+    console.log(`Watching Content and Media...`);
+    shell.exec(`cpx --watch "${config.contentPath()}/**" "${config.distContentPath()}/"`, {async: true});
+    shell.exec(`cpx --watch "${config.mediaPath()}/**" "${config.distMediaPath()}/"`, {async: true});
+};
 
+presidium.develop = function(config) {
+    console.log(`Watching Presidium...`);
+    shell.exec(`cpx --watch --verbose "node_modules/presidium-core/_includes/**" "${config.distIncludesPath()}/"`, {async: true});
+    shell.exec(`cpx --watch --verbose "node_modules/presidium-core/_layouts/**" "${config.distLayoutsPath()}/"`, {async: true});
+    shell.exec(`cpx --watch --verbose "node_modules/presidium-core/media/**" "${config.distMediaPath()}/"`, {async: true});
+};
+
+presidium.serve = function(config) {
     console.log(`Serving...`);
     shell.cd('.jekyll');
-    shell.exec(`bundle exec jekyll serve --incremental --port 4001 -s ../${config.distSrc()} -d ../${config.distSite()}`);
+    shell.exec(`bundle exec jekyll serve -s ../${config.distSrcPath()} -d ../${config.distSitePath()}`, {async: true});
     shell.cd('..');
 };
 
 presidium.ghPages = function(config) {
     console.log('Publishing to Github Pages...');
-    shell.exec(`git-directory-deploy --directory ${config.distSrc()}`);
+    shell.exec(`git-directory-deploy --directory ${config.distSrcPath()}`);
 };

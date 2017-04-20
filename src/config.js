@@ -21,36 +21,56 @@ Config.prototype.get = function(key, defaultVal = undefined) {
     return this.config[key] ? this.config[key] : defaultVal;
 };
 
-Config.prototype.content = function() {
+Config.prototype.logo = function() {
+    return this.get('logo', './content/');
+};
+
+Config.prototype.brandName = function() {
+    return this.get('name', '');
+};
+
+Config.prototype.baseUrl = function() {
+    return path.join(this.get('baseurl', ''), '/');
+};
+
+Config.prototype.contentPath = function() {
     return this.get('content-path', './content/');
 };
 
-Config.prototype.dist = function() {
+Config.prototype.mediaPath = function() {
+    return this.get('media-path', './media/');
+};
+
+Config.prototype.distPath = function() {
     return this.get('dist-path', './dist/');
 };
 
-Config.prototype.distSrc = function() {
-    return this.get('dist-src-path', path.join(this.dist(), 'src/'));
+Config.prototype.distSrcPath = function() {
+    return this.get('dist-src-path', path.join(this.distPath(), 'src/'));
 };
 
-Config.prototype.distSite = function() {
-    return this.get('dist-site-path', path.join(this.dist(), 'site/'));
+Config.prototype.distContentPath = function() {
+    return this.get('dist-content-path', this.distSrcPath());
 };
 
-Config.prototype.distMedia = function() {
-    return this.get('media-path', path.join(this.distSrc(), 'media/'));
+Config.prototype.distMediaPath = function() {
+    return this.get('dist-media-path', path.join(this.distSrcPath(), 'media/'));
 };
 
-Config.prototype.distIncludes = function() {
-    return this.get('includes-path', path.join(this.distSrc(), '_includes/'));
+Config.prototype.distIncludesPath = function() {
+    return this.get('dist-includes-path', path.join(this.distSrcPath(), '_includes/'));
 };
 
-Config.prototype.distLayouts = function() {
-    return this.get('layouts-path', path.join(this.distSrc(), '_layouts/'));
+Config.prototype.distLayoutsPath = function() {
+    return this.get('dist-layouts-path', path.join(this.distSrcPath(), '_layouts/'));
 };
 
-Config.prototype.distSections = function() {
-    return this.get('sections-path', path.join(this.distSrc(), 'sections/'));
+Config.prototype.distSectionsPath = function() {
+    return this.get('dist-sections-path', path.join(this.distSrcPath(), 'sections/'));
+};
+
+Config.prototype.distSitePath = function() {
+    return this.get('dist-site-path', path.join(this.distPath(), 'site/'));
 };
 
 Config.prototype.includeNestedArticles = function() {

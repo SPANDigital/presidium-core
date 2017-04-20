@@ -19,11 +19,11 @@ external:
   authors-url: https://github.com/orgs/SPANDigital/people/
 
 content-path:  ./test/structure/content/
-dist-src-path: ./test/structure/dist/src
-media-path:    ./test/structure/dist/src/media/
-sections-path: ./test/structure/dist/src/sections/
-includes-path: ./test/structure/dist/src/_includes/
-layouts-path:  ./test/structure/dist/src/_layouts/
+dist-src-path: ./test/structure/distPath/src
+media-path:    ./test/structure/distPath/src/media/
+sections-path: ./test/structure/distPath/src/sections/
+includes-path: ./test/structure/distPath/src/_includes/
+layouts-path:  ./test/structure/distPath/src/_layouts/
 
 include-nested-articles: true
 #

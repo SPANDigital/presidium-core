@@ -21783,7 +21783,7 @@
 	        _this.state = {
 	            onPage: onPage,
 	            inSection: onPage || inSection,
-	            isExpandable: _this.props.item.expandable,
+	            isCollapsed: _this.props.item.collapsed,
 	            hasChildren: hasChildren,
 	            activeArticle: _this.props.activeArticle,
 	            isExpanded: inSection && hasChildren,
@@ -21875,7 +21875,7 @@
 	                        )
 	                    )
 	                ),
-	                this.state.isExpandable && _react2.default.createElement(
+	                !this.state.isCollapsed && _react2.default.createElement(
 	                    'ul',
 	                    _extends({}, this.spyOnMe(), { className: this.state.isExpanded ? "dropdown expanded" : "dropdown" }),
 	                    this.children()
@@ -21921,7 +21921,7 @@
 	        value: function expander() {
 	            var _this5 = this;
 
-	            if (this.state.isExpandable && this.state.hasChildren) {
+	            if (!this.state.isCollapsed && this.state.hasChildren) {
 	                return _react2.default.createElement('span', { onClick: function onClick(e) {
 	                        return _this5.toggleExpand(e);
 	                    }, className: this.state.isExpanded ? "glyphicon glyphicon-chevron-down" : "glyphicon glyphicon-chevron-right" });

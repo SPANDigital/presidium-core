@@ -21,6 +21,7 @@ parser.parseSection = function (siteConf, sectionConf) {
         path: sectionPath,
         url: sectionUrl,
         collection: sectionConf.collection,
+        collapsed: sectionConf.collapsed,
         roles: [],
         articles: []
     }

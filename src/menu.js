@@ -14,7 +14,7 @@ menu.init = function(config) {
 };
 
 /**
- * Builds a menu treeA Menu init for traversing a menu tree. Appends items to the menu tree using the structure.
+ * Builds a menu tree. Appends items to the menu tree using the structure.
  *
  * Sections are root nodes than may have articles and categories
  * Categories group articles
@@ -31,8 +31,9 @@ menu.init = function(config) {
  * @constructor
  */
 var Menu = function(config) {
-    this.logo = config.get('logo');
-    this.baseUrl = path.join(config.get('baseurl'), '/');
+    this.logo = config.logo();
+    this.brandName = config.brandName();
+    this.baseUrl = config.baseUrl();
     this.roles =  this.siteRoles(config);
     this.children = [];
 };
@@ -56,7 +57,7 @@ Menu.prototype.addSection = function(props) {
         id: props.path,
         title: props.title,
         level: 1,
-        expandable: props.expandable? props.expandable : true,
+        collapsed: props.collapsed? props.collapsed: false,
         path: props.path,
         url: props.url,
         roles : [],
@@ -71,7 +72,7 @@ Menu.prototype.addCategory = function(node, props) {
         type: menu.TYPE.CATEGORY,
         id: props.id,
         level: node.level + 1,
-        expandable: true,
+        collapsed: false,
         title: props.title,
         slug: props.slug,
         path: props.path,
@@ -94,7 +95,7 @@ Menu.prototype.addArticle = function(node, props) {
         title: props.title,
         parent: node,
         level: node.level + 1,
-        expandable: false,
+        collapsed: true,
         roles: props.roles.length > 0 ? props.roles : [this.roles.all]
     };
     node.children.push(article);

@@ -19,8 +19,8 @@ external:
   authors-url: https://github.com/orgs/SPANDigital/people/
 
 content-path:  ./test/structure/content/
-section-path: ./test/structure/dist/src/sections/
-include-path: ./test/structure/dist/src/_includes/
+section-path: ./test/structure/distPath/src/sections/
+include-path: ./test/structure/distPath/src/_includes/
 
 #
 # Menu Structure
