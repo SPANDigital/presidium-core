@@ -26,8 +26,7 @@ describe('Generate Site Structure', function() {
     describe('Group By Section', function() {
         var siteConfig = config.load("./test/structure/_config.yml");
 
-        const targetPath = "./test/structure/distPath/src/sections/";
-        fs.emptydirSync(targetPath);
+        fs.emptydirSync(siteConfig.distSrcPath());
 
         structure.build(siteConfig);
     });
