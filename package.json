@@ -1,6 +1,6 @@
 {
   "name": "presidium-core",
-  "version": "0.0.33",
+  "version": "0.0.34",
   "description": "Presidium technical documentation template for Jekyll",
   "license": "Apache-2.0",
   "bin": {
