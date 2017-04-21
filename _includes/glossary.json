@@ -1,7 +1,9 @@
 {
   {% for article in site.glossary %}
-  "{{article.title}}": {
-    "url": "{{ article.url }}",
+    {% assign path =  site.baseurl | append: '/glossary/' | replace: '//','/' %}
+    {% assign slug = article.title | slugify %}
+  "{{ article.title }}": {
+    "url": "{{path | append: '#' | append: slug}}",
     "content": "{{ article.content | strip_newlines | replace: '"','\"' }}"
   }{% if forloop.last %}{% else %},{% endif %}
   {% endfor %}
