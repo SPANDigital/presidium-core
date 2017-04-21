@@ -1,12 +1,6 @@
-{% if article.roles %}
-    {% if article.roles.first %} {% assign roles = (article.roles | sort) | reverse %} {% else %} {% assign roles = article.roles %} {% endif %}
-    {% for role in roles %}
-        <div class="article-role">
-            <span title="Role" class="label">{{role}}</span>
-        </div>
-    {% endfor %}
-{% elsif site.roles%}
-    <div class="article-role">
-        <span title="Role" class="label">{{site.roles.all}}</span>
-    </div>
-{% endif %}
+{% assign split-roles = article-roles | split: "," %}
+{% for role in split-roles %}
+<div class="article-role">
+    <span title="Role" class="label">{{role}}</span>
+</div>
+{% endfor %}

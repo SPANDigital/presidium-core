@@ -59,9 +59,9 @@ Content and media resources are kept separate from the underlying Jekyll layouts
 ### Build Scripts
 The following build scripts manage the main workflows:
 - `npm install` : Installs all npm and Jekyll dependencies required to build, run and publish your site.
-- `npm start` : Serves the Jekyll site from `dist/site` and Watches for any changes to `content` and `media`.
-- `npm run build` : Build your Jekyll site to `dist/site`.
-- `npm run gh-pages` : Publishes `dist/site` to a `gh-pages` branch in your current repo.
+- `npm start` : Serves the Jekyll site from `distPath/site` and Watches for any changes to `content` and `media`.
+- `npm run build` : Build your Jekyll site to `distPath/site`.
+- `npm run gh-pages` : Publishes `distPath/site` to a `gh-pages` branch in your current repo.
 
 ### Configuration
 Site configuration such as the site name and menu structure can be done in `_config.yml`. Changes made to config require a site rebuild to take effect.
