@@ -33,6 +33,7 @@
 <script src="{{ site.baseurl | append: '/media/js/presidium.js' | replace: '//','/'}}"></script>
 <script>
     window.presidium.menu.load({% include menu.json %}, 'presidium-navigation');
+    window.presidium.tooltips.load({ "baseurl": "{{ site.baseurl }}" });
 </script>
 
 </body>
