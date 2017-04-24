@@ -22675,17 +22675,20 @@
 
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
-	/* TODO: Remove baseurl, and any project specific variables that could instead be pulled from the config. */
-
+	/**
+	 * A helper function, returns true if the entry has expired or if it is
+	 * undefined, null, or empty.
+	 * @param {object} data - the cached data.
+	 */
 	function emptyOrExpired(data) {
 	    return data ? new Date().getTime() > data.timestamp + data.expire : true;
 	}
 
 	/**
-	 * @param {string} key
-	 * @param {int} expire - Expiry in milliseconds.
 	 * Helper that checks if the value is cached, otherwise performs a GET and set.
 	 * Returns: promise. TODO raise an error to catch?
+	 * @param {string} key
+	 * @param {int} expire - Expiry in milliseconds.
 	 */
 	function getAndOrSet(key) {
 	    var expire = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 100000;
@@ -22717,13 +22720,12 @@
 	}
 
 	/**
-	 * @param {object} term - The HTML element (title) of the glossary entry.
 	 * Note that all terms must correspond exactly to their glossary entry title.
+	 * @param {object} term - The HTML element (title) of the glossary entry.
 	 */
 	function automaticTooltips(term) {
 	    /* Create a tooltip - if and only if - a glossary entry exists for the
 	     term. */
-	    // TODO get the base url of the project.
 	    getAndOrSet(window.location.pathname + '/glossary.json').then(function (data) {
 	        var key = term.innerText;
 	        if (data[key]) {
@@ -22739,7 +22741,6 @@
 	            tooltip.appendChild(glossaryContent);
 
 	            term.href = url;
-	            term.target = '_blank';
 	            term.className = 'tooltips-term';
 	            term.removeAttribute('title');
 	            term.appendChild(tooltip);
@@ -22784,7 +22785,6 @@
 	            tooltip.appendChild(content.getElementsByTagName('p')[0]);
 
 	            term.href = url;
-	            term.target = '_blank';
 	            term.className = 'tooltips-term';
 
 	            term.removeAttribute('title');
@@ -22796,8 +22796,9 @@
 	}
 
 	/**
-	 * A helper that searches for glossary terms in the current page marked by:
-	 * <em>...</em>. Injects html to allow for hover and linking of content.
+	 * The initializer that searches for glossary terms in the current page
+	 * marked by: <a title='presidium-tooltip'>...</a>. Injects html to allow for
+	 * hover and linking of content.
 	 */
 	function init() {
 
@@ -22818,8 +22819,8 @@
 
 	            var url = term.getAttribute('href');
 
-	            /* If no URL is provided create automatic tooltips from /glossary. */
-	            url ? createLinkTooltips(term, url) : automaticTooltips(term);
+	            /* Convention url === #: create automatic tooltips from /glossary. */
+	            url === "#" ? automaticTooltips(term) : createLinkTooltips(term, url);
 	        }
 	    } catch (err) {
 	        _didIteratorError = true;
