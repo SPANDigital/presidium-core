@@ -22661,6 +22661,10 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	exports.emptyOrExpired = emptyOrExpired;
+	exports.getAndOrSet = getAndOrSet;
+	exports.automaticTooltips = automaticTooltips;
+	exports.linkTooltips = linkTooltips;
 	exports.init = init;
 
 	var _axios = __webpack_require__(185);
@@ -22756,7 +22760,7 @@
 	 * @param {object} term - The HTML element that has been flagged as a tooltip.
 	 * @param {string} url - The URL supplied to article for the content.
 	 */
-	function createLinkTooltips(term, url) {
+	function linkTooltips(term, url) {
 	    getAndOrSet(url).then(function (data) {
 	        /* Create the HTML elements from the result. */
 	        var parser = new DOMParser();
@@ -22820,7 +22824,7 @@
 	            var url = term.getAttribute('href');
 
 	            /* Convention url === #: create automatic tooltips from /glossary. */
-	            url === "#" ? automaticTooltips(term) : createLinkTooltips(term, url);
+	            url === "#" ? automaticTooltips(term) : linkTooltips(term, url);
 	        }
 	    } catch (err) {
 	        _didIteratorError = true;
