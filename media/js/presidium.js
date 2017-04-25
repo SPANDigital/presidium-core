@@ -22662,7 +22662,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.automaticTooltips = automaticTooltips;
+	exports.createTooltip = createTooltip;
 	exports.linkTooltips = linkTooltips;
 	exports.loadTooltips = loadTooltips;
 
@@ -22672,38 +22672,24 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+	var parser = new DOMParser();
 
 	/**
-	 * Note that all terms must correspond exactly to their glossary entry title.
-	 * @param {object} term - The HTML element (title) of the glossary entry.
+	 * Helper function that manipulates the DOM by adding the tooltip & attributes.
+	 *
+	 * @param term {object} - The HTML element that has been flagged as a tooltip.
+	 * @param content {object} - The content as a HTML element.
+	 * @param url {string}
 	 */
-	function automaticTooltips(term) {
-	    /* Create a tooltip - if and only if - a glossary entry exists for the
-	     term. */
-	    _axios2.default.get(presidium.tooltips.config.baseurl + '/glossary.json').then(function (response) {
-	        var key = term.innerText;
-	        if (response.data[key]) {
-	            var content = response.data[key].content;
-	            var url = response.data[key].url;
+	function createTooltip(term, content, url) {
+	    var tooltip = document.createElement('span');
+	    tooltip.setAttribute('class', 'tooltips-text');
+	    tooltip.appendChild(content.querySelector('p'));
 
-	            var parser = new DOMParser();
-	            var glossaryContent = parser.parseFromString(content, "text/html");
-
-	            /* Create the tooltip. */
-	            var tooltip = document.createElement('span');
-	            tooltip.className = 'tooltips-text';
-	            /* Take the first <p> from the body. */
-	            tooltip.appendChild(glossaryContent.getElementsByTagName('p')[0]);
-
-	            term.href = url;
-	            term.className = 'tooltips-term';
-	            term.removeAttribute('title');
-	            term.appendChild(tooltip);
-	        }
-	    }).catch(function (error) {
-	        console.log("[presidium-js] Could not create the tooltip: " + error);
-	    });
+	    term.setAttribute('href', url);
+	    term.setAttribute('class', 'tooltips-term');
+	    term.removeAttribute('title');
+	    term.appendChild(tooltip);
 	}
 
 	/**
@@ -22711,35 +22697,21 @@
 	 * then create a 'link' tooltip. External URLs are not supported. Required
 	 * to use the url to find the term name as the string used by the content writer
 	 * (i.e. [...my string...]) might not contain any reference to the topic.
+	 *
 	 * @param {object} term - The HTML element that has been flagged as a tooltip.
 	 * @param {string} url - The URL supplied to article for the content.
 	 */
-	function linkTooltips(term, url) {
-	    _axios2.default.get(url).then(function (response) {
+	function linkTooltips(term) {
+	    var url = term.getAttribute('href');
 
-	        /* Create the HTML element from the result. */
-	        var parser = new DOMParser();
+	    _axios2.default.get(url).then(function (response) {
 	        var page = parser.parseFromString(response.data, "text/html");
 
-	        /* Get the last string after '/'. */
-	        var slugTitle = url.substr(url.lastIndexOf('/') + 1).replace('#', ''); // Removing the 1st occurrence of # might be too restrictive.
+	        var slugTitle = url.substr(url.lastIndexOf('/') + 1).replace('#', '');
+	        var match = page.querySelector('span.anchor[id="' + slugTitle + '"]');
 
-	        /* Find the span anchor with an ID that matches the article slug. */
-	        var match = page.querySelectorAll("span.anchor" + ('[id="' + slugTitle + '"]'))[0];
 	        if (match) {
-	            /* Its parent is the article div, which we want to search for the <article> tag. */
-	            var content = match.parentElement.getElementsByTagName('article')[0];
-
-	            /* Create the tooltip. */
-	            var tooltip = document.createElement('span');
-	            tooltip.className = 'tooltips-text';
-	            /* Take the first <p> from the body. */
-	            tooltip.appendChild(content.getElementsByTagName('p')[0]);
-
-	            term.href = url;
-	            term.className = 'tooltips-term';
-	            term.removeAttribute('title');
-	            term.appendChild(tooltip);
+	            createTooltip(term, match.parentElement.querySelector('article'), url);
 	        }
 	    }).catch(function (error) {
 	        console.log("[presidium-js] Could not create the tooltip: " + error);
@@ -22755,46 +22727,21 @@
 	    var config = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
 	    presidium.tooltips.config = config;
+	    var baseSelector = 'a[title=presidium-tooltip]';
 
-	    /* Search for tooltip candidates. */
-	    var links = document.getElementsByTagName('a');
-	    var pageTerms = [].concat(_toConsumableArray(links)).filter(function (link) {
-	        return link.title === "presidium-tooltip";
+	    document.querySelectorAll(baseSelector + '[href^="' + config.baseurl + '"]').forEach(function (term) {
+	        linkTooltips(term);
 	    });
 
-	    /* For each presidium tooltip term inject HTML into the DOM. */
-	    var _iteratorNormalCompletion = true;
-	    var _didIteratorError = false;
-	    var _iteratorError = undefined;
-
-	    try {
-	        for (var _iterator = pageTerms[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-	            var term = _step.value;
-
-	            var url = term.getAttribute('href');
-
-	            /* Convention url === #: create automatic tooltips from /glossary. */
-	            if (url === "#") {
-	                automaticTooltips(term);
-	            } else if (url.includes(presidium.tooltips.config.baseurl)) {
-	                linkTooltips(term, url);
-	            }
-	        }
-	    } catch (err) {
-	        _didIteratorError = true;
-	        _iteratorError = err;
-	    } finally {
-	        try {
-	            if (!_iteratorNormalCompletion && _iterator.return) {
-	                _iterator.return();
-	            }
-	        } finally {
-	            if (_didIteratorError) {
-	                throw _iteratorError;
-	            }
-	        }
-	    }
-	};
+	    _axios2.default.get(config.baseurl + '/glossary.json').then(function (response) {
+	        document.querySelectorAll(baseSelector + '[href="' + '#' + '"]').forEach(function (term) {
+	            var glossary = response.data[term.innerText];
+	            createTooltip(term, parser.parseFromString(glossary.content, "text/html"), glossary.url);
+	        });
+	    }).catch(function (error) {
+	        console.log("[presidium-js] Could not create glossary tooltips: " + error);
+	    });
+	}
 
 /***/ },
 /* 185 */
