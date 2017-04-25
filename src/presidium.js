@@ -19,13 +19,22 @@ presidium.requirements = function() {
 };
 
 presidium.install = function(config) {
+    presidium.requirements();
+
+    console.log(`Creating ${config.distPath()}...`);
     const dist = config.distPath();
     fs.mkdirsSync(dist);
 
-    presidium.requirements();
+    console.log('Copying Gemfile...');
+    fs.mkdirsSync(config.jekyllPath());
+    fs.copySync('node_modules/presidium-core/.jekyll', config.jekyllPath());
 
+    console.log('Installing Jekyll Gems...');
     shell.cd('.jekyll');
     shell.exec('bundle install --path=.bundle --deployment');
+
+    console.log('Removing unused gems...');
+    shell.exec('bundle clean');
 };
 
 presidium.generate = function(config) {

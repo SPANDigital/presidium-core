@@ -45,6 +45,10 @@ Config.prototype.distPath = function() {
     return this.get('dist-path', './dist/');
 };
 
+Config.prototype.jekyllPath = function() {
+    return this.get('jekyll-path', '.jekyll/');
+};
+
 Config.prototype.distSrcPath = function() {
     return this.get('dist-src-path', path.join(this.distPath(), 'src/'));
 };

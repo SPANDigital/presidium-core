@@ -44,7 +44,7 @@ function buildTemplate(config) {
         const section = parser.parseSection(config, sectionConf);
         const sectionPath = path.join(contentPath, section.path);
         if (!fs.existsSync(sectionPath)) {
-            throw new Error(`Expected site section content directory not found: '${sectionPath}'`);
+            throw new Error(`Expected site section ${section.title} directory not found: '${sectionPath}'`);
         }
 
         const sectionPage = createPage(section, PAGE_TYPE.SECTION);

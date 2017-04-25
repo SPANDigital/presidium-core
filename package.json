@@ -25,7 +25,8 @@
     "url": "https://github.com/SPANDigital/presidium-core/issues"
   },
   "scripts": {
-    "test": "mocha --debug-brk --recursive"
+    "test": "mocha --debug-brk --recursive",
+    "update-gems": "cd .jekyll; bundle lock --update"
   },
   "dependencies": {
     "cpx": "^1.5.0",
