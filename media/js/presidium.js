@@ -22683,10 +22683,11 @@
 	 * @param {object} terms
 	 */
 	function tooltipError(error, terms) {
+	    console.log(error);
 	    terms.forEach(function (term) {
+	        console.log('[presidium-js] Could not create the tooltip: ' + term.innerText);
 	        term.replaceWith(term.innerText);
 	    });
-	    console.log("[presidium-js] Could not create the tooltip(s): " + error);
 	}
 
 	/**
@@ -22720,7 +22721,11 @@
 	    var match = parser.parseFromString(page, "text/html").querySelector('span.anchor[id="' + title + '"]');
 
 	    if (match) {
-	        addToDom(term, match.parentElement.querySelector('article'), url);
+	        try {
+	            addToDom(term, match.parentElement.querySelector('article'), url);
+	        } catch (error) {
+	            tooltipError(error, [term]);
+	        }
 	    } else {
 	        tooltipError('Term: ' + title + ', has no match.', [term]);
 	    }
@@ -22739,7 +22744,7 @@
 	    var autoTerms = document.querySelectorAll('a[title=presidium-tooltip][href="' + '#' + '"]');
 	    var linkTerms = document.querySelectorAll('a[title=presidium-tooltip][href^="' + config.baseurl + '"]');
 
-	    _axios2.default.get(config.baseurl + '/glossary').then(function (response) {
+	    _axios2.default.get(config.baseurl + '/glossary/').then(function (response) {
 	        autoTerms.forEach(function (term) {
 	            createTooltip(term, response.data);
 	        });
