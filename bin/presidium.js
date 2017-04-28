@@ -2,18 +2,20 @@
 var yargs = require('yargs');
 var config = require('../src/config');
 var presidium = require('../src/presidium');
-
 var conf = config.load('_config.yml');
 
 var argv = yargs.usage('$0 command')
     .command('requirements', 'Install jekyll gems and npm dependencies', function (yargs) {
         presidium.requirements(conf);
     })
-    .command('clean', 'Clean build directory', function (yargs) {
+    .command('clean', 'Clean generate directory', function (yargs) {
         presidium.clean(conf);
     })
     .command('install', 'Install jekyll gems and npm dependencies', function (yargs) {
         presidium.install(conf);
+    })
+    .command('generate', 'Generate site sources', function (yargs) {
+        presidium.generate(conf);
     })
     .command('build', 'Build site', function (yargs) {
         presidium.generate(conf);

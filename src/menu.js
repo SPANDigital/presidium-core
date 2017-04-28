@@ -1,20 +1,13 @@
+var fs = require('fs-extra');
 var path = require('path');
-var url = require('url');
+var structure = require('./structure');
 
-const menu = module.exports;
+var menu = module.exports;
 
-menu.TYPE = {
-    SECTION:  'section',
-    CATEGORY: 'category',
-    ARTICLE:  'article'
-};
-
-menu.init = function(config) {
-    return new Menu(config);
-};
+const MENU_STRUCTURE = 'menu.json';
 
 /**
- * Builds a menu tree. Appends items to the menu tree using the structure.
+ * Generate and writes menu.json
  *
  * Sections are root nodes than may have articles and categories
  * Categories group articles
@@ -27,49 +20,61 @@ menu.init = function(config) {
  *     - category
  *       - ...
  *
- * @param config jekyll site config
- * @constructor
+ * @param conf site config
+ * @param structure site structure
  */
-var Menu = function(config) {
-    this.logo = config.logo();
-    this.brandName = config.brandName();
-    this.baseUrl = config.baseUrl();
-    this.roles =  this.siteRoles(config);
+menu.generate = function(conf, structure) {
+    fs.mkdirsSync(conf.distIncludesPath);
+    const siteMenu = new Menu(conf, structure);
+    const destination = path.join(conf.distIncludesPath, MENU_STRUCTURE);
+    fs.writeFileSync(destination, JSON.stringify(siteMenu));
+};
+
+
+var Menu = function(conf, structure) {
+    this.logo = conf.logo;
+    this.brandName = conf.brandName;
+    this.baseUrl = conf.baseUrl;
+    this.roles =  conf.roles;
     this.children = [];
+    structure.sections.map(section => {
+        addSection(this, section);
+    })
 };
 
-Menu.prototype.siteRoles = function(config) {
-    return config.get('roles') ?
-    {
-        label: config.get('roles').label,
-        all: config.get('roles').all,
-        options: config.get('roles').options
-    } : {
-        label: '',
-        all: '',
-        options: []
-    }
-};
-
-Menu.prototype.addSection = function(props) {
+function addSection(node, props) {
     var section = {
-        type: menu.TYPE.SECTION,
+        type: structure.TYPE.SECTION,
         id: props.path,
         title: props.title,
         level: 1,
-        collapsed: props.collapsed? props.collapsed: false,
+        collapsed: props.collapsed,
         path: props.path,
         url: props.url,
-        roles : [],
+        roles : props.roles,
         children : []
     };
-    this.children.push(section);
-    return section;
-};
+    node.children.push(section);
+    traverse(section, props.children);
+}
 
-Menu.prototype.addCategory = function(node, props) {
+function traverse(node, children) {
+    children.forEach(child => {
+        switch(child.type) {
+            case structure.TYPE.CATEGORY:
+                const category = addCategory(node, child);
+                traverse(category, child.children);
+                break;
+            case structure.TYPE.ARTICLE:
+                addArticle(node, child);
+                break;
+        }
+    })
+}
+
+function addCategory(node, props) {
     var category = {
-        type: menu.TYPE.CATEGORY,
+        type: structure.TYPE.CATEGORY,
         id: props.id,
         level: node.level + 1,
         collapsed: false,
@@ -77,39 +82,24 @@ Menu.prototype.addCategory = function(node, props) {
         slug: props.slug,
         path: props.path,
         url: props.url,
-        roles : [],
-        parent: node,
+        roles : props.roles,
         children: [],
     };
     node.children.push(category);
     return category;
-};
+}
 
-Menu.prototype.addArticle = function(node, props) {
+function addArticle(node, props) {
     var article = {
-        type: menu.TYPE.ARTICLE,
+        type: structure.TYPE.ARTICLE,
         id: props.id,
         path: props.path,
         url: props.url,
         slug: props.slug,
         title: props.title,
-        parent: node,
         level: node.level + 1,
         collapsed: true,
-        roles: props.roles.length > 0 ? props.roles : [this.roles.all]
+        roles: props.roles
     };
     node.children.push(article);
-    Menu.propagateRoles(article);
-    return article;
-};
-
-/**
- * Visits all parent nodes in a tree and merge distinct roles.
- * @param node
- */
-Menu.propagateRoles = function(node) {
-    if (node.parent) {
-        node.parent.roles = Array.from(new Set([...node.parent.roles, ...node.roles]));
-        Menu.propagateRoles(node.parent);
-    }
-};
+}

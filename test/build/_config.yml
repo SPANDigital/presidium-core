@@ -18,8 +18,8 @@ show:
 external:
   authors-url: https://github.com/orgs/SPANDigital/people/
 
-content-path:  ./test/build/content/
-dist-path: ./test/build/dist/
+content-path:  ./test/generate/content/
+dist-path: ./test/generate/dist/
 
 #
 # Menu Structure

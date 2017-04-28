@@ -30,18 +30,18 @@ include-nested-articles: true
 # - collection: The collection to use for generating a sub menu of articles (REQUIRED).
 #
 sections:
-#  - title: "Overview"
-#    path: "/"
-#    collection: overview
-#    expandable: false
+  - title: "Overview"
+    url: "/"
+    collection: overview
+    collapsed: true
 
   - title: "Key Concepts"
-    path: "/key-concepts/"
+    url: "/key-concepts/"
     collection: key-concepts
 
-#  - title: "Reference"
-#    path: "/reference/"
-#    collection: reference
+  - title: "Reference"
+    url: "/reference/"
+    collection: reference
 
 #
 # Optional filters that may be used to filter articles by role.

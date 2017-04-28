@@ -12,7 +12,7 @@ describe('Build Site', function() {
 
     describe('Build', function() {
         var siteConfig = config.load("_config.yml");
-        presidium.build(siteConfig);
+        presidium.generate(siteConfig);
     });
 
 });

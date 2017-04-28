@@ -1,5 +1,6 @@
 var config = require("../../src/config");
 var structure = require("../../src/structure");
+var site = require("../../src/site");
 
 var fs = require("fs-extra");
 
@@ -23,12 +24,10 @@ describe('Generate Site Structure', function() {
     // });
 
 
-    describe('Group By Section', function() {
-        var siteConfig = config.load("./test/structure/_config.yml");
-
-        fs.emptydirSync(siteConfig.distSrcPath());
-
-        structure.build(siteConfig);
+    describe('Build Site', function() {
+        var conf = config.load("./test/structure/_config.yml");
+        fs.emptydirSync(conf.distSrcPath);
+        site.generate(conf);
     });
 
 

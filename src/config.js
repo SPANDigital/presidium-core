@@ -1,89 +1,60 @@
-const yaml = require('js-yaml');
-const fs = require('fs');
-const path = require('path');
-const config = module.exports;
+var yaml = require('js-yaml');
+var fs = require('fs');
+var path = require('path');
 
-//TODO validate required fields
-config.load = function(configFile = '_config.yml') {
-    try {
-        const file = fs.readFileSync(configFile, 'utf8');
-        return new Config(yaml.load(file));
-    } catch (e) {
-        console.log(e);
+var config = module.exports;
+
+/**
+ * Load config file with defaults
+ * @param filename
+ */
+config.load = function(filename = '_config.yml') {
+    const conf = new Config(filename);
+
+    const distPath      = conf.get('dist-path', './dist/');
+    const distSrcPath   = conf.get('dist-src-path', path.join(distPath, 'src/'));
+    const distSite      = conf.get('dist-site-path', path.join(distPath, 'site/'));
+
+    return {
+        logo:               conf.get('logo', ''),
+        brandName:          conf.get('name', ''),
+        baseUrl:            path.join(conf.get('baseurl', ''), '/'),
+        sections:           conf.get('sections', []),
+
+        roles:              conf.get('roles', { label: '', all: '', options: [] }),
+
+        contentPath:        conf.get('content-path', './content/'),
+        mediaPath:          conf.get('media-path', './media/'),
+
+        distPath:           distPath,
+        distSrcPath:        distSrcPath,
+        distSitePath:       distSite,
+        distContentPath:    conf.get('dist-content-path', distSrcPath),
+        distMediaPath:      conf.get('dist-media-path', path.join(distSrcPath, 'media/')),
+        distIncludesPath:   conf.get('dist-includes-path', path.join(distSrcPath, '_includes/')),
+        distLayoutsPath:    conf.get('dist-layouts-path', path.join(distSrcPath, '_layouts/')),
+        distSectionsPath:   conf.get('dist-sections-path', path.join(distSrcPath, 'sections/')),
+
+        jekyllPath: conf.get('jekyll-path', '.jekyll/'),
+
+        includeNestedArticles: conf.get('include-nested-articles', true)
     }
 };
 
-var Config = function(config) {
-    this.config = config;
+var Config = function(filename) {
+    //TODO validate config
+    this.config = load(filename);
 };
 
 Config.prototype.get = function(key, defaultVal = undefined) {
-    return this.config[key] ? this.config[key] : defaultVal;
+    return this.config.hasOwnProperty(key) ? this.config[key] : defaultVal;
 };
 
-Config.prototype.logo = function() {
-    return this.get('logo', './content/');
-};
-
-Config.prototype.brandName = function() {
-    return this.get('name', '');
-};
-
-Config.prototype.baseUrl = function() {
-    return path.join(this.get('baseurl', ''), '/');
-};
-
-Config.prototype.contentPath = function() {
-    return this.get('content-path', './content/');
-};
-
-Config.prototype.mediaPath = function() {
-    return this.get('media-path', './media/');
-};
-
-Config.prototype.distPath = function() {
-    return this.get('dist-path', './dist/');
-};
-
-Config.prototype.jekyllPath = function() {
-    return this.get('jekyll-path', '.jekyll/');
-};
-
-Config.prototype.distSrcPath = function() {
-    return this.get('dist-src-path', path.join(this.distPath(), 'src/'));
-};
-
-Config.prototype.distContentPath = function() {
-    return this.get('dist-content-path', this.distSrcPath());
-};
-
-Config.prototype.distMediaPath = function() {
-    return this.get('dist-media-path', path.join(this.distSrcPath(), 'media/'));
-};
-
-Config.prototype.distIncludesPath = function() {
-    return this.get('dist-includes-path', path.join(this.distSrcPath(), '_includes/'));
-};
-
-Config.prototype.distLayoutsPath = function() {
-    return this.get('dist-layouts-path', path.join(this.distSrcPath(), '_layouts/'));
-};
-
-Config.prototype.distSectionsPath = function() {
-    return this.get('dist-sections-path', path.join(this.distSrcPath(), 'sections/'));
-};
-
-Config.prototype.distSitePath = function() {
-    return this.get('dist-site-path', path.join(this.distPath(), 'site/'));
-};
-
-Config.prototype.includeNestedArticles = function() {
-    return this.get('include-nested-articles', true);
-};
-
-
-
-
-
-
-
+function load(filename) {
+    try {
+        const file = fs.readFileSync(filename, 'utf8');
+        return yaml.load(file);
+    } catch (e) {
+        console.log(e);
+    }
+}
