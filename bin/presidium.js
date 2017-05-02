@@ -8,7 +8,7 @@ var argv = yargs.usage('$0 command')
     .command('requirements', 'Install jekyll gems and npm dependencies', function (yargs) {
         presidium.requirements(conf);
     })
-    .command('clean', 'Clean generate directory', function (yargs) {
+    .command('clean', 'Clean build directory', function (yargs) {
         presidium.clean(conf);
     })
     .command('install', 'Install jekyll gems and npm dependencies', function (yargs) {
