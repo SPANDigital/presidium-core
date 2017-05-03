@@ -2,10 +2,9 @@
 
 Presiduim is a Jekyll based documentation framework that enforces industry best practices for documenting software systems. 
 Presidium provides software teams with familiar tools to acquire, revise, categorize, utilize and evaluate small 
-document fragments that get aggregated into well structured website.
+document fragments that get aggregated into a well structured static website.
 
 ## Quick Start
-
 - Download the [template project](https://github.com/SPANDigital/presidium)
 - Requires `ruby`, `bundler` and `npm`. See [setting up your environment](#setup) for further details and requirements.
 - To install the required dependencies and start the documentation server locally, run:
@@ -60,9 +59,9 @@ Content and media resources are kept separate from the underlying Jekyll layouts
 The following build scripts manage the main workflows:
 - `npm install` : Installs all npm and Jekyll dependencies required to build, run and publish your site.
 - `npm start` : Serves the Jekyll site from `dist/site` and Watches for any changes to `content` and `media`.
-- `npm run generate` : Generate site structure and prepare sources in `dist/src`.
 - `npm run build` : Build your Jekyll site to `dist/site`.
 - `npm run gh-pages` : Publishes `dist/site` to a `gh-pages` branch in your current repo.
+- `npm run generate` : Generate site structure and prepare Jekyll sources in `dist/src`.
 
 ### Configuration
 Site configuration such as the site name and menu structure can be done in `_config.yml`. Changes made to config require a site rebuild to take effect.
@@ -127,6 +126,8 @@ For further details on setting up Jekyll for Github pages, see: [Setting up gith
 ## Build Server
 
 ### Provisioning a Debian Based build server:
+
+The following script may be used to provision a build server to build a Jekyll site:
 
 ```sh
 #!/bin/bash
