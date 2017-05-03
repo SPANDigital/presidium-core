@@ -1,8 +1,8 @@
 # Presidium
 
-Presiduim is a Jekyll based documentation framework that enforces industry best practices for documenting software systems. 
-Presidium provides software teams with familiar tools to acquire, revise, categorize, utilize and evaluate small 
-document fragments that get aggregated into a well structured static website.
+Presidium is a documentation framework that enforces industry best practices for documenting software systems. 
+Presidium provides software teams with the tools to acquire, revise, categorize, utilize and evaluate small 
+document fragments that get aggregated into a well structured static website. Presidium is based on familar tools already in use by many software development teams. 
 
 ## Quick Start
 - Download the [template project](https://github.com/SPANDigital/presidium)
@@ -15,13 +15,13 @@ $ npm start
 
 This will install all required dependencies and fire up a Jekyll server on: http://localhost:4000/
 
-Add and edit your content using examples in `content` and `media`
-Configure your site using options in `_config.yml`
+Add and edit your content following the examples in the `content` and `media` directories.
+Configure your site using the available options in `_config.yml`
 
 ## Setup and Configuration
 
 ### Directory Structure
-Presidium uses the following directories:
+Presidium is pre-configured with the following directories:
 ```
 presidium/
 
@@ -47,16 +47,16 @@ presidium/
 ```
 
 ### Content
-All content updates are done using the sections and markdown templates in `content` using markdown. See the [template project](https://github.com/SPANDigital/presidium) for example usage.
-* [Jekyll](http://jekyllrb.com/) a simple, blog-aware, static site generator that integrates with GitHub
-* [GitHub Flavored Markdown](https://help.github.com/articles/github-flavored-markdown/) GitHub Flavored Markdown to document your content.
+All content is stored in the content directory which is divided into sub-directories. Each sub-directory contains markdown templates that should be used to create documentation. See the [template project](https://github.com/SPANDigital/presidium) for example usage. Presdium uses:
+* [Jekyll](http://jekyllrb.com/) A simple, blog-aware, static site generator that integrates with GitHub
+* [GitHub Flavored Markdown](https://help.github.com/articles/github-flavored-markdown/) A GitHub varient of Markdown.
 
-Static sources such as images, files and custom styles should be added to the `media`.
+Other static content such as images, files, and custom styles should be added to the `media` directory.
 
-Content and media resources are kept separate from the underlying Jekyll layouts and templates.
+Content and media resources are kept separate from the underlying Jekyll layouts and templates to allow for easy upgrades.
 
 ### Build Scripts
-The following build scripts manage the main workflows:
+The following build scripts manage the main workflow:
 - `npm install` : Installs all npm and Jekyll dependencies required to build, run and publish your site.
 - `npm start` : Serves the Jekyll site from `dist/site` and Watches for any changes to `content` and `media`.
 - `npm run build` : Build your Jekyll site to `dist/site`.
@@ -64,7 +64,7 @@ The following build scripts manage the main workflows:
 - `npm run generate` : Generate site structure and prepare Jekyll sources in `dist/src`.
 
 ### Configuration
-Site configuration such as the site name and menu structure can be done in `_config.yml`. Changes made to config require a site rebuild to take effect.
+Site wide configuration, such as the site name and menu structure, can be updated in the `_config.yml` file. Changes made to this file require a site rebuild to take effect.
 
 ### Styling and Theming
 All styles are based on Bootstrap with Bootswatch themes and sass overrides. Jekyll themes are not supported.
@@ -81,7 +81,6 @@ To publish your documentation to Github pages, run:
 ```sh
 $ npm run gh-pages
 ```
-
 This pushes your site and to a gh-pages branch on your repo. To enable your site on Github, go to your repository settings and enable Github pages using your `gh-pages` branch. 
 
 Further details may be found on [Github](https://help.github.com/articles/about-github-pages-and-jekyll/)
