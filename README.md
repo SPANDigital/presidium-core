@@ -97,13 +97,13 @@ The following tools are required to build and run Presidium locally:
 
 ### NPM
 
-For [homebrew](http://brew.sh/) users, install and upgrade node:
+### NPM
 
-```sh
-$ brew install node
-$ brew update
-$ brew upgrade node
-```
+Install using the [node package](https://nodejs.org/en/) or [nvm](http://nvm.sh)
+
+- node v6.10 (LTS)
+- npm v3.10
+
 
 ### Ruby
 
