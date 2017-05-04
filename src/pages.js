@@ -25,7 +25,9 @@ function traverse(conf, section) {
                     traverse(conf, child);
                     break;
                 case structure.TYPE.ARTICLE:
-                    //TODO article exports
+                    if (section.exportArticles) {
+                        exportContent(conf, section, child);
+                    }
                     break;
             }
         })
@@ -38,13 +40,13 @@ function writeTemplate(conf, section) {
     }
     const pageUrl = path.relative(conf.baseUrl, section.url);
     const pagePath = path.join(conf.distSectionsPath, pageUrl);
-    const template = pageTemplate(conf, section);
+    const template = pageTemplate(conf, pageUrl, section);
     fs.mkdirsSync(pagePath);
     fs.writeFileSync(path.join(pagePath, INDEX_TEMPLATE), template);
 }
 
-function pageTemplate(conf, section) {
-const permalink = path.join('/', path.relative(conf.baseUrl, section.url), '/');
+function pageTemplate(conf, pageUrl, section) {
+const permalink = path.join('/', pageUrl, '/');
 return `---
 title: ${section.title}
 permalink: ${permalink}
@@ -64,4 +66,20 @@ function includedArticles(conf, section) {
             `{% assign article-roles = "${ article.roles.join(',') }" %}\r\n` +
             `{% include article.html %}\r\n`;
     }).join('\r\n')
+}
+
+function exportContent(conf, section, article) {
+    const url = path.join(path.relative(conf.baseUrl, section.url), `${article.slug}.html`);
+    const file = path.join(conf.distSectionsPath, url);
+    fs.writeFileSync(file, contentTemplate(conf, article, url));
+}
+
+function contentTemplate(conf, article, url) {
+return `---
+permalink: ${url}
+layout: content
+---
+
+{% assign article = site.${ article.collection } | where:"path", "${ path.relative(conf.contentPath, article.path) }"  | first %}\r\n
+{{article.content}}\r\n`;
 }

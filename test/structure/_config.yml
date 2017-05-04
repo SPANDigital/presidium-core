@@ -38,6 +38,7 @@ sections:
   - title: "Key Concepts"
     url: "/key-concepts/"
     collection: key-concepts
+    export-articles: true
 
   - title: "Reference"
     url: "/reference/"

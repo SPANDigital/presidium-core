@@ -25,6 +25,7 @@ parse.section = function (conf, section) {
         url: sectionUrl,
         collection: section.collection,
         collapsed: section.collapsed || false,
+        exportArticles: section['export-articles'] || false,
         roles: [],
         articles: [],
         children: []
@@ -54,6 +55,7 @@ parse.category = function (section, file) {
         path: file,
         url: path.join(section.url, slug, '/'),
         parent: section,
+        exportArticles: section.exportArticles,
         collection: section.collection,
         roles: [],
         articles: [],

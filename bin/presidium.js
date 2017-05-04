@@ -24,7 +24,7 @@ var argv = yargs.usage('$0 command')
     .command('watch', 'Watch for content and media updates', function (yargs) {
         presidium.watch(conf)
     })
-    .command('develop', 'Watch presidium sources for development', function (yargs) {
+    .command('develop', 'Watch presidium sources (for development)', function (yargs) {
         presidium.develop(conf)
     })
     .command('serve', 'Serve site', function (yargs) {
