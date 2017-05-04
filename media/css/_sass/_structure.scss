@@ -37,10 +37,15 @@
       }
     }
 
-    > h2 {
-      display: inline-block;
-      margin-top: 10px;
-      margin-bottom: 10px;
+    .article-title {
+      .permalink {
+        display: none;
+        margin-left: 10px;
+      }
+      &:hover > .permalink {
+        display: inline-block;
+        text-decoration: none;
+      }
     }
 
     .category {

@@ -1,7 +1,7 @@
 <div class="article" data-roles="{{article-roles}}">
 <span class="anchor" id="{{article-slug}}" data-id="{{article-id}}"></span>
 {% if article != nil %}
-    <h2>{{ article-title }}</h2>
+    <h2 class="article-title">{{ article-title }}<a class="permalink" href="{{article-url}}" title="Permalink to this article">¶</a></h2>
     <div class="article-header">{% include author.html %} {% include status.html %} {% include roles.html %}</div>
     <article>{{ article.content }}</article>
 {% else %}
