@@ -47,7 +47,7 @@ presidium/
 ```
 
 ### Content
-All content is stored in the content directory which is divided into sub-directories. Each sub-directory contains markdown templates that should be used to create documentation. See the [template project](https://github.com/SPANDigital/presidium) for example usage. Presdium uses:
+All content is stored in the content directory which is divided into sub-directories. Each sub-directory contains markdown templates that should be used to create documentation. See the [template project](https://github.com/SPANDigital/presidium-template) for example usage. Presdium uses:
 * [Jekyll](http://jekyllrb.com/) A simple, blog-aware, static site generator that integrates with GitHub
 * [GitHub Flavored Markdown](https://help.github.com/articles/github-flavored-markdown/) A GitHub varient of Markdown.
 
