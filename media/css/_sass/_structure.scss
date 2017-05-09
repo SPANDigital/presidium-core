@@ -38,13 +38,18 @@
     }
 
     .article-title {
+      display: flex;
+      align-items: center;
       .permalink {
         display: none;
-        margin-left: 10px;
+        margin-left: 12px;
+        margin-top: 14px;
       }
       &:hover > .permalink {
-        display: inline-block;
-        text-decoration: none;
+        display: block;
+        > a {
+          text-decoration: none;
+        }
       }
     }
 
