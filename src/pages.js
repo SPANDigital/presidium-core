@@ -7,7 +7,7 @@ const INDEX_TEMPLATE = 'index.html';
 var pages = module.exports;
 
 pages.generate = function(conf, structure) {
-    console.log(`Writing pages to: ${conf.distSectionsPath}`);
+    console.log(`Writing page templates: ${conf.distSectionsPath}`);
     fs.emptydirSync(conf.distSectionsPath);
 
     structure.sections.map(section => {

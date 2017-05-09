@@ -71,7 +71,8 @@ parse.article = function (conf, section, file) {
 
     //Review with larger file sets
     const content = fs.readFileSync(file, { encoding: 'utf8', flat: 'r' });
-    const attributes = fm(content).attributes;
+    const article = fm(content);
+    const attributes = article.attributes;
 
     if (attributes && attributes.title) {
         const slug = parse.slug(attributes.title);
@@ -79,6 +80,7 @@ parse.article = function (conf, section, file) {
             id: file,
             type: structure.TYPE.ARTICLE,
             title: attributes.title,
+            content: article.body,
             slug: slug,
             path: file,
             url: path.join(section.url, `#${slug}`),
