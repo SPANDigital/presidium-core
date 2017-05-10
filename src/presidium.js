@@ -3,6 +3,7 @@ var fs = require('fs-extra');
 var path = require('path');
 var site = require('./site');
 var cpx = require("cpx");
+var links = require('./links');
 
 var presidium = module.exports;
 
@@ -58,9 +59,18 @@ presidium.generate = function(conf) {
 
 presidium.build = function(conf) {
     console.log(`Building site...`);
-    shell.cd('.jekyll');
+    shell.cd(conf.jekyllPath);
     shell.exec(`bundle exec jekyll build --trace -s ../${conf.distSrcPath} -d ../${conf.distSitePath}`);
     shell.cd('..');
+};
+
+presidium.validate = function(conf) {
+
+    const results = links.validate(conf);
+
+    if(results.broken > 0) {
+        throw new Error('There are broken links in the site. Can not proceed.')
+    }
 };
 
 presidium.watch = function(conf) {
