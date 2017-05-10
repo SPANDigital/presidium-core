@@ -35,6 +35,9 @@
     window.presidium.menu.load({% include menu.json %}, 'presidium-navigation');
     window.presidium.tooltips.load({ "baseurl": "{{ site.baseurl }}" });
 </script>
+{% for script in site.scripts %}
+<script src="{{ site.baseurl | append: '/media/js/' | append: script | replace: '//','/'}}"></script>
+{% endfor %}
 
 </body>
 </html>
