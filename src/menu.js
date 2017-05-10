@@ -24,10 +24,12 @@ const MENU_STRUCTURE = 'menu.json';
  * @param structure site structure
  */
 menu.generate = function(conf, structure) {
+
     fs.mkdirsSync(conf.distIncludesPath);
     const siteMenu = new Menu(conf, structure);
-    const destination = path.join(conf.distIncludesPath, MENU_STRUCTURE);
-    fs.writeFileSync(destination, JSON.stringify(siteMenu));
+    const file = path.join(conf.distIncludesPath, MENU_STRUCTURE);
+    console.log(`Writing menu: ${file}...`);
+    fs.writeFileSync(file, JSON.stringify(siteMenu));
 };
 
 

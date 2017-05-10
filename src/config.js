@@ -19,6 +19,7 @@ config.load = function(filename = '_config.yml') {
         logo:               conf.get('logo', ''),
         brandName:          conf.get('name', ''),
         baseUrl:            path.join(conf.get('baseurl', ''), '/'),
+        cname:              conf.get('cname', ''),
         sections:           conf.get('sections', []),
 
         roles:              conf.get('roles', { label: '', all: '', options: [] }),

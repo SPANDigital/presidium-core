@@ -95,5 +95,10 @@ presidium.serve = function(conf) {
 
 presidium.ghPages = function(conf) {
     console.log('Publishing to Github Pages...');
-    shell.exec(`git-directory-deploy --directory ${conf.distSrcPath}`);
+    if (conf.cname) {
+        console.log(`Using CNAME record: ${conf.cname}`);
+        const file = path.join(conf.distSitePath, "CNAME");
+        fs.writeFileSync(file, conf.cname);
+    }
+    shell.exec(`git-directory-deploy --directory ${conf.distSitePath}`);
 };
