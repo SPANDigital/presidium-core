@@ -13,19 +13,19 @@ const results = {
     total: 0
 };
 
+let distSitePath = "";
+
 var links = module.exports;
 
 links.validate = function(conf) {
-    traverseDirectory(conf.distSitePath, conf.distSitePath);
+    distSitePath = conf.distSitePath;
+    traverseDirectory(distSitePath);
     paths.add(conf.baseUrl).add('/');
-    validateLinks(conf);
+    validateLinks(conf.baseUrl);
     return results;
 };
 
-
-
-
-function traverseDirectory(dir, sitePath) {
+function traverseDirectory(dir) {
 
     let list = fs.readdirSync(dir);
 
@@ -34,15 +34,13 @@ function traverseDirectory(dir, sitePath) {
         let stat = fs.statSync(file);
 
         if (stat && stat.isDirectory()) {
-            paths.add(file.replace(sitePath, '') + '/');
-            traverseDirectory(file, sitePath);
+            paths.add(file.replace(distSitePath, '') + '/');
+            traverseDirectory(file);
         } else {
             if (file.indexOf('.html') > -1) htmlFiles.add(file);
         }
     });
 }
-
-
 
 function getLinks(files) {
 
@@ -91,21 +89,21 @@ function log(type, baseLink, message = '') {
     }
 }
 
-function validateLinks(conf) {
+function validateLinks(baseUrl) {
 
     let links = getLinks(htmlFiles);
     results['total'] = links.size;
 
     for (let baseLink of links) {
 
-        let link = baseLink.replace(conf.baseUrl, '/');
+        let link = baseLink.replace(baseUrl, '/');
         if(link === "") {
             log('warning', baseLink, 'empty href defined')
-        } else if(conf.baseUrl === baseLink) {
+        } else if(baseUrl === baseLink) {
             log('valid', baseLink)
         } else if(link.indexOf('/') === 0) {
             if(link.indexOf('#') > -1) {
-                if(anchorValid(conf.distSitePath, link)) {
+                if(anchorValid(distSitePath, link)) {
                     if(link.indexOf('/#') > -1) {
                         log('valid', baseLink)
                     } else {

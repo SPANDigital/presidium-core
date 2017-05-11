@@ -11,9 +11,9 @@ Links (found below) will be used to test if our link checker works
 
 # Links
 
-[Link 1](/hello)
+[Link 1](/broken-link)
 
-[Link 2]({{site.baseurl}}/hello)
+[Link 2]({{site.baseurl}}/another-broken-link)
 
 [Link 3]({{site.baseurl}}/)
 
