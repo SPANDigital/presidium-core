@@ -27,4 +27,8 @@ Links (found below) will be used to test if our link checker works
 
 [Link 8]({{site.baseurl}}/recipes/roles/#using-roles)
 
-[Link 9](http://www.spandigital.com)
+[Link 9]({{site.baseurl}}/recipes/roles#using-broken-anchor)
+
+[Link 10]({{site.baseurl}}/recipes/roles/#using-broken-anchor)
+
+[Link 11](http://www.spandigital.com)
