@@ -17,7 +17,7 @@ var links = module.exports;
 
 links.validate = function(conf) {
     traverseDirectory(conf.distSitePath, conf.distSitePath);
-    paths.add(conf.baseUrl);
+    paths.add(conf.baseUrl).add('/');
     validateLinks(conf);
     return results;
 };
@@ -106,7 +106,11 @@ function validateLinks(conf) {
         } else if(link.indexOf('/') === 0) {
             if(link.indexOf('#') > -1) {
                 if(anchorValid(conf.distSitePath, link)) {
-                    log('valid', baseLink)
+                    if(link.indexOf('/#') > -1) {
+                        log('valid', baseLink)
+                    } else {
+                        log('warning', baseLink, ' is missing a \'/\' before the \'#\', but might still work')
+                    }
                 } else {
                     log('broken', baseLink)
                 }
