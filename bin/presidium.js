@@ -43,7 +43,6 @@ var argv = yargs.usage('$0 command')
         presidium.clean(conf);
         presidium.generate(conf);
         presidium.build(conf);
-        presidium.validate(conf);
         presidium.ghPages(conf);
     })
     .demand(1, 'must provide a valid command')
