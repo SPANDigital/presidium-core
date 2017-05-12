@@ -48,7 +48,7 @@ function getLinks(files) {
 
     for (let file of files) {
         let $ = cheerio.load(fs.readFileSync(file));
-        $('#presidium-content section a').each(function(i, link){
+        $('#presidium-content').find('section a').each(function(i, link){
             links.add($(link).attr('href'))
         });
     }
