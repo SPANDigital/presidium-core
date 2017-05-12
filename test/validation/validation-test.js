@@ -8,12 +8,14 @@ var fs = require("fs-extra");
 
 var assert = require('assert');
 
-let res = {};
+let res;
+let conf;
 
 describe('Link Validation', () => {
 
+    //TODO: generalise this for re-use - create testSetup method
     describe('Build Site', () => {
-        var conf = config.load("./test/validation/_config.yml");
+        conf = config.load("./test/validation/_config.yml");
         fs.emptydirSync(conf.distSrcPath);
 
         fs.copySync('_includes', conf.distIncludesPath);
@@ -33,23 +35,28 @@ describe('Link Validation', () => {
 
     it('Should find and validate links', () => {
         assert.equal(res.total, res.valid + res.broken + res.warning + res.external);
-        assert.notEqual(0, res.total);
+        assert.notEqual(res.total, 0);
     });
 
     it('Should indicate broken links', () => {
-        assert.equal(5, res.broken);
+        assert.equal(res.broken, 5);
     });
 
     it('Should warn for uncertain links', () => {
-        assert.equal(3, res.warning);
+        if (conf.baseUrl === '/') {
+            assert.equal(res.warning, 2)
+        } else {
+            assert.equal(res.warning, 3)
+        }
+
     });
 
     it('Should indicate valid links', () => {
-        assert.equal(5, res.valid);
+        assert.equal(res.valid, 5);
     });
 
     it('Should indicate external links', () => {
-        assert.equal(1, res.external);
+        assert.equal(res.external, 1);
     });
 
 });

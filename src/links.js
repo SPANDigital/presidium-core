@@ -1,40 +1,44 @@
 const fs = require('fs');
 const cheerio = require('cheerio');
 const colours = require('colors/safe');
+const url = require('url');
+const path = require('path');
 
-const paths = new Set();
-const htmlFiles = new Set();
+let validPaths;
+let htmlFiles;
+let results;
 
-const results = {
-    valid : 0,
-    broken: 0,
-    warning: 0,
-    external: 0,
-    total: 0
-};
-
+//TODO: remove this:
 let distSitePath = "";
 
-var links = module.exports;
+const links = module.exports;
 
-links.validate = function(conf) {
+links.validate = function (conf) {
+    validPaths = new Set();
+    htmlFiles = new Set();
+    results = {
+        valid: 0,
+        broken: 0,
+        warning: 0,
+        external: 0,
+        total: 0
+    };
+
     distSitePath = conf.distSitePath;
     traverseDirectory(distSitePath);
-    paths.add(conf.baseUrl).add('/');
+    validPaths.add('/');
+    validPaths.add(path.join(conf.baseUrl, '/'));
     validateLinks(conf.baseUrl);
     return results;
 };
 
 function traverseDirectory(dir) {
+    fs.readdirSync(dir).forEach(file => {
+        file = path.join(dir,'/', file);
 
-    let list = fs.readdirSync(dir);
-
-    list.forEach(function(file) {
-        file = dir + '/' + file;
-        let stat = fs.statSync(file);
-
+        const stat = fs.statSync(file);
         if (stat && stat.isDirectory()) {
-            paths.add(file.replace(distSitePath, '') + '/');
+            validPaths.add(path.join(file.replace(distSitePath, '/'), '/'));
             traverseDirectory(file);
         } else {
             if (file.indexOf('.html') > -1) htmlFiles.add(file);
@@ -48,23 +52,23 @@ function getLinks(files) {
 
     for (let file of files) {
         let $ = cheerio.load(fs.readFileSync(file));
-        $('#presidium-content').find('section a').each(function(i, link){
+        $('#presidium-content').find('section a').each(function (i, link) {
             links.add($(link).attr('href'))
         });
     }
     return links;
 }
 
-function anchorValid(dir, path) {
+function anchorValid(dir, anchorLink) {
 
-    const data = path.split('#');
-    const file = data[0].lastIndexOf('/') === data[0].length - 1 ? data[0] : data[0] + '/';
-    const anchor = data[1];
+    const link = url.parse(anchorLink);
 
-    if(paths.has(file)) {
+    const file = path.join(link.path, '/');
+
+    if (validPaths.has(file)) {
         let $ = cheerio.load(fs.readFileSync(dir + file + 'index.html'));
 
-        return $('.anchor#' + anchor).length > 0;
+        return $('.anchor' + link.hash).length > 0;
     } else return false
 }
 
@@ -97,27 +101,27 @@ function validateLinks(baseUrl) {
     for (let baseLink of links) {
 
         let link = baseLink.replace(baseUrl, '/');
-        if(link === "") {
+        if (link === "") {
             log('warning', baseLink, 'empty href defined')
-        } else if(baseUrl === baseLink) {
-            log('valid', baseLink)
-        } else if(link.indexOf('/') === 0) {
-            if(link.indexOf('#') > -1) {
-                if(anchorValid(distSitePath, link)) {
-                    if(link.indexOf('/#') > -1) {
+        } else if (baseUrl === baseLink) {
+            log('valid', baseLink);
+        } else if (link.indexOf('/') === 0) {
+            if (link.indexOf('#') > -1) {
+                if (anchorValid(distSitePath, link)) {
+                    if (link.indexOf('/#') > -1) {
                         log('valid', baseLink)
                     } else {
-                        log('warning', baseLink, ' is missing a \'/\' before the \'#\', but might still work')
+                        log('warning', baseLink, ' is missing a trailing \'/\' before the \'#\'')
                     }
                 } else {
                     log('broken', baseLink)
                 }
             } else {
-                if(link.lastIndexOf('/') === link.length - 1 && paths.has(link)) {
+                if (link.lastIndexOf('/') === link.length - 1 && validPaths.has(link)) {
                     log('valid', baseLink)
                 } else {
-                    if(paths.has(link + '/')) {
-                        log('warning', baseLink, ' is missing a trailing \'/\', but might still work')
+                    if (validPaths.has(link + '/')) {
+                        log('warning', baseLink, ' is missing a trailing \'/\'')
                     } else {
                         log('broken', baseLink)
                     }
@@ -128,6 +132,3 @@ function validateLinks(baseUrl) {
         }
     }
 }
-
-
-
