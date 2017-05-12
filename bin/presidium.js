@@ -21,6 +21,9 @@ var argv = yargs.usage('$0 command')
         presidium.generate(conf);
         presidium.build(conf);
     })
+    .command('validate', 'Validate generated site', function (yargs) {
+        presidium.validate(conf)
+    })
     .command('watch', 'Watch for content and media updates', function (yargs) {
         presidium.watch(conf)
     })
@@ -40,6 +43,7 @@ var argv = yargs.usage('$0 command')
         presidium.clean(conf);
         presidium.generate(conf);
         presidium.build(conf);
+        presidium.validate(conf);
         presidium.ghPages(conf);
     })
     .demand(1, 'must provide a valid command')

@@ -38,7 +38,9 @@
     "shelljs": "^0.7.7",
     "slug": "^0.9.1",
     "strip-markdown": "^3.0.0",
-    "yargs": "^7.0.2"
+    "yargs": "^7.0.2",
+    "cheerio": "^0.22.0",
+    "colors": "^1.1.2"
   },
   "devDependencies": {
     "mocha": "^3.2.0"
