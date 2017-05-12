@@ -41,7 +41,7 @@ describe('Link Validation', () => {
     });
 
     it('Should warn for uncertain links', () => {
-        assert.equal(2, res.warning);
+        assert.equal(3, res.warning);
     });
 
     it('Should indicate valid links', () => {
