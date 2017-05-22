@@ -86,6 +86,12 @@
 
     article {
       margin-top : 20px;
+      iframe {
+        box-shadow: 0px 0px 10px #777;
+        border: None;
+        height: 900px;
+        width: 110%;
+      }
     }
   }
   article {
