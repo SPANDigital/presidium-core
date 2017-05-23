@@ -38,20 +38,25 @@ presidium.install = function(conf) {
     shell.exec('bundle clean');
 };
 
-presidium.version = function(conf, version){
-    const path = `${shell.pwd()}/${conf.distPath}gh-pages`;
+presidium.version = function(conf, version) {
+    // Fail if we're not in root.
+    const path = `.versions`;
     if (!shell.test('-d', path)) {
         const url = shell.exec('git remote get-url origin', {silent:true}).stdout;
         const reponame = shell.exec("basename -s .git " + url, {silent:true}).stdout.replace(/\r?\n|\r[|&;$%@"<>()+,]/g, "");
-        shell.cd(`${shell.pwd()}/${conf.distPath}`);
         shell.exec(`git clone --branch gh-pages --single-branch ${url}`);
-        shell.mv(reponame, 'gh-pages');
-        shell.cd('..');
+        shell.mv(reponame, '.versions');
     }else{
-        console.log("success");
+        shell.cd(path);
+        shell.exec('git pull');
+        shell.cd('..');
     }
-    // Update the package.json - i.e. create a new version.
-    // Ensure _config.yml has the correct ENV variable.
+    // Need to somehow update the _config.yml with the version number.
+    // Create a new versioned config file that overrides things like baseurl.
+    if (version){
+        shell.exec(`touch _config${version}.yml`);
+        shell.exec(`echo "baseurl: ${conf.baseUrl}${version}" > _config${version}.yml`);
+    }
 };
 
 presidium.generate = function(conf) {
@@ -73,10 +78,10 @@ presidium.generate = function(conf) {
     site.generate(conf);
 };
 
-presidium.build = function(conf) {
+presidium.build = function(conf, version) {
     console.log(`Building site...`);
     shell.cd(conf.jekyllPath);
-    shell.exec(`bundle exec jekyll build --trace -s ../${conf.distSrcPath} -d ../${conf.distSitePath}`);
+    shell.exec(`bundle exec jekyll build --config ../_config.yml,../_config${version}.yml --trace -s ../${conf.distSrcPath} -d ../${conf.distSitePath}`);
     shell.cd('..');
 };
 
@@ -109,12 +114,26 @@ presidium.serve = function(conf) {
     shell.cd('..');
 };
 
-presidium.ghPages = function(conf, args) {
+presidium.ghPages = function(conf, version) {
     console.log('Publishing to Github Pages...');
+    // Sync up versions with dist
+    // TODO prevent rsync from deleting stuff.
+    if (version){
+        // Copy to directory in versions
+        if (!shell.test('-d', version)) {
+            fs.mkdirsSync(`./versions/${version}`);
+        }
+        // Update ./versions/${version} with the contents of ./dist/site.
+        shell.exec(`rsync -r ./dist/site/ ./versions/${version}`);
+        shell.rm(`_config${version}.yml`);
+    } else {
+        // Update root of ./versions with the contents of ./dist/site.
+        shell.exec(`rsync -r ./dist/site/ ./versions/`);
+    }
     if (conf.cname) {
         console.log(`Using CNAME record: ${conf.cname}`);
-        const file = path.join(conf.distSitePath, "CNAME");
+        const file = path.join('./versions', "CNAME");
         fs.writeFileSync(file, conf.cname);
     }
-    shell.exec(`git-directory-deploy --directory ${conf.distSitePath}`);
+    shell.exec(`git-directory-deploy --directory ./versions`);
 };
