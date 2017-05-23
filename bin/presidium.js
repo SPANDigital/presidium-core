@@ -40,10 +40,12 @@ var argv = yargs.usage('$0 command')
         presidium.serve(conf);
     })
     .command('gh-pages', 'Publish to Github Pages', function (yargs) {
-        presidium.clean(conf);
-        presidium.generate(conf);
-        presidium.build(conf);
-        presidium.ghPages(conf);
+        let version = yargs.argv['v'] || '';
+        presidium.version(conf, version);
+        //presidium.clean(conf);
+        //presidium.generate(conf);
+        //presidium.build(conf);
+        //presidium.ghPages(conf, yargs);
     })
     .demand(1, 'must provide a valid command')
     .help('h').alias('h', 'help')

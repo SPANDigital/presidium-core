@@ -38,6 +38,22 @@ presidium.install = function(conf) {
     shell.exec('bundle clean');
 };
 
+presidium.version = function(conf, version){
+    const path = `${shell.pwd()}/${conf.distPath}gh-pages`;
+    if (!shell.test('-d', path)) {
+        const url = shell.exec('git remote get-url origin', {silent:true}).stdout;
+        const reponame = shell.exec("basename -s .git " + url, {silent:true}).stdout.replace(/\r?\n|\r[|&;$%@"<>()+,]/g, "");
+        shell.cd(`${shell.pwd()}/${conf.distPath}`);
+        shell.exec(`git clone --branch gh-pages --single-branch ${url}`);
+        shell.mv(reponame, 'gh-pages');
+        shell.cd('..');
+    }else{
+        console.log("success");
+    }
+    // Update the package.json - i.e. create a new version.
+    // Ensure _config.yml has the correct ENV variable.
+};
+
 presidium.generate = function(conf) {
     console.log(`Copy base templates...`);
     fs.copySync('node_modules/presidium-core/_includes', conf.distIncludesPath);
@@ -93,7 +109,7 @@ presidium.serve = function(conf) {
     shell.cd('..');
 };
 
-presidium.ghPages = function(conf) {
+presidium.ghPages = function(conf, args) {
     console.log('Publishing to Github Pages...');
     if (conf.cname) {
         console.log(`Using CNAME record: ${conf.cname}`);
