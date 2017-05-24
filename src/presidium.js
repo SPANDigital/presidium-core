@@ -40,14 +40,14 @@ presidium.install = function(conf) {
 
 presidium.version = function(conf, version) {
     // Fail if we're not in root.
-    const path = `.versions`;
-    if (!shell.test('-d', path)) {
+    const vpath = './.versions';
+    if (!shell.test('-d', vpath)) {
         const url = shell.exec('git remote get-url origin', {silent:true}).stdout;
         const reponame = shell.exec("basename -s .git " + url, {silent:true}).stdout.replace(/\r?\n|\r[|&;$%@"<>()+,]/g, "");
         shell.exec(`git clone --branch gh-pages --single-branch ${url}`);
         shell.mv(reponame, '.versions');
     }else{
-        shell.cd(path);
+        shell.cd(vpath);
         shell.exec('git pull');
         shell.cd('..');
     }
@@ -59,7 +59,7 @@ presidium.version = function(conf, version) {
     }
 };
 
-presidium.generate = function(conf) {
+presidium.generate = function(conf, version="") {
     console.log(`Copy base templates...`);
     fs.copySync('node_modules/presidium-core/_includes', conf.distIncludesPath);
     fs.copySync('node_modules/presidium-core/_layouts', conf.distLayoutsPath);
@@ -76,6 +76,26 @@ presidium.generate = function(conf) {
 
     console.log(`Generate site structure...`);
     site.generate(conf);
+
+    // TODO move this somewhere else
+    if (!version) { // i.e. latest version
+        const file = path.join(conf.distSrcPath, "versions.json");
+        console.log(`Writing versions: ${file}...`);
+        // need to generate this from updates - look at version number if the article front matter.
+        fs.writeFileSync(file, JSON.stringify({
+            "baseurl": conf.baseUrl,
+            "selected": conf.versions,
+            "versions": [
+                "1.5",
+                "1.4",
+                "0.0.1",
+                "0.0.2",
+                "1.3",
+                "0.0.4"
+            ]
+        }));
+    }
+
 };
 
 presidium.build = function(conf, version) {
@@ -121,19 +141,19 @@ presidium.ghPages = function(conf, version) {
     if (version){
         // Copy to directory in versions
         if (!shell.test('-d', version)) {
-            fs.mkdirsSync(`./versions/${version}`);
+            fs.mkdirsSync(`./.versions/${version}`);
         }
         // Update ./versions/${version} with the contents of ./dist/site.
-        shell.exec(`rsync -r ./dist/site/ ./versions/${version}`);
+        shell.exec(`rsync -r ./dist/site/ ./.versions/${version}`);
         shell.rm(`_config${version}.yml`);
     } else {
         // Update root of ./versions with the contents of ./dist/site.
-        shell.exec(`rsync -r ./dist/site/ ./versions/`);
+        shell.exec(`rsync -r ./dist/site/ ./.versions/`);
     }
     if (conf.cname) {
         console.log(`Using CNAME record: ${conf.cname}`);
-        const file = path.join('./versions', "CNAME");
+        const file = path.join('./.versions', "CNAME");
         fs.writeFileSync(file, conf.cname);
     }
-    shell.exec(`git-directory-deploy --directory ./versions`);
+    shell.exec(`git-directory-deploy --directory ./.versions`);
 };
