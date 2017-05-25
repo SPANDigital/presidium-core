@@ -19,7 +19,7 @@
             <h1 class="page-title">{{ page.title }}</h1>
             <hr/>
             <section>
-                <h1 id="no-content-warning">No articles match the selected filter.</h1>
+                {% include info.html %}
                 {{ content }}
             </section>
             {% include footer.html %}
