@@ -48,7 +48,7 @@ presidium.version = function(conf, version) {
         shell.mv(reponame, '.versions');
     }else{
         shell.cd(vpath);
-        shell.exec('git pull');
+        //shell.exec('git pull'); --  for now this can fail.
         shell.cd('..');
     }
     // Need to somehow update the _config.yml with the version number.
@@ -82,26 +82,26 @@ presidium.generate = function(conf, version="") {
         const file = path.join(conf.distSrcPath, "versions.json");
         console.log(`Writing versions: ${file}...`);
         // need to generate this from updates - look at version number if the article front matter.
+        // ENSURE THE VERSIONS ARE SORTED IN DESCENDING ORDER.
         fs.writeFileSync(file, JSON.stringify({
             "baseurl": conf.baseUrl,
-            "selected": conf.versions,
+            "selected": conf.versions.selected,
             "versions": [
+                "latest",
                 "1.5",
                 "1.4",
                 "0.0.1",
-                "0.0.2",
-                "1.3",
-                "0.0.4"
+                "0.0.2"
             ]
         }));
     }
 
 };
 
-presidium.build = function(conf, version) {
+presidium.build = function(conf, version='') {
     console.log(`Building site...`);
     shell.cd(conf.jekyllPath);
-    shell.exec(`bundle exec jekyll build --config ../_config.yml,../_config${version}.yml --trace -s ../${conf.distSrcPath} -d ../${conf.distSitePath}`);
+    shell.exec(`bundle exec jekyll build --config ../_config.yml --trace -s ../${conf.distSrcPath} -d ../${conf.distSitePath}`);
     shell.cd('..');
 };
 
@@ -150,6 +150,7 @@ presidium.ghPages = function(conf, version) {
         // Update root of ./versions with the contents of ./dist/site.
         shell.exec(`rsync -r ./dist/site/ ./.versions/`);
     }
+
     if (conf.cname) {
         console.log(`Using CNAME record: ${conf.cname}`);
         const file = path.join('./.versions', "CNAME");
