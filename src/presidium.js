@@ -38,7 +38,7 @@ presidium.install = function(conf) {
     shell.exec('bundle clean');
 };
 
-presidium.version = function(conf, version) {
+presidium.version = function(conf, version='') {
     // Fail if we're not in root.
     const vpath = './.versions';
     if (!shell.test('-d', vpath)) {
@@ -51,13 +51,20 @@ presidium.version = function(conf, version) {
         //shell.exec('git pull'); --  for now this can fail.
         shell.cd('..');
     }
-    // Need to somehow update the _config.yml with the version number.
-    // Create a new versioned config file that overrides things like baseurl.
-    if (version){
-        shell.exec(`touch _config${version}.yml`);
-        shell.exec(`echo "baseurl: ${conf.baseUrl}${version}" > _config${version}.yml`);
-    }
+    // Update the loaded config baseurl.
+    conf.baseUrl = `${conf.baseUrl}${version}`;
 };
+
+
+function listVersions(dir) {
+    let versions = fs.readdirSync(dir).filter((file) => {
+        const re = /^(\d+\.)?(\d+\.)?(\*|\d+)$/g;
+        const fullpath = path.join(dir,'/', file);
+        return re.test(file) && fs.statSync(fullpath).isDirectory();
+    }).reverse().slice(0, 4);
+    versions.unshift('latest');
+    return versions;
+}
 
 presidium.generate = function(conf, version="") {
     console.log(`Copy base templates...`);
@@ -81,18 +88,9 @@ presidium.generate = function(conf, version="") {
     if (!version) { // i.e. latest version
         const file = path.join(conf.distSrcPath, "versions.json");
         console.log(`Writing versions: ${file}...`);
-        // need to generate this from updates - look at version number if the article front matter.
-        // ENSURE THE VERSIONS ARE SORTED IN DESCENDING ORDER.
         fs.writeFileSync(file, JSON.stringify({
-            "baseurl": conf.baseUrl,
-            "selected": conf.versions.selected,
-            "versions": [
-                "latest",
-                "1.5",
-                "1.4",
-                "0.0.1",
-                "0.0.2"
-            ]
+            "enabled": conf.versions.enabled,
+            "versions": listVersions('./.versions')
         }));
     }
 
@@ -101,7 +99,7 @@ presidium.generate = function(conf, version="") {
 presidium.build = function(conf, version='') {
     console.log(`Building site...`);
     shell.cd(conf.jekyllPath);
-    shell.exec(`bundle exec jekyll build --config ../_config.yml --trace -s ../${conf.distSrcPath} -d ../${conf.distSitePath}`);
+    shell.exec(`bundle exec jekyll build --baseurl ${conf.baseUrl} --config ../_config.yml --trace -s ../${conf.distSrcPath} -d ../${conf.distSitePath}`);
     shell.cd('..');
 };
 
@@ -134,22 +132,13 @@ presidium.serve = function(conf) {
     shell.cd('..');
 };
 
-presidium.ghPages = function(conf, version) {
+presidium.ghPages = function(conf, version='') {
     console.log('Publishing to Github Pages...');
-    // Sync up versions with dist
-    // TODO prevent rsync from deleting stuff.
-    if (version){
-        // Copy to directory in versions
-        if (!shell.test('-d', version)) {
-            fs.mkdirsSync(`./.versions/${version}`);
-        }
-        // Update ./versions/${version} with the contents of ./dist/site.
-        shell.exec(`rsync -r ./dist/site/ ./.versions/${version}`);
-        shell.rm(`_config${version}.yml`);
-    } else {
-        // Update root of ./versions with the contents of ./dist/site.
-        shell.exec(`rsync -r ./dist/site/ ./.versions/`);
+
+    if (!shell.test('-d', `./.versions/${version}`)) {
+        fs.mkdirsSync(`./.versions/${version}`);
     }
+    shell.exec(`rsync -r ./dist/site/ ./.versions/${version}`);
 
     if (conf.cname) {
         console.log(`Using CNAME record: ${conf.cname}`);
