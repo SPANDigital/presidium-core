@@ -69,7 +69,6 @@ presidium.version = function(conf, version='') {
     conf.baseUrl = `${conf.baseUrl}${version}`;
 };
 
-
 function listVersions(dir) {
     let versions = fs.readdirSync(dir).filter((file) => {
         const fullpath = path.join(dir,'/', file);
@@ -79,37 +78,47 @@ function listVersions(dir) {
     return versions;
 }
 
-function resolve(resolvable, conf, circularCheck=[]) {
-    resolvable.match(CONFIG_VAR_REGEX).forEach((variable) => {
-        let keyp = variable.substring(variable.lastIndexOf("${") + 2,variable.lastIndexOf("}"));
-        if (!circularCheck.indexOf(keyp)) {
-            throw `Circular dependency error: cannot resolve variables: ${circularCheck}`;
+function resolve(value, conf, dependencyCheck=[]) {
+    value.match(CONFIG_VAR_REGEX).forEach((variable) => {
+        const key = variable.substring(variable.lastIndexOf("${") + 2,variable.lastIndexOf("}"));
+
+        if (!dependencyCheck.indexOf(key)) {
+            throw `Circular dependency error: cannot resolve variables ${dependencyCheck}`;
         }
-        circularCheck.push(keyp);
-        let val = conf[`${keyp}`];
-        if (!val){
-            throw `Could not resolve ${keyp} ... make sure this value is defined in _config.yml`;
+        dependencyCheck.push(key);
+
+        let resolved = conf[key];
+        if (!resolved){
+            throw `Could not resolve ${key} ... make sure this key is defined in _config.yml`;
         }else{
-            if (CONFIG_VAR_REGEX.test(val)){
-                val = resolve(val, conf, circularCheck);
+            if (CONFIG_VAR_REGEX.test(resolved)){
+                resolved = resolve(resolved, conf, dependencyCheck);
             }
-            resolvable = resolvable.replace(variable, val);
+            value = value.replace(variable, resolved);
         }
     });
-    return resolvable;
+    return value;
 }
 
-// TODO reactor the hell out of this - we want to be able to recurse per key value pair, and detect circular dependencies.
+/**
+ * 
+ * @param {*} version {String} - The version number supplied.  
+ * @param {*} configPath {String} - The path to the build area . 
+ */
 function resolveConfig(version='', configPath) {
     let conf = load('./_config.yml');
+    /* Create siteroot variable to store the true baseurl. */
     conf['siteroot'] = conf.baseurl;
-    conf['baseurl'] = path.join(conf['baseurl'], `${version}`)
+    /* Update baseurl with a version number if supplied. */
+    conf['baseurl'] = path.join(conf['baseurl'], version)
 
+    /* Check for variable dependencies. */
     for (let key in conf) {
         if (CONFIG_VAR_REGEX.test(conf[key])){
             conf[key] = resolve(conf[key], conf, [key]);
         }
     }
+    /* Write the resolved configuration to ./dist/src. */
     fs.writeFileSync(configPath, yaml.safeDump (conf, {}), 'utf8');
 }
 
@@ -119,8 +128,7 @@ presidium.generate = function(conf, version='') {
     fs.copySync('node_modules/presidium-core/_layouts', conf.distLayoutsPath);
     fs.copySync('node_modules/presidium-core/media', conf.distMediaPath);
 
-    console.log(`Copy config...`);
-    //fs.copySync('_config.yml', path.join(conf.distSrcPath, '_config.yml'));
+    console.log(`Resolve & copy config...`);
     resolveConfig(version, path.join(conf.distSrcPath, '_config.yml'));
 
     console.log(`Copy media assets...`);
