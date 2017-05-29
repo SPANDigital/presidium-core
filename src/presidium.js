@@ -8,9 +8,9 @@ var yaml = require('js-yaml');
 
 var presidium = module.exports;
 
-const REPO_NAME_REGEX = /\r?\n|\r[|&;$%@"<>()+,]/g;
+const REPO_NAME_REGEX = /\r?\n|\r[|&;$%@"<>()+,]/;
 const CONFIG_VAR_REGEX = /\$([{A-Z])\w+}/g;
-const SEMANTIC_VERSION_REGEX  =/^(\d+\.)?(\d+\.)?(\*|\d+)$/g;
+const SEMANTIC_VERSION_REGEX  =/^(\d+\.)?(\d+\.)?(\*|\d+)$/;
 
 function load(filename) {
     try {
@@ -52,32 +52,33 @@ presidium.install = function(conf) {
     shell.exec('bundle clean');
 };
 
-presidium.version = function(conf, version='') {
-    // Fail if we're not in root.
-    const vpath = './.versions';
-    if (!shell.test('-d', vpath)) {
+presidium.versionInit = function(conf, version='') {
+    const versionsPath = './.versions';
+    if (!shell.test('-d', versionsPath)) {
         const url = shell.exec('git remote get-url origin', {silent:true}).stdout;
         const reponame = shell.exec("basename -s .git " + url, {silent:true}).stdout.replace(REPO_NAME_REGEX, "");
         shell.exec(`git clone --branch gh-pages --single-branch ${url}`);
         shell.mv(reponame, '.versions');
     }else{
-        shell.cd(vpath);
-        //shell.exec('git pull'); --  for now this can fail.
+        shell.cd(versionsPath);
+        shell.exec('git pull origin gh-pages');
         shell.cd('..');
     }
-    // Update the loaded config baseurl.
-    conf.baseUrl = `${conf.baseUrl}${version}`;
 };
 
 function listVersions(dir) {
-    let versions = fs.readdirSync(dir).filter((file) => {
-        const fullpath = path.join(dir,'/', file);
-        return SEMANTIC_VERSION_REGEX.test(file) && fs.statSync(fullpath).isDirectory();
-    }).reverse().slice(0, 4);
-    versions.unshift('latest');
-    return versions;
+    return fs.readdirSync(dir).filter((file) => {
+        return SEMANTIC_VERSION_REGEX.test(file) &&
+            fs.statSync(path.join(dir,'/', file)).isDirectory();
+    }).concat(['latest']).reverse().slice(0, 5);
 }
 
+/**
+ *
+ * @param {String} value - String to resolve of dependencies.
+ * @param {Dictionary} conf - Loaded config.
+ * @param {Array} dependencyCheck
+ */
 function resolve(value, conf, dependencyCheck=[]) {
     value.match(CONFIG_VAR_REGEX).forEach((variable) => {
         const key = variable.substring(variable.lastIndexOf("${") + 2,variable.lastIndexOf("}"));
@@ -101,9 +102,9 @@ function resolve(value, conf, dependencyCheck=[]) {
 }
 
 /**
- * 
- * @param {*} version {String} - The version number supplied.  
- * @param {*} configPath {String} - The path to the build area . 
+ * Helper function that resolves any variable depenencies in the config.
+ * @param {String} version - The version number supplied.
+ * @param {String} configPath - The path to the build area.
  */
 function resolveConfig(version='', configPath) {
     let conf = load('./_config.yml');
@@ -196,10 +197,17 @@ presidium.ghPages = function(conf, version='') {
     }
     shell.exec(`rsync -r ./dist/site/ ./.versions/${version}`);
 
+    // TODO figure out what this is about.
     if (conf.cname) {
         console.log(`Using CNAME record: ${conf.cname}`);
         const file = path.join('./.versions', "CNAME");
         fs.writeFileSync(file, conf.cname);
     }
-    shell.exec(`git-directory-deploy --directory ./.versions`);
+
+    //shell.exec(`git-directory-deploy --directory ./.versions`);
+    shell.cd('./.versions');
+    shell.exec(`git add -A &&
+        git commit -m "Publish Update: ${version || 'latest'}" &&
+        git push origin gh-pages`);
+    shell.cd('..');
 };
