@@ -38,6 +38,9 @@ $navbar-default-border-level-4: darken($navbar-default-bg, 20%);
     .navbar-header {
       float: none;
 
+      width: 100%;
+      text-align: center;
+
       .brand {
         float: none;
         margin: 0 auto;
@@ -56,10 +59,26 @@ $navbar-default-border-level-4: darken($navbar-default-bg, 20%);
         }
       }
 
+      select#versions-select {
+        background: none;
+        border: none;
+        box-shadow: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        width: auto;
+        &:hover {
+          color: $navbar-default-link-hover-color;
+        }
+      }
+      .versions-filter {
+        display: inline-block;
+        border: none;
+        margin-bottom: 0px;
+      }
       .brand-name {
         color: $navbar-default-brand-color;
         display: block;
-        padding: 10px 5px 20px 5px;
+        padding: 20px 5px 0px 5px;
         margin: 0;
         text-transform: uppercase;
         text-align: center;

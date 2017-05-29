@@ -23,7 +23,7 @@ config.load = function(filename = '_config.yml') {
         sections:           conf.get('sections', []),
 
         roles:              conf.get('roles', { label: '', all: '', options: [] }),
-        versions:           conf.get('versions', false),
+        versioned:          conf.get('versioned', false),
 
         contentPath:        conf.get('content-path', './content/'),
         mediaPath:          conf.get('media-path', './media/'),

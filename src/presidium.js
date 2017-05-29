@@ -4,8 +4,22 @@ var path = require('path');
 var site = require('./site');
 var cpx = require("cpx");
 var links = require('./links');
+var yaml = require('js-yaml');
 
 var presidium = module.exports;
+
+const REPO_NAME_REGEX = /\r?\n|\r[|&;$%@"<>()+,]/g;
+const CONFIG_VAR_REGEX = /\$([{A-Z])\w+}/g;
+const SEMANTIC_VERSION_REGEX  =/^(\d+\.)?(\d+\.)?(\*|\d+)$/g;
+
+function load(filename) {
+    try {
+        const file = fs.readFileSync(filename, 'utf8');
+        return yaml.load(file);
+    } catch (e) {
+        console.log(e);
+    }
+}
 
 presidium.clean = function (conf) {
     const dist = conf.distPath;
@@ -43,7 +57,7 @@ presidium.version = function(conf, version='') {
     const vpath = './.versions';
     if (!shell.test('-d', vpath)) {
         const url = shell.exec('git remote get-url origin', {silent:true}).stdout;
-        const reponame = shell.exec("basename -s .git " + url, {silent:true}).stdout.replace(/\r?\n|\r[|&;$%@"<>()+,]/g, "");
+        const reponame = shell.exec("basename -s .git " + url, {silent:true}).stdout.replace(REPO_NAME_REGEX, "");
         shell.exec(`git clone --branch gh-pages --single-branch ${url}`);
         shell.mv(reponame, '.versions');
     }else{
@@ -58,22 +72,56 @@ presidium.version = function(conf, version='') {
 
 function listVersions(dir) {
     let versions = fs.readdirSync(dir).filter((file) => {
-        const re = /^(\d+\.)?(\d+\.)?(\*|\d+)$/g;
         const fullpath = path.join(dir,'/', file);
-        return re.test(file) && fs.statSync(fullpath).isDirectory();
+        return SEMANTIC_VERSION_REGEX.test(file) && fs.statSync(fullpath).isDirectory();
     }).reverse().slice(0, 4);
     versions.unshift('latest');
     return versions;
 }
 
-presidium.generate = function(conf, version="") {
+function resolve(resolvable, conf, circularCheck=[]) {
+    resolvable.match(CONFIG_VAR_REGEX).forEach((variable) => {
+        let keyp = variable.substring(variable.lastIndexOf("${") + 2,variable.lastIndexOf("}"));
+        if (!circularCheck.indexOf(keyp)) {
+            throw `Circular dependency error: cannot resolve variables: ${circularCheck}`;
+        }
+        circularCheck.push(keyp);
+        let val = conf[`${keyp}`];
+        if (!val){
+            throw `Could not resolve ${keyp} ... make sure this value is defined in _config.yml`;
+        }else{
+            if (CONFIG_VAR_REGEX.test(val)){
+                val = resolve(val, conf, circularCheck);
+            }
+            resolvable = resolvable.replace(variable, val);
+        }
+    });
+    return resolvable;
+}
+
+// TODO reactor the hell out of this - we want to be able to recurse per key value pair, and detect circular dependencies.
+function resolveConfig(version='', configPath) {
+    let conf = load('./_config.yml');
+    conf['siteroot'] = conf.baseurl;
+    conf['baseurl'] = path.join(conf['baseurl'], `${version}`)
+
+    for (let key in conf) {
+        if (CONFIG_VAR_REGEX.test(conf[key])){
+            conf[key] = resolve(conf[key], conf, [key]);
+        }
+    }
+    fs.writeFileSync(configPath, yaml.safeDump (conf, {}), 'utf8');
+}
+
+presidium.generate = function(conf, version='') {
     console.log(`Copy base templates...`);
     fs.copySync('node_modules/presidium-core/_includes', conf.distIncludesPath);
     fs.copySync('node_modules/presidium-core/_layouts', conf.distLayoutsPath);
     fs.copySync('node_modules/presidium-core/media', conf.distMediaPath);
 
     console.log(`Copy config...`);
-    fs.copySync('_config.yml', path.join(conf.distSrcPath, '_config.yml'));
+    //fs.copySync('_config.yml', path.join(conf.distSrcPath, '_config.yml'));
+    resolveConfig(version, path.join(conf.distSrcPath, '_config.yml'));
 
     console.log(`Copy media assets...`);
     fs.copySync('media', conf.distMediaPath);
@@ -89,7 +137,7 @@ presidium.generate = function(conf, version="") {
         const file = path.join(conf.distSrcPath, "versions.json");
         console.log(`Writing versions: ${file}...`);
         fs.writeFileSync(file, JSON.stringify({
-            "enabled": conf.versions.enabled,
+            "versioned": conf.versioned,
             "versions": listVersions('./.versions')
         }));
     }
@@ -99,7 +147,7 @@ presidium.generate = function(conf, version="") {
 presidium.build = function(conf, version='') {
     console.log(`Building site...`);
     shell.cd(conf.jekyllPath);
-    shell.exec(`bundle exec jekyll build --baseurl ${conf.baseUrl} --config ../_config.yml --trace -s ../${conf.distSrcPath} -d ../${conf.distSitePath}`);
+    shell.exec(`bundle exec jekyll build  --config ../${conf.distSrcPath}/_config.yml --trace -s ../${conf.distSrcPath} -d ../${conf.distSitePath}`);
     shell.cd('..');
 };
 

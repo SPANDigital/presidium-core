@@ -32,7 +32,7 @@
 <!-- Components -->
 <script src="{{ site.baseurl | append: '/media/js/presidium.js' | replace: '//','/'}}"></script>
 <script>
-    window.presidium['versions'] = { gitbase: "{{ site.versions.gitbase }}" };
+    window.presidium['versions'] = { siteroot: "{{ site.siteroot }}" };
     window.presidium.menu.load({% include menu.json %}, 'presidium-navigation');
     window.presidium.tooltips.load({ "baseurl": "{{ site.baseurl }}" });
 </script>
