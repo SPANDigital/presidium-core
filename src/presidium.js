@@ -8,19 +8,6 @@ var yaml = require('js-yaml');
 
 var presidium = module.exports;
 
-const REPO_NAME_REGEX = /\r?\n|\r[|&;$%@"<>()+,]/;
-const CONFIG_VAR_REGEX = /\$([{A-Z])\w+}/g;
-const SEMANTIC_VERSION_REGEX  =/^(\d+\.)?(\d+\.)?(\*|\d+)$/;
-
-function load(filename) {
-    try {
-        const file = fs.readFileSync(filename, 'utf8');
-        return yaml.load(file);
-    } catch (e) {
-        console.log(e);
-    }
-}
-
 presidium.clean = function (conf) {
     const dist = conf.distPath;
     console.log(`Cleaning all files and folders in: ${dist}`);
@@ -52,85 +39,14 @@ presidium.install = function(conf) {
     shell.exec('bundle clean');
 };
 
-presidium.versionInit = function(conf, version='') {
-    const versionsPath = './.versions';
-    if (!shell.test('-d', versionsPath)) {
-        const url = shell.exec('git remote get-url origin', {silent:true}).stdout;
-        const reponame = shell.exec("basename -s .git " + url, {silent:true}).stdout.replace(REPO_NAME_REGEX, "");
-        shell.exec(`git clone --branch gh-pages --single-branch ${url}`);
-        shell.mv(reponame, '.versions');
-    }else{
-        shell.cd(versionsPath);
-        shell.exec('git pull origin gh-pages');
-        shell.cd('..');
-    }
-};
-
-function listVersions(dir) {
-    return fs.readdirSync(dir).filter((file) => {
-        return SEMANTIC_VERSION_REGEX.test(file) &&
-            fs.statSync(path.join(dir,'/', file)).isDirectory();
-    }).concat(['latest']).reverse().slice(0, 5);
-}
-
-/**
- *
- * @param {String} value - String to resolve of dependencies.
- * @param {Dictionary} conf - Loaded config.
- * @param {Array} dependencyCheck
- */
-function resolve(value, conf, dependencyCheck=[]) {
-    value.match(CONFIG_VAR_REGEX).forEach((variable) => {
-        const key = variable.substring(variable.lastIndexOf("${") + 2,variable.lastIndexOf("}"));
-
-        if (!dependencyCheck.indexOf(key)) {
-            throw `Circular dependency error: cannot resolve variables ${dependencyCheck}`;
-        }
-        dependencyCheck.push(key);
-
-        let resolved = conf[key];
-        if (!resolved){
-            throw `Could not resolve ${key} ... make sure this key is defined in _config.yml`;
-        }else{
-            if (CONFIG_VAR_REGEX.test(resolved)){
-                resolved = resolve(resolved, conf, dependencyCheck);
-            }
-            value = value.replace(variable, resolved);
-        }
-    });
-    return value;
-}
-
-/**
- * Helper function that resolves any variable depenencies in the config.
- * @param {String} version - The version number supplied.
- * @param {String} configPath - The path to the build area.
- */
-function resolveConfig(version='', configPath) {
-    let conf = load('./_config.yml');
-    /* Create siteroot variable to store the true baseurl. */
-    conf['siteroot'] = conf.baseurl;
-    /* Update baseurl with a version number if supplied. */
-    conf['baseurl'] = path.join(conf['baseurl'], version)
-
-    /* Check for variable dependencies. */
-    for (let key in conf) {
-        if (CONFIG_VAR_REGEX.test(conf[key])){
-            conf[key] = resolve(conf[key], conf, [key]);
-        }
-    }
-    /* Write the resolved configuration to ./dist/src. */
-    fs.writeFileSync(configPath, yaml.safeDump (conf, {}), 'utf8');
-}
-
-presidium.generate = function(conf, version='') {
+presidium.generate = function(conf) {
     console.log(`Copy base templates...`);
     fs.copySync('node_modules/presidium-core/_includes', conf.distIncludesPath);
     fs.copySync('node_modules/presidium-core/_layouts', conf.distLayoutsPath);
     fs.copySync('node_modules/presidium-core/media', conf.distMediaPath);
 
     console.log(`Resolve & copy config...`);
-    resolveConfig(version, path.join(conf.distSrcPath, '_config.yml'));
+    fs.writeFileSync(path.join(conf.distSrcPath, '_config.yml'), conf.raw, 'utf8');
 
     console.log(`Copy media assets...`);
     fs.copySync('media', conf.distMediaPath);
@@ -140,30 +56,17 @@ presidium.generate = function(conf, version='') {
 
     console.log(`Generate site structure...`);
     site.generate(conf);
-
-    // TODO move this somewhere else
-    if (!version) { // i.e. latest version
-        const file = path.join(conf.distSrcPath, "versions.json");
-        console.log(`Writing versions: ${file}...`);
-        fs.writeFileSync(file, JSON.stringify({
-            "versioned": conf.versioned,
-            "versions": listVersions('./.versions')
-        }));
-    }
-
 };
 
-presidium.build = function(conf, version='') {
+presidium.build = function(conf) {
     console.log(`Building site...`);
     shell.cd(conf.jekyllPath);
-    shell.exec(`bundle exec jekyll build  --config ../${conf.distSrcPath}/_config.yml --trace -s ../${conf.distSrcPath} -d ../${conf.distSitePath}`);
+    shell.exec(`bundle exec jekyll build --config ../${path.join(conf.distSrcPath, '_config.yml')} --trace -s ../${conf.distSrcPath} -d ../${conf.distSitePath}`);
     shell.cd('..');
 };
 
 presidium.validate = function(conf) {
-
     const results = links.validate(conf);
-
     if(results.broken > 0) {
         throw new Error('There are broken links in the site. Can not proceed.')
     }
@@ -189,13 +92,13 @@ presidium.serve = function(conf) {
     shell.cd('..');
 };
 
-presidium.ghPages = function(conf, version='') {
+presidium.ghPages = function(conf) {
     console.log('Publishing to Github Pages...');
 
-    if (!shell.test('-d', `./.versions/${version}`)) {
-        fs.mkdirsSync(`./.versions/${version}`);
+    if (!shell.test('-d', `./.versions/${conf.version}`)) {
+        fs.mkdirsSync(`./.versions/${conf.version}`);
     }
-    shell.exec(`rsync -r ./dist/site/ ./.versions/${version}`);
+    shell.exec(`rsync -r ./dist/site/ ./.versions/${conf.version}`);
 
     // TODO figure out what this is about.
     if (conf.cname) {
@@ -207,7 +110,7 @@ presidium.ghPages = function(conf, version='') {
     //shell.exec(`git-directory-deploy --directory ./.versions`);
     shell.cd('./.versions');
     shell.exec(`git add -A &&
-        git commit -m "Publish Update: ${version || 'latest'}" &&
+        git commit -m "Publish Update: ${conf.version || 'latest'}" &&
         git push origin gh-pages`);
     shell.cd('..');
 };
