@@ -45,7 +45,7 @@ presidium.generate = function(conf) {
     fs.copySync('node_modules/presidium-core/_layouts', conf.distLayoutsPath);
     fs.copySync('node_modules/presidium-core/media', conf.distMediaPath);
 
-    console.log(`Resolve & copy config...`);
+    console.log(`Write resolved config to the build directory...`);
     fs.writeFileSync(path.join(conf.distSrcPath, '_config.yml'), conf.raw, 'utf8');
 
     console.log(`Copy media assets...`);
@@ -100,14 +100,12 @@ presidium.ghPages = function(conf) {
     }
     shell.exec(`rsync -r ./dist/site/ ./.versions/${conf.version}`);
 
-    // TODO figure out what this is about.
     if (conf.cname) {
         console.log(`Using CNAME record: ${conf.cname}`);
         const file = path.join('./.versions', "CNAME");
         fs.writeFileSync(file, conf.cname);
     }
 
-    //shell.exec(`git-directory-deploy --directory ./.versions`);
     shell.cd('./.versions');
     shell.exec(`git add -A &&
         git commit -m "Publish Update: ${conf.version || 'latest'}" &&

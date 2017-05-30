@@ -18,8 +18,6 @@ config.load = function(filename = '_config.yml', version='') {
     const distSite      = conf.get('dist-site-path', path.join(distPath, 'site/'));
 
     return {
-        raw:                yaml.safeDump(conf, {}),
-        version:            version,
         logo:               conf.get('logo', ''),
         brandName:          conf.get('name', ''),
         baseUrl:            path.join(conf.get('baseurl', ''), '/'),
@@ -27,10 +25,13 @@ config.load = function(filename = '_config.yml', version='') {
         sections:           conf.get('sections', []),
 
         roles:              conf.get('roles', { label: '', all: '', options: [] }),
-        versioned:          conf.get('versioned', false),
 
         contentPath:        conf.get('content-path', './content/'),
         mediaPath:          conf.get('media-path', './media/'),
+
+        raw:                yaml.safeDump(conf.config, {}),
+        version:            version,
+        versioned:          conf.get('versioned', false),
 
         distPath:           distPath,
         distSrcPath:        distSrcPath,

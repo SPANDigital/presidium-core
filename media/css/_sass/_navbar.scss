@@ -66,8 +66,11 @@ $navbar-default-border-level-4: darken($navbar-default-bg, 20%);
         -webkit-appearance: none;
         -moz-appearance: none;
         width: auto;
+        font-weight: 600;
+        font-size: small;
         &:hover {
           color: $navbar-default-link-hover-color;
+          cursor: pointer;
         }
       }
       .versions-filter {
