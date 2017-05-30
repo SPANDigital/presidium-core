@@ -15,7 +15,7 @@ version.init = function (conf) {
         }).stdout;
         const reponame = shell.exec("basename -s .git " + url, {
             silent: true
-        }).stdout.replace(REPO_NAME_REGEX, "");
+        }).stdout.replace(REPO_NAME_REGEX, '');
         shell.exec(`git clone --branch gh-pages --single-branch ${url}`);
         shell.mv(reponame, '.versions');
     } else {
