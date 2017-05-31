@@ -42,7 +42,8 @@ var argv = yargs.usage('$0 command')
         presidium.serve(conf);
     })
     .command('clean-gh-pages', 'Remove old versions.', function (yargs) {
-        return yargs.alias('v', 'version')
+        return yargs
+            .alias('v', 'version')
             .describe('v', 'Semantic version number you wish to delete.')
             .demand('v', 'You must supply a version to delete.')
             .string('v');
@@ -50,7 +51,8 @@ var argv = yargs.usage('$0 command')
         version.clean(argv['v'], conf);
     })
     .command('gh-pages', 'Publish to Github Pages', function (yargs) {
-        return yargs.alias('v', 'version')
+        return yargs
+            .alias('v', 'version')
             .describe('v', 'Semantic version number to publish with. \n If omitted, it defaults to publishing "latest".')
             .string('v');
     }, function (argv) {
