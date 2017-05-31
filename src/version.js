@@ -6,10 +6,11 @@ var version = module.exports;
 
 const REPO_NAME_REGEX = /\r?\n|\r[|&;$%@"<>()+,]/;
 const SEMANTIC_VERSION_REGEX = /^(\d+\.)?(\d+\.)?(\*|\d+)$/;
-const versionsPath = './.versions';
+
+version.path = './.versions';
 
 version.init = function (conf) {
-    if (!shell.test('-d', versionsPath)) {
+    if (!shell.test('-d', version.path)) {
         const url = shell.exec('git remote get-url origin', {
             silent: true
         }).stdout;
@@ -19,7 +20,7 @@ version.init = function (conf) {
         shell.exec(`git clone --branch gh-pages --single-branch ${url}`);
         shell.mv(reponame, '.versions');
     } else {
-        shell.cd(versionsPath, path.join(conf.distSrcPath, "versions.json"));
+        shell.cd(version.path);
         shell.exec('git pull origin gh-pages');
         shell.cd('..');
     }
@@ -27,11 +28,11 @@ version.init = function (conf) {
 };
 
 version.clean = function(v, conf) {
-    if (shell.test('-d', path.join(versionsPath, v))) {
-        shell.rm('-rf', path.join(versionsPath, v));
-        updateVersionsJson(conf, path.join(versionsPath, 'versions.json'));
+    if (shell.test('-d', path.join(version.path, v))) {
+        shell.rm('-rf', path.join(version.path, v));
+        updateVersionsJson(conf, path.join(version.path, 'versions.json'));
 
-        shell.cd(versionsPath);
+        shell.cd(version.path);
         shell.exec('git add -A');
         shell.exec(`git commit -m "Remove version: ${v}"`);
         shell.exec('git push origin');
@@ -41,10 +42,10 @@ version.clean = function(v, conf) {
 
 function updateVersionsJson(conf){
     console.log('Writing new versions.json file...');
-    fs.writeFileSync(path.join(versionsPath, 'versions.json'),
+    fs.writeFileSync(path.join(version.path, 'versions.json'),
         JSON.stringify({
             "versioned": conf.versioned,
-            "versions": listVersions('./.versions')
+            "versions": listVersions(version.path)
         })
     );
 };

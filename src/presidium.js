@@ -5,6 +5,7 @@ var site = require('./site');
 var cpx = require("cpx");
 var links = require('./links');
 var yaml = require('js-yaml');
+var version = require('./version');
 
 var presidium = module.exports;
 
@@ -94,19 +95,19 @@ presidium.serve = function(conf) {
 
 presidium.ghPages = function(conf) {
     console.log('Publishing to Github Pages...');
-
-    if (!shell.test('-d', `./.versions/${conf.version}`)) {
-        fs.mkdirsSync(`./.versions/${conf.version}`);
+    const syncPath = path.join(version.path, conf.version);
+    if (!shell.test('-d', syncPath)) {
+        fs.mkdirsSync(syncPath);
     }
-    shell.exec(`rsync -r ./dist/site/ ./.versions/${conf.version}`);
+    shell.exec(`rsync -r ./dist/site/ ${syncPath}`);
 
     if (conf.cname) {
         console.log(`Using CNAME record: ${conf.cname}`);
-        const file = path.join('./.versions', "CNAME");
+        const file = path.join(version.path, "CNAME");
         fs.writeFileSync(file, conf.cname);
     }
 
-    shell.cd('./.versions');
+    shell.cd(version.path);
     shell.exec(`git add -A &&
         git commit -m "Publish Update: ${conf.version || 'latest'}" &&
         git push origin gh-pages`);

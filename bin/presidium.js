@@ -1,5 +1,4 @@
 #! /usr/bin/env node
-
 var yargs = require('yargs');
 var config = require('../src/config');
 var presidium = require('../src/presidium');
@@ -59,7 +58,7 @@ var argv = yargs.usage('$0 command')
             .describe('v', 'Semantic version number to publish with. \n If omitted, it defaults to publishing "latest".')
             .string('v');
     }, function (argv) {
-        conf = config.load('_config.yml', yargs.argv['v'] || '');
+        conf = config.load('_config.yml', argv['v'] || '');
         presidium.clean(conf);
         presidium.generate(conf);
         version.init(conf);

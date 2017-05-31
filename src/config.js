@@ -64,7 +64,7 @@ function load(filename) {
     } catch (e) {
         console.log(e);
     }
-}
+};
 
 /**
  * Helper function that resolves any variable depenencies in the config.
@@ -81,7 +81,7 @@ function resolveConfig(conf, version='') {
         }
     }
     return conf;
-}
+};
 
 /**
  * Recursively resolve variable depedencies.
@@ -109,4 +109,4 @@ function resolve(value, conf, ring=[]) {
         ring.pop();
     });
     return value;
-}
+};
