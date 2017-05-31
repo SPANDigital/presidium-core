@@ -69,49 +69,44 @@ function load(filename) {
 /**
  * Helper function that resolves any variable depenencies in the config.
  * @param {String} version - The version number supplied.
- * @param {String} configPath - The path to the build area.
+ * @param {Object} conf - The parsed config file.
  */
 function resolveConfig(conf, version='') {
-    /* Create siteroot variable to store the true baseurl. */
     conf['siteroot'] = conf.baseurl;
-    /* Update baseurl with a version number if supplied. */
     conf['baseurl'] = path.join(conf['baseurl'], version)
 
-    /* Check for variable dependencies. */
     for (let key in conf) {
         if (CONFIG_VAR_REGEX.test(conf[key])){
             conf[key] = resolve(conf[key], conf, [key]);
         }
     }
-    /* Write the resolved configuration to ./dist/src. */
-    //fs.writeFileSync(configPath, yaml.safeDump (conf, {}), 'utf8');
     return conf;
 }
 
 /**
- *
+ * Recursively resolve variable depedencies.
  * @param {String} value - String to resolve of dependencies.
- * @param {Dictionary} conf - Loaded config.
- * @param {Array} dependencyCheck
+ * @param {Dictionary} conf - The parsed config file.
+ * @param {Array} ring - An array of previously seen keys.
  */
-function resolve(value, conf, dependencyCheck=[]) {
+function resolve(value, conf, ring=[]) {
     value.match(CONFIG_VAR_REGEX).forEach((variable) => {
         const key = variable.substring(variable.lastIndexOf("${") + 2,variable.lastIndexOf("}"));
 
-        if (!dependencyCheck.indexOf(key)) {
-            throw `Circular dependency error: cannot resolve variables ${dependencyCheck}`;
+        if (ring.includes(key)) {
+            throw `Circular dependency error: cannot resolve variable(s) ${ring}.`;
         }
-        dependencyCheck.push(key);
+        ring.push(key);
 
         let resolved = conf[key];
         if (!resolved){
-            throw `Could not resolve ${key} ... make sure this key is defined in _config.yml`;
-        }else{
-            if (CONFIG_VAR_REGEX.test(resolved)){
-                resolved = resolve(resolved, conf, dependencyCheck);
-            }
-            value = value.replace(variable, resolved);
+            throw `Could not resolve ${key} - make sure this key is defined in _config.yml.`;
         }
+        if (CONFIG_VAR_REGEX.test(resolved)){
+            resolved = resolve(resolved, conf, ring);
+        }
+        value = value.replace(variable, resolved);
+        ring.pop();
     });
     return value;
 }
