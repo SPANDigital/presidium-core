@@ -68,6 +68,7 @@ $navbar-default-border-level-4: darken($navbar-default-bg, 20%);
         width: auto;
         font-weight: 600;
         font-size: small;
+        margin-top: -10px; 
         &:hover {
           color: $navbar-default-link-hover-color;
           cursor: pointer;
@@ -81,7 +82,7 @@ $navbar-default-border-level-4: darken($navbar-default-bg, 20%);
       .brand-name {
         color: $navbar-default-brand-color;
         display: block;
-        padding: 20px 5px 0px 5px;
+        padding: 20px 5px 10px 5px;
         margin: 0;
         text-transform: uppercase;
         text-align: center;

@@ -26062,6 +26062,10 @@
 
 	var _reactRedux = __webpack_require__(240);
 
+	var _paths = __webpack_require__(237);
+
+	var _paths2 = _interopRequireDefault(_paths);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -26097,7 +26101,7 @@
 	        key: 'onChangeVersion',
 	        value: function onChangeVersion(e) {
 	            var version = e.target.value === 'latest' ? '' : e.target.value;
-	            window.location.href = this.state.siteroot + '/' + version;
+	            window.location.href = _paths2.default.concat(this.state.siteroot, version);
 	        }
 	    }, {
 	        key: 'componentWillReceiveProps',
@@ -26107,7 +26111,7 @@
 	    }, {
 	        key: 'componentWillMount',
 	        value: function componentWillMount() {
-	            this.props.getVersions(this.state.siteroot + '/versions.json');
+	            this.props.getVersions(_paths2.default.concat(this.state.siteroot, 'versions.json'));
 	        }
 	    }, {
 	        key: 'render',
