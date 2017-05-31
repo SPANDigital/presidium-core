@@ -34,7 +34,6 @@
     "cpx": "^1.5.0",
     "front-matter": "^2.1.2",
     "fs-extra": "^2.1.2",
-    "git-directory-deploy": "^1.5.1",
     "js-yaml": "^3.8.2",
     "remark": "^7.0.1",
     "shelljs": "^0.7.7",
