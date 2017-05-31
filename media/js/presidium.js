@@ -4343,18 +4343,27 @@
 	            var _this4 = this;
 
 	            var articles = document.querySelectorAll('#presidium-content .article');
+	            var articlesFound = false;
 	            articles.forEach(function (article) {
 	                if (selected == _this4.state.roles.all) {
 	                    article.style.display = "block";
+	                    articlesFound = true;
 	                    return;
 	                }
 	                var roles = article.getAttribute('data-roles').split(",");
 	                if (roles.includes(selected) || roles.includes(_this4.state.roles.all)) {
 	                    article.style.display = "block";
+	                    articlesFound = true;
 	                } else {
 	                    article.style.display = "none";
 	                }
 	            });
+
+	            if (articlesFound) {
+	                document.getElementById('no-content-warning').style.display = "none";
+	            } else {
+	                document.getElementById('no-content-warning').style.display = "block";
+	            }
 	        }
 	    }]);
 
