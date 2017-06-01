@@ -4,6 +4,8 @@ var path = require('path');
 var site = require('./site');
 var cpx = require("cpx");
 var links = require('./links');
+var yaml = require('js-yaml');
+var version = require('./version');
 
 var presidium = module.exports;
 
@@ -44,8 +46,8 @@ presidium.generate = function(conf) {
     fs.copySync('node_modules/presidium-core/_layouts', conf.distLayoutsPath);
     fs.copySync('node_modules/presidium-core/media', conf.distMediaPath);
 
-    console.log(`Copy config...`);
-    fs.copySync('_config.yml', path.join(conf.distSrcPath, '_config.yml'));
+    console.log(`Write resolved config to the build directory...`);
+    fs.writeFileSync(path.join(conf.distSrcPath, '_config.yml'), conf.raw, 'utf8');
 
     console.log(`Copy media assets...`);
     fs.copySync('media', conf.distMediaPath);
@@ -60,14 +62,12 @@ presidium.generate = function(conf) {
 presidium.build = function(conf) {
     console.log(`Building site...`);
     shell.cd(conf.jekyllPath);
-    shell.exec(`bundle exec jekyll build --trace -s ../${conf.distSrcPath} -d ../${conf.distSitePath}`);
+    shell.exec(`bundle exec jekyll build --config ../${path.join(conf.distSrcPath, '_config.yml')} --trace -s ../${conf.distSrcPath} -d ../${conf.distSitePath}`);
     shell.cd('..');
 };
 
 presidium.validate = function(conf) {
-
     const results = links.validate(conf);
-
     if(results.broken > 0) {
         throw new Error('There are broken links in the site. Can not proceed.')
     }
@@ -95,10 +95,21 @@ presidium.serve = function(conf) {
 
 presidium.ghPages = function(conf) {
     console.log('Publishing to Github Pages...');
+    const syncPath = path.join(version.path, conf.version);
+    if (!shell.test('-d', syncPath)) {
+        fs.mkdirsSync(syncPath);
+    }
+    shell.exec(`rsync -r ./dist/site/ ${syncPath}`);
+
     if (conf.cname) {
         console.log(`Using CNAME record: ${conf.cname}`);
-        const file = path.join(conf.distSitePath, "CNAME");
+        const file = path.join(version.path, "CNAME");
         fs.writeFileSync(file, conf.cname);
     }
-    shell.exec(`git-directory-deploy --directory ${conf.distSitePath}`);
+
+    shell.cd(version.path);
+    shell.exec(`git add -A &&
+        git commit -m "Publish Update: ${conf.version || 'latest'}" &&
+        git push origin gh-pages`);
+    shell.cd('..');
 };
