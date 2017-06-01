@@ -19,6 +19,7 @@
             <h1 class="page-title">{{ page.title }}</h1>
             <hr/>
             <section>
+                {% include info.html %}
                 {{ content }}
             </section>
             {% include footer.html %}
@@ -32,6 +33,7 @@
 <!-- Components -->
 <script src="{{ site.baseurl | append: '/media/js/presidium.js' | replace: '//','/'}}"></script>
 <script>
+    window.presidium['versions'] = { siteroot: "{{ site.siteroot }}" };
     window.presidium.menu.load({% include menu.json %}, 'presidium-navigation');
     window.presidium.tooltips.load({ "baseurl": "{{ site.baseurl }}" });
 </script>

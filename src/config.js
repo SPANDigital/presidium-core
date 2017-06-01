@@ -4,12 +4,14 @@ var path = require('path');
 
 var config = module.exports;
 
+const CONFIG_VAR_REGEX = /\$([{A-Z])\w+}/g;
+
 /**
  * Load config file with defaults
  * @param filename
  */
-config.load = function(filename = '_config.yml') {
-    const conf = new Config(filename);
+config.load = function(filename = '_config.yml', version='') {
+    const conf = new Config(filename, version);
 
     const distPath      = conf.get('dist-path', './dist/');
     const distSrcPath   = conf.get('dist-src-path', path.join(distPath, 'src/'));
@@ -27,6 +29,10 @@ config.load = function(filename = '_config.yml') {
         contentPath:        conf.get('content-path', './content/'),
         mediaPath:          conf.get('media-path', './media/'),
 
+        raw:                yaml.safeDump(conf.config, {}),
+        version:            version,
+        versioned:          conf.get('versioned', false),
+
         distPath:           distPath,
         distSrcPath:        distSrcPath,
         distSitePath:       distSite,
@@ -42,9 +48,9 @@ config.load = function(filename = '_config.yml') {
     }
 };
 
-var Config = function(filename) {
+var Config = function(filename, version) {
     //TODO validate config
-    this.config = load(filename);
+    this.config = resolveConfig(load(filename), version);
 };
 
 Config.prototype.get = function(key, defaultVal = undefined) {
@@ -58,4 +64,49 @@ function load(filename) {
     } catch (e) {
         console.log(e);
     }
-}
+};
+
+/**
+ * Helper function that resolves any variable depenencies in the config.
+ * @param {String} version - The version number supplied.
+ * @param {Object} conf - The parsed config file.
+ */
+function resolveConfig(conf, version='') {
+    conf['siteroot'] = conf.baseurl;
+    conf['baseurl'] = path.join(conf['baseurl'], version)
+
+    for (let key in conf) {
+        if (CONFIG_VAR_REGEX.test(conf[key])){
+            conf[key] = resolve(conf[key], conf, [key]);
+        }
+    }
+    return conf;
+};
+
+/**
+ * Recursively resolve variable depedencies.
+ * @param {String} value - String to resolve of dependencies.
+ * @param {Dictionary} conf - The parsed config file.
+ * @param {Array} ring - An array of previously seen keys.
+ */
+function resolve(value, conf, ring=[]) {
+    value.match(CONFIG_VAR_REGEX).forEach((variable) => {
+        const key = variable.substring(variable.lastIndexOf("${") + 2,variable.lastIndexOf("}"));
+
+        if (ring.includes(key)) {
+            throw `Circular dependency error: cannot resolve variable(s) ${ring}.`;
+        }
+        ring.push(key);
+
+        let resolved = conf[key];
+        if (!resolved){
+            throw `Could not resolve ${key} - make sure this key is defined in _config.yml.`;
+        }
+        if (CONFIG_VAR_REGEX.test(resolved)){
+            resolved = resolve(resolved, conf, ring);
+        }
+        value = value.replace(variable, resolved);
+        ring.pop();
+    });
+    return value;
+};
