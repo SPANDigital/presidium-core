@@ -73,7 +73,7 @@ function load(filename) {
  */
 function resolveConfig(conf, version='') {
     conf['siteroot'] = conf.baseurl || '/';
-		if(version) {
+    if(version) {
       conf['baseurl'] = path.join(conf.siteroot, version);
     }
 
