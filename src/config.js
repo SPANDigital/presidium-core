@@ -72,8 +72,10 @@ function load(filename) {
  * @param {Object} conf - The parsed config file.
  */
 function resolveConfig(conf, version='') {
-    conf['siteroot'] = conf.baseurl;
-    conf['baseurl'] = path.join(conf['baseurl'], version)
+    conf['siteroot'] = conf.baseurl || '/';
+    if(version) {
+      conf['baseurl'] = path.join(conf.siteroot, version);
+    }
 
     for (let key in conf) {
         if (CONFIG_VAR_REGEX.test(conf[key])){
