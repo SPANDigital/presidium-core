@@ -1,3 +1,9 @@
+
+| Branch | Status
+|-|-
+|master|[![Build Status](https://travis-ci.org/SPANDigital/presidium-core.svg?branch=master)](https://travis-ci.org/SPANDigital/presidium-core)
+|develop|[![Build Status](https://travis-ci.org/SPANDigital/presidium-core.svg?branch=develop)](https://travis-ci.org/SPANDigital/presidium-core)
+
 # Presidium
 
 Presidium is a documentation framework that enforces industry best practices for documenting software systems. 
