@@ -1,6 +1,6 @@
 {
   "name": "presidium-core",
-  "version": "0.1.2",
+  "version": "0.1.4",
   "description": "Presidium technical documentation template for Jekyll",
   "license": "Apache-2.0",
   "bin": {
@@ -22,11 +22,11 @@
     "url": "https://github.com/SPANDigital/presidium-core"
   },
   "bugs": {
-    "url": "https://github.com/SPANDigital/presidium-core/issues"
+    "url": "https://github.com/SPANDigital/presidium/issues"
   },
   "scripts": {
-    "test": "mocha --debug-brk --recursive",
-    "update-gems": "cd .jekyll; bundle lock --update"
+    "test": "mocha",
+    "update-jekyll": "cd .jekyll; bundle lock --update"
   },
   "dependencies": {
     "cheerio": "^0.22.0",
