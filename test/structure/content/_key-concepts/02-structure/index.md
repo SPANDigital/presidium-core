@@ -1,6 +1,0 @@
----
-title: "Structure"
----
-
-Structure descriptor
-

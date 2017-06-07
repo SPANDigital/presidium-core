@@ -1,37 +1,8 @@
-var config = require("../../src/config");
-var structure = require("../../src/structure");
-var site = require("../../src/site");
-
-var fs = require("fs-extra");
-
 var assert = require('assert');
 
-describe('Generate Site Structure', function() {
+describe('Util Tests', function() {
 
-    // describe('Traverse Section Files', function() {
-    //
-    //     var files = structure.traverseSync("./test/structure/content/");
-    //
-    //     it('should traverse all files', function() {
-    //         assert.equal(23, files.length);
-    //     });
-    //
-    //     it('should parse frontmatter', function() {
-    //         const fm = files[0].properties;
-    //         assert.equal("Article in Category", fm.title);
-    //         assert.equal("Category", fm.category);
-    //     });
-    // });
-
-
-    describe('Build Site', function() {
-        var conf = config.load("./test/structure/_config.yml");
-        fs.emptydirSync(conf.distSrcPath);
-        site.generate(conf);
-    });
-
-
-    describe('TEST', function() {
+    describe('Test root paths', function() {
         var url = require('url');
         var isRoot = function(root, reference, baseurl = "/") {
             if (root == baseurl) {
