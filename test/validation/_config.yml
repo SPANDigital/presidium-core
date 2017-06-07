@@ -20,7 +20,7 @@ external:
 
 content-path:  test/validation/content/
 dist-path: test/validation/dist/
-jekyll-path: ./test/.jekyll
+#jekyll-path: ./test/.jekyll
 include-nested-articles: true
 #
 # Menu Structure

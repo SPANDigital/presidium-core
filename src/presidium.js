@@ -42,18 +42,18 @@ presidium.install = function(conf) {
 
 presidium.generate = function(conf) {
     console.log(`Copy base templates...`);
-    fs.copySync('node_modules/presidium-core/_includes', conf.distIncludesPath);
-    fs.copySync('node_modules/presidium-core/_layouts', conf.distLayoutsPath);
-    fs.copySync('node_modules/presidium-core/media', conf.distMediaPath);
+    fs.copySync(path.join(conf.corePath, '_includes'), conf.distIncludesPath);
+    fs.copySync(path.join(conf.corePath, '_layouts'), conf.distLayoutsPath);
+    fs.copySync(path.join(conf.corePath, 'media'), conf.distMediaPath);
 
     console.log(`Write resolved config to the build directory...`);
     fs.writeFileSync(path.join(conf.distSrcPath, '_config.yml'), conf.raw, 'utf8');
 
     console.log(`Copy media assets...`);
-    fs.copySync('media', conf.distMediaPath);
+    fs.copySync(conf.mediaPath, conf.distMediaPath);
 
     console.log(`Copy content...`);
-    fs.copySync('./content', conf.distSrcPath);
+    fs.copySync(conf.contentPath, conf.distSrcPath);
 
     console.log(`Generate site structure...`);
     site.generate(conf);
