@@ -30,14 +30,19 @@ presidium.install = function(conf) {
 
     console.log('Copying Gemfile...');
     fs.mkdirsSync(conf.jekyllPath);
-    fs.copySync('node_modules/presidium-core/.jekyll', conf.jekyllPath);
+    fs.copySync(path.join(conf.corePath, '.jekyll'), conf.jekyllPath);
+
+    var pwd = shell.pwd();
 
     console.log('Installing Jekyll Gems...');
-    shell.cd('.jekyll');
+    shell.cd(conf.jekyllPath);
     shell.exec('bundle install --path=.bundle --deployment');
 
     console.log('Removing unused gems...');
     shell.exec('bundle clean');
+
+    shell.cd(pwd);
+
 };
 
 presidium.generate = function(conf) {

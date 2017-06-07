@@ -18,6 +18,7 @@ show:
 external:
   authors-url: https://github.com/orgs/SPANDigital/people/
 
+jekyll-path: ./test/.jekyll
 core-path: ./
 content-path:  ./test/build/content/
 dist-path: ./test/build/dist/
