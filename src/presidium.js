@@ -66,9 +66,13 @@ presidium.generate = function(conf) {
 
 presidium.build = function(conf) {
     console.log(`Building site...`);
+    const pwd = shell.pwd();
     shell.cd(conf.jekyllPath);
-    shell.exec(`bundle exec jekyll build --config ../${path.join(conf.distSrcPath, '_config.yml')} --trace -s ../${conf.distSrcPath} -d ../${conf.distSitePath}`);
-    shell.cd('..');
+    const cmd = `bundle exec jekyll build --config ../${path.join(conf.distSrcPath, '_config.yml')} --trace -s ../${conf.distSrcPath} -d ../${conf.distSitePath}`;
+
+    console.log(`Executing: ${cmd}`);
+    shell.exec(cmd);
+    shell.cd(pwd);
 };
 
 presidium.validate = function(conf) {

@@ -21,6 +21,7 @@ external:
 jekyll-path: ./test/.jekyll
 core-path: ./
 content-path:  ./test/build/content/
+media-path:  ./test/build/media/
 dist-path: ./test/build/dist/
 
 #

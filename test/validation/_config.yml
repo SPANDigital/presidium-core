@@ -18,9 +18,12 @@ show:
 external:
   authors-url: https://github.com/orgs/SPANDigital/people/
 
-content-path:  test/validation/content/
-dist-path: test/validation/dist/
-#jekyll-path: ./test/.jekyll
+core-path: ./
+jekyll-path: ./test/.jekyll
+content-path:  ./test/validation/content/
+media-path:  ./test/validation/media/
+dist-path: ./test/validation/dist/
+
 include-nested-articles: true
 #
 # Menu Structure

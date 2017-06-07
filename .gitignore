@@ -3,7 +3,5 @@
 node_modules
 npm-debug.log
 *.iml
-test/structure/dist/
-test/validation/dist/
 test/.jekyll/
-test/build/dist/
+test/**/dist
