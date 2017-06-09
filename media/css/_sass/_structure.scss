@@ -1,3 +1,11 @@
+.container-fluid {
+  margin-left: 0px;
+
+  @media (min-width: $grid-float-breakpoint) {
+    margin-left: 260px;
+  }
+}
+
 #presidium-content {
   position: relative;
   padding: 10px 20px;
