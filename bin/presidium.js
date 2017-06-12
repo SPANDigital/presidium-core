@@ -40,6 +40,7 @@ var argv = yargs.usage('$0 command')
     .command('start', 'Build and serve', function (yargs) {
         presidium.clean(conf);
         presidium.generate(conf);
+        version.islocal(conf);
         presidium.watch(conf);
         presidium.serve(conf);
     })
