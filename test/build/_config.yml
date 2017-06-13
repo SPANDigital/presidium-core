@@ -18,8 +18,11 @@ show:
 external:
   authors-url: https://github.com/orgs/SPANDigital/people/
 
-content-path:  ./test/generate/content/
-dist-path: ./test/generate/dist/
+jekyll-path: ./test/.jekyll
+core-path: ./
+content-path:  ./test/build/content/
+media-path:  ./test/build/media/
+dist-path: ./test/build/dist/
 
 #
 # Menu Structure
@@ -35,7 +38,7 @@ sections:
 #    expandable: false
 
   - title: "Key Concepts"
-    path: "/key-concepts/"
+    url: "/key-concepts/"
     collection: key-concepts
 
 #  - title: "Reference"

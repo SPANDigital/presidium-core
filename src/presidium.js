@@ -30,30 +30,35 @@ presidium.install = function(conf) {
 
     console.log('Copying Gemfile...');
     fs.mkdirsSync(conf.jekyllPath);
-    fs.copySync('node_modules/presidium-core/.jekyll', conf.jekyllPath);
+    fs.copySync(path.join(conf.corePath, '.jekyll'), conf.jekyllPath);
+
+    var pwd = shell.pwd();
 
     console.log('Installing Jekyll Gems...');
-    shell.cd('.jekyll');
+    shell.cd(conf.jekyllPath);
     shell.exec('bundle install --path=.bundle --deployment');
 
     console.log('Removing unused gems...');
     shell.exec('bundle clean');
+
+    shell.cd(pwd);
+
 };
 
 presidium.generate = function(conf) {
     console.log(`Copy base templates...`);
-    fs.copySync('node_modules/presidium-core/_includes', conf.distIncludesPath);
-    fs.copySync('node_modules/presidium-core/_layouts', conf.distLayoutsPath);
-    fs.copySync('node_modules/presidium-core/media', conf.distMediaPath);
+    fs.copySync(path.join(conf.corePath, '_includes'), conf.distIncludesPath);
+    fs.copySync(path.join(conf.corePath, '_layouts'), conf.distLayoutsPath);
+    fs.copySync(path.join(conf.corePath, 'media'), conf.distMediaPath);
 
     console.log(`Write resolved config to the build directory...`);
     fs.writeFileSync(path.join(conf.distSrcPath, '_config.yml'), conf.raw, 'utf8');
 
     console.log(`Copy media assets...`);
-    fs.copySync('media', conf.distMediaPath);
+    fs.copySync(conf.mediaPath, conf.distMediaPath);
 
     console.log(`Copy content...`);
-    fs.copySync('./content', conf.distSrcPath);
+    fs.copySync(conf.contentPath, conf.distSrcPath);
 
     console.log(`Generate site structure...`);
     site.generate(conf);
@@ -61,9 +66,13 @@ presidium.generate = function(conf) {
 
 presidium.build = function(conf) {
     console.log(`Building site...`);
+    const pwd = shell.pwd();
     shell.cd(conf.jekyllPath);
-    shell.exec(`bundle exec jekyll build --config ../${path.join(conf.distSrcPath, '_config.yml')} --trace -s ../${conf.distSrcPath} -d ../${conf.distSitePath}`);
-    shell.cd('..');
+    const cmd = `bundle exec jekyll build --config ../${path.join(conf.distSrcPath, '_config.yml')} --trace -s ../${conf.distSrcPath} -d ../${conf.distSitePath}`;
+
+    console.log(`Executing: ${cmd}`);
+    shell.exec(cmd);
+    shell.cd(pwd);
 };
 
 presidium.validate = function(conf) {

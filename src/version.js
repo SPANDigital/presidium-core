@@ -40,12 +40,17 @@ version.clean = function(v, conf) {
     }
 };
 
-function updateVersionsJson(conf){
-    console.log('Writing new versions.json file...');
-    fs.writeFileSync(path.join(version.path, 'versions.json'),
+version.islocal = function(conf) {
+    conf.versioned = false;
+    updateVersionsJson(conf, conf.distSrcPath);
+}
+
+function updateVersionsJson(conf, outdir=''){
+    console.log('Writing versions.json file...');
+    fs.writeFileSync(path.join(outdir || version.path, 'versions.json'),
         JSON.stringify({
             "versioned": conf.versioned,
-            "versions": listVersions(version.path)
+            "versions": conf.versioned ? listVersions(version.path) : []
         })
     );
 };

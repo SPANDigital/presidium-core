@@ -90,7 +90,7 @@ $navbar-default-border-level-4: darken($navbar-default-bg, 20%);
         @media (max-width: $grid-float-breakpoint) {
           float: left;
           max-width: 80%;
-          padding: 0 10px;
+          padding: 0 25px;
           font-size: 14px;
           @include navbar-vertical-align(14px);
         }
