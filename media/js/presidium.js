@@ -4359,7 +4359,7 @@
 	                }
 	            });
 
-	            if (articlesFound) {
+	            if (articlesFound || articles.length === 0) {
 	                document.getElementById('no-content-warning').style.display = "none";
 	            } else {
 	                document.getElementById('no-content-warning').style.display = "block";
