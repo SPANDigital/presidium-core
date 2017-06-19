@@ -24,13 +24,12 @@ version.init = function (conf) {
         shell.exec('git pull origin gh-pages');
         shell.cd('..');
     }
-    updateVersionsJson(conf);
 };
 
 version.clean = function(v, conf) {
     if (shell.test('-d', path.join(version.path, v))) {
         shell.rm('-rf', path.join(version.path, v));
-        updateVersionsJson(conf, path.join(version.path, 'versions.json'));
+        version.updateVersionsJson(conf);
 
         shell.cd(version.path);
         shell.exec('git add -A');
@@ -42,10 +41,10 @@ version.clean = function(v, conf) {
 
 version.islocal = function(conf) {
     conf.versioned = false;
-    updateVersionsJson(conf, conf.distSrcPath);
+    version.updateVersionsJson(conf, conf.distSrcPath);
 }
 
-function updateVersionsJson(conf, outdir=''){
+version.updateVersionsJson = function(conf, outdir=''){
     console.log('Writing versions.json file...');
     fs.writeFileSync(path.join(outdir || version.path, 'versions.json'),
         JSON.stringify({
