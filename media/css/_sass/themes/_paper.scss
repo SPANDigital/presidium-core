@@ -1,0 +1,10 @@
+$navbar-default-bg : #EEEEEE;
+@import 'paper/variables';
+@import '../bootstrap/bootstrap';
+@import 'paper/bootswatch.scss';
+
+// Custom SASS
+
+.scrollable-container {
+  border: 1px solid $navbar-default-bg;
+}
