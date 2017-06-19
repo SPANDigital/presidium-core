@@ -116,6 +116,8 @@ presidium.ghPages = function(conf) {
         fs.writeFileSync(file, conf.cname);
     }
 
+    version.updateVersionsJson(conf);
+
     shell.cd(version.path);
     shell.exec(`git add -A &&
         git commit -m "Publish Update: ${conf.version || 'latest'}" &&
