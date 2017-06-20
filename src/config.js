@@ -16,12 +16,15 @@ config.load = function(filename = '_config.yml', version='') {
     const distPath      = conf.get('dist-path', './dist/');
     const distSrcPath   = conf.get('dist-src-path', path.join(distPath, 'src/'));
     const distSite      = conf.get('dist-site-path', path.join(distPath, 'site/'));
+    const baseUrl       = path.join(conf.get('baseurl', ''), '/');
 
     return {
         logo:               conf.get('logo', ''),
         brandName:          conf.get('name', ''),
-        baseUrl:            path.join(conf.get('baseurl', ''), '/'),
+        baseUrl:            baseUrl,
         cname:              conf.get('cname', ''),
+
+        sectionsBaseUrl:    path.join(conf.get('sections-baseurl', baseUrl), '/'),
         sections:           conf.get('sections', []),
 
         roles:              conf.get('roles', { label: '', all: '', options: [] }),

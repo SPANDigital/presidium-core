@@ -4245,7 +4245,7 @@
 	                        _react2.default.createElement(
 	                            'a',
 	                            { href: this.props.menu.baseUrl != null ? this.props.menu.baseUrl : "#", className: 'brand' },
-	                            _react2.default.createElement('img', { src: _paths2.default.concat(menu.baseUrl, menu.logo), alt: '' })
+	                            _react2.default.createElement('img', { src: menu.logo, alt: '' })
 	                        ),
 	                        this.props.menu.brandName && _react2.default.createElement(
 	                            'div',
@@ -28198,7 +28198,7 @@
 	 */
 	function createTooltip(term, page, url) {
 
-	    var title = url ? url.substr(url.lastIndexOf('/') + 1).replace('#', '') : (0, _slug.slugify)(term.innerText);
+	    var title = url.substr(url.lastIndexOf('/') + 1).replace('#', '');
 	    var match = parser.parseFromString(page, "text/html").querySelector('span.anchor[id="' + title + '"]');
 
 	    if (match) {
@@ -28228,7 +28228,8 @@
 	    if (glossaryTerms.length > 0) {
 	        _axios2.default.get(config.baseurl + '/glossary/').then(function (response) {
 	            glossaryTerms.forEach(function (term) {
-	                createTooltip(term, response.data);
+	                var url = config.baseurl + '/glossary/#' + (0, _slug.slugify)(term.innerText);
+	                createTooltip(term, response.data, url);
 	            });
 	        }).catch(function (error) {
 	            tooltipError(error, glossaryTerms);
