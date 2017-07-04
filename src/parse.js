@@ -97,7 +97,7 @@ parse.roles = function (conf, roles) {
     const all = conf.roles.all ? [conf.roles.all] : [];
 
     if (roles && roles.constructor === Array) {
-        return roles.length > 0 ? roles : all;
+        return roles.length > 0 && conf.showRoles ? roles : all;
     }
-    return roles ? [roles] : all;
+    return roles && conf.showRoles ? [roles] : all;
 };
