@@ -14,7 +14,7 @@ parse.slug = function(value) {
 };
 
 parse.section = function (conf, section) {
-    const sectionUrl = path.join(conf.sectionsBaseUrl, section.url);
+    const sectionUrl = path.join(conf.baseUrl, section.url);
     const sectionPath = path.join(conf.contentPath, `_${section.collection}`, '/');
 
     return {

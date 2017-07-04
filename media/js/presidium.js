@@ -28223,7 +28223,7 @@
 
 	    presidium.tooltips.config = config;
 	    var glossaryTerms = document.querySelectorAll('a[title=presidium-tooltip][href="' + '#' + '"]');
-	    var linkTerms = document.querySelectorAll('a[title=presidium-tooltip][href^="' + config.baseurl + '"]');
+	    var linkTerms = document.querySelectorAll('a[title=presidium-tooltip][href^="' + '/' + '"]');
 
 	    if (glossaryTerms.length > 0) {
 	        _axios2.default.get(config.baseurl + '/glossary/').then(function (response) {
