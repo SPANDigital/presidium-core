@@ -1,6 +1,6 @@
 {% assign split-roles = article-roles | split: "," %}
 {% for role in split-roles %}
-<div class="article-role">
-    <span title="Role" class="label">{{role}}</span>
-</div>
+    <div class="article-role">
+        <span title="Role" class="label">{{role}}</span>
+    </div>
 {% endfor %}

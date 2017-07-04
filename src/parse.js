@@ -14,7 +14,7 @@ parse.slug = function(value) {
 };
 
 parse.section = function (conf, section) {
-    const sectionUrl = path.join(conf.sectionsBaseUrl, section.url);
+    const sectionUrl = path.join(conf.baseUrl, section.url);
     const sectionPath = path.join(conf.contentPath, `_${section.collection}`, '/');
 
     return {
@@ -97,7 +97,7 @@ parse.roles = function (conf, roles) {
     const all = conf.roles.all ? [conf.roles.all] : [];
 
     if (roles && roles.constructor === Array) {
-        return roles.length > 0 ? roles : all;
+        return roles.length > 0 && conf.showRoles ? roles : all;
     }
-    return roles ? [roles] : all;
+    return roles && conf.showRoles ? [roles] : all;
 };
