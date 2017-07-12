@@ -56,7 +56,9 @@ function addSection(node, props) {
         roles : props.roles,
         children : []
     };
-    node.children.push(section);
+    if (!props.hidden) {
+        node.children.push(section);
+    }
     traverse(section, props.children);
 }
 
@@ -89,7 +91,9 @@ function addCategory(node, props) {
         roles : props.roles,
         children: [],
     };
-    node.children.push(category);
+    if (!props.hidden) {
+        node.children.push(category);
+    }
     return category;
 }
 
@@ -105,5 +109,7 @@ function addArticle(node, props) {
         collapsed: true,
         roles: props.roles
     };
-    node.children.push(article);
+    if (!props.hidden) {
+        node.children.push(article);
+    }
 }

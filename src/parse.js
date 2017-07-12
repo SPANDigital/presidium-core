@@ -28,19 +28,22 @@ parse.section = function (conf, section) {
         exportArticles: section['export-articles'] || false,
         roles: [],
         articles: [],
-        children: []
+        children: [],
+        hidden: section.hidden || false
     }
 };
 
 parse.category = function (section, file) {
     const indexFile = path.join(file, INDEX_SOURCE);
     let title = path.parse(file).name;
+    let hidden = false;
 
     if (fs.existsSync(indexFile)) {
         const content = fs.readFileSync(indexFile, {encoding: 'utf8', flat: 'r'});
         const attributes = fm(content).attributes;
         if (attributes && attributes.title) {
             title = attributes.title;
+            hidden = attributes.hidden || false;
         } else {
             throw new Error('A title is required in a category index.')
         }
@@ -59,7 +62,8 @@ parse.category = function (section, file) {
         collection: section.collection,
         roles: [],
         articles: [],
-        children: []
+        children: [],
+        hidden: hidden
     }
 };
 
@@ -88,6 +92,7 @@ parse.article = function (conf, section, file) {
             collection: section.collection,
             roles: parse.roles(conf, attributes.roles),
             include: true,
+            hidden: attributes.hidden || false
         };
     }
     return IGNORED_ARTICLE;
