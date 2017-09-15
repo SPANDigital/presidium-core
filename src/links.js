@@ -79,7 +79,7 @@ function anchorValid(dir, anchorLink) {
     if (validPaths.has(file)) {
         let $ = cheerio.load(fs.readFileSync(dir + file + 'index.html'));
 
-        return $('.anchor' + link.hash).length > 0;
+        return $('.anchor' + '[id="'+link.hash.slice(1)+'"]').length > 0;
     } else return false
 }
 
