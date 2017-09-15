@@ -12,6 +12,7 @@ let results;
 let distSitePath = "";
 
 const links = module.exports;
+const mediaFolder = '/media';
 
 links.validate = function (conf) {
     validPaths = new Set();
@@ -53,7 +54,17 @@ function getLinks(files) {
     for (let file of files) {
         let $ = cheerio.load(fs.readFileSync(file));
         $('#presidium-content').find('section a').each(function (i, link) {
-            links.add($(link).attr('href'))
+
+            let href = $(link).attr('href');
+            if (typeof href !== 'undefined'){
+                // Checks if the href belongs to a set of assets (/media folder)
+                if (href.indexOf(mediaFolder) > -1){
+                    let parsedLink = url.parse(href);
+                    href = parsedLink.pathname;     // Remove the hash from the URL
+                }
+
+                links.add(href)
+            }
         });
     }
     return links;
@@ -117,7 +128,10 @@ function validateLinks(baseUrl) {
                     log('broken', baseLink)
                 }
             } else {
-                if (link.lastIndexOf('/') === link.length - 1 && validPaths.has(link)) {
+                if (
+                    (link.lastIndexOf('/') === link.length - 1 && validPaths.has(link)) ||
+                    (link.lastIndexOf(mediaFolder) > -1 && fs.existsSync(distSitePath + link))
+                ) {
                     log('valid', baseLink)
                 } else {
                     if (validPaths.has(link + '/')) {
