@@ -25,7 +25,7 @@ $navbar-default-border-level-4: darken($navbar-default-bg, 20%);
     @media (min-width: $grid-float-breakpoint) {
       position: fixed;
       overflow-y: auto;
-      height: 100vh;
+      height: 100%;
     }
   }
   nav {
@@ -33,6 +33,7 @@ $navbar-default-border-level-4: darken($navbar-default-bg, 20%);
     @media (min-width: $grid-float-breakpoint) {
       width: 260px;
       border: 0;
+      margin-bottom: 150px;
     }
 
     .navbar-header {
