@@ -4802,6 +4802,11 @@
 	            };
 	        }
 	    }, {
+	        key: 'brandUrl',
+	        value: function brandUrl() {
+	            if (this.props.menu.brandUrl) return this.props.menu.brandUrl;else if (this.props.menu.baseUrl) return this.props.menu.baseUrl;else return "#";
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
 	            var _this3 = this;
@@ -4820,7 +4825,7 @@
 	                        { className: 'navbar-header' },
 	                        _react2.default.createElement(
 	                            'a',
-	                            { href: this.props.menu.baseUrl != null ? this.props.menu.baseUrl : "#", className: 'brand' },
+	                            { href: this.brandUrl(), className: 'brand' },
 	                            _react2.default.createElement('img', { src: menu.logo, alt: '' })
 	                        ),
 	                        this.props.menu.brandName && _react2.default.createElement(
@@ -25785,8 +25790,7 @@
 	            var _this3 = this;
 
 	            var load = true;
-	            gumShoe = _scrollSpy2.default;
-	            gumShoe.init({
+	            _scrollSpy2.default.init({
 	                selector: '[data-spy] a',
 	                selectorTarget: "#presidium-content .article > .anchor",
 	                container: window,
