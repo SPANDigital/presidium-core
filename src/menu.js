@@ -36,6 +36,7 @@ menu.generate = function(conf, structure) {
 var Menu = function(conf, structure) {
     this.logo = conf.logo;
     this.brandName = conf.brandName;
+    this.brandUrl = conf.brandUrl;
     this.baseUrl = conf.baseUrl;
     this.roles =  conf.roles;
     this.children = [];

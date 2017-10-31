@@ -2,11 +2,13 @@ $navbar-selected-bg-level-1: $navbar-default-bg;
 $navbar-selected-bg-level-2: darken($navbar-default-bg, 8%);
 $navbar-selected-bg-level-3: darken($navbar-default-bg, 12%);
 $navbar-selected-bg-level-4: darken($navbar-default-bg, 16%);
+$navbar-selected-bg-level-5: darken($navbar-default-bg, 20%);
 
 $navbar-default-border-level-1: darken($navbar-default-bg, 8%);
 $navbar-default-border-level-2: darken($navbar-default-bg, 12%);
 $navbar-default-border-level-3: darken($navbar-default-bg, 16%);
 $navbar-default-border-level-4: darken($navbar-default-bg, 20%);
+$navbar-default-border-level-5: darken($navbar-default-bg, 24%);
 
 #presidium-navigation {
   position: relative;
@@ -203,16 +205,20 @@ $navbar-default-border-level-4: darken($navbar-default-bg, 20%);
           background-color: $navbar-selected-bg-level-4;
         }
 
+        li > .level-five {
+          background-color: $navbar-selected-bg-level-5;
+        }
+
         //Apply drop shadow to first unhidden element
         //Defaults to all
         li:not(.hidden) {
-          > .level-two, > .level-three, > .level-four {
+          > .level-two, > .level-three, > .level-four > .level-five {
             box-shadow: inset 0 7px 9px -7px rgba(0, 0, 0, 0.4);
           }
         }
 
         li:not(.hidden) ~ li:not(.hidden){
-          > .level-two, > .level-three , > .level-four {
+          > .level-two, > .level-three , > .level-four, > .level-five {
             box-shadow: none;
           }
         }
@@ -323,6 +329,12 @@ $navbar-default-border-level-4: darken($navbar-default-bg, 20%);
         padding-left: 50px;
         border-bottom: 1px $navbar-default-border-level-4 solid;
       }
+
+      &.level-five {
+        padding-left: 65px;
+        border-bottom: 1px $navbar-default-border-level-5 solid;
+      }
+
     }
 
     .menu-expander {
