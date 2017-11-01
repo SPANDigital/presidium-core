@@ -1,11 +1,11 @@
-before_install:
-- rvm install 2.4.0 --quiet-curl
-- rvm use 2.4.0 --default
-- ruby --version
-- gem install bundler
 language: node_js
 node_js:
-- '8'
+  - '8'
+before_install:
+  - rvm install 2.4.0 --quiet-curl
+  - rvm use 2.4.0 --default
+  - ruby --version
+  - gem install bundler
 deploy:
   provider: npm
   email: presidium@spandigital.com
