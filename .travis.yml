@@ -1,9 +1,17 @@
 before_install:
-  - rvm install 2.4.0 --quiet-curl
-  - rvm use 2.4.0 --default
-  - ruby --version
-  - gem install bundler
-
+- rvm install 2.4.0 --quiet-curl
+- rvm use 2.4.0 --default
+- ruby --version
+- gem install bundler
 language: node_js
 node_js:
-  - "6"
+- '8'
+deploy:
+  provider: npm
+  email: presidium@spandigital.com
+  api_key:
+    secure: G4pPFsxQugTTrKFzVEXXO5+y2Uin9Ra8Nd+hnobSj2AQ4nQyK7Tb5V3CZWoqdF1zKHKprKsBAS9G3v6rhUkZqQ6c4E3Z7RQpT96kXHLkL5g4tZhPGjC3oxjnaIxuKpYizh8Jf3ohVxd3bNAF/1rqXM3NkQHw5dkVrwehFpWFQzwHHAPvm/2GRn8bhSnrFRw4gCXuCIWLL4sc+9RfHDfiNdBaBp5TOD/TLGsbbssGUN1fxEB+NTeP6bEyKtOP0/o9HJ8iQFmMGk65NpWnyP8x9S+Oxym4sTMtofNyXDn3UODAJlS/yxp4v/+xBT0TNjvX9RCRXGfC2+/C6hZlx7oa51VjMcUYBm0SmEsyI35ZCCZ7hDZLhCekcfepGZZAnSqgsrPIbcChYq07bFa1DtgPOXTbE8KQ/XdAs20o4dk50wIPlp05PKcmLPmXSnNF1oQy6u2Y/JWmDdCECQb5Fw7EsBLCcvPesIZifWJ6z9pATw/Ax0hBE1+9RmCbEjLD75ltKdHsqmaStLBWtaBgZv+204x/wNhUyhRJsfBo3JaQfFPVsfDBNQtbT9rb/8YuQQ02PhdWU+rSV+4gTiXgKdNOVzQWQ1Cky73AoLeIJMPzosu87LeZG3+CJH9mtHhv0SFYEf6+GJjJyAW6lYdwF4Fzvj1+8285bYiUPAvtgmWBc4M=
+  on:
+    tags: true
+    repo: SPANDigital/presidium-core
+    branch: master
