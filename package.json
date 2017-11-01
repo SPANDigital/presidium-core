@@ -26,7 +26,8 @@
   },
   "scripts": {
     "test": "mocha",
-    "update-jekyll": "cd .jekyll; bundle lock --update"
+    "update-jekyll": "cd .jekyll; bundle lock --update",
+    "postinstall": "(cd node_modules/presidium-js; npm i; npm run build:webpack; cp dist/presidium.js ../../media/js/)"
   },
   "dependencies": {
     "cheerio": "^0.22.0",
@@ -39,7 +40,8 @@
     "shelljs": "^0.7.7",
     "slug": "^0.9.1",
     "strip-markdown": "^3.0.0",
-    "yargs": "^7.0.2"
+    "yargs": "^7.0.2",
+    "presidium-js": "0.0.2"
   },
   "devDependencies": {
     "mocha": "^3.2.0"
