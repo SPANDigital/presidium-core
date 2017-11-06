@@ -1,9 +1,22 @@
 {% if site.show.author == true or site.show.author == nil %}
     {% if article.author %}
-        {% if site.external.authors-url %}
-            <div class="article-author">Author: <a href="{{site.external.authors-url.}}{{article.author}}">{{article.author}}</a></div>
+
+        {% if article.author-label %}
+            {% assign author-label = article.author-label %}
         {% else %}
-            <div class="article-author">Author: {{article.author}}</div>
+            {% assign author-label = 'Author' %}
+        {% endif %}
+
+        {% if article.author-link %}
+            {% assign author-link = article.author-link %}
+        {% else %}
+            {% assign author-link  = site.external.authors-url | append: article.author` %}
+        {% endif %}
+
+        {% if site.external.authors-url or  article.author-link%}
+            <div class="article-author">{{author-label}}: <a href="{{author-link}}">{{article.author}}</a></div>
+        {% else %}
+            <div class="article-author">{{author-label}}: {{article.author}}</div>
         {% endif %}
     {% endif %}
 {% endif %}
