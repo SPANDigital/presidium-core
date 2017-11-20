@@ -13,7 +13,7 @@
     margin-top: 80px;
 
     @media (min-width: $grid-float-breakpoint) {
-      position : inherit;
+      position: inherit;
       margin-top: 0;
       padding: 60px 100px;
     }
@@ -52,6 +52,22 @@
       .article-title {
         display: flex;
         align-items: center;
+
+        &.edit {
+          h1, h2, h3, h4, h5, h6 {
+            display: flex;
+            align-items: center;
+
+            &:hover {
+              cursor: pointer;
+
+              .suggest-edit {
+                opacity: 1;
+              }
+            }
+          }
+        }
+
         .permalink {
           display: none;
           margin-left: 12px;
@@ -96,8 +112,29 @@
         }
       }
 
+      .article {
+        .suggest-edit {
+          color: #9a9a99;
+          font-style: italic;
+          margin-left: 10px;
+          font-size: 0.5em;
+          opacity: 0;
+          transition: opacity 0.3s;
+          font-weight: normal;
+        }
+
+        svg {
+          width: 16px;
+          margin-bottom: -2px;
+
+          path {
+            fill: #9a9a99;
+          }
+        }
+      }
+
       article {
-        margin-top : 20px;
+        margin-top: 20px;
         iframe {
           box-shadow: 0px 0px 10px #777;
           border: None;
@@ -110,9 +147,15 @@
       h1, h2, h3, h4, h5, h6 {
         text-transform: none;
       }
-      h1, .h1 { font-size: $font-size-h3; }
-      h2, .h2 { font-size: $font-size-h4; }
-      h3, .h3, h4, .h4, h5, .h5, h6, .h6 { font-size: $font-size-h5; }
+      h1, .h1 {
+        font-size: $font-size-h3;
+      }
+      h2, .h2 {
+        font-size: $font-size-h4;
+      }
+      h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
+        font-size: $font-size-h5;
+      }
     }
   }
 
@@ -125,10 +168,9 @@
     width: 100%;
   }
 
-  table{
+  table {
     @extend .table, .table-striped, .table-bordered;
   }
-
 
   blockquote {
     @extend .well;

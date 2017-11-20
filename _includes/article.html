@@ -1,14 +1,20 @@
 <div class="article" data-roles="{{article-roles}}">
-<span class="anchor" id="{{article-slug}}" data-id="{{article-id}}"></span>
-{% if article != nil %}
-    <div class="article-title">
-        <h2>{{ article-title }}</h2>
+    <span class="anchor" id="{{article-slug}}" data-id="{{article-id}}"></span>
+    {% if article != nil %}
+    <div class='article-title {% if site.repo.edit %} edit {% endif %}'>
+        <h2>
+            {{ article-title }}
+            {% if site.repo.edit %}
+                {% include /partials/edit-link.html %}
+            {% endif %}
+        </h2>
         <div class="permalink"><a href="{{article-url}}" title="Permalink to this article">&#182;</a></div>
     </div>
     <div class="article-header">{% include author.html %} {% include status.html %} {% include roles.html %}</div>
     <article>{{ article.content }}</article>
-{% else %}
-    Article not found: {{article-id}}
-{% endif %}
-<hr/>
+
+    {% else %}
+        Article not found: {{article-id}}
+    {% endif %}
+    <hr/>
 </div>
