@@ -10,8 +10,19 @@
 
 </head>
 <body>
-<div data-key="{{ site.key }}" data-title="{{ site.name }}" id="presidium-enterprise" class="presidium-enterprise"></div>
-<div id="presidium-navigation"></div>
+
+{% if site.scripts and site.scripts contains 'presidium-enterprise.js' %}
+    <div data-key="{{ site.key }}"
+         data-title="{{ site.name }}"
+         id="presidium-enterprise"
+         class="presidium-enterprise">
+        {% include enterprise-placeholder.html %}
+    </div>
+{% endif %}
+
+<div id="presidium-navigation">
+    {% include navigation-placeholder.html %}
+</div>
 <div id="presidium-container" class="container-fluid">
     <div class="row">
         <div id="presidium-content" class="col-lg-10 col-md-12">
