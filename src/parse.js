@@ -87,6 +87,7 @@ parse.article = function (conf, section, file) {
             parent: section,
             collection: section.collection,
             roles: parse.roles(conf, attributes.roles),
+            author: attributes.author,
             include: true,
         };
     }
