@@ -152,6 +152,7 @@ $navbar-default-border-level-5: darken($navbar-default-bg, 24%);
         text-align: center;
 
         @media (max-width: $grid-float-breakpoint) {
+          display: none; //hidden by default
           float: left;
           max-width: 80%;
           padding: 0 25px;
@@ -435,7 +436,7 @@ $navbar-default-border-level-5: darken($navbar-default-bg, 24%);
 
   .spacer {
     width: 100%;
-    height: 90px;
+    height: 50px;
   }
 
   .black-bar {
