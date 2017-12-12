@@ -4,23 +4,21 @@
     <div class='article-title {% if site.repo.edit %} edit {% endif %}'>
         <h2>
             {{ article-title }}
-            {% if site.repo.edit %}
-                {% include /partials/edit-link.html %}
-            {% endif %}
+            {% include /partials/edit-link.html %}
         </h2>
         <div class="permalink"><a href="{{article-url}}" title="Permalink to this article">&#182;</a></div>
     </div>
 
     {% if site.show.author && article.author %}
-        <div class="article-header">
-            {% include author.html %} {% include status.html %} {% include roles.html %}
-        </div>
+    <div class="article-header">
+        {% include author.html %} {% include status.html %} {% include roles.html %}
+    </div>
     {% endif %}
 
     <article>{{ article.content }}</article>
 
     {% else %}
-        Article not found: {{article-id}}
+    Article not found: {{article-id}}
     {% endif %}
     <hr/>
 </div>
