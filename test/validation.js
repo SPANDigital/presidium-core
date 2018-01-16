@@ -51,7 +51,7 @@ describe('Link Validation', () => {
     });
 
     it('Should indicate external links', () => {
-        assert.equal(res.external, 4); //TODO: fix this test
+        assert.equal(res.external, 1);
     });
 
 });

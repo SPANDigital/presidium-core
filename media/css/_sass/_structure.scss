@@ -61,7 +61,7 @@
             &:hover {
               cursor: pointer;
 
-              .suggest-edit {
+              .article-edit-menu {
                 pointer-events: all;
                 opacity: 1;
               }
@@ -114,24 +114,41 @@
       }
 
       .article {
-        .suggest-edit {
-          color: #9a9a99;
-          font-style: italic;
-          margin-left: 10px;
-          font-size: 0.5em;
+        .article-edit-menu {
+          min-width: 200px;
+          display: flex;
+          flex-direction: column;
+          margin-left: 15px;
           opacity: 0;
           transition: opacity 0.3s;
-          font-weight: normal;
           pointer-events: none;
         }
 
-        svg {
-          width: 16px;
-          margin-bottom: -2px;
+        .dropdown-item {
+          display: flex;
+          align-items: center;
+          flex: 1;
 
-          path {
-            fill: #9a9a99;
+          &:hover {
+            text-decoration: none;
           }
+        }
+
+        .edit-icon {
+          background-image: url('../svg/edit-icon.svg');
+          fill: #9a9a99;
+          width: 16px;
+          height: 16px;
+        }
+
+        .label {
+          flex: 1;
+          font-style: italic;
+          margin-left: 0px;
+          font-size: 0.5em;
+          font-weight: normal;
+          color: #9a9a99;
+          display: flex;
         }
       }
 
