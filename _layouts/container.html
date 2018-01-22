@@ -11,9 +11,9 @@
 </head>
 <body>
 
-{% if site.scripts and site.scripts contains 'presidium-enterprise.js' %}
-    <div data-key="{{ site.key }}"
-         data-title="{{ site.name }}"
+{% if site.enterprise %}
+    <div data-key="{{ site.enterprise.key }}"
+         data-title="{{ site.enterprise.name }}"
          id="presidium-enterprise"
          class="presidium-enterprise">
         {% include enterprise-placeholder.html %}
@@ -47,6 +47,11 @@
     window.presidium.menu.load({% include menu.json %}, 'presidium-navigation');
     window.presidium.tooltips.load({ "baseurl": "{{ site.baseurl }}" });
 </script>
+
+{% if site.enterprise.script %}
+<script src="{{ site.enterprise.script | append: script | replace: '//','/'}}"></script>
+{% endif %}
+
 {% for script in site.scripts %}
 <script src="{{ site.baseurl | append: '/media/js/' | append: script | replace: '//','/'}}"></script>
 {% endfor %}
