@@ -24,7 +24,7 @@
     .page-title {
       text-transform: uppercase;
       margin-top: 0;
-      margin-bottom: 0px;
+      margin-bottom: 0;
     }
 
     hr {
@@ -114,20 +114,40 @@
       }
 
       .article {
+
         .article-edit-menu {
-          min-width: 200px;
           display: flex;
           flex-direction: column;
           margin-left: 15px;
           opacity: 0;
           transition: opacity 0.3s;
           pointer-events: none;
+          position: relative;
+          background: #f9f8f8;
+          padding: 1px 13px;
+          border-radius: 10px;
+
+          &:after {
+            right: 100%;
+            top: 50%;
+            border: solid transparent;
+            content: " ";
+            height: 0;
+            width: 0;
+            position: absolute;
+            pointer-events: none;
+            border-color: rgba(212, 212, 212, 0);
+            border-right-color: #f9f8f8;
+            border-width: 15px;
+            margin-top: -15px;
+          }
         }
 
         .dropdown-item {
           display: flex;
           align-items: center;
           flex: 1;
+          padding: 1px;
 
           &:hover {
             text-decoration: none;
