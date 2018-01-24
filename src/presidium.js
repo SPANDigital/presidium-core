@@ -4,6 +4,7 @@ var path = require('path');
 var site = require('./site');
 var cpx = require("cpx");
 var links = require('./links');
+var linter = require('./linter');
 var yaml = require('js-yaml');
 var version = require('./version');
 
@@ -80,6 +81,7 @@ presidium.validate = function(conf) {
     if(results.broken > 0) {
         throw new Error('There are broken links in the site. Can not proceed.')
     }
+    const linterResults = linter.validate(conf);
 };
 
 presidium.watch = function(conf) {
