@@ -53,18 +53,16 @@
         display: flex;
         align-items: center;
 
-        &.edit {
-          h1, h2, h3, h4, h5, h6 {
-            display: flex;
-            align-items: center;
+        h1, h2, h3, h4, h5, h6 {
+          display: flex;
+          align-items: center;
 
-            &:hover {
-              cursor: pointer;
+          &:hover {
+            cursor: pointer;
 
-              .article-edit-menu {
-                pointer-events: all;
-                opacity: 1;
-              }
+            .article-edit-menu {
+              pointer-events: all;
+              opacity: 1;
             }
           }
         }
