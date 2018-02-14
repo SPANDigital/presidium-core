@@ -7,6 +7,7 @@ var links = require('./links');
 var linter = require('./linter');
 var yaml = require('js-yaml');
 var version = require('./version');
+const argv = require('yargs').argv;
 
 var presidium = module.exports;
 
@@ -66,10 +67,11 @@ presidium.generate = function(conf) {
 };
 
 presidium.build = function(conf) {
+    let extraConf =  argv.config ? `,${argv.config}` : '';
     console.log(`Building site...`);
     const pwd = shell.pwd();
     shell.cd(conf.jekyllPath);
-    const cmd = `bundle exec jekyll build --config ../${path.join(conf.distSrcPath, '_config.yml')} --trace -s ../${conf.distSrcPath} -d ../${conf.distSitePath}`;
+    const cmd = `bundle exec jekyll build --config ../${path.join(conf.distSrcPath, '_config.yml')}${extraConf} --trace -s ../${conf.distSrcPath} -d ../${conf.distSitePath}`;
 
     console.log(`Executing: ${cmd}`);
     shell.exec(cmd);
