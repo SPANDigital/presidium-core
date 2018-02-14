@@ -67,7 +67,17 @@ presidium.generate = function(conf) {
 };
 
 presidium.build = function(conf) {
-    let extraConf =  argv.config ? `,${argv.config}` : '';
+    // Manage extra config files
+    const configFiles = `${argv.config}`;
+    let extraConf = '';
+    if (argv.config) {
+        extraConf = configFiles.split(',').map( x => {
+            x = path.isAbsolute(x) ? x : `../${x}`;
+            return x;
+        });
+    }
+    extraConf =  extraConf ? `,${extraConf}` : '';
+
     console.log(`Building site...`);
     const pwd = shell.pwd();
     shell.cd(conf.jekyllPath);
