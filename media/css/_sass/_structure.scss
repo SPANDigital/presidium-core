@@ -1,97 +1,85 @@
 //.presidium-container {
 //  @extend .container-fluid;
 //  margin-left: 0px;
-
 #presidium-container {
   @media (min-width: $grid-float-breakpoint) {
     margin-left: 260px;
   }
-
   #presidium-content {
     position: relative;
     padding: 10px 20px;
     margin-top: 80px;
-
     @media (min-width: $grid-float-breakpoint) {
       position: inherit;
       margin-top: 0;
       padding: 60px 100px;
     }
-  }
-
-  // Articles
+  } // Articles
   #presidium-content {
     .page-title {
       text-transform: uppercase;
       margin-top: 0;
       margin-bottom: 0;
     }
-
     hr {
       margin-top: 40px;
       margin-bottom: 20px;
     }
-
     section {
-
       #no-content-warning {
         display: none;
       }
-
       span.anchor {
         display: block;
         position: relative;
         top: -70px;
         visibility: hidden;
-
         @media (min-width: $grid-float-breakpoint) {
           top: -10px;
         }
       }
-
       .article-title {
         display: flex;
         align-items: center;
-
-        h1, h2, h3, h4, h5, h6 {
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
           display: flex;
           align-items: center;
-
           &:hover {
             cursor: pointer;
-
             .article-edit-menu {
               pointer-events: all;
               opacity: 1;
             }
           }
         }
-
         .permalink {
           display: none;
           margin-left: 12px;
           margin-top: 14px;
         }
-        &:hover > .permalink {
+        &:hover>.permalink {
           display: block;
-          > a {
+          >a {
             text-decoration: none;
           }
         }
       }
-
       .category {
-        a > span {
+        a>span {
           padding-left: 10px;
           color: $link-color;
           font-size: 80%;
         }
       }
-
       .article-header {
         width: 100%;
         padding: 10px 0;
-        > div {
+        >div {
           display: inline-block;
           vertical-align: middle;
           margin-left: 10px;
@@ -102,7 +90,6 @@
             line-height: 15px;
           }
         }
-
         .article-role {
           float: right;
           .label {
@@ -110,9 +97,7 @@
           }
         }
       }
-
       .article {
-
         .article-edit-menu {
           display: flex;
           flex-direction: column;
@@ -124,7 +109,6 @@
           background: #f9f8f8;
           padding: 1px 13px;
           border-radius: 10px;
-
           &:after {
             right: 100%;
             top: 50%;
@@ -140,25 +124,28 @@
             margin-top: -15px;
           }
         }
-
         .dropdown-item {
           display: flex;
           align-items: center;
           flex: 1;
           padding: 1px;
-
           &:hover {
             text-decoration: none;
           }
         }
-
         .edit-icon {
           background-image: url('../svg/edit-icon.svg');
           fill: #9a9a99;
           width: 16px;
           height: 16px;
         }
-
+        .link-icon {
+          background-image: url('../svg/link-icon.svg');
+          fill: #9a9a99;
+          width: 16px;
+          height: 16px;
+          display: block;
+        }
         .label {
           flex: 1;
           font-style: italic;
@@ -169,7 +156,6 @@
           display: flex;
         }
       }
-
       article {
         margin-top: 20px;
         iframe {
@@ -181,21 +167,34 @@
       }
     }
     article {
-      h1, h2, h3, h4, h5, h6 {
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
         text-transform: none;
       }
-      h1, .h1 {
+      h1,
+      .h1 {
         font-size: $font-size-h3;
       }
-      h2, .h2 {
+      h2,
+      .h2 {
         font-size: $font-size-h4;
       }
-      h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
+      h3,
+      .h3,
+      h4,
+      .h4,
+      h5,
+      .h5,
+      h6,
+      .h6 {
         font-size: $font-size-h5;
       }
     }
   }
-
   footer {
     .spacer {
       height: 70vh;
@@ -204,17 +203,15 @@
     text-align: center;
     width: 100%;
   }
-
   table {
-    @extend .table, .table-striped, .table-bordered;
+    @extend .table;
+    @extend.table-striped;
+    @extend.table-bordered;
   }
-
   blockquote {
     @extend .well;
     font-size: inherit;
-  }
-
-  // Unordered and Ordered lists
+  } // Unordered and Ordered lists
   ul,
   ol {
     margin-top: 0;
@@ -225,6 +222,3 @@
     }
   }
 }
-
-
-
