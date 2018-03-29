@@ -10,7 +10,7 @@
         </div>
     </div>
 
-    {% if site.show.author and article.author %}
+    {% if article.roles or site.show.author and article.author %}
     <div class="article-header">
         {% include author.html %} {% include status.html %} {% include roles.html %}
     </div>
