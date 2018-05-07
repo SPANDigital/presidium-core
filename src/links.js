@@ -114,7 +114,9 @@ function log(type, baseLink, message = '', logLevel) {
 
 function validateLinks(baseUrl, argv) {
     let links = getLinks(htmlFiles);
-    let logLevel = argv.log;
+    let logLevel;
+    if (argv) logLevel = argv.log;
+
     results['total'] = links.size;
 
     for (let baseLink of links) {
