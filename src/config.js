@@ -29,6 +29,8 @@ config.load = function (filename = '_config.yml', version = '') {
         showRoles: conf.get('roles', false),
         roles: conf.get('roles', { label: '', all: '', options: [] }),
 
+        showScope: conf.get('scope', false),
+
         corePath: conf.get('core-path', 'node_modules/presidium-core'),
 
         contentPath: conf.get('content-path', './content/'),

@@ -15,15 +15,14 @@ logo: media/images/logo.png
 show:
   status: true
   author: true
-  scope: true
 external:
   authors-url: https://github.com/orgs/SPANDigital/people/
 
 jekyll-path: ./test/.jekyll
 core-path: ./
-content-path:  ./test/build/content/
-media-path:  ./test/build/media/
-dist-path: ./test/build/dist/
+content-path:  ./test/scope/content/
+media-path:  ./test/scope/media/
+dist-path: ./test/scope/dist/
 
 #
 # Menu Structure
@@ -33,18 +32,20 @@ dist-path: ./test/build/dist/
 # - collection: The collection to use for generating a sub menu of articles (REQUIRED).
 #
 sections:
-#  - title: "Overview"
-#    url: "/"
-#    collection: overview
-#    expandable: false
+  - title: "Overview"
+    url: "/"
+    collection: overview
+    expandable: false
+    scope: external
 
   - title: "Key Concepts"
     url: "/key-concepts/"
     collection: key-concepts
 
-#  - title: "Reference"
-#    url: "/reference/"
-#    collection: reference
+  - title: "Reference"
+    url: "/reference/"
+    collection: reference
+    scope: internal
 
 #
 # Optional filters that may be used to filter articles by role.
@@ -56,6 +57,12 @@ roles:
     - "Business Analyst"
     - "Developer"
     - "Tester"
+
+#
+# Optional flag to specify whether article scope (internal/external) is respected.
+# Defaults to `false` if not included
+#
+scope: true
 
 #
 # Jekyll collections definitions that use layout templates from presidium-core

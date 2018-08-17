@@ -65,7 +65,7 @@ parse.category = function (section, file) {
 
 parse.article = function (conf, section, file) {
     const filename = path.parse(file).base;
-    if (filename == INDEX_SOURCE) {
+    if (filename === INDEX_SOURCE) {
         return IGNORED_ARTICLE;
     }
 
