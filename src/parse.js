@@ -27,7 +27,6 @@ parse.section = function (conf, section) {
         collapsed: section.collapsed || false,
         exportArticles: section['export-articles'] || false,
         roles: [],
-        scope: undefined,
         articles: [],
         children: []
     }

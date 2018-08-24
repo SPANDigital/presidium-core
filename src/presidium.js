@@ -79,9 +79,6 @@ presidium.build = function (conf) {
     }
     extraConf = extraConf ? `,${extraConf}` : '';
 
-    let scope = process.env.scope ? process.env.scope : undefined;
-    // Having the flag during the `build` command doesn't necessarily make sense
-
     console.log(`Building site...`);
     const pwd = shell.pwd();
     shell.cd(conf.jekyllPath);
