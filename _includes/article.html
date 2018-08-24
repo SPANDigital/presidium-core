@@ -1,4 +1,5 @@
-<div class="article" data-roles="{{article-roles}}">
+<div class="article" data-roles="{{article-roles}}" data-scope="{{article-scope}}">
+
     <span class="anchor" id="{{article-slug}}" data-id="{{article-id}}"></span>
     {% if article != nil %}
     <div class='article-title {% if site.repo.edit %} edit {% endif %}'>
@@ -12,7 +13,7 @@
 
     {% if article.roles or site.show.author and article.author %}
     <div class="article-header">
-        {% include author.html %} {% include status.html %} {% include roles.html %}
+        {% include author.html %} {% include status.html %} {% include roles.html %} {% include scope.html %}
     </div>
     {% endif %}
 

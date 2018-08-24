@@ -1,4 +1,4 @@
 ---
-title: No Scope
+title: Scope Overview
 ---
 Scope descriptor

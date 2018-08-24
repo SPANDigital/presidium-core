@@ -1,0 +1,12 @@
+{% if site.show.scope == true or site.show.scope == nil %}
+    {% if article.author %}
+        {% if article.scope-label %}
+            {% assign scope-label = article.scope-label %}
+            {% else %}
+            {% assign scope-label = 'Scope' %}
+        {% endif %}
+
+        <div class="article-author">{{scope-label}}: {{article.scope}}</div>
+
+    {% endif %}
+{% endif %}
