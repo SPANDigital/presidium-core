@@ -1,6 +1,5 @@
 var config = require("../src/config");
 var presidium = require("../src/presidium");
-var shell = require('shelljs');
 var assert = require('assert');
 var path = require('path');
 var fs = require('fs-extra');
@@ -24,13 +23,13 @@ describe('Scope Validation', function () {
         });
 
         it('Should have both internal and external articles', function (done) {
-            fs.readdir(external_category, function (err, files) {
+            fs.readdirSync(external_category, function (err, files) {
                 if (!files) {
                     assert.fail('Found no articles');
                     done();
                 }
                 files.forEach(function (file) {
-                    fs.readFile(path.join(external_category, file), 'utf-8', function (err, content) {
+                    fs.readFileSync(path.join(external_category, file), 'utf-8', function (err, content) {
                         if (!content.includes('External Article')) {
                             assert.fail('Found no external articles');
                         }
@@ -59,9 +58,9 @@ describe('Scope Validation', function () {
         });
 
         it('Should have no external articles in external-scope', function (done) {
-            fs.readdir(external_category, function (err, files) {
+            fs.readdirSync(external_category, function (err, files) {
                 files.forEach(function (file) {
-                    fs.readFile(path.join(external_category, file), 'utf-8', function (err, content) {
+                    fs.readFileSync(path.join(external_category, file), 'utf-8', function (err, content) {
                         if (content.includes('External Article')) {
                             assert.fail('Found an external article');
                         }
@@ -75,9 +74,9 @@ describe('Scope Validation', function () {
         });
         
         it('Should inherit scope from a section if no scope on article', function (done) {
-            fs.readdir(internal_section, function (err, files) {
+            fs.readdirSync(internal_section, function (err, files) {
                 files.forEach(function (file) {
-                    fs.readFile(path.join(external_category, file), 'utf-8', function (err, content) {
+                    fs.readFileSync(path.join(external_category, file), 'utf-8', function (err, content) {
                         if (!content.includes('No Scope')) {
                             assert.fail('Found no articles with unspecified scope');
                         }
