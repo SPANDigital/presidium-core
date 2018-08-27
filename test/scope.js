@@ -6,7 +6,7 @@ var path = require('path');
 var fs = require('fs-extra');
 
 describe('Scope Validation', function () {
-
+    this.timeout(0);
     let conf;
     const distSitePath = "./test/scope/dist/site";
     const internal_category = path.join(distSitePath, 'key-concepts', 'scope-overview', 'internal-scope');
@@ -40,7 +40,6 @@ describe('Scope Validation', function () {
                         if (!content.includes('No Scope')) {
                             assert.fail('Found no articles with unspecified scope');
                         }
-                        done();
                     });
                 });
                 done();
@@ -69,7 +68,6 @@ describe('Scope Validation', function () {
                         if (content.includes('No Scope')) {
                             assert.fail('Found an article without scope');
                         }
-                        done();
                     });
                 });
                 done();
@@ -83,7 +81,6 @@ describe('Scope Validation', function () {
                         if (!content.includes('No Scope')) {
                             assert.fail('Found no articles with unspecified scope');
                         }
-                        done();
                     });
                 });
                 done();
@@ -112,7 +109,6 @@ describe('Scope Validation', function () {
                         if (content.includes('No Scope')) {
                             assert.fail('Found an article without scope');
                         }
-                        done();
                     });
                 });
                 done();
