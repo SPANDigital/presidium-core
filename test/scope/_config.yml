@@ -37,6 +37,11 @@ sections:
     url: "/key-concepts/"
     collection: key-concepts
 
+  - title: "Internal Section"
+    url: "/internal-section/"
+    collection: internal-section
+    scope: internal
+
 #
 # Optional filters that may be used to filter articles by role.
 #
@@ -58,6 +63,7 @@ roles:
 #
 collections:
     key-concepts:
+    internal-section:
 
 #
 # Exclude the following files from the generated site

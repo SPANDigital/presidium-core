@@ -5,80 +5,53 @@ var assert = require('assert');
 var path = require('path');
 var fs = require('fs-extra');
 
-describe('Scope Validation', function() {
+describe('Scope Validation', function () {
 
     let conf;
-    const distSrcPath = "./test/scope/dist/src";
     const distSitePath = "./test/scope/dist/site";
-    const distPath = "./test/scope/dist";
-    const internal_path = path.join(distSitePath, 'key-concepts', 'scope-overview', 'internal-scope');
-    const external_path = path.join(distSitePath, 'key-concepts', 'scope-overview', 'external-scope');
+    const internal_category = path.join(distSitePath, 'key-concepts', 'scope-overview', 'internal-scope');
+    const internal_section = path.join(distSitePath, 'internal-section');
+    const external_category = path.join(distSitePath, 'key-concepts', 'scope-overview', 'external-scope');
 
     describe('Unspecified Scope', function () {
-
-        let conf;
-
-        describe('Clean', function() {
+        before(function () {
             conf = config.load("./test/scope/_config.yml");
             presidium.clean(conf);
-        });
-
-        it('Should clean dist site', function() {
-            fs.readdir(conf.distPath, function(err, files) {
-                if (files.length && files.length > 0) {
-                    assert.fail("Should have cleaned up")
-                }
-            });
-        });
-
-        describe('Generate External', function() {
-            conf = config.load("./test/scope/_config.yml");
-            conf.scope = 'external';
             presidium.generate(conf);
-        });
-
-        it('Should generate dist src', function() {
-            fs.readdir(distSrcPath, function(err, files) {
-                if (!files.length) {
-                    assert.fail("Should have created dist src files")
-                }
-            });
-        });
-
-        describe('Build Site', function() {
-            conf = config.load("./test/scope/_config.yml");
-            conf.scope = 'internal';
-            //Relative to .jekyll
             conf.distSrcPath = "./scope/dist/src";
             conf.distSitePath = "./scope/dist/site";
             presidium.build(conf);
         });
 
-        it('Should generate dist site', function() {
-            fs.readdir(distSitePath, function(err, files) {
-                if (!files.length) {
-                    assert.fail("Should have created dist site")
+        it('Should have both internal and external articles', function (done) {
+            fs.readdir(external_category, function (err, files) {
+                if (!files) {
+                    assert.fail('Found no articles');
+                    done();
                 }
+                files.forEach(function (file) {
+                    fs.readFile(path.join(external_category, file), 'utf-8', function (err, content) {
+                        if (!content.includes('External Article')) {
+                            assert.fail('Found no external articles');
+                        }
+                        if (!content.includes('Internal Article')) {
+                            assert.fail('Found no internal articles');
+                        }
+                        if (!content.includes('No Scope')) {
+                            assert.fail('Found no articles with unspecified scope');
+                        }
+                        done();
+                    });
+                });
+                done();
             });
         });
-
-        describe('View All Articles', function() {
-            conf = config.load("./test/scope/_config.yml");
-            conf.distSitePath = "./test/scope/dist/site";
-        });
-
-        it('Should be able to view all articles, regardless of scope', function () {
-            fs.readdir(distSitePath, function(err, files) {
-                console.log(err);
-            });
-        });
-
     });
 
     describe('Internal Scope', function () {
-        before(function() {
+        before(function () {
             conf = config.load("./test/scope/_config.yml");
-            // conf.scope = 'internal';
+            conf.scope = 'internal';
             presidium.clean(conf);
             presidium.generate(conf);
             conf.distSrcPath = "./scope/dist/src";
@@ -86,72 +59,82 @@ describe('Scope Validation', function() {
             presidium.build(conf);
         });
 
-        it('Should have no external articles', function(done) {
-            fs.readdir(external_path, function(err, files) {
-                files.forEach(function(file) {
-                    fs.readFile(path.join(external_path, file), 'utf-8', function(err, content) {
+        it('Should have no external articles in external-scope', function (done) {
+            fs.readdir(external_category, function (err, files) {
+                files.forEach(function (file) {
+                    fs.readFile(path.join(external_category, file), 'utf-8', function (err, content) {
                         if (content.includes('External Article')) {
                             assert.fail('Found an external article');
-                            done();
                         }
+                        if (content.includes('No Scope')) {
+                            assert.fail('Found an article without scope');
+                        }
+                        done();
                     });
                 });
+                done();
+            });
+        });
+        
+        it('Should inherit scope from a section if no scope on article', function (done) {
+            fs.readdir(internal_section, function (err, files) {
+                files.forEach(function (file) {
+                    fs.readFile(path.join(external_category, file), 'utf-8', function (err, content) {
+                        if (!content.includes('No Scope')) {
+                            assert.fail('Found no articles with unspecified scope');
+                        }
+                        done();
+                    });
+                });
+                done();
             });
         });
     });
 
-    describe('External Scope', function() {
-        describe('Clean', function() {
+    describe('External Scope', function () {
+        before(function () {
             conf = config.load("./test/scope/_config.yml");
+            conf.scope = 'external';
             presidium.clean(conf);
-        });
-
-        it('Should clean dist site', function() {
-            fs.readdir(distPath, function(err, files) {
-                if (files.length && files.length > 0) {
-                    assert.fail("Should have cleaned up")
-                }
-            });
-        });
-
-        describe('Generate External', function() {
-            conf = config.load("./test/scope/_config.yml");
-            conf.scope = 'external';
             presidium.generate(conf);
-        });
-
-        it('Should generate dist src', function() {
-            fs.readdir(distSrcPath, function(err, files) {
-                if (!files.length) {
-                    assert.fail("Should have created dist src files")
-                }
-            });
-        });
-
-        describe('Build External', function() {
-            conf = config.load("./test/scope/_config.yml");
-            conf.scope = 'external';
-            //Relative to .jekyll
             conf.distSrcPath = "./scope/dist/src";
             conf.distSitePath = "./scope/dist/site";
             presidium.build(conf);
         });
 
-        it('Should generate dist site', function() {
-            fs.readdir(distSitePath, function(err, files) {
-                if (!files.length) {
-                    assert.fail("Should have created dist site")
-                }
+        it('Should have no internal articles in external-scope', function (done) {
+            fs.readdir(external_category, function (err, files) {
+                files.forEach(function (file) {
+                    fs.readFile(path.join(external_category, file), 'utf-8', function (err, content) {
+                        if (content.includes('Internal Article')) {
+                            assert.fail('Found an internal article');
+                        }
+                        if (content.includes('No Scope')) {
+                            assert.fail('Found an article without scope');
+                        }
+                        done();
+                    });
+                });
+                done();
             });
         });
 
-        it('Should have no internal articles', function() {
-            fs.readdir(internal_path, function(err, files) {
-                if (files.length) {
-                    assert.fail("Non-internal articles found")
+        it('Should remove the internal-scope folder', function (done) {
+            fs.access(internal_category, function (err, files) {
+                if (!err) {
+                    assert.fail('internal-scope folder still exists')
                 }
+                done();
             });
         });
 
+        it('Should remove the internal-section folder', function (done) {
+            fs.access(internal_section, function (err, files) {
+                if (!err) {
+                    assert.fail('internal-scope folder still exists')
+                }
+                done();
+            });
+        });
     });
 });

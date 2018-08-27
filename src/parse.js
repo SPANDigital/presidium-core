@@ -26,6 +26,7 @@ parse.section = function (conf, section) {
         collection: section.collection,
         collapsed: section.collapsed || false,
         exportArticles: section['export-articles'] || false,
+        scope: section.scope,
         roles: [],
         articles: [],
         children: []
@@ -73,8 +74,9 @@ parse.article = function (conf, section, file) {
     const content = fs.readFileSync(file, { encoding: 'utf8', flat: 'r' });
     const article = fm(content);
     const attributes = article.attributes;
+    article.scope = attributes.scope ? attributes.scope : section.scope;
 
-    if (conf.scope && attributes.scope !== conf.scope) {
+    if (conf.scope && article.scope !== conf.scope) {
         return IGNORED_ARTICLE;
     }
 
@@ -92,7 +94,7 @@ parse.article = function (conf, section, file) {
             collection: section.collection,
             roles: parse.roles(conf, attributes.roles),
             author: attributes.author,
-            scope: attributes.scope ? attributes.scope : section.scope,
+            scope: article.scope,
             include: true,
         };
     }
