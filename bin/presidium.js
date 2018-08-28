@@ -37,6 +37,10 @@ var argv = yargs.usage('$0 command')
         presidium.generate(conf);
     })
     .command('build', 'Build site', function (yargs) {
+        return yargs
+            .option('s', scopeArg);
+    }, function (argv) {
+        conf.scope = argv['s'];
         presidium.generate(conf);
         presidium.build(conf);
     })
