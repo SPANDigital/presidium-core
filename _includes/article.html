@@ -1,5 +1,4 @@
 <div class="article" data-roles="{{article-roles}}" data-scope="{{article-scope}}">
-
     <span class="anchor" id="{{article-slug}}" data-id="{{article-id}}"></span>
     {% if article != nil %}
     <div class='article-title {% if site.repo.edit %} edit {% endif %}'>
@@ -10,12 +9,9 @@
             <a class="link-icon" href="{{article-url}}" title="Permalink to this article"></a>
         </div>
     </div>
-
-    {% if article.roles or site.show.author and article.author %}
     <div class="article-header">
         {% include author.html %} {% include status.html %} {% include roles.html %} {% include scope.html %}
     </div>
-    {% endif %}
 
     <article>{{ article.content }}</article>
 
