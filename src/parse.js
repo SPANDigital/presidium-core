@@ -101,8 +101,6 @@ parse.article = function (conf, section, file) {
     return IGNORED_ARTICLE;
 };
 
-
-
 parse.roles = function (conf, roles) {
     const all = conf.roles.all ? [conf.roles.all] : [];
 
