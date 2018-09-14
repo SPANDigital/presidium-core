@@ -35,6 +35,7 @@ SearchMap.prototype.addArticle = function(article) {
         content: String(stripped),
         updated: new Date().toISOString(),
         roles: article.roles,
+        scope: article.scope,
         author: article.author
     });
 };
