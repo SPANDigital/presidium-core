@@ -9,12 +9,9 @@
             <a class="link-icon" href="{{article-url}}" title="Permalink to this article"></a>
         </div>
     </div>
-
-    {% if article.roles or site.show.author and article.author %}
     <div class="article-header">
-        {% include author.html %} {% include status.html %} {% include roles.html %}
+        {% include author.html %} {% include status.html %} {% include roles.html %} {% include scope.html %}
     </div>
-    {% endif %}
 
     <article>{{ article.content }}</article>
 
