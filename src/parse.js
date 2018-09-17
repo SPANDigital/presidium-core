@@ -26,7 +26,7 @@ parse.section = function (conf, section) {
         collection: section.collection,
         collapsed: section.collapsed || false,
         exportArticles: section['export-articles'] || false,
-        scope: section.scope,
+        scope: parse.scope(section.scope),
         roles: [],
         articles: [],
         children: []
@@ -47,6 +47,7 @@ parse.category = function (section, file) {
         }
         scope = attributes.scope ? attributes.scope : scope;
     }
+    scope = parse.scope(scope);
 
     const slug = parse.slug(title);
     return {
@@ -77,8 +78,9 @@ parse.article = function (conf, section, file) {
     const article = fm(content);
     const attributes = article.attributes;
     article.scope = attributes.scope ? attributes.scope : section.scope;
+    article.scope = parse.scope(article.scope);
 
-    if (conf.scope && article.scope !== conf.scope) {
+    if (conf.scope && !article.scope.includes(conf.scope)) {
         return IGNORED_ARTICLE;
     }
 
@@ -110,4 +112,12 @@ parse.roles = function (conf, roles) {
         return roles.length > 0 && conf.showRoles ? roles : all;
     }
     return roles && conf.showRoles ? [roles] : all;
+};
+
+parse.scope = function(scope) {
+    if (scope && scope.constructor === Array)
+        return scope;
+    if (scope === undefined)
+        return [];
+    return [scope];
 };

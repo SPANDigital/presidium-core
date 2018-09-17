@@ -1,6 +1,6 @@
 ---
 title: Internal Article
-scope: internal
+scope: [internal]
 ---
 
 Article for `internal` scope:
