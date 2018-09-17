@@ -69,10 +69,7 @@ function traverse(node, children) {
     children.forEach(child => {
         switch(child.type) {
             case structure.TYPE.CATEGORY:
-                if (child.children.length > 0) {
-                    const category = addCategory(node, child);
-                    traverse(category, child.children);
-                }
+                addCategory(node, child);
                 break;
             case structure.TYPE.ARTICLE:
                 addArticle(node, child);
@@ -95,7 +92,10 @@ function addCategory(node, props) {
         scope: props.scope,
         children: [],
     };
-    node.children.push(category);
+    traverse(category, props.children);
+    if (category.children.length > 0) {
+        node.children.push(category);
+    }
     return category;
 }
 

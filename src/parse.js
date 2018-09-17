@@ -36,7 +36,7 @@ parse.section = function (conf, section) {
 parse.category = function (section, file) {
     const indexFile = path.join(file, INDEX_SOURCE);
     let title = path.parse(file).name;
-
+    let scope = section.scope;
     if (fs.existsSync(indexFile)) {
         const content = fs.readFileSync(indexFile, {encoding: 'utf8', flat: 'r'});
         const attributes = fm(content).attributes;
@@ -45,6 +45,7 @@ parse.category = function (section, file) {
         } else {
             throw new Error('A title is required in a category index.')
         }
+        scope = attributes.scope ? attributes.scope : scope;
     }
 
     const slug = parse.slug(title);
@@ -58,6 +59,7 @@ parse.category = function (section, file) {
         parent: section,
         exportArticles: section.exportArticles,
         collection: section.collection,
+        scope: scope,
         roles: [],
         articles: [],
         children: []
