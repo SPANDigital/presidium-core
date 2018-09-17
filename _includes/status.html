@@ -1,14 +1,16 @@
 {% if site.show.status == true or site.show.status == nil %}
-    <div class="article-status">
-    {% case article.status %}
-    {% when 'draft' %}
-        <span title="Article Status" class="label label-default">Draft</span>
-    {% when 'review' %}
-        <span title="Article Status" class="label label-primary">Review</span>
-    {% when 'published' %}
-        <span title="Article Status" class="label label-success">Published</span>
-    {% when 'retired' %}
-        <span title="Article Status" class="label label-warning">Retired</span>
-    {% endcase %}
-    </div>
+    {% if article.status %}
+        <div class="article-status">
+        {% case article.status %}
+        {% when 'draft' %}
+            <span title="Article Status" class="label label-default">Draft</span>
+        {% when 'review' %}
+            <span title="Article Status" class="label label-primary">Review</span>
+        {% when 'published' %}
+            <span title="Article Status" class="label label-success">Published</span>
+        {% when 'retired' %}
+            <span title="Article Status" class="label label-warning">Retired</span>
+        {% endcase %}
+        </div>
+    {% endif %}
 {% endif %}

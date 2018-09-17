@@ -39,6 +39,7 @@ var Menu = function(conf, structure) {
     this.brandUrl = conf.brandUrl;
     this.baseUrl = conf.baseUrl;
     this.roles =  conf.roles;
+    this.scope = conf.scope;
     this.children = [];
     structure.sections.map(section => {
         addSection(this, section);
@@ -54,11 +55,14 @@ function addSection(node, props) {
         collapsed: props.collapsed,
         path: props.path,
         url: props.url,
-        roles : props.roles,
+        roles: props.roles,
+        scope: props.scope,
         children : []
     };
-    node.children.push(section);
     traverse(section, props.children);
+    if (section.children.length > 0) {
+        node.children.push(section);
+    }
 }
 
 function traverse(node, children) {
@@ -87,7 +91,8 @@ function addCategory(node, props) {
         slug: props.slug,
         path: props.path,
         url: props.url,
-        roles : props.roles,
+        roles: props.roles,
+        scope: props.scope,
         children: [],
     };
     node.children.push(category);
@@ -104,7 +109,8 @@ function addArticle(node, props) {
         title: props.title,
         level: node.level + 1,
         collapsed: true,
-        roles: props.roles
+        roles: props.roles,
+        scope: props.scope,
     };
     node.children.push(article);
 }

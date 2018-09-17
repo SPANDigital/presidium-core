@@ -21,7 +21,7 @@ presidium.clean = function (conf) {
 
 presidium.requirements = function () {
     //TODO move out of sh script
-    shell.exec('presidium-requirements');
+    shell.exec('./bin/presidium-requirements.sh');
 };
 
 presidium.install = function (conf) {

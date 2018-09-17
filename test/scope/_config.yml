@@ -21,9 +21,9 @@ external:
 
 jekyll-path: ./test/.jekyll
 core-path: ./
-content-path:  ./test/build/content/
-media-path:  ./test/build/media/
-dist-path: ./test/build/dist/
+content-path:  ./test/scope/content/
+media-path:  ./test/scope/media/
+dist-path: ./test/scope/dist/
 
 #
 # Menu Structure
@@ -33,18 +33,14 @@ dist-path: ./test/build/dist/
 # - collection: The collection to use for generating a sub menu of articles (REQUIRED).
 #
 sections:
-#  - title: "Overview"
-#    url: "/"
-#    collection: overview
-#    expandable: false
-
   - title: "Key Concepts"
     url: "/key-concepts/"
     collection: key-concepts
 
-#  - title: "Reference"
-#    url: "/reference/"
-#    collection: reference
+  - title: "Internal Section"
+    url: "/internal-section/"
+    collection: internal-section
+    scope: internal
 
 #
 # Optional filters that may be used to filter articles by role.
@@ -58,14 +54,16 @@ roles:
     - "Tester"
 
 #
+# Optional flag to specify whether article scope (internal/external) is respected.
+# Defaults to `false` if not included
+#
+
+#
 # Jekyll collections definitions that use layout templates from presidium-core
 #
 collections:
-    overview:
-    getting-started:
-    reference:
-        output: true
-        permalink: /reference/:path/
+    key-concepts:
+    internal-section:
 
 #
 # Exclude the following files from the generated site
