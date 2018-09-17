@@ -8,8 +8,8 @@ var fs = require('fs-extra');
 describe('Build Site', function() {
 
     let conf;
-    const distSrcPath = "./build/dist/src";
-    const distSitePath = "./build/dist/site";
+    const distSrcPath = "./test/build/dist/src";
+    const distSitePath = "./test/build/dist/site";
 
     describe('Clean', function() {
         conf = config.load("./test/build/_config.yml");
@@ -17,7 +17,7 @@ describe('Build Site', function() {
     });
 
     it('Should clean dist site', () => {
-        fs.readdir(conf.distPath, (err, files) => {
+        fs.readdirSync(conf.distPath, (err, files) => {
                 if (files.length && files.length > 0) {
                     assert.fail("Should have cleaned up")
                 }
@@ -30,7 +30,7 @@ describe('Build Site', function() {
     });
 
     it('Should generate dist src', () => {
-        fs.readdir(distSrcPath, (err, files) => {
+        fs.readdirSync(distSrcPath, (err, files) => {
             if (!files.length) {
                 assert.fail("Should have created dist src files")
             }
@@ -46,7 +46,7 @@ describe('Build Site', function() {
     });
 
     it('Should generate dist site', () => {
-        fs.readdir(distSitePath, (err, files) => {
+        fs.readdirSync(distSitePath, (err, files) => {
             if (!files.length) {
                 assert.fail("Should have created dist site")
             }

@@ -24,7 +24,7 @@ describe('Scope Validation', function () {
 
         it('Should have both internal and external articles', function (done) {
             fs.readdirSync(external_category, function (err, files) {
-                if (!files) {
+                if (!files || err) {
                     assert.fail('Found no articles');
                     done();
                 }
@@ -41,8 +41,8 @@ describe('Scope Validation', function () {
                         }
                     });
                 });
-                done();
             });
+            done();
         });
     });
 
@@ -69,8 +69,8 @@ describe('Scope Validation', function () {
                         }
                     });
                 });
-                done();
             });
+            done();
         });
         
         it('Should inherit scope from a section if no scope on article', function (done) {
@@ -82,8 +82,8 @@ describe('Scope Validation', function () {
                         }
                     });
                 });
-                done();
             });
+            done();
         });
     });
 
@@ -99,7 +99,7 @@ describe('Scope Validation', function () {
         });
 
         it('Should have no internal articles in external-scope', function (done) {
-            fs.readdir(external_category, function (err, files) {
+            fs.readdirSync(external_category, function (err, files) {
                 files.forEach(function (file) {
                     fs.readFile(path.join(external_category, file), 'utf-8', function (err, content) {
                         if (content.includes('Internal Article')) {
@@ -110,26 +110,26 @@ describe('Scope Validation', function () {
                         }
                     });
                 });
-                done();
             });
+            done();
         });
 
         it('Should remove the internal-scope folder', function (done) {
-            fs.access(internal_category, function (err, files) {
-                if (!err) {
-                    assert.fail('internal-scope folder still exists')
+            fs.stat(internal_category, function (err, stats) {
+                if (!err || err.code !== 'ENOENT') {
+                    assert.fail('external-scope folder still exists')
                 }
-                done();
             });
+            done();
         });
 
         it('Should remove the internal-section folder', function (done) {
-            fs.access(internal_section, function (err, files) {
-                if (!err) {
+            fs.stat(internal_section, function (err, stats) {
+                if (!err || err.code !== 'ENOENT') {
                     assert.fail('internal-scope folder still exists')
                 }
-                done();
             });
+            done();
         });
     });
 });
