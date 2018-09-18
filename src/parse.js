@@ -117,7 +117,7 @@ parse.roles = function (conf, roles) {
 parse.scope = function(scope) {
     if (scope && scope.constructor === Array)
         return scope;
-    if (scope === undefined)
+    if (scope === undefined || scope === [])
         return [];
     return [scope];
 };
