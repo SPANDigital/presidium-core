@@ -42,7 +42,7 @@ sections:
     collection: internal-section
     scope: internal
 
-  - title: "Internal/External Section"
+  - title: "Both Section"
     url: "/both-section/"
     collection: both-section
     scope: [internal, external]

@@ -1,3 +1,3 @@
 ---
-title: External Scope
+title: Internal and External
 ---
