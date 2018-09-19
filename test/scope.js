@@ -11,6 +11,7 @@ describe('Scope Validation', function () {
     const internal_category = path.join(distSitePath, 'key-concepts', 'scope-overview', 'internal-scope');
     const internal_section = path.join(distSitePath, 'internal-section');
     const external_category = path.join(distSitePath, 'key-concepts', 'scope-overview', 'external-scope');
+    const both_category = path.join(distSitePath, 'both-section', 'internal-and-external');
 
     describe('Unspecified Scope', function () {
         before(function () {
@@ -127,6 +128,22 @@ describe('Scope Validation', function () {
             fs.stat(internal_section, function (err, stats) {
                 if (!err || err.code !== 'ENOENT') {
                     assert.fail('internal-scope folder still exists')
+                }
+            });
+            done();
+        });
+        it('Should find article with multiple scopes', function(done) {
+            fs.stat(both_category, function (err) {
+                if (err) {
+                    assert.fail('Article with multiple scopes not found')
+                }
+            });
+            done();
+        });
+        it('Should find article inheriting multiple scopes', function(done) {
+            fs.stat(both_category, function (err) {
+                if (err) {
+                    assert.fail('Article did not inherit multiple scopes from section')
                 }
             });
             done();

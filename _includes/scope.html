@@ -2,9 +2,10 @@
     {% if article.scope %}
         {% if article.scope-label %}
             {% assign scope-label = article.scope-label %}
-            {% else %}
+        {% else %}
             {% assign scope-label = 'Scope' %}
         {% endif %}
-        <div class="article-scope">{{scope-label}}: {{article.scope}}</div>
+        {% assign scopes = article.scope | split: "," | join: "|" %}
+        <div class="article-scope">{{scope-label}}: {{scopes}}</div>
     {% endif %}
 {% endif %}

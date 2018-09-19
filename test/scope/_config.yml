@@ -42,6 +42,10 @@ sections:
     collection: internal-section
     scope: internal
 
+  - title: "Both Section"
+    url: "/both-section/"
+    collection: both-section
+    scope: [internal, external]
 #
 # Optional filters that may be used to filter articles by role.
 #
@@ -64,6 +68,7 @@ roles:
 collections:
     key-concepts:
     internal-section:
+    both-section:
 
 #
 # Exclude the following files from the generated site
