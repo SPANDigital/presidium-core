@@ -26,7 +26,7 @@ parse.section = function (conf, section) {
         collection: section.collection,
         collapsed: section.collapsed || false,
         exportArticles: section['export-articles'] || false,
-        scope: section.scope,
+        scope: parse.scope(section.scope),
         roles: [],
         articles: [],
         children: []
@@ -36,7 +36,7 @@ parse.section = function (conf, section) {
 parse.category = function (section, file) {
     const indexFile = path.join(file, INDEX_SOURCE);
     let title = path.parse(file).name;
-
+    let scope = section.scope;
     if (fs.existsSync(indexFile)) {
         const content = fs.readFileSync(indexFile, {encoding: 'utf8', flat: 'r'});
         const attributes = fm(content).attributes;
@@ -45,7 +45,9 @@ parse.category = function (section, file) {
         } else {
             throw new Error('A title is required in a category index.')
         }
+        scope = attributes.scope ? attributes.scope : scope;
     }
+    scope = parse.scope(scope);
 
     const slug = parse.slug(title);
     return {
@@ -58,6 +60,7 @@ parse.category = function (section, file) {
         parent: section,
         exportArticles: section.exportArticles,
         collection: section.collection,
+        scope: scope,
         roles: [],
         articles: [],
         children: []
@@ -75,8 +78,9 @@ parse.article = function (conf, section, file) {
     const article = fm(content);
     const attributes = article.attributes;
     article.scope = attributes.scope ? attributes.scope : section.scope;
+    article.scope = parse.scope(article.scope);
 
-    if (conf.scope && article.scope !== conf.scope) {
+    if (conf.scope && !article.scope.includes(conf.scope)) {
         return IGNORED_ARTICLE;
     }
 
@@ -108,4 +112,12 @@ parse.roles = function (conf, roles) {
         return roles.length > 0 && conf.showRoles ? roles : all;
     }
     return roles && conf.showRoles ? [roles] : all;
+};
+
+parse.scope = function(scope) {
+    if (scope && scope.constructor === Array)
+        return scope;
+    if (scope === undefined || scope === [])
+        return [];
+    return [scope];
 };

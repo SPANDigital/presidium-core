@@ -1,6 +1,6 @@
 ---
 title: External Article
-scope: external
+scope: [external, internal]
 ---
 
 Article for `external` scope:
