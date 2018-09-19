@@ -60,7 +60,7 @@ function addSection(node, props) {
         children : []
     };
     traverse(section, props.children);
-    if (section.children.length > 0) {
+    if (section.children.length > 0 || section.url.startsWith("http")) {
         node.children.push(section);
     }
 }
