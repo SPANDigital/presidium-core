@@ -21,11 +21,15 @@ structure.generate = function(conf) {
     conf.sections
         .map(section => { return parse.section(conf, section) })
         .map(section => {
-            if (!fs.existsSync(section.path)) {
-                throw new Error(`Expected section '${section.title}' not found in: '${section.path}'`);
+            if (section.url.startsWith("http")) {
+                structure.sections.push(section);
+            } else {
+                if (!fs.existsSync(section.path)) {
+                    throw new Error(`Expected section '${section.title}' not found in: '${section.path}'`);
+                }
+                structure.sections.push(section);
+                traverseArticlesSync(conf, section);
             }
-            structure.sections.push(section);
-            traverseArticlesSync(conf, section);
     });
     return structure;
 };
