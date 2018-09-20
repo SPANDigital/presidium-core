@@ -14,7 +14,7 @@ parse.slug = function(value) {
 };
 
 parse.section = function (conf, section) {
-    const sectionUrl = section.externalurl !== undefined ? section.externalurl : path.join(conf.baseUrl, section.url);
+    const sectionUrl = section['external-url'] !== undefined ? section['external-url'] : path.join(conf.baseUrl, section.url);
     const sectionPath = path.join(conf.contentPath, `_${section.collection}`, '/');
 
     return {
