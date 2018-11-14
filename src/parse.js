@@ -14,7 +14,18 @@ parse.slug = function(value) {
 };
 
 parse.section = function (conf, section) {
-    const sectionUrl = section['external-url'] !== undefined ? section['external-url'] : path.join(conf.baseUrl, section.url);
+
+    let sectionUrl;
+    let newTab;
+
+    if (section['external-url'] !== undefined) {
+        sectionUrl = section['external-url'].href;
+        newTab = section['external-url']['new-tab'] !== undefined ? section['external-url']['new-tab'] : true;
+    } else {
+        sectionUrl = path.join(conf.baseUrl, section.url);
+        newTab = false;
+    }
+
     const sectionPath = path.join(conf.contentPath, `_${section.collection}`, '/');
 
     return {
@@ -25,6 +36,7 @@ parse.section = function (conf, section) {
         url: sectionUrl,
         collection: section.collection,
         collapsed: section.collapsed || false,
+        newTab: newTab,
         exportArticles: section['export-articles'] || false,
         scope: parse.scope(section.scope),
         roles: [],
