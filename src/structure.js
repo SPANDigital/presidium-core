@@ -22,7 +22,13 @@ structure.generate = function(conf) {
         .map(section => { return parse.section(conf, section) })
         .map(section => {
             if (section.url.startsWith("http")) {
-                structure.sections.push(section);
+                if (conf.scope) {
+                    if(section.scope.includes(conf.scope)) {
+                        structure.sections.push(section);
+                    }
+                } else {
+                    structure.sections.push(section);
+                }
             } else {
                 if (!fs.existsSync(section.path)) {
                     throw new Error(`Expected section '${section.title}' not found in: '${section.path}'`);
