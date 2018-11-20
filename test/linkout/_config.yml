@@ -35,7 +35,9 @@ dist-path: ./test/linkout/dist/
 sections:
   - title: "External"
     collapsed: true
-    externalurl: "http://presidium.spandigital.net"
+    external-url:
+      href: "http://presidium.spandigital.net"
+      new-tab: true
     collection: empty
 
   - title: "Internal"
