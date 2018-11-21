@@ -12,13 +12,6 @@ let scopeArg = {
     string: 'scope'
 };
 
-let versionArg = {
-    alias: 'version',
-    describe: 'Semantic version number you wish to delete.',
-    demand: 'You must supply a version to delete.',
-    string: 'version'
-};
-
 var argv = yargs.usage('$0 command')
     .command('requirements', 'Install jekyll gems and npm dependencies', function (yargs) {
         presidium.requirements(conf);
@@ -76,13 +69,22 @@ var argv = yargs.usage('$0 command')
     })
     .command('clean-gh-pages', 'Remove old versions.', function (yargs) {
         return yargs
-            .option('v', versionArg);
+            .option('v', {
+                alias: 'version',
+                describe: 'Semantic version number you wish to delete.',
+                demand: 'You must supply a version to delete.',
+                string: 'version'
+            });
     }, function (argv) {
         version.clean(argv['v'], conf);
     })
     .command('gh-pages', 'Publish to Github Pages', function (yargs) {
         return yargs
-            .option('v', versionArg)
+            .option('v', {
+                alias: 'version',
+                describe: 'Semantic version number to publish with. \n If omitted, it defaults to publishing "latest".',
+                string: 'version'
+            })
             .option('s', scopeArg);
     }, function (argv) {
         conf = config.load('_config.yml', argv['v'] || '');
