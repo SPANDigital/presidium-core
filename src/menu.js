@@ -36,8 +36,10 @@ menu.generate = function(conf, structure) {
 var Menu = function(conf, structure) {
     this.logo = conf.logo;
     this.brandName = conf.brandName;
+    this.brandUrl = conf.brandUrl;
     this.baseUrl = conf.baseUrl;
     this.roles =  conf.roles;
+    this.scope = conf.scope;
     this.children = [];
     structure.sections.map(section => {
         addSection(this, section);
@@ -51,25 +53,26 @@ function addSection(node, props) {
         title: props.title,
         level: 1,
         collapsed: props.collapsed,
+        newTab: props.newTab,
         path: props.path,
         url: props.url,
-        roles : props.roles,
+        roles: props.roles,
+        scope: props.scope,
         children : []
     };
-    if (!props.hidden) {
-        node.children.push(section);
-    }
     traverse(section, props.children);
+    if (!props.hidden) {
+        if (section.children.length > 0 || section.url.startsWith("http")) {
+            node.children.push(section);
+        }
+    }
 }
 
 function traverse(node, children) {
     children.forEach(child => {
         switch(child.type) {
             case structure.TYPE.CATEGORY:
-                if (child.children.length > 0) {
-                    const category = addCategory(node, child);
-                    traverse(category, child.children);
-                }
+                addCategory(node, child);
                 break;
             case structure.TYPE.ARTICLE:
                 addArticle(node, child);
@@ -88,16 +91,21 @@ function addCategory(node, props) {
         slug: props.slug,
         path: props.path,
         url: props.url,
-        roles : props.roles,
+        roles: props.roles,
+        scope: props.scope,
         children: [],
     };
-    if (!props.hidden) {
+    traverse(category, props.children);
+    if (category.children.length > 0 && !props.hidden) {
         node.children.push(category);
     }
     return category;
 }
 
 function addArticle(node, props) {
+    if(props.slug.length === 0) {
+        return;
+    }
     var article = {
         type: structure.TYPE.ARTICLE,
         id: props.id,
@@ -107,7 +115,8 @@ function addArticle(node, props) {
         title: props.title,
         level: node.level + 1,
         collapsed: true,
-        roles: props.roles
+        roles: props.roles,
+        scope: props.scope,
     };
     if (!props.hidden) {
         node.children.push(article);

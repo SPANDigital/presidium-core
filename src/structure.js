@@ -21,17 +21,30 @@ structure.generate = function(conf) {
     conf.sections
         .map(section => { return parse.section(conf, section) })
         .map(section => {
-            if (!fs.existsSync(section.path)) {
-                throw new Error(`Expected section '${section.title}' not found in: '${section.path}'`);
+            if (section.url.startsWith("http")) {
+                if (conf.scope) {
+                    if(section.scope.includes(conf.scope)) {
+                        structure.sections.push(section);
+                    }
+                } else {
+                    structure.sections.push(section);
+                }
+            } else {
+                if (!fs.existsSync(section.path)) {
+                    throw new Error(`Expected section '${section.title}' not found in: '${section.path}'`);
+                }
+                structure.sections.push(section);
+                traverseArticlesSync(conf, section);
             }
-            structure.sections.push(section);
-            traverseArticlesSync(conf, section);
     });
     return structure;
 };
 
 function traverseArticlesSync(conf, section) {
     fs.readdirSync(section.path)
+        .sort(function(a,b) {
+            return b.includes(parse.INDEX_SOURCE)
+        })
         .map(filename => {
             const file = path.join(section.path, filename);
             if (isCategory(file)) {

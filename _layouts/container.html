@@ -6,11 +6,23 @@
     <link rel="shortcut icon" href="{{ site.baseurl | append: '/media/images/favicon.ico' | replace: '//','/'}}" type="image/X-icon">
     <title>{{ site.name }}</title>
 
-    <link rel="stylesheet" href="{{ site.baseurl | append: '/media/css/presidium.css' | replace: '//','/'}}" type="text/css" media="screen"/>
+    <link rel="stylesheet" href="{{ site.baseurl | append: '/media/css/presidium.css' | replace: '//','/'}}" type="text/css" media="all"/>
 
 </head>
 <body>
-<div id="presidium-navigation"></div>
+
+{% if site.enterprise %}
+    <div data-key="{{ site.enterprise.key }}"
+         data-title="{{ site.enterprise.name }}"
+         id="presidium-enterprise"
+         class="presidium-enterprise">
+        {% include enterprise-placeholder.html %}
+    </div>
+{% endif %}
+
+<div id="presidium-navigation">
+    {% include navigation-placeholder.html %}
+</div>
 <div id="presidium-container" class="container-fluid">
     <div class="row">
         <div id="presidium-content" class="col-lg-10 col-md-12">
@@ -31,10 +43,21 @@
 <!-- Components -->
 <script src="{{ site.baseurl | append: '/media/js/presidium.js' | replace: '//','/'}}"></script>
 <script>
+    window.presidium.config = {
+        name: "{{ site.name }}",
+        baseurl:  "{{ site.baseurl }}",
+        brandurl:  "{{ site.brandurl }}",
+        repourl:  "{{ site.repourl }}"
+    }
     window.presidium['versions'] = { siteroot: "{{ site.siteroot }}" };
     window.presidium.menu.load({% include menu.json %}, 'presidium-navigation');
     window.presidium.tooltips.load({ "baseurl": "{{ site.baseurl }}" });
 </script>
+
+{% if site.enterprise.script %}
+<script src="{{ site.enterprise.script | append: script | replace: '//','/'}}"></script>
+{% endif %}
+
 {% for script in site.scripts %}
 <script src="{{ site.baseurl | append: '/media/js/' | append: script | replace: '//','/'}}"></script>
 {% endfor %}

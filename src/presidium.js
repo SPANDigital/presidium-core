@@ -4,8 +4,11 @@ var path = require('path');
 var site = require('./site');
 var cpx = require("cpx");
 var links = require('./links');
+var linter = require('./linter');
 var yaml = require('js-yaml');
 var version = require('./version');
+const argv = require('yargs').argv;
+const utils = require('./utils');
 
 var presidium = module.exports;
 
@@ -16,12 +19,12 @@ presidium.clean = function (conf) {
     fs.mkdirsSync(dist);
 };
 
-presidium.requirements = function() {
+presidium.requirements = function () {
     //TODO move out of sh script
-    shell.exec('presidium-requirements');
+    shell.exec('./bin/presidium-requirements.sh');
 };
 
-presidium.install = function(conf) {
+presidium.install = function (conf) {
     presidium.requirements();
 
     console.log(`Creating ${conf.distPath}...`);
@@ -45,7 +48,7 @@ presidium.install = function(conf) {
 
 };
 
-presidium.generate = function(conf) {
+presidium.generate = function (conf) {
     console.log(`Copy base templates...`);
     fs.copySync(path.join(conf.corePath, '_includes'), conf.distIncludesPath);
     fs.copySync(path.join(conf.corePath, '_layouts'), conf.distLayoutsPath);
@@ -64,45 +67,55 @@ presidium.generate = function(conf) {
     site.generate(conf);
 };
 
-presidium.build = function(conf) {
+presidium.build = function (conf) {
+    // Manage extra config files
+    const configFiles = `${argv.config}`;
+    let extraConf = '';
+    if (argv.config) {
+        extraConf = configFiles.split(',').map(x => {
+            x = path.isAbsolute(x) ? x : `../${x}`;
+            return x;
+        });
+    }
+    extraConf = extraConf ? `,${extraConf}` : '';
+
     console.log(`Building site...`);
     const pwd = shell.pwd();
     shell.cd(conf.jekyllPath);
-    const cmd = `bundle exec jekyll build --config ../${path.join(conf.distSrcPath, '_config.yml')} --trace -s ../${conf.distSrcPath} -d ../${conf.distSitePath}`;
+    const cmd = `bundle exec jekyll build --config ../${path.join(conf.distSrcPath, '_config.yml')}${extraConf} --trace -s ../${conf.distSrcPath} -d ../${conf.distSitePath}`;
 
     console.log(`Executing: ${cmd}`);
     shell.exec(cmd);
     shell.cd(pwd);
 };
 
-presidium.validate = function(conf) {
-    const results = links.validate(conf);
-    if(results.broken > 0) {
-        throw new Error('There are broken links in the site. Can not proceed.')
-    }
+presidium.validate = function (conf) {
+    const results = links.validate(conf, argv);
+    if (results.broken > 0 && (argv.fail_on_errors == 'true')) throw new Error('There are broken links in the site. Can not proceed.')
+    if (argv.check && utils.contains(argv.check, 'author')) linter.validate(conf, argv);
 };
 
-presidium.watch = function(conf) {
+presidium.watch = function (conf) {
     console.log(`Watching Content and Media...`);
-    shell.exec(`cpx --watch "${conf.contentPath}/**" "${conf.distContentPath}/"`, {async: true});
-    shell.exec(`cpx --watch "${conf.mediaPath}/**" "${conf.distMediaPath}/"`, {async: true});
+    shell.exec(`cpx --watch "${conf.contentPath}/**" "${conf.distContentPath}/"`, { async: true });
+    shell.exec(`cpx --watch "${conf.mediaPath}/**" "${conf.distMediaPath}/"`, { async: true });
 };
 
-presidium.develop = function(conf) {
+presidium.develop = function (conf) {
     console.log(`Watching Presidium...`);
-    shell.exec(`cpx --watch --verbose "node_modules/presidium-core/_includes/**" "${conf.distIncludesPath}/"`, {async: true});
-    shell.exec(`cpx --watch --verbose "node_modules/presidium-core/_layouts/**" "${conf.distLayoutsPath}/"`, {async: true});
-    shell.exec(`cpx --watch --verbose "node_modules/presidium-core/media/**" "${conf.distMediaPath}/"`, {async: true});
+    shell.exec(`cpx --watch --verbose "node_modules/presidium-core/_includes/**" "${conf.distIncludesPath}/"`, { async: true });
+    shell.exec(`cpx --watch --verbose "node_modules/presidium-core/_layouts/**" "${conf.distLayoutsPath}/"`, { async: true });
+    shell.exec(`cpx --watch --verbose "node_modules/presidium-core/media/**" "${conf.distMediaPath}/"`, { async: true });
 };
 
-presidium.serve = function(conf) {
+presidium.serve = function (conf) {
     console.log(`Serving...`);
     shell.cd('.jekyll');
-    shell.exec(`bundle exec jekyll serve -s ../${conf.distSrcPath} -d ../${conf.distSitePath}`, {async: true});
+    shell.exec(`bundle exec jekyll serve -s ../${conf.distSrcPath} -d ../${conf.distSitePath}`, { async: true });
     shell.cd('..');
 };
 
-presidium.ghPages = function(conf) {
+presidium.ghPages = function (conf) {
     console.log('Publishing to Github Pages...');
     const syncPath = path.join(version.path, conf.version);
     if (!shell.test('-d', syncPath)) {

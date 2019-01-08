@@ -1,6 +1,6 @@
 {
   "name": "presidium-core",
-  "version": "0.1.9",
+  "version": "0.1.42",
   "description": "Presidium technical documentation template for Jekyll",
   "license": "Apache-2.0",
   "bin": {
@@ -36,12 +36,13 @@
     "fs-extra": "^2.1.2",
     "js-yaml": "^3.8.2",
     "remark": "^7.0.1",
+    "request": "^2.85.0",
     "shelljs": "^0.7.7",
     "slug": "^0.9.1",
     "strip-markdown": "^3.0.0",
-    "yargs": "^7.0.2"
+    "yargs": "^12.0.1"
   },
   "devDependencies": {
-    "mocha": "^3.2.0"
+    "mocha": "^5.2.0"
   }
 }

@@ -64,6 +64,7 @@ function includedArticles(conf, section) {
             `{% assign article-slug = "${ article.slug }" %}\r\n` +
             `{% assign article-url = "${ article.url }" %}\r\n` +
             `{% assign article-roles = "${ article.roles.join(',') }" %}\r\n` +
+            `{% assign article-scope = "${ article.scope }" %}\r\n` +
             `{% include article.html %}\r\n`;
     }).join('\r\n')
 }

@@ -1,0 +1,11 @@
+{% if site.show.scope == true or site.show.scope == nil %}
+    {% if article.scope %}
+        {% if article.scope-label %}
+            {% assign scope-label = article.scope-label %}
+        {% else %}
+            {% assign scope-label = 'Scope' %}
+        {% endif %}
+        {% assign scopes = article.scope | split: "," | join: "|" %}
+        <div class="article-scope">{{scope-label}}: {{scopes}}</div>
+    {% endif %}
+{% endif %}

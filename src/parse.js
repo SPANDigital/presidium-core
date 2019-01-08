@@ -4,17 +4,29 @@ var fm = require('front-matter');
 var slug = require('slug');
 var structure = require('./structure');
 
-const INDEX_SOURCE = 'index.md';
 const IGNORED_ARTICLE = { include: false };
 
 var parse = module.exports;
+
+parse.INDEX_SOURCE = 'index.md';
 
 parse.slug = function(value) {
     return slug(value, { mode: 'rfc3986' });
 };
 
 parse.section = function (conf, section) {
-    const sectionUrl = path.join(conf.baseUrl, section.url);
+
+    let sectionUrl;
+    let newTab;
+
+    if (section['external-url'] !== undefined) {
+        sectionUrl = section['external-url'].href;
+        newTab = section['external-url']['new-tab'] !== undefined ? section['external-url']['new-tab'] : true;
+    } else {
+        sectionUrl = path.join(conf.baseUrl, section.url);
+        newTab = false;
+    }
+
     const sectionPath = path.join(conf.contentPath, `_${section.collection}`, '/');
 
     return {
@@ -25,7 +37,9 @@ parse.section = function (conf, section) {
         url: sectionUrl,
         collection: section.collection,
         collapsed: section.collapsed || false,
+        newTab: newTab,
         exportArticles: section['export-articles'] || false,
+        scope: parse.scope(section.scope),
         roles: [],
         articles: [],
         children: [],
@@ -34,8 +48,9 @@ parse.section = function (conf, section) {
 };
 
 parse.category = function (section, file) {
-    const indexFile = path.join(file, INDEX_SOURCE);
+    const indexFile = path.join(file, parse.INDEX_SOURCE);
     let title = path.parse(file).name;
+    let scope = section.scope;
     let hidden = false;
 
     if (fs.existsSync(indexFile)) {
@@ -47,7 +62,9 @@ parse.category = function (section, file) {
         } else {
             throw new Error('A title is required in a category index.')
         }
+        scope = attributes.scope ? attributes.scope : scope;
     }
+    scope = parse.scope(scope);
 
     const slug = parse.slug(title);
     return {
@@ -60,6 +77,7 @@ parse.category = function (section, file) {
         parent: section,
         exportArticles: section.exportArticles,
         collection: section.collection,
+        scope: scope,
         roles: [],
         articles: [],
         children: [],
@@ -69,17 +87,23 @@ parse.category = function (section, file) {
 
 parse.article = function (conf, section, file) {
     const filename = path.parse(file).base;
-    if (filename == INDEX_SOURCE) {
-        return IGNORED_ARTICLE;
-    }
 
     //Review with larger file sets
     const content = fs.readFileSync(file, { encoding: 'utf8', flat: 'r' });
     const article = fm(content);
     const attributes = article.attributes;
+    article.scope = attributes.scope ? attributes.scope : section.scope;
+    article.scope = parse.scope(article.scope);
+
+    if (conf.scope && !article.scope.includes(conf.scope)) {
+        return IGNORED_ARTICLE;
+    }
 
     if (attributes && attributes.title) {
-        const slug = parse.slug(attributes.title);
+        var slug = parse.slug(attributes.title);
+        if (filename === parse.INDEX_SOURCE) {
+            slug = '';
+        }
         return {
             id: file,
             type: structure.TYPE.ARTICLE,
@@ -91,6 +115,8 @@ parse.article = function (conf, section, file) {
             parent: section,
             collection: section.collection,
             roles: parse.roles(conf, attributes.roles),
+            author: attributes.author,
+            scope: article.scope,
             include: true,
             hidden: attributes.hidden || false
         };
@@ -105,4 +131,12 @@ parse.roles = function (conf, roles) {
         return roles.length > 0 && conf.showRoles ? roles : all;
     }
     return roles && conf.showRoles ? [roles] : all;
+};
+
+parse.scope = function(scope) {
+    if (scope && scope.constructor === Array)
+        return scope;
+    if (scope === undefined || scope === [])
+        return [];
+    return [scope];
 };
