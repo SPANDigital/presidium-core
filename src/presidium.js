@@ -1,16 +1,14 @@
-var shell = require('shelljs');
-var fs = require('fs-extra');
-var path = require('path');
-var site = require('./site');
-var cpx = require("cpx");
-var links = require('./links');
-var linter = require('./linter');
-var yaml = require('js-yaml');
-var version = require('./version');
+const shell = require('shelljs');
+const fs = require('fs-extra');
+const path = require('path');
+const site = require('./site');
+const links = require('./links');
+const linter = require('./linter');
+const version = require('./version');
 const argv = require('yargs').argv;
 const utils = require('./utils');
 
-var presidium = module.exports;
+const presidium = module.exports;
 
 presidium.clean = function (conf) {
     const dist = conf.distPath;
@@ -19,13 +17,12 @@ presidium.clean = function (conf) {
     fs.mkdirsSync(dist);
 };
 
-presidium.requirements = function () {
-    //TODO move out of sh script
-    shell.exec('./bin/presidium-requirements.sh');
+presidium.requirements = function (conf) {
+    shell.exec(`./${path.join(conf.corePath, 'bin', 'presidium-requirements.sh')}`);
 };
 
 presidium.install = function (conf) {
-    presidium.requirements();
+    presidium.requirements(conf);
 
     console.log(`Creating ${conf.distPath}...`);
     const dist = conf.distPath;
