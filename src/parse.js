@@ -4,10 +4,11 @@ var fm = require('front-matter');
 var slug = require('slug');
 var structure = require('./structure');
 
-const INDEX_SOURCE = 'index.md';
 const IGNORED_ARTICLE = { include: false };
 
 var parse = module.exports;
+
+parse.INDEX_SOURCE = 'index.md';
 
 parse.slug = function(value) {
     return slug(value, { mode: 'rfc3986' });
@@ -46,7 +47,7 @@ parse.section = function (conf, section) {
 };
 
 parse.category = function (section, file) {
-    const indexFile = path.join(file, INDEX_SOURCE);
+    const indexFile = path.join(file, parse.INDEX_SOURCE);
     let title = path.parse(file).name;
     let scope = section.scope;
     if (fs.existsSync(indexFile)) {
@@ -81,9 +82,6 @@ parse.category = function (section, file) {
 
 parse.article = function (conf, section, file) {
     const filename = path.parse(file).base;
-    if (filename === INDEX_SOURCE) {
-        return IGNORED_ARTICLE;
-    }
 
     //Review with larger file sets
     const content = fs.readFileSync(file, { encoding: 'utf8', flat: 'r' });
@@ -97,7 +95,10 @@ parse.article = function (conf, section, file) {
     }
 
     if (attributes && attributes.title) {
-        const slug = parse.slug(attributes.title);
+        var slug = parse.slug(attributes.title);
+        if (filename === parse.INDEX_SOURCE) {
+            slug = '';
+        }
         return {
             id: file,
             type: structure.TYPE.ARTICLE,
