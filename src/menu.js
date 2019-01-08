@@ -101,6 +101,9 @@ function addCategory(node, props) {
 }
 
 function addArticle(node, props) {
+    if(props.slug.length === 0) {
+        return;
+    }
     var article = {
         type: structure.TYPE.ARTICLE,
         id: props.id,
