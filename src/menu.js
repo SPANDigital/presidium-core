@@ -61,7 +61,7 @@ function addSection(node, props) {
         children : []
     };
     traverse(section, props.children);
-    if (!props.hidden) {
+    if (!props.hideFromMenu) {
         if (section.children.length > 0 || section.url.startsWith("http")) {
             node.children.push(section);
         }
@@ -96,7 +96,7 @@ function addCategory(node, props) {
         children: [],
     };
     traverse(category, props.children);
-    if (category.children.length > 0 && !props.hidden) {
+    if (category.children.length > 0 && !props.hideFromMenu) {
         node.children.push(category);
     }
     return category;
@@ -118,7 +118,7 @@ function addArticle(node, props) {
         roles: props.roles,
         scope: props.scope,
     };
-    if (!props.hidden) {
+    if (!props.hideFromMenu) {
         node.children.push(article);
     }
 }

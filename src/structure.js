@@ -33,8 +33,10 @@ structure.generate = function(conf) {
                 if (!fs.existsSync(section.path)) {
                     throw new Error(`Expected section '${section.title}' not found in: '${section.path}'`);
                 }
-                structure.sections.push(section);
-                traverseArticlesSync(conf, section);
+                if (!section.hideContent) {
+                    structure.sections.push(section);
+                    traverseArticlesSync(conf, section);
+                }
             }
     });
     return structure;
@@ -49,8 +51,10 @@ function traverseArticlesSync(conf, section) {
             const file = path.join(section.path, filename);
             if (isCategory(file)) {
                 const category = parse.category(section, file);
-                section.children.push(category);
-                traverseArticlesSync(conf, category)
+                if (!category.hideContent) {
+                    section.children.push(category);
+                    traverseArticlesSync(conf, category)
+                }
             } else {
                 const article = parse.article(conf, section, file);
                 if (article.include) {
