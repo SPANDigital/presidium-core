@@ -8,6 +8,7 @@ parserOptions:
 plugins:
   - 'eslint-plugin-hapi'
 rules:
+  no-console: 'off'
   indent:
     - error
     - 2
