@@ -18,10 +18,10 @@ const LEVELS = {
 	VALID: 'valid',
 	BROKEN: 'broken',
 	WARNING: 'warning',
-	EXTERNAL: 'external',
+	EXTERNAL: 'external'
 };
 
-links.validate = function (conf, argv) {
+links.validate = function(conf, argv) {
 	validPaths = new Set();
 	htmlFiles = new Set();
 	results = {
@@ -41,7 +41,7 @@ links.validate = function (conf, argv) {
 };
 
 function traverseDirectory(dir) {
-	fs.readdirSync(dir).forEach(file => {
+	fs.readdirSync(dir).forEach((file) => {
 		file = path.join(dir, '/', file);
 
 		const stat = fs.statSync(file);
@@ -59,19 +59,20 @@ function getLinks(files) {
 
 	for (let file of files) {
 		let $ = cheerio.load(fs.readFileSync(file));
-		$('#presidium-content').find('section a').each(function (i, link) {
+		$('#presidium-content')
+			.find('section a')
+			.each(function(i, link) {
+				let href = $(link).attr('href');
+				if (typeof href !== 'undefined') {
+					// Checks if the href belongs to a set of assets (/media folder)
+					if (href.indexOf(mediaFolder) > -1) {
+						let parsedLink = url.parse(href);
+						href = parsedLink.pathname; // Remove the hash from the URL
+					}
 
-			let href = $(link).attr('href');
-			if (typeof href !== 'undefined') {
-				// Checks if the href belongs to a set of assets (/media folder)
-				if (href.indexOf(mediaFolder) > -1) {
-					let parsedLink = url.parse(href);
-					href = parsedLink.pathname;     // Remove the hash from the URL
+					links.add(href);
 				}
-
-				links.add(href);
-			}
-		});
+			});
 	}
 	return links;
 }
@@ -139,7 +140,7 @@ function validateLinks(baseUrl, argv) {
 			} else {
 				if (
 					(link.lastIndexOf('/') === link.length - 1 && validPaths.has(link)) ||
-                    (link.lastIndexOf(mediaFolder) > -1 && fs.existsSync(distSitePath + link))
+					(link.lastIndexOf(mediaFolder) > -1 && fs.existsSync(distSitePath + link))
 				) {
 					log(LEVELS.VALID, baseLink, null, logLevel);
 				} else {

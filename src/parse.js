@@ -14,14 +14,14 @@ parse.slug = function(value) {
 	return slug(value, { mode: 'rfc3986' });
 };
 
-parse.section = function (conf, section) {
-
+parse.section = function(conf, section) {
 	let sectionUrl;
 	let newTab;
 
 	if (section['external-url'] !== undefined) {
 		sectionUrl = section['external-url'].href;
-		newTab = section['external-url']['new-tab'] !== undefined ? section['external-url']['new-tab'] : true;
+		newTab =
+			section['external-url']['new-tab'] !== undefined ? section['external-url']['new-tab'] : true;
 	} else {
 		sectionUrl = path.join(conf.baseUrl, section.url);
 		newTab = false;
@@ -46,12 +46,12 @@ parse.section = function (conf, section) {
 	};
 };
 
-parse.category = function (section, file) {
+parse.category = function(section, file) {
 	const indexFile = path.join(file, parse.INDEX_SOURCE);
 	let title = path.parse(file).name;
 	let scope = section.scope;
 	if (fs.existsSync(indexFile)) {
-		const content = fs.readFileSync(indexFile, {encoding: 'utf8', flat: 'r'});
+		const content = fs.readFileSync(indexFile, { encoding: 'utf8', flat: 'r' });
 		const attributes = fm(content).attributes;
 		if (attributes && attributes.title) {
 			title = attributes.title;
@@ -80,7 +80,7 @@ parse.category = function (section, file) {
 	};
 };
 
-parse.article = function (conf, section, file) {
+parse.article = function(conf, section, file) {
 	const filename = path.parse(file).base;
 
 	//Review with larger file sets
@@ -112,13 +112,13 @@ parse.article = function (conf, section, file) {
 			roles: parse.roles(conf, attributes.roles),
 			author: attributes.author,
 			scope: article.scope,
-			include: true,
+			include: true
 		};
 	}
 	return IGNORED_ARTICLE;
 };
 
-parse.roles = function (conf, roles) {
+parse.roles = function(conf, roles) {
 	const all = conf.roles.all ? [conf.roles.all] : [];
 
 	if (roles && roles.constructor === Array) {
@@ -128,9 +128,7 @@ parse.roles = function (conf, roles) {
 };
 
 parse.scope = function(scope) {
-	if (scope && scope.constructor === Array)
-		return scope;
-	if (scope === undefined || scope === [])
-		return [];
+	if (scope && scope.constructor === Array) return scope;
+	if (scope === undefined || scope === []) return [];
 	return [scope];
 };

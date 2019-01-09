@@ -10,7 +10,7 @@ const CONFIG_VAR_REGEX = /\$([{A-Z])\w+}/g;
  * Load config file with defaults
  * @param filename
  */
-config.load = function (filename = '_config.yml', version = '') {
+config.load = function(filename = '_config.yml', version = '') {
 	const conf = new Config(filename, version);
 
 	const distPath = conf.get('dist-path', './dist/');
@@ -53,12 +53,12 @@ config.load = function (filename = '_config.yml', version = '') {
 	};
 };
 
-const Config = function (filename, version) {
+const Config = function(filename, version) {
 	//TODO validate config
 	this.config = resolveConfig(load(filename), version);
 };
 
-Config.prototype.get = function (key, defaultVal = undefined) {
+Config.prototype.get = function(key, defaultVal = undefined) {
 	return this.config.hasOwnProperty(key) ? this.config[key] : defaultVal;
 };
 

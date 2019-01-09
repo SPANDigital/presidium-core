@@ -6,7 +6,7 @@ const structure = module.exports;
 structure.TYPE = {
 	SECTION: 'section',
 	CATEGORY: 'category',
-	ARTICLE: 'article',
+	ARTICLE: 'article'
 };
 
 /**
@@ -15,14 +15,16 @@ structure.TYPE = {
  */
 structure.generate = function(conf) {
 	const structure = {
-		sections : [],
+		sections: []
 	};
 	conf.sections
-		.map(section => { return parse.section(conf, section); })
-		.map(section => {
+		.map((section) => {
+			return parse.section(conf, section);
+		})
+		.map((section) => {
 			if (section.url.startsWith('http')) {
 				if (conf.scope) {
-					if(section.scope.includes(conf.scope)) {
+					if (section.scope.includes(conf.scope)) {
 						structure.sections.push(section);
 					}
 				} else {
@@ -41,10 +43,10 @@ structure.generate = function(conf) {
 
 function traverseArticlesSync(conf, section) {
 	fs.readdirSync(section.path)
-		.sort(function(a,b) {
+		.sort(function(a, b) {
 			return b.includes(parse.INDEX_SOURCE);
 		})
-		.map(filename => {
+		.map((filename) => {
 			const file = path.join(section.path, filename);
 			if (isCategory(file)) {
 				const category = parse.category(section, file);

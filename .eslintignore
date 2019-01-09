@@ -1,0 +1,6 @@
+/media/*
+/test/build/*
+/test/linkout/*
+/test/scope/*
+/test/validation/*
+/node_modules/*

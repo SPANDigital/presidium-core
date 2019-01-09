@@ -7,7 +7,7 @@ const linter = module.exports;
 
 let results;
 
-linter.validate = function (conf) {
+linter.validate = function(conf) {
 	results = {
 		missing_authors: 0
 	};
@@ -20,32 +20,35 @@ function validateAuthor(conf) {
 	new SiteStruct(conf, struct);
 }
 
-const SiteStruct = function (conf, structure) {
+const SiteStruct = function(conf, structure) {
 	this.stripper = remark().use(strip);
-	structure.sections.map(section => {
+	structure.sections.map((section) => {
 		traverse(section, this);
 	});
 };
 
-SiteStruct.prototype.verifyAuthor = function (article) {
+SiteStruct.prototype.verifyAuthor = function(article) {
 	if (article.author === undefined) {
 		log(article.url, 'MISSING');
 	} else {
-		request({
-			url: 'https://api.github.com/users/' + article.author,
-			headers: {
-				'User-Agent': 'Awesome-Octocat-App'
+		request(
+			{
+				url: 'https://api.github.com/users/' + article.author,
+				headers: {
+					'User-Agent': 'Awesome-Octocat-App'
+				}
+			},
+			function(error, response) {
+				if (response.statusCode !== 200) {
+					log(`[${article.author}] - ${article.url}`, 'INVALID');
+				}
 			}
-		}, function (error, response) {
-			if (response.statusCode !== 200) {
-				log(`[${article.author}] - ${article.url}`, 'INVALID');
-			}
-		});
+		);
 	}
 };
 
 function traverse(node, map) {
-	node.children.forEach(child => {
+	node.children.forEach((child) => {
 		switch (child.type) {
 		case structure.TYPE.CATEGORY:
 			if (child.children.length > 0) {

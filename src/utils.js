@@ -1,6 +1,6 @@
 const utils = module.exports;
 
-utils.contains = function (a, obj) {
+utils.contains = function(a, obj) {
 	let i = a.length;
 	while (i--) {
 		if (a[i] === obj) {

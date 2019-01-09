@@ -24,7 +24,6 @@ const MENU_STRUCTURE = 'menu.json';
  * @param structure site structure
  */
 menu.generate = function(conf, structure) {
-
 	fs.mkdirsSync(conf.distIncludesPath);
 	const siteMenu = new Menu(conf, structure);
 	const file = path.join(conf.distIncludesPath, MENU_STRUCTURE);
@@ -32,16 +31,15 @@ menu.generate = function(conf, structure) {
 	fs.writeFileSync(file, JSON.stringify(siteMenu));
 };
 
-
 const Menu = function(conf, structure) {
 	this.logo = conf.logo;
 	this.brandName = conf.brandName;
 	this.brandUrl = conf.brandUrl;
 	this.baseUrl = conf.baseUrl;
-	this.roles =  conf.roles;
+	this.roles = conf.roles;
 	this.scope = conf.scope;
 	this.children = [];
-	structure.sections.map(section => {
+	structure.sections.map((section) => {
 		addSection(this, section);
 	});
 };
@@ -58,7 +56,7 @@ function addSection(node, props) {
 		url: props.url,
 		roles: props.roles,
 		scope: props.scope,
-		children : []
+		children: []
 	};
 	traverse(section, props.children);
 	if (section.children.length > 0 || section.url.startsWith('http')) {
@@ -67,8 +65,8 @@ function addSection(node, props) {
 }
 
 function traverse(node, children) {
-	children.forEach(child => {
-		switch(child.type) {
+	children.forEach((child) => {
+		switch (child.type) {
 		case structure.TYPE.CATEGORY:
 			addCategory(node, child);
 			break;
@@ -91,7 +89,7 @@ function addCategory(node, props) {
 		url: props.url,
 		roles: props.roles,
 		scope: props.scope,
-		children: [],
+		children: []
 	};
 	traverse(category, props.children);
 	if (category.children.length > 0) {
@@ -101,7 +99,7 @@ function addCategory(node, props) {
 }
 
 function addArticle(node, props) {
-	if(props.slug.length === 0) {
+	if (props.slug.length === 0) {
 		return;
 	}
 	const article = {
@@ -114,7 +112,7 @@ function addArticle(node, props) {
 		level: node.level + 1,
 		collapsed: true,
 		roles: props.roles,
-		scope: props.scope,
+		scope: props.scope
 	};
 	node.children.push(article);
 }

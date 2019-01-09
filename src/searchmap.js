@@ -17,7 +17,7 @@ searchmap.generate = function(conf, struct) {
 const SearchMap = function(conf, structure) {
 	this.stripper = remark().use(strip);
 	this.articles = [];
-	structure.sections.map(section => {
+	structure.sections.map((section) => {
 		traverse(section, this);
 	});
 };
@@ -41,8 +41,8 @@ SearchMap.prototype.addArticle = function(article) {
 };
 
 function traverse(node, map) {
-	node.children.forEach(child => {
-		switch(child.type) {
+	node.children.forEach((child) => {
+		switch (child.type) {
 		case structure.TYPE.CATEGORY:
 			if (child.children.length > 0) {
 				traverse(child, map);
@@ -56,7 +56,7 @@ function traverse(node, map) {
 }
 
 function category(node) {
-	return (node.parent && node.parent.type === structure.TYPE.CATEGORY) ? node.parent.title : '';
+	return node.parent && node.parent.type === structure.TYPE.CATEGORY ? node.parent.title : '';
 }
 
 function section(node) {

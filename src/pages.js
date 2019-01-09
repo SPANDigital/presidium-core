@@ -10,7 +10,7 @@ pages.generate = function(conf, structure) {
 	console.log(`Writing page templates: ${conf.distSectionsPath}`);
 	fs.emptydirSync(conf.distSectionsPath);
 
-	structure.sections.map(section => {
+	structure.sections.map((section) => {
 		writeTemplate(conf, section);
 		traverse(conf, section);
 	});
@@ -18,9 +18,9 @@ pages.generate = function(conf, structure) {
 
 function traverse(conf, section) {
 	if (section.children) {
-		section.children.map(child => {
+		section.children.map((child) => {
 			switch (child.type) {
-			case structure.TYPE.CATEGORY :
+			case structure.TYPE.CATEGORY:
 				writeTemplate(conf, child);
 				traverse(conf, child);
 				break;
@@ -56,17 +56,23 @@ ${includedArticles(conf, section)}`;
 }
 
 function includedArticles(conf, section) {
-	return section.articles.map(article => {
-		const articlePath = path.relative(conf.contentPath, article.path);
-		return  `{% assign article = site.${ article.collection } | where:"path", "${ articlePath }"  | first %}\r\n` +
-            `{% assign article-id = "${ article.id }" %}\r\n` +
-            `{% assign article-title = "${ article.title }" %}\r\n` +
-            `{% assign article-slug = "${ article.slug }" %}\r\n` +
-            `{% assign article-url = "${ article.url }" %}\r\n` +
-            `{% assign article-roles = "${ article.roles.join(',') }" %}\r\n` +
-            `{% assign article-scope = "${ article.scope }" %}\r\n` +
-            '{% include article.html %}\r\n';
-	}).join('\r\n');
+	return section.articles
+		.map((article) => {
+			const articlePath = path.relative(conf.contentPath, article.path);
+			return (
+				`{% assign article = site.${
+					article.collection
+				} | where:"path", "${articlePath}"  | first %}\r\n` +
+				`{% assign article-id = "${article.id}" %}\r\n` +
+				`{% assign article-title = "${article.title}" %}\r\n` +
+				`{% assign article-slug = "${article.slug}" %}\r\n` +
+				`{% assign article-url = "${article.url}" %}\r\n` +
+				`{% assign article-roles = "${article.roles.join(',')}" %}\r\n` +
+				`{% assign article-scope = "${article.scope}" %}\r\n` +
+				'{% include article.html %}\r\n'
+			);
+		})
+		.join('\r\n');
 }
 
 function exportContent(conf, section, article) {
@@ -81,6 +87,9 @@ permalink: ${url}
 layout: content
 ---
 
-{% assign article = site.${ article.collection } | where:"path", "${ path.relative(conf.contentPath, article.path) }"  | first %}\r\n
+{% assign article = site.${article.collection} | where:"path", "${path.relative(
+	conf.contentPath,
+	article.path
+)}"  | first %}\r\n
 {{article.content}}\r\n`;
 }

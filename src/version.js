@@ -9,14 +9,16 @@ const SEMANTIC_VERSION_REGEX = /^(\d+\.)?(\d+\.)?(\*|\d+)$/;
 
 version.path = './.versions';
 
-version.init = function () {
+version.init = function() {
 	if (!shell.test('-d', version.path)) {
 		const url = shell.exec('git remote get-url origin', {
 			silent: true
 		}).stdout;
-		const reponame = shell.exec('basename -s .git ' + url, {
-			silent: true
-		}).stdout.replace(REPO_NAME_REGEX, '');
+		const reponame = shell
+			.exec('basename -s .git ' + url, {
+				silent: true
+			})
+			.stdout.replace(REPO_NAME_REGEX, '');
 		shell.exec(`git clone --branch gh-pages --single-branch ${url}`);
 		shell.mv(reponame, '.versions');
 	} else {
@@ -44,19 +46,26 @@ version.islocal = function(conf) {
 	version.updateVersionsJson(conf, conf.distSrcPath);
 };
 
-version.updateVersionsJson = function(conf, outdir=''){
+version.updateVersionsJson = function(conf, outdir = '') {
 	console.log('Writing versions.json file...');
-	fs.writeFileSync(path.join(outdir || version.path, 'versions.json'),
+	fs.writeFileSync(
+		path.join(outdir || version.path, 'versions.json'),
 		JSON.stringify({
-			'versioned': conf.versioned,
-			'versions': conf.versioned ? listVersions(version.path) : []
+			versioned: conf.versioned,
+			versions: conf.versioned ? listVersions(version.path) : []
 		})
 	);
 };
 
 function listVersions(dir) {
-	return fs.readdirSync(dir).filter((file) => {
-		return SEMANTIC_VERSION_REGEX.test(file) &&
-            fs.statSync(path.join(dir, '/', file)).isDirectory();
-	}).concat(['latest']).reverse().slice(0, 5);
+	return fs
+		.readdirSync(dir)
+		.filter((file) => {
+			return (
+				SEMANTIC_VERSION_REGEX.test(file) && fs.statSync(path.join(dir, '/', file)).isDirectory()
+			);
+		})
+		.concat(['latest'])
+		.reverse()
+		.slice(0, 5);
 }
