@@ -5,6 +5,8 @@ var slug = require('slug');
 var structure = require('./structure');
 
 const IGNORED_ARTICLE = { include: false };
+const HIDE_CONTENT = 'all';
+const HIDE_MENU = 'menu';
 
 var parse = module.exports;
 
@@ -42,7 +44,9 @@ parse.section = function (conf, section) {
         scope: parse.scope(section.scope),
         roles: [],
         articles: [],
-        children: []
+        children: [],
+        hideFromMenu: section.hide && (section.hide === HIDE_MENU || section.hide === HIDE_CONTENT),
+        hideContent: section.hide && section.hide === HIDE_CONTENT
     }
 };
 
@@ -50,14 +54,24 @@ parse.category = function (section, file) {
     const indexFile = path.join(file, parse.INDEX_SOURCE);
     let title = path.parse(file).name;
     let scope = section.scope;
+    let hideFromMenu = false;
+    let hideContent = false;
+
     if (fs.existsSync(indexFile)) {
         const content = fs.readFileSync(indexFile, {encoding: 'utf8', flat: 'r'});
         const attributes = fm(content).attributes;
-        if (attributes && attributes.title) {
-            title = attributes.title;
-        } else {
-            throw new Error('A title is required in a category index.')
-        }
+        if (attributes) {
+            if (attributes.title) {
+                title = attributes.title;
+            } else {
+                throw new Error('A title is required in a category index.')
+            }
+
+            if (attributes.hide) {
+                hideFromMenu = attributes.hide === HIDE_MENU || attributes.hide === HIDE_CONTENT,
+                hideContent = attributes.hide === HIDE_CONTENT
+            }
+        } 
         scope = attributes.scope ? attributes.scope : scope;
     }
     scope = parse.scope(scope);
@@ -76,7 +90,9 @@ parse.category = function (section, file) {
         scope: scope,
         roles: [],
         articles: [],
-        children: []
+        children: [],
+        hideFromMenu: hideFromMenu,
+        hideContent: hideContent
     }
 };
 
@@ -91,6 +107,10 @@ parse.article = function (conf, section, file) {
     article.scope = parse.scope(article.scope);
 
     if (conf.scope && !article.scope.includes(conf.scope)) {
+        return IGNORED_ARTICLE;
+    }
+
+    if (attributes && attributes.hide && attributes.hide === HIDE_CONTENT) {
         return IGNORED_ARTICLE;
     }
 
@@ -113,6 +133,7 @@ parse.article = function (conf, section, file) {
             author: attributes.author,
             scope: article.scope,
             include: true,
+            hideFromMenu: attributes.hide && (attributes.hide === HIDE_MENU || attributes.hide === HIDE_CONTENT)
         };
     }
     return IGNORED_ARTICLE;

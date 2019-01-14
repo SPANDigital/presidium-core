@@ -61,8 +61,10 @@ function addSection(node, props) {
         children : []
     };
     traverse(section, props.children);
-    if (section.children.length > 0 || section.url.startsWith("http")) {
-        node.children.push(section);
+    if (!props.hideFromMenu) {
+        if (section.children.length > 0 || section.url.startsWith("http")) {
+            node.children.push(section);
+        }
     }
 }
 
@@ -94,7 +96,7 @@ function addCategory(node, props) {
         children: [],
     };
     traverse(category, props.children);
-    if (category.children.length > 0) {
+    if (category.children.length > 0 && !props.hideFromMenu) {
         node.children.push(category);
     }
     return category;
@@ -116,5 +118,7 @@ function addArticle(node, props) {
         roles: props.roles,
         scope: props.scope,
     };
-    node.children.push(article);
+    if (!props.hideFromMenu) {
+        node.children.push(article);
+    }
 }
