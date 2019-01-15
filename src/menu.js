@@ -45,23 +45,25 @@ const Menu = function(conf, structure) {
 };
 
 function addSection(node, props) {
-	const section = {
-		type: structure.TYPE.SECTION,
-		id: props.path,
-		title: props.title,
-		level: 1,
-		collapsed: props.collapsed,
-		newTab: props.newTab,
-		path: props.path,
-		url: props.url,
-		roles: props.roles,
-		scope: props.scope,
-		children: []
-	};
-	traverse(section, props.children);
-	if (section.children.length > 0 || section.url.startsWith('http')) {
-		node.children.push(section);
-	}
+    const section = {
+        type: structure.TYPE.SECTION,
+        id: props.path,
+        title: props.title,
+        level: 1,
+        collapsed: props.collapsed,
+        newTab: props.newTab,
+        path: props.path,
+        url: props.url,
+        roles: props.roles,
+        scope: props.scope,
+        children: []
+    };
+    traverse(section, props.children);
+    if (!props.hideFromMenu) {
+        if (section.children.length > 0 || section.url.startsWith('http')) {
+            node.children.push(section);
+        }
+    }
 }
 
 function traverse(node, children) {
@@ -92,27 +94,29 @@ function addCategory(node, props) {
 		children: []
 	};
 	traverse(category, props.children);
-	if (category.children.length > 0) {
+	if (category.children.length > 0 && !props.hideFromMenu) {
 		node.children.push(category);
 	}
 	return category;
 }
 
 function addArticle(node, props) {
-	if (props.slug.length === 0) {
-		return;
-	}
-	const article = {
-		type: structure.TYPE.ARTICLE,
-		id: props.id,
-		path: props.path,
-		url: props.url,
-		slug: props.slug,
-		title: props.title,
-		level: node.level + 1,
-		collapsed: true,
-		roles: props.roles,
-		scope: props.scope
-	};
-	node.children.push(article);
+    if (props.slug.length === 0) {
+        return;
+    }
+    const article = {
+        type: structure.TYPE.ARTICLE,
+        id: props.id,
+        path: props.path,
+        url: props.url,
+        slug: props.slug,
+        title: props.title,
+        level: node.level + 1,
+        collapsed: true,
+        roles: props.roles,
+        scope: props.scope
+    };
+    if (!props.hideFromMenu) {
+        node.children.push(article);
+    }
 }
