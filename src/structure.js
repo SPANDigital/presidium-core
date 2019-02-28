@@ -1,13 +1,12 @@
-var fs = require('fs-extra');
-var path = require('path');
-var parse = require('./parse');
-
-var structure = module.exports;
+const fs = require('fs-extra');
+const path = require('path');
+const parse = require('./parse');
+const structure = module.exports;
 
 structure.TYPE = {
-    SECTION: 'section',
-    CATEGORY: 'category',
-    ARTICLE: 'article',
+	SECTION: 'section',
+	CATEGORY: 'category',
+	ARTICLE: 'article'
 };
 
 /**
@@ -16,14 +15,16 @@ structure.TYPE = {
  */
 structure.generate = function(conf) {
     const structure = {
-        sections : [],
+        sections: []
     };
     conf.sections
-        .map(section => { return parse.section(conf, section) })
-        .map(section => {
-            if (section.url.startsWith("http")) {
+        .map((section) => {
+            return parse.section(conf, section);
+        })
+        .map((section) => {
+            if (section.url.startsWith('http')) {
                 if (conf.scope) {
-                    if(section.scope.includes(conf.scope)) {
+                    if (section.scope.includes(conf.scope)) {
                         structure.sections.push(section);
                     }
                 } else {
@@ -33,21 +34,28 @@ structure.generate = function(conf) {
                 if (!fs.existsSync(section.path)) {
                     throw new Error(`Expected section '${section.title}' not found in: '${section.path}'`);
                 }
-                structure.sections.push(section);
-                traverseArticlesSync(conf, section);
+                if (!section.hideContent) {
+                    structure.sections.push(section);
+                    traverseArticlesSync(conf, section);
+                }
             }
-    });
+        });
     return structure;
 };
 
 function traverseArticlesSync(conf, section) {
     fs.readdirSync(section.path)
-        .map(filename => {
+        .sort(function(a, b) {
+            return b.includes(parse.INDEX_SOURCE);
+        })
+        .map((filename) => {
             const file = path.join(section.path, filename);
             if (isCategory(file)) {
                 const category = parse.category(section, file);
-                section.children.push(category);
-                traverseArticlesSync(conf, category)
+                if (!category.hideContent) {
+                    section.children.push(category);
+                    traverseArticlesSync(conf, category)
+                }
             } else {
                 const article = parse.article(conf, section, file);
                 if (article.include) {
@@ -63,19 +71,19 @@ function traverseArticlesSync(conf, section) {
 }
 
 function isCategory(file) {
-    return fs.statSync(file).isDirectory();
+	return fs.statSync(file).isDirectory();
 }
 
 function addRolesToParents(node) {
-    if (node.parent) {
-        node.parent.roles = Array.from(new Set([...node.parent.roles, ...node.roles]));
-        addRolesToParents(node.parent);
-    }
+	if (node.parent) {
+		node.parent.roles = Array.from(new Set([...node.parent.roles, ...node.roles]));
+		addRolesToParents(node.parent);
+	}
 }
 
 function addArticleToParents(node, article) {
-    if (node && node.parent) {
-        node.parent.articles.push(article);
-        addArticleToParents(node.parent, article);
-    }
+	if (node && node.parent) {
+		node.parent.articles.push(article);
+		addArticleToParents(node.parent, article);
+	}
 }
