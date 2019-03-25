@@ -4,6 +4,7 @@ const it = mocha.it;
 
 let config = require('../src/config');
 let links = require('../src/links');
+let structure = require('../src/structure');
 
 let presidium = require('../src/presidium');
 
@@ -27,6 +28,7 @@ describe('Link Validation', () => {
 
 		conf = config.load('./test/validation/_config.yml');
 		res = links.validate(conf);
+		st = structure.generate(conf);
 	});
 
 	it('Should find and validate links', () => {
@@ -53,4 +55,15 @@ describe('Link Validation', () => {
 	it('Should indicate external links', () => {
 		assert.equal(res.external, 1);
 	});
+
+	it('Should have collection set for external link section', () => {
+		for (let section of st.sections) {
+			if (section.title === "External Link") {
+				assert.equal(section.collection, "External Link");
+			}
+			if (section.title === "Another External Link") {
+				assert.equal(section.collection, "Another External Link");
+			}
+		}
+	})
 });
