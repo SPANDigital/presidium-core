@@ -42,6 +42,16 @@ sections:
     url: "/recipes/"
     collection: recipes
 
+  - title: External Link
+    external-url:
+      href: "http://www.google.com"
+      new-tab: true
+
+  - title: Another External Link
+    external-url:
+      href: "http://www.yahoo.com"
+      new-tab: false
+
 #
 # Optional filters that may be used to filter articles by role.
 #

@@ -20,16 +20,22 @@ parse.section = function(conf, section) {
 	let sectionUrl;
 	let newTab;
 
+	let collection = section.collection;
+
 	if (section['external-url'] !== undefined) {
 		sectionUrl = section['external-url'].href;
 		newTab =
 			section['external-url']['new-tab'] !== undefined ? section['external-url']['new-tab'] : true;
+		// Use title for collection if it's not set
+		if (!collection) {
+		  collection = section.title
+    }
 	} else {
 		sectionUrl = path.join(conf.baseUrl, section.url);
 		newTab = false;
 	}
 
-	const sectionPath = path.join(conf.contentPath, `_${section.collection}`, '/');
+	const sectionPath = path.join(conf.contentPath, `_${collection}`, '/');
 
     return {
         id: sectionPath,
@@ -37,7 +43,7 @@ parse.section = function(conf, section) {
         title: section.title,
         path: sectionPath,
         url: sectionUrl,
-        collection: section.collection,
+        collection,
         collapsed: section.collapsed || false,
         newTab: newTab,
         exportArticles: section['export-articles'] || false,
