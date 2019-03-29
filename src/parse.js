@@ -27,7 +27,7 @@ parse.section = function(conf, section) {
 		newTab =
 			section['external-url']['new-tab'] !== undefined ? section['external-url']['new-tab'] : true;
 		// Use title for collection if it's not set
-		if (collection === undefined) {
+		if (!collection) {
 		  collection = section.title
     }
 	} else {
@@ -43,7 +43,7 @@ parse.section = function(conf, section) {
         title: section.title,
         path: sectionPath,
         url: sectionUrl,
-        collection: collection,
+        collection,
         collapsed: section.collapsed || false,
         newTab: newTab,
         exportArticles: section['export-articles'] || false,
