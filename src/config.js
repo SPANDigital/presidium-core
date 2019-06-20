@@ -1,8 +1,8 @@
-var yaml = require('js-yaml');
-var fs = require('fs');
-var path = require('path');
+const yaml = require('js-yaml');
+const fs = require('fs');
+const path = require('path');
 
-var config = module.exports;
+const config = module.exports;
 
 const CONFIG_VAR_REGEX = /\$([{A-Z])\w+}/g;
 
@@ -10,66 +10,66 @@ const CONFIG_VAR_REGEX = /\$([{A-Z])\w+}/g;
  * Load config file with defaults
  * @param filename
  */
-config.load = function (filename = '_config.yml', version = '') {
-    const conf = new Config(filename, version);
+config.load = function(filename = '_config.yml', version = '') {
+	const conf = new Config(filename, version);
 
-    const distPath = conf.get('dist-path', './dist/');
-    const distSrcPath = conf.get('dist-src-path', path.join(distPath, 'src/'));
-    const distSite = conf.get('dist-site-path', path.join(distPath, 'site/'));
+	const distPath = conf.get('dist-path', './dist/');
+	const distSrcPath = conf.get('dist-src-path', path.join(distPath, 'src/'));
+	const distSite = conf.get('dist-site-path', path.join(distPath, 'site/'));
 
-    return {
-        logo: conf.get('logo', ''),
-        brandName: conf.get('name', ''),
-        brandUrl: conf.get('brandurl', ''),
-        baseUrl: path.join(conf.get('baseurl', ''), '/'),
-        cname: conf.get('cname', ''),
+	return {
+		logo: conf.get('logo', ''),
+		brandName: conf.get('name', ''),
+		brandUrl: conf.get('brandurl', ''),
+		baseUrl: path.join(conf.get('baseurl', ''), '/'),
+		cname: conf.get('cname', ''),
 
-        sections: conf.get('sections', []),
+		sections: conf.get('sections', []),
 
-        showRoles: conf.get('roles', false),
-        roles: conf.get('roles', { label: '', all: '', options: [] }),
+		showRoles: conf.get('roles', false),
+		roles: conf.get('roles', { label: '', all: '', options: [] }),
 
-        corePath: conf.get('core-path', 'node_modules/presidium-core'),
+		corePath: conf.get('core-path', 'node_modules/presidium-core'),
 
-        contentPath: conf.get('content-path', './content/'),
-        mediaPath: conf.get('media-path', './media/'),
+		contentPath: conf.get('content-path', './content/'),
+		mediaPath: conf.get('media-path', './media/'),
 
-        raw: yaml.safeDump(conf.config, {}),
-        version: version,
-        versioned: conf.get('versioned', false),
+		raw: yaml.safeDump(conf.config, {}),
+		version: version,
+		versioned: conf.get('versioned', false),
 
-        distPath: distPath,
-        distSrcPath: distSrcPath,
-        distSitePath: distSite,
-        distContentPath: conf.get('dist-content-path', distSrcPath),
-        distMediaPath: conf.get('dist-media-path', path.join(distSrcPath, 'media/')),
-        distIncludesPath: conf.get('dist-includes-path', path.join(distSrcPath, '_includes/')),
-        distLayoutsPath: conf.get('dist-layouts-path', path.join(distSrcPath, '_layouts/')),
-        distSectionsPath: conf.get('dist-sections-path', path.join(distSrcPath, 'sections/')),
+		distPath: distPath,
+		distSrcPath: distSrcPath,
+		distSitePath: distSite,
+		distContentPath: conf.get('dist-content-path', distSrcPath),
+		distMediaPath: conf.get('dist-media-path', path.join(distSrcPath, 'media/')),
+		distIncludesPath: conf.get('dist-includes-path', path.join(distSrcPath, '_includes/')),
+		distLayoutsPath: conf.get('dist-layouts-path', path.join(distSrcPath, '_layouts/')),
+		distSectionsPath: conf.get('dist-sections-path', path.join(distSrcPath, 'sections/')),
 
-        jekyllPath: conf.get('jekyll-path', '.jekyll/'),
+		jekyllPath: conf.get('jekyll-path', '.jekyll/'),
 
-        includeNestedArticles: conf.get('include-nested-articles', true)
-    }
+		includeNestedArticles: conf.get('include-nested-articles', true)
+	};
 };
 
-var Config = function (filename, version) {
-    //TODO validate config
-    this.config = resolveConfig(load(filename), version);
+const Config = function(filename, version) {
+	//TODO validate config
+	this.config = resolveConfig(load(filename), version);
 };
 
-Config.prototype.get = function (key, defaultVal = undefined) {
-    return this.config.hasOwnProperty(key) ? this.config[key] : defaultVal;
+Config.prototype.get = function(key, defaultVal = undefined) {
+	return this.config.hasOwnProperty(key) ? this.config[key] : defaultVal;
 };
 
 function load(filename) {
-    try {
-        const file = fs.readFileSync(filename, 'utf8');
-        return yaml.load(file);
-    } catch (e) {
-        console.log(e);
-    }
-};
+	try {
+		const file = fs.readFileSync(filename, 'utf8');
+		return yaml.load(file);
+	} catch (e) {
+		console.log(e);
+	}
+}
 
 /**
  * Helper function that resolves any variable depenencies in the config.
@@ -77,18 +77,18 @@ function load(filename) {
  * @param {Object} conf - The parsed config file.
  */
 function resolveConfig(conf, version = '') {
-    conf['siteroot'] = conf.baseurl || '/';
-    if (version) {
-        conf['baseurl'] = path.join(conf.siteroot, version);
-    }
+	conf['siteroot'] = conf.baseurl || '/';
+	if (version) {
+		conf['baseurl'] = path.join(conf.siteroot, version);
+	}
 
-    for (let key in conf) {
-        if (CONFIG_VAR_REGEX.test(conf[key])) {
-            conf[key] = resolve(conf[key], conf, [key]);
-        }
-    }
-    return conf;
-};
+	for (let key in conf) {
+		if (CONFIG_VAR_REGEX.test(conf[key])) {
+			conf[key] = resolve(conf[key], conf, [key]);
+		}
+	}
+	return conf;
+}
 
 /**
  * Recursively resolve variable depedencies.
@@ -97,23 +97,23 @@ function resolveConfig(conf, version = '') {
  * @param {Array} ring - An array of previously seen keys.
  */
 function resolve(value, conf, ring = []) {
-    value.match(CONFIG_VAR_REGEX).forEach((variable) => {
-        const key = variable.substring(variable.lastIndexOf("${") + 2, variable.lastIndexOf("}"));
+	value.match(CONFIG_VAR_REGEX).forEach((variable) => {
+		const key = variable.substring(variable.lastIndexOf('${') + 2, variable.lastIndexOf('}'));
 
-        if (ring.includes(key)) {
-            throw `Circular dependency error: cannot resolve variable(s) ${ring}.`;
-        }
-        ring.push(key);
+		if (ring.includes(key)) {
+			throw `Circular dependency error: cannot resolve variable(s) ${ring}.`;
+		}
+		ring.push(key);
 
-        let resolved = conf[key];
-        if (!resolved) {
-            throw `Could not resolve ${key} - make sure this key is defined in _config.yml.`;
-        }
-        if (CONFIG_VAR_REGEX.test(resolved)) {
-            resolved = resolve(resolved, conf, ring);
-        }
-        value = value.replace(variable, resolved);
-        ring.pop();
-    });
-    return value;
-};
+		let resolved = conf[key];
+		if (!resolved) {
+			throw `Could not resolve ${key} - make sure this key is defined in _config.yml.`;
+		}
+		if (CONFIG_VAR_REGEX.test(resolved)) {
+			resolved = resolve(resolved, conf, ring);
+		}
+		value = value.replace(variable, resolved);
+		ring.pop();
+	});
+	return value;
+}
