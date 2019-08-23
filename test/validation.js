@@ -12,7 +12,7 @@ let fs = require('fs-extra');
 
 let assert = require('assert');
 
-let res, conf;
+let res, conf, st;
 
 describe('Link Validation', () => {
 	describe('Build Site', () => {
@@ -58,12 +58,12 @@ describe('Link Validation', () => {
 
 	it('Should have collection set for external link section', () => {
 		for (let section of st.sections) {
-			if (section.title === "External Link") {
-				assert.equal(section.collection, "External Link");
+			if (section.title === 'External Link') {
+				assert.equal(section.collection, 'External Link');
 			}
-			if (section.title === "Another External Link") {
-				assert.equal(section.collection, "Another External Link");
+			if (section.title === 'Another External Link') {
+				assert.equal(section.collection, 'Another External Link');
 			}
 		}
-	})
+	});
 });

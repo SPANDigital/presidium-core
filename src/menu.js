@@ -23,7 +23,7 @@ const MENU_STRUCTURE = 'menu.json';
  * @param conf site config
  * @param structure site structure
  */
-menu.generate = function(conf, structure) {
+menu.generate = function (conf, structure) {
 	fs.mkdirsSync(conf.distIncludesPath);
 	const siteMenu = new Menu(conf, structure);
 	const file = path.join(conf.distIncludesPath, MENU_STRUCTURE);
@@ -31,7 +31,7 @@ menu.generate = function(conf, structure) {
 	fs.writeFileSync(file, JSON.stringify(siteMenu));
 };
 
-const Menu = function(conf, structure) {
+const Menu = function (conf, structure) {
 	this.logo = conf.logo;
 	this.brandName = conf.brandName;
 	this.brandUrl = conf.brandUrl;
@@ -45,25 +45,25 @@ const Menu = function(conf, structure) {
 };
 
 function addSection(node, props) {
-    const section = {
-        type: structure.TYPE.SECTION,
-        id: props.path,
-        title: props.title,
-        level: 1,
-        collapsed: props.collapsed,
-        newTab: props.newTab,
-        path: props.path,
-        url: props.url,
-        roles: props.roles,
-        scope: props.scope,
-        children: []
-    };
-    traverse(section, props.children);
-    if (!props.hideFromMenu) {
-        if (section.children.length > 0 || section.url.startsWith('http')) {
-            node.children.push(section);
-        }
-    }
+	const section = {
+		type: structure.TYPE.SECTION,
+		id: props.path,
+		title: props.title,
+		level: 1,
+		collapsed: props.collapsed,
+		newTab: props.newTab,
+		path: props.path,
+		url: props.url,
+		roles: props.roles,
+		scope: props.scope,
+		children: []
+	};
+	traverse(section, props.children);
+	if (!props.hideFromMenu) {
+		if (section.children.length > 0 || section.url.startsWith('http')) {
+			node.children.push(section);
+		}
+	}
 }
 
 function traverse(node, children) {
@@ -101,22 +101,22 @@ function addCategory(node, props) {
 }
 
 function addArticle(node, props) {
-    if (props.slug.length === 0) {
-        return;
-    }
-    const article = {
-        type: structure.TYPE.ARTICLE,
-        id: props.id,
-        path: props.path,
-        url: props.url,
-        slug: props.slug,
-        title: props.title,
-        level: node.level + 1,
-        collapsed: true,
-        roles: props.roles,
-        scope: props.scope
-    };
-    if (!props.hideFromMenu) {
-        node.children.push(article);
-    }
+	if (props.slug.length === 0) {
+		return;
+	}
+	const article = {
+		type: structure.TYPE.ARTICLE,
+		id: props.id,
+		path: props.path,
+		url: props.url,
+		slug: props.slug,
+		title: props.title,
+		level: node.level + 1,
+		collapsed: true,
+		roles: props.roles,
+		scope: props.scope
+	};
+	if (!props.hideFromMenu) {
+		node.children.push(article);
+	}
 }
