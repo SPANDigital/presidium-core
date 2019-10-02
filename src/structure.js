@@ -46,7 +46,9 @@ structure.generate = function (conf) {
 function traverseArticlesSync(conf, section) {
 	fs.readdirSync(section.path)
 		.sort(function (a, b) {
-			return b.includes(parse.INDEX_SOURCE);
+			if (b.includes(parse.INDEX_SOURCE)) return 1;
+			if (a.includes(parse.INDEX_SOURCE)) return -1;
+			return (a > b) ? 1 : -1;
 		})
 		.map((filename) => {
 			const file = path.join(section.path, filename);
