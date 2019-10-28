@@ -92,7 +92,7 @@ presidium.build = function(conf) {
 
 presidium.validate = function(conf) {
 	const results = links.validate(conf, argv);
-	if (results.broken > 0 && argv.fail_on_errors === 'true')
+	if (results.broken > 0 && argv.fail_on_errors === 'true') 
 		throw new Error('There are broken links in the site. Can not proceed.');
 	if (argv.check && utils.contains(argv.check, 'author')) linter.validate(conf, argv);
 };
@@ -152,3 +152,9 @@ presidium.ghPages = function(conf) {
         git push origin gh-pages`);
 	shell.cd('..');
 };
+
+presidium.pdf = function(conf) {
+	console.log("Generating PDF...");
+	console.log("Replacing internal Links and removing tooltips...");
+	links.replaceInternalLinks(conf);
+}

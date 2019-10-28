@@ -49,7 +49,9 @@ config.load = function(filename = '_config.yml', version = '') {
 
 		jekyllPath: conf.get('jekyll-path', '.jekyll/'),
 
-		includeNestedArticles: conf.get('include-nested-articles', true)
+		includeNestedArticles: conf.get('include-nested-articles', true),
+
+		isPdf: false
 	};
 };
 

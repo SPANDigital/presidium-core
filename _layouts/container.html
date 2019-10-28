@@ -1,3 +1,4 @@
+{% if page.isPdf == false or page.isFirst == true %}
 <!doctype html>
 <html>
 <head>
@@ -10,6 +11,7 @@
 
 </head>
 <body>
+{% endif %}
 
 {% if site.enterprise %}
     <div data-key="{{ site.enterprise.key }}"
@@ -20,24 +22,36 @@
     </div>
 {% endif %}
 
+{% if page.isPdf == false %}
 <div id="presidium-navigation">
     {% include navigation-placeholder.html %}
 </div>
+{% endif %}
+
 <div id="presidium-container" class="container-fluid">
     <div class="row">
         <div id="presidium-content" class="col-lg-10 col-md-12">
+            <section><span class="anchor" id="{{ page.permalink | replace: '/', '_'}}" name="{{ page.permalink | replace: '/', '_'}}"></span></section>
             <h1 class="page-title">{{ page.title }}</h1>
             <hr/>
             <section>
                 {% include info.html %}
                 {{ content }}
             </section>
+
+            {% if page.isPdf == false %}
             {% include footer.html %}
+            {% endif %}
         </div>
+
+        {% if page.isPdf != true %}
         <div class="col-lg-2"></div>
+        {% endif %}
     </div>
 </div>
-
+<script>
+</script>
+{% if page.isPdf == false %}
 {% include modal.html %}
 
 <!-- Components -->
@@ -61,6 +75,10 @@
 {% for script in site.scripts %}
 <script src="{{ site.baseurl | append: '/media/js/' | append: script | replace: '//','/'}}"></script>
 {% endfor %}
+{% endif %}
 
+{% if page.isPdf == false or page.isLast == true %}
 </body>
 </html>
+{% endif %}
+
