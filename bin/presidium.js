@@ -123,17 +123,17 @@ const argv = yargs
 		}
 	)
 	.command('pdf', 
-	'Generate a pdf friendly version of Presidium site',
-	function(yargs) {
-		return yargs.option('s', scopeArg);
-	},
-	function(argv) {
-		conf.isPdf = true;
-		presidium.clean(conf);
-		presidium.generate(conf);
-		presidium.build(conf);
-		presidium.pdf(conf);
-	})
+		'Generate a pdf friendly version of Presidium site',
+		function(yargs) {
+			return yargs.option('s', scopeArg);
+		},
+		function() {
+			conf.isPdf = true;
+			presidium.clean(conf);
+			presidium.generate(conf);
+			presidium.build(conf);
+			presidium.pdf(conf);
+		})
 	.demand(1, 'must provide a valid command')
 	.help('h')
 	.alias('h', 'help').argv;

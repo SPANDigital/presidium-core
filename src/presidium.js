@@ -7,6 +7,7 @@ const linter = require('./linter');
 const version = require('./version');
 const argv = require('yargs').argv;
 const utils = require('./utils');
+const wkhtmltopdf = require('wkhtmltopdf');
 
 const presidium = module.exports;
 
@@ -154,7 +155,29 @@ presidium.ghPages = function(conf) {
 };
 
 presidium.pdf = function(conf) {
-	console.log("Generating PDF...");
-	console.log("Replacing internal Links and removing tooltips...");
-	links.replaceInternalLinks(conf);
-}
+	console.log('Generating PDF...');
+	console.log('Replacing internal Links and removing tooltips...');
+	const createCombinedHTML = () => {
+		return new Promise((resolve, reject) => {
+			try {
+				shell.exec('./test.sh', function () {
+					return resolve();
+				});
+			} catch (e) {
+				return reject(e);
+			}
+		});
+	};
+	createCombinedHTML().then(() => {
+		const options = {
+			output: 'out.pdf',
+			cover: './cover/index.html',
+			pageOffset: -1,
+			javascriptDelay: 1000,
+			disableExternalLinks: true,
+			footerCenter: '[page] of [toPage]'
+		};
+		const pwd = shell.pwd().toString();
+		wkhtmltopdf(`file:///${pwd}/${path.join(conf.distSitePath, 'uber.html')}`, options);
+	});
+};

@@ -10,10 +10,10 @@ pages.generate = function(conf, structure) {
 	console.log(`Writing page templates: ${conf.distSectionsPath}`);
 	fs.emptydirSync(conf.distSectionsPath);
 
-	for (i = 0; i < structure.sections.length; i++) {
+	for (let i = 0; i < structure.sections.length; i++) {
 		let section = structure.sections[i];
-		let isFirst = conf.isPdf && i == 0;
-		let isLast = conf.isPdf && i == structure.sections.length-1;
+		let isFirst = conf.isPdf && i === 0;
+		let isLast = conf.isPdf && i === structure.sections.length-1;
 		writeTemplate(conf, section, isFirst, isLast);
 		traverse(conf, section);
 	}
@@ -72,8 +72,8 @@ function includedArticles(conf, section) {
 			const articlePath = path.relative(conf.contentPath, article.path);
 			let articleSlug = article.slug;
 			if(conf.isPdf) {
-				articleSlug = article.url.replace(new RegExp('/', 'g'), "_");
-				articleSlug = articleSlug.replace(new RegExp('#', 'g'), "_");
+				articleSlug = article.url.replace(new RegExp('/', 'g'), '_');
+				articleSlug = articleSlug.replace(new RegExp('#', 'g'), '_');
 			}
 			return (
 				`{% assign article = site.${
