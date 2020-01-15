@@ -4,7 +4,7 @@ const fm = require('front-matter');
 const slug = require('slug');
 const structure = require('./structure');
 
-const IGNORED_ARTICLE = {include: false};
+const IGNORED_ARTICLE = { include: false };
 const HIDE_CONTENT = 'all';
 const HIDE_MENU = 'menu';
 
@@ -12,11 +12,11 @@ const parse = module.exports;
 
 parse.INDEX_SOURCE = 'index.md';
 
-parse.slug = function (value) {
-	return slug(value, {mode: 'rfc3986'});
+parse.slug = function(value) {
+	return slug(value, { mode: 'rfc3986' });
 };
 
-parse.section = function (conf, section) {
+parse.section = function(conf, section) {
 	let sectionUrl;
 	let newTab;
 
@@ -56,14 +56,54 @@ parse.section = function (conf, section) {
 	};
 };
 
-parse.category = function (section, file) {
-	const indexFile = path.join(file, parse.INDEX_SOURCE);
+parse.sectionV2 = function(conf, section) {
+	let sectionUrl;
+	let newTab;
+
+	let collection = section.identifier;
+
+	if (section['external-url'] !== undefined) {
+		sectionUrl = section['external-url'].href;
+		newTab =
+			section['external-url']['new-tab'] !== undefined ? section['external-url']['new-tab'] : true;
+		// Use title for collection if it's not set
+		if (!collection) {
+			collection = section.name;
+		}
+	} else {
+		sectionUrl = path.join(conf.baseUrl, section.url);
+		newTab = false;
+	}
+
+	const sectionPath = path.join(conf.contentPath, collection, '/');
+
+	return {
+		id: sectionPath,
+		type: structure.TYPE.SECTION,
+		title: section.name,
+		path: sectionPath,
+		url: sectionUrl,
+		collection,
+		collapsed: section.collapsed || false,
+		newTab: newTab,
+		exportArticles: section['export-articles'] || false,
+		scope: parse.scope(section.scope),
+		roles: [],
+		articles: [],
+		children: [],
+		hideFromMenu: section.hide && (section.hide === HIDE_MENU || section.hide === HIDE_CONTENT),
+		hideContent: section.hide && section.hide === HIDE_CONTENT
+	};
+};
+
+parse.category = function(section, file, indexFileName) {
+	const indexFile = path.join(file, indexFileName);
 	let title = path.parse(file).name;
 	let scope = section.scope;
 	let hideFromMenu = false;
 	let hideContent = false;
 	if (fs.existsSync(indexFile)) {
-		const content = fs.readFileSync(indexFile, {encoding: 'utf8', flat: 'r'});
+		const content = fs.readFileSync(indexFile, { encoding: 'utf8', flat: 'r' });
 		const attributes = fm(content).attributes;
 		if (attributes) {
 			if (attributes.title) {
@@ -100,11 +140,11 @@ parse.category = function (section, file) {
 	};
 };
 
-parse.article = function (conf, section, file) {
+parse.article = function(conf, section, file, indexFileName = parse.INDEX_SOURCE) {
 	const filename = path.parse(file).base;
 
 	//Review with larger file sets
-	const content = fs.readFileSync(file, {encoding: 'utf8', flat: 'r'});
+	const content = fs.readFileSync(file, { encoding: 'utf8', flat: 'r' });
 	const article = fm(content);
 	const attributes = article.attributes;
 	article.scope = attributes.scope ? attributes.scope : section.scope;
@@ -120,7 +160,7 @@ parse.article = function (conf, section, file) {
 
 	if (attributes && attributes.title) {
 		let slug = parse.slug(attributes.title);
-		if (filename === parse.INDEX_SOURCE) {
+		if (filename === indexFileName) {
 			slug = '';
 		}
 		return {
@@ -137,13 +177,14 @@ parse.article = function (conf, section, file) {
 			author: attributes.author,
 			scope: article.scope,
 			include: true,
-			hideFromMenu: attributes.hide && (attributes.hide === HIDE_MENU || attributes.hide === HIDE_CONTENT)
+			hideFromMenu:
+				attributes.hide && (attributes.hide === HIDE_MENU || attributes.hide === HIDE_CONTENT)
 		};
 	}
 	return IGNORED_ARTICLE;
 };
 
-parse.roles = function (conf, roles) {
+parse.roles = function(conf, roles) {
 	const all = conf.roles.all ? [conf.roles.all] : [];
 
 	if (roles && roles.constructor === Array) {
@@ -152,7 +193,7 @@ parse.roles = function (conf, roles) {
 	return roles && conf.showRoles ? [roles] : all;
 };
 
-parse.scope = function (scope) {
+parse.scope = function(scope) {
 	if (scope && scope.constructor === Array) return scope;
 	if (scope === undefined || scope === []) return [];
 	return [scope];

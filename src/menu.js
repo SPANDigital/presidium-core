@@ -23,7 +23,7 @@ const MENU_STRUCTURE = 'menu.json';
  * @param conf site config
  * @param structure site structure
  */
-menu.generate = function (conf, structure) {
+menu.generate = function(conf, structure) {
 	fs.mkdirsSync(conf.distIncludesPath);
 	const siteMenu = new Menu(conf, structure);
 	const file = path.join(conf.distIncludesPath, MENU_STRUCTURE);
@@ -31,7 +31,14 @@ menu.generate = function (conf, structure) {
 	fs.writeFileSync(file, JSON.stringify(siteMenu));
 };
 
-const Menu = function (conf, structure) {
+menu.generateV2 = function(conf, structure) {
+	const siteMenu = new Menu(conf, structure);
+	const file = path.join(conf.distIncludesPath, MENU_STRUCTURE);
+	console.log(`Writing menu: ${file}...`);
+	fs.writeFileSync(file, JSON.stringify(siteMenu));
+};
+
+const Menu = function(conf, structure) {
 	this.logo = conf.logo;
 	this.brandName = conf.brandName;
 	this.brandUrl = conf.brandUrl;
@@ -69,12 +76,12 @@ function addSection(node, props) {
 function traverse(node, children) {
 	children.forEach((child) => {
 		switch (child.type) {
-		case structure.TYPE.CATEGORY:
-			addCategory(node, child);
-			break;
-		case structure.TYPE.ARTICLE:
-			addArticle(node, child);
-			break;
+			case structure.TYPE.CATEGORY:
+				addCategory(node, child);
+				break;
+			case structure.TYPE.ARTICLE:
+				addArticle(node, child);
+				break;
 		}
 	});
 }

@@ -53,6 +53,47 @@ config.load = function(filename = '_config.yml', version = '') {
 	};
 };
 
+config.loadV2 = function(filename = 'config.yml', version = '') {
+	const conf = new Config(filename, version);
+	const params = conf.get('params', {});
+
+	return {
+		// Read from config.yaml root
+
+		brandName: conf.get('name', ''),
+		baseUrl: path.join(conf.get('baseURL', ''), '/'),
+		sections: conf.get('menu', []).main,
+
+		logo: params.logo || '',
+		brandUrl: params.brandURL || '',
+		repoURL: params.repoURL || '',
+		cname: params.cname || '',
+
+		showRoles: conf.get('roles', false),
+		roles: conf.get('roles', { label: '', all: '', options: [] }),
+
+		corePath: conf.get('core-path', 'node_modules/presidium-core'),
+
+		contentPath: conf.get('content-path', './content/'),
+		mediaPath: conf.get('media-path', './media/'),
+
+		raw: yaml.safeDump(conf.config, {}),
+		version: version,
+		versioned: conf.get('versioned', false),
+
+		distPath: 'content',
+		distSrcPath: 'content',
+		distSitePath: 'content',
+		distContentPath: conf.get('dist-content-path', 'content'),
+		distMediaPath: conf.get('dist-media-path', path.join('content', 'media/')),
+		distIncludesPath: 'content',
+		distLayoutsPath: conf.get('dist-layouts-path', path.join('content', '_layouts/')),
+		distSectionsPath: conf.get('dist-sections-path', path.join('content', 'sections/')),
+
+		includeNestedArticles: conf.get('include-nested-articles', true)
+	};
+};
+
 const Config = function(filename, version) {
 	//TODO validate config
 	this.config = resolveConfig(load(filename), version);

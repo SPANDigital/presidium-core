@@ -78,8 +78,12 @@ presidium.build = function(conf) {
 	console.log('Building site...');
 	const pwd = shell.pwd();
 	shell.cd(conf.jekyllPath);
-	let resolvedDistSrcPath = path.isAbsolute(conf.distSrcPath) ? conf.distSrcPath : `../${conf.distSrcPath}`;
-	let resolvedDistSitePath = path.isAbsolute(conf.distSitePath) ? conf.distSitePath : `../${conf.distSitePath}`;
+	let resolvedDistSrcPath = path.isAbsolute(conf.distSrcPath)
+		? conf.distSrcPath
+		: `../${conf.distSrcPath}`;
+	let resolvedDistSitePath = path.isAbsolute(conf.distSitePath)
+		? conf.distSitePath
+		: `../${conf.distSitePath}`;
 	const cmd = `bundle exec jekyll build --config ${path.join(
 		resolvedDistSrcPath,
 		'_config.yml'
@@ -88,6 +92,10 @@ presidium.build = function(conf) {
 	console.log(`Executing: ${cmd}`);
 	shell.exec(cmd);
 	shell.cd(pwd);
+};
+
+presidium.buildV2 = function(conf) {
+	site.generateV2(conf);
 };
 
 presidium.validate = function(conf) {
@@ -122,8 +130,12 @@ presidium.develop = function(conf) {
 presidium.serve = function(conf) {
 	console.log('Serving...');
 	shell.cd('.jekyll');
-	let resolvedDistSrcPath = path.isAbsolute(conf.distSrcPath) ? conf.distSrcPath : `../${conf.distSrcPath}`;
-	let resolvedDistSitePath = path.isAbsolute(conf.distSitePath) ? conf.distSitePath : `../${conf.distSitePath}`;
+	let resolvedDistSrcPath = path.isAbsolute(conf.distSrcPath)
+		? conf.distSrcPath
+		: `../${conf.distSrcPath}`;
+	let resolvedDistSitePath = path.isAbsolute(conf.distSitePath)
+		? conf.distSitePath
+		: `../${conf.distSitePath}`;
 	shell.exec(`bundle exec jekyll serve -s ${resolvedDistSrcPath} -d ${resolvedDistSitePath}`, {
 		async: true
 	});
