@@ -39,15 +39,18 @@ describe('Scope Validation', function() {
 		});
 
 		it('Should have both internal and external articles', function(done) {
-			console.log('-----------');
-			console.log(done);
+			console.log('-----------'); // eslint-disable-line
+			console.log(done); // eslint-disable-line
 			fs.readdirSync(external_category, function(err, files) {
 				if (!files || err) {
 					assert.fail('Found no articles');
 					done();
 				}
 				files.forEach(function(file) {
-					fs.readFileSync(path.join(external_category, file), 'utf-8', function(err, content) {
+					fs.readFileSync(path.join(external_category, file), 'utf-8', function(
+						err,
+						content
+					) {
 						if (!content.includes('External Article')) {
 							assert.fail('Found no external articles');
 						}
@@ -78,7 +81,10 @@ describe('Scope Validation', function() {
 		it('Should have no external articles in external-scope', function(done) {
 			fs.readdirSync(external_category, function(err, files) {
 				files.forEach(function(file) {
-					fs.readFileSync(path.join(external_category, file), 'utf-8', function(err, content) {
+					fs.readFileSync(path.join(external_category, file), 'utf-8', function(
+						err,
+						content
+					) {
 						if (content.includes('External Article')) {
 							assert.fail('Found an external article');
 						}
@@ -94,7 +100,10 @@ describe('Scope Validation', function() {
 		it('Should inherit scope from a section if no scope on article', function(done) {
 			fs.readdirSync(internal_section, function(err, files) {
 				files.forEach(function(file) {
-					fs.readFileSync(path.join(external_category, file), 'utf-8', function(err, content) {
+					fs.readFileSync(path.join(external_category, file), 'utf-8', function(
+						err,
+						content
+					) {
 						if (!content.includes('No Scope')) {
 							assert.fail('Found no articles with unspecified scope');
 						}
@@ -119,7 +128,10 @@ describe('Scope Validation', function() {
 		it('Should have no internal articles in external-scope', function(done) {
 			fs.readdirSync(external_category, function(err, files) {
 				files.forEach(function(file) {
-					fs.readFile(path.join(external_category, file), 'utf-8', function(err, content) {
+					fs.readFile(path.join(external_category, file), 'utf-8', function(
+						err,
+						content
+					) {
 						if (content.includes('Internal Article')) {
 							assert.fail('Found an internal article');
 						}

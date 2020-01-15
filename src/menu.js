@@ -27,14 +27,14 @@ menu.generate = function(conf, structure) {
 	fs.mkdirsSync(conf.distIncludesPath);
 	const siteMenu = new Menu(conf, structure);
 	const file = path.join(conf.distIncludesPath, MENU_STRUCTURE);
-	console.log(`Writing menu: ${file}...`);
+	console.log(`Writing menu: ${file}...`); // eslint-disable-line
 	fs.writeFileSync(file, JSON.stringify(siteMenu));
 };
 
 menu.generateV2 = function(conf, structure) {
 	const siteMenu = new Menu(conf, structure);
 	const file = path.join(conf.distIncludesPath, MENU_STRUCTURE);
-	console.log(`Writing menu: ${file}...`);
+	console.log(`Writing menu: ${file}...`); // eslint-disable-line
 	fs.writeFileSync(file, JSON.stringify(siteMenu));
 };
 

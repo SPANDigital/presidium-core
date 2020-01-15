@@ -90,26 +90,31 @@ function anchorValid(dir, anchorLink) {
 
 function log(type, baseLink, message = '', logLevel) {
 	switch (type) {
-	case LEVELS.BROKEN:
-		results[LEVELS.BROKEN]++;
-		if (!logLevel || logLevel === type || logLevel === LEVELS.ALL)
-			console.log(colours.red('BROKEN:  \t' + colours.underline(baseLink)));
-		break;
-	case LEVELS.VALID:
-		results[LEVELS.VALID]++;
-		if (!logLevel || logLevel === type || logLevel === LEVELS.ALL)
-			console.log(colours.blue('VALID:   \t' + colours.underline(baseLink)));
-		break;
-	case LEVELS.EXTERNAL:
-		results[LEVELS.EXTERNAL]++;
-		if (!logLevel || logLevel === type || logLevel === LEVELS.ALL)
-			console.log(colours.grey('EXTERNAL:\t' + colours.underline(baseLink)));
-		break;
-	case LEVELS.WARNING:
-		results[LEVELS.WARNING]++;
-		if (!logLevel || logLevel === type || logLevel === LEVELS.ALL)
-			console.log(colours.yellow('WARNING: \t' + colours.underline(baseLink) + '%s'), message);
-		break;
+		case LEVELS.BROKEN:
+			results[LEVELS.BROKEN]++;
+			if (!logLevel || logLevel === type || logLevel === LEVELS.ALL)
+				console.log(colours.red('BROKEN:  \t' + colours.underline(baseLink))); // eslint-disable-line
+			break;
+		case LEVELS.VALID:
+			results[LEVELS.VALID]++;
+			if (!logLevel || logLevel === type || logLevel === LEVELS.ALL)
+				console.log(colours.blue('VALID:   \t' + colours.underline(baseLink))); // eslint-disable-line
+			break;
+		case LEVELS.EXTERNAL:
+			results[LEVELS.EXTERNAL]++;
+			if (!logLevel || logLevel === type || logLevel === LEVELS.ALL)
+				console.log(colours.grey('EXTERNAL:\t' + colours.underline(baseLink))); // eslint-disable-line
+			break;
+		case LEVELS.WARNING:
+			results[LEVELS.WARNING]++;
+			if (!logLevel || logLevel === type || logLevel === LEVELS.ALL) {
+				// eslint-disable-next-line
+				console.log(
+					colours.yellow('WARNING: \t' + colours.underline(baseLink) + '%s'),
+					message
+				);
+			}
+			break;
 	}
 }
 
@@ -132,7 +137,12 @@ function validateLinks(baseUrl, argv) {
 					if (link.indexOf('/#') > -1) {
 						log(LEVELS.VALID, baseLink, null, logLevel);
 					} else {
-						log(LEVELS.WARNING, baseLink, ' is missing a trailing \'/\' before the \'#\'', logLevel);
+						log(
+							LEVELS.WARNING,
+							baseLink,
+							" is missing a trailing '/' before the '#'",
+							logLevel
+						);
 					}
 				} else {
 					log(LEVELS.BROKEN, baseLink, null, logLevel);
@@ -145,7 +155,7 @@ function validateLinks(baseUrl, argv) {
 					log(LEVELS.VALID, baseLink, null, logLevel);
 				} else {
 					if (validPaths.has(link + '/')) {
-						log(LEVELS.WARNING, baseLink, ' is missing a trailing \'/\'', logLevel);
+						log(LEVELS.WARNING, baseLink, " is missing a trailing '/'", logLevel);
 					} else {
 						log(LEVELS.BROKEN, baseLink, null, logLevel);
 					}

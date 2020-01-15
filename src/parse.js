@@ -25,7 +25,9 @@ parse.section = function(conf, section) {
 	if (section['external-url'] !== undefined) {
 		sectionUrl = section['external-url'].href;
 		newTab =
-			section['external-url']['new-tab'] !== undefined ? section['external-url']['new-tab'] : true;
+			section['external-url']['new-tab'] !== undefined
+				? section['external-url']['new-tab']
+				: true;
 		// Use title for collection if it's not set
 		if (!collection) {
 			collection = section.title;
@@ -65,7 +67,9 @@ parse.sectionV2 = function(conf, section) {
 	if (section['external-url'] !== undefined) {
 		sectionUrl = section['external-url'].href;
 		newTab =
-			section['external-url']['new-tab'] !== undefined ? section['external-url']['new-tab'] : true;
+			section['external-url']['new-tab'] !== undefined
+				? section['external-url']['new-tab']
+				: true;
 		// Use title for collection if it's not set
 		if (!collection) {
 			collection = section.name;
@@ -178,7 +182,8 @@ parse.article = function(conf, section, file, indexFileName = parse.INDEX_SOURCE
 			scope: article.scope,
 			include: true,
 			hideFromMenu:
-				attributes.hide && (attributes.hide === HIDE_MENU || attributes.hide === HIDE_CONTENT)
+				attributes.hide &&
+				(attributes.hide === HIDE_MENU || attributes.hide === HIDE_CONTENT)
 		};
 	}
 	return IGNORED_ARTICLE;

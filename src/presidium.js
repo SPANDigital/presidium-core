@@ -12,7 +12,7 @@ const presidium = module.exports;
 
 presidium.clean = function(conf) {
 	const dist = conf.distPath;
-	console.log(`Cleaning all files and folders in: ${dist}`);
+	console.log(`Cleaning all files and folders in: ${dist}`); // eslint-disable-line
 	fs.removeSync(dist);
 	fs.mkdirsSync(dist);
 };
@@ -24,42 +24,42 @@ presidium.requirements = function(conf) {
 presidium.install = function(conf) {
 	presidium.requirements(conf);
 
-	console.log(`Creating ${conf.distPath}...`);
+	console.log(`Creating ${conf.distPath}...`); // eslint-disable-line
 	const dist = conf.distPath;
 	fs.mkdirsSync(dist);
 
-	console.log('Copying Gemfile...');
+	console.log('Copying Gemfile...'); // eslint-disable-line
 	fs.mkdirsSync(conf.jekyllPath);
 	fs.copySync(path.join(conf.corePath, '.jekyll'), conf.jekyllPath);
 
 	const pwd = shell.pwd();
 
-	console.log('Installing Jekyll Gems...');
+	console.log('Installing Jekyll Gems...'); // eslint-disable-line
 	shell.cd(conf.jekyllPath);
 	shell.exec('bundle install --path=.bundle --deployment');
 
-	console.log('Removing unused gems...');
+	console.log('Removing unused gems...'); // eslint-disable-line
 	shell.exec('bundle clean');
 
 	shell.cd(pwd);
 };
 
 presidium.generate = function(conf) {
-	console.log('Copy base templates...');
+	console.log('Copy base templates...'); // eslint-disable-line
 	fs.copySync(path.join(conf.corePath, '_includes'), conf.distIncludesPath);
 	fs.copySync(path.join(conf.corePath, '_layouts'), conf.distLayoutsPath);
 	fs.copySync(path.join(conf.corePath, 'media'), conf.distMediaPath);
 
-	console.log('Write resolved config to the build directory...');
+	console.log('Write resolved config to the build directory...'); // eslint-disable-line
 	fs.writeFileSync(path.join(conf.distSrcPath, '_config.yml'), conf.raw, 'utf8');
 
-	console.log('Copy media assets...');
+	console.log('Copy media assets...'); // eslint-disable-line
 	fs.copySync(conf.mediaPath, conf.distMediaPath);
 
-	console.log('Copy content...');
+	console.log('Copy content...'); // eslint-disable-line
 	fs.copySync(conf.contentPath, conf.distSrcPath);
 
-	console.log('Generate site structure...');
+	console.log('Generate site structure...'); // eslint-disable-line
 	site.generate(conf);
 };
 
@@ -75,7 +75,7 @@ presidium.build = function(conf) {
 	}
 	extraConf = extraConf ? `,${extraConf}` : '';
 
-	console.log('Building site...');
+	console.log('Building site...'); // eslint-disable-line
 	const pwd = shell.pwd();
 	shell.cd(conf.jekyllPath);
 	let resolvedDistSrcPath = path.isAbsolute(conf.distSrcPath)
@@ -89,7 +89,7 @@ presidium.build = function(conf) {
 		'_config.yml'
 	)}${extraConf} --trace -s ${resolvedDistSrcPath} -d ${resolvedDistSitePath}`;
 
-	console.log(`Executing: ${cmd}`);
+	console.log(`Executing: ${cmd}`); // eslint-disable-line
 	shell.exec(cmd);
 	shell.cd(pwd);
 };
@@ -106,13 +106,13 @@ presidium.validate = function(conf) {
 };
 
 presidium.watch = function(conf) {
-	console.log('Watching Content and Media...');
+	console.log('Watching Content and Media...'); // eslint-disable-line
 	shell.exec(`cpx --watch "${conf.contentPath}/**" "${conf.distContentPath}/"`, { async: true });
 	shell.exec(`cpx --watch "${conf.mediaPath}/**" "${conf.distMediaPath}/"`, { async: true });
 };
 
 presidium.develop = function(conf) {
-	console.log('Watching Presidium...');
+	console.log('Watching Presidium...'); // eslint-disable-line
 	shell.exec(
 		`cpx --watch --verbose "node_modules/presidium-core/_includes/**" "${conf.distIncludesPath}/"`,
 		{ async: true }
@@ -128,7 +128,7 @@ presidium.develop = function(conf) {
 };
 
 presidium.serve = function(conf) {
-	console.log('Serving...');
+	console.log('Serving...'); // eslint-disable-line
 	shell.cd('.jekyll');
 	let resolvedDistSrcPath = path.isAbsolute(conf.distSrcPath)
 		? conf.distSrcPath
@@ -143,7 +143,7 @@ presidium.serve = function(conf) {
 };
 
 presidium.ghPages = function(conf) {
-	console.log('Publishing to Github Pages...');
+	console.log('Publishing to Github Pages...'); // eslint-disable-line
 	const syncPath = path.join(version.path, conf.version);
 	if (!shell.test('-d', syncPath)) {
 		fs.mkdirsSync(syncPath);
@@ -151,7 +151,7 @@ presidium.ghPages = function(conf) {
 	shell.exec(`rsync -r ./dist/site/ ${syncPath}`);
 
 	if (conf.cname) {
-		console.log(`Using CNAME record: ${conf.cname}`);
+		console.log(`Using CNAME record: ${conf.cname}`); // eslint-disable-line
 		const file = path.join(version.path, 'CNAME');
 		fs.writeFileSync(file, conf.cname);
 	}

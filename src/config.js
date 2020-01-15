@@ -108,7 +108,7 @@ function load(filename) {
 		const file = fs.readFileSync(filename, 'utf8');
 		return yaml.load(file);
 	} catch (e) {
-		console.log(e);
+		console.log(e); // eslint-disable-line
 	}
 }
 

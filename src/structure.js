@@ -32,7 +32,9 @@ structure.generate = function(conf) {
 				}
 			} else {
 				if (!fs.existsSync(section.path)) {
-					throw new Error(`Expected section '${section.title}' not found in: '${section.path}'`);
+					throw new Error(
+						`Expected section '${section.title}' not found in: '${section.path}'`
+					);
 				}
 				if (!section.hideContent) {
 					structure.sections.push(section);
@@ -66,7 +68,9 @@ structure.generateV2 = function(conf) {
 				}
 			} else {
 				if (!fs.existsSync(section.path)) {
-					throw new Error(`Expected section '${section.title}' not found in: '${section.path}'`);
+					throw new Error(
+						`Expected section '${section.title}' not found in: '${section.path}'`
+					);
 				}
 
 				if (!section.hideContent) {
