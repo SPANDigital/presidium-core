@@ -6,11 +6,14 @@ const config = module.exports;
 
 const CONFIG_VAR_REGEX = /\$([{A-Z])\w+}/g;
 
+const JEKYLL_CONFIG = '_config.yml';
+const HUGO_CONFIG = 'config.yml';
+
 /**
  * Load config file with defaults
  * @param filename
  */
-config.load = function(filename = '_config.yml', version = '') {
+config.load = function(filename = JEKYLL_CONFIG, version = '') {
 	const conf = new Config(filename, version);
 
 	const distPath = conf.get('dist-path', './dist/');
@@ -53,17 +56,17 @@ config.load = function(filename = '_config.yml', version = '') {
 	};
 };
 
-config.loadV2 = function(filename = 'config.yml', version = '') {
-	const conf = new Config(filename, version);
+config.loadV2 = function(version = '') {
+	const conf = new Config(HUGO_CONFIG, version);
 	const params = conf.get('params', {});
 
 	return {
-		// Read from config.yaml root
-
+		// Read from config.yaml: root-level
 		brandName: conf.get('name', ''),
 		baseUrl: path.join(conf.get('baseURL', ''), '/'),
 		sections: conf.get('menu', []).main,
 
+		// Read from config.yaml: params
 		logo: params.logo || '',
 		brandUrl: params.brandURL || '',
 		repoURL: params.repoURL || '',

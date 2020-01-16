@@ -14,13 +14,13 @@ const scopeArg = {
 const argv = yargs
 	.usage('$0 command')
 	.command('requirements', 'Install jekyll gems and npm dependencies', function() {
-		presidium.requirements(config.load('_config.yml'));
+		presidium.requirements(config.load());
 	})
 	.command('clean', 'Clean build directory', function() {
-		presidium.clean(config.load('_config.yml'));
+		presidium.clean(config.load());
 	})
 	.command('install', 'Install jekyll gems and npm dependencies', function() {
-		presidium.install(config.load('_config.yml'));
+		presidium.install(config.load());
 	})
 	.command(
 		'generate',
@@ -29,7 +29,7 @@ const argv = yargs
 			return yargs.option('s', scopeArg);
 		},
 		function(argv) {
-			const conf = config.load('_config.yml');
+			const conf = config.load();
 			conf.scope = argv['s'];
 			presidium.generate(conf);
 		}
@@ -41,7 +41,7 @@ const argv = yargs
 			return yargs.option('s', scopeArg);
 		},
 		function(argv) {
-			const conf = config.load('_config.yml');
+			const conf = config.load();
 			conf.scope = argv['s'];
 			presidium.generate(conf);
 			presidium.build(conf);
@@ -54,7 +54,7 @@ const argv = yargs
 			return yargs.option('s', scopeArg);
 		},
 		function(argv) {
-			const conf = config.loadV2('config.yml'); // note: no leading underscore
+			const conf = config.loadV2();
 			conf.scope = argv['s'];
 			presidium.buildV2(conf);
 		}
@@ -66,7 +66,7 @@ const argv = yargs
 			return yargs.option('s', scopeArg);
 		},
 		function(argv) {
-			const conf = config.load('_config.yml');
+			const conf = config.load();
 			conf.scope = argv['s'];
 			presidium.clean(conf);
 			presidium.generate(conf);
@@ -75,13 +75,13 @@ const argv = yargs
 		}
 	)
 	.command('watch', 'Watch for content and media updates', function() {
-		presidium.watch(config.load('_config.yml'));
+		presidium.watch(config.load());
 	})
 	.command('develop', 'Watch presidium sources (for development)', function() {
-		presidium.develop(config.load('_config.yml'));
+		presidium.develop(config.load());
 	})
 	.command('serve', 'Serve site', function() {
-		presidium.serve(config.load('_config.yml'));
+		presidium.serve(config.load());
 	})
 	.command(
 		'start',
@@ -90,7 +90,7 @@ const argv = yargs
 			return yargs.option('s', scopeArg);
 		},
 		function(argv) {
-			const conf = config.load('_config.yml');
+			const conf = config.load();
 			conf.scope = argv['s'];
 			presidium.clean(conf);
 			presidium.generate(conf);
@@ -128,7 +128,7 @@ const argv = yargs
 				.option('s', scopeArg);
 		},
 		function(argv) {
-			const conf = config.load('_config.yml', argv['v'] || '');
+			const conf = config.load(null, argv['v'] || '');
 			conf.scope = argv['s'];
 			presidium.clean(conf);
 			presidium.generate(conf);
