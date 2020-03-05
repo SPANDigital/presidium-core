@@ -93,7 +93,7 @@ presidium.build = function(conf) {
 
 presidium.validate = function(conf) {
 	const results = links.validate(conf, argv);
-	if (results.broken > 0 && argv.fail_on_errors === 'true') 
+	if (results.broken > 0 && argv.fail_on_errors === 'true')
 		throw new Error('There are broken links in the site. Can not proceed.');
 	if (argv.check && utils.contains(argv.check, 'author')) linter.validate(conf, argv);
 };
@@ -157,27 +157,29 @@ presidium.ghPages = function(conf) {
 presidium.pdf = function(conf) {
 	console.log('Generating PDF...');
 	console.log('Replacing internal Links and removing tooltips...');
-	const createCombinedHTML = () => {
-		return new Promise((resolve, reject) => {
-			try {
-				shell.exec('./test.sh', function () {
-					return resolve();
-				});
-			} catch (e) {
-				return reject(e);
-			}
-		});
-	};
-	createCombinedHTML().then(() => {
-		const options = {
-			output: 'out.pdf',
-			cover: './cover/index.html',
-			pageOffset: -1,
-			javascriptDelay: 1000,
-			disableExternalLinks: true,
-			footerCenter: '[page] of [toPage]'
+	links.replaceInternalLinks(conf);
+	setTimeout(() => {
+		const createCombinedHTML = () => {
+			return new Promise((resolve, reject) => {
+				try {
+					shell.exec('./test.sh', function () {
+						return resolve();
+					});
+				} catch (e) {
+					return reject(e);
+				}
+			});
 		};
-		const pwd = shell.pwd().toString();
-		wkhtmltopdf(`file:///${pwd}/${path.join(conf.distSitePath, 'uber.html')}`, options);
-	});
+		createCombinedHTML().then(() => {
+			const options = {
+				output: 'out.pdf',
+				cover: './cover/index.html',
+				pageOffset: -1,
+				javascriptDelay: 1000,
+				footerCenter: '[page] of [toPage]'
+			};
+			const pwd = shell.pwd().toString();
+			wkhtmltopdf(`file:///${pwd}/${path.join(conf.distSitePath, 'uber.html')}`, options);
+		});
+	}, 10000);
 };
