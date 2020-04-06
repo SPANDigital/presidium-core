@@ -176,7 +176,8 @@ presidium.pdf = function(conf) {
 				cover: './cover/index.html',
 				pageOffset: -1,
 				javascriptDelay: 1000,
-				footerCenter: '[page] of [toPage]'
+				footerCenter: '[page] of [toPage]',
+				footerFontSize: 8
 			};
 			const pwd = shell.pwd().toString();
 			wkhtmltopdf(`file:///${pwd}/${path.join(conf.distSitePath, 'uber.html')}`, options);
