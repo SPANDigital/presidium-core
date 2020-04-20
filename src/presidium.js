@@ -11,18 +11,18 @@ const wkhtmltopdf = require('wkhtmltopdf');
 
 const presidium = module.exports;
 
-presidium.clean = function(conf) {
+presidium.clean = function (conf) {
 	const dist = conf.distPath;
 	console.log(`Cleaning all files and folders in: ${dist}`);
 	fs.removeSync(dist);
 	fs.mkdirsSync(dist);
 };
 
-presidium.requirements = function(conf) {
+presidium.requirements = function (conf) {
 	shell.exec(`./${path.join(conf.corePath, 'bin', 'presidium-requirements.sh')}`);
 };
 
-presidium.install = function(conf) {
+presidium.install = function (conf) {
 	presidium.requirements(conf);
 
 	console.log(`Creating ${conf.distPath}...`);
@@ -45,7 +45,7 @@ presidium.install = function(conf) {
 	shell.cd(pwd);
 };
 
-presidium.generate = function(conf) {
+presidium.generate = function (conf) {
 	console.log('Copy base templates...');
 	fs.copySync(path.join(conf.corePath, '_includes'), conf.distIncludesPath);
 	fs.copySync(path.join(conf.corePath, '_layouts'), conf.distLayoutsPath);
@@ -64,7 +64,7 @@ presidium.generate = function(conf) {
 	site.generate(conf);
 };
 
-presidium.build = function(conf) {
+presidium.build = function (conf) {
 	// Manage extra config files
 	const configFiles = `${argv.config}`;
 	let extraConf = '';
@@ -91,20 +91,20 @@ presidium.build = function(conf) {
 	shell.cd(pwd);
 };
 
-presidium.validate = function(conf) {
+presidium.validate = function (conf) {
 	const results = links.validate(conf, argv);
 	if (results.broken > 0 && argv.fail_on_errors === 'true')
 		throw new Error('There are broken links in the site. Can not proceed.');
 	if (argv.check && utils.contains(argv.check, 'author')) linter.validate(conf, argv);
 };
 
-presidium.watch = function(conf) {
+presidium.watch = function (conf) {
 	console.log('Watching Content and Media...');
 	shell.exec(`cpx --watch "${conf.contentPath}/**" "${conf.distContentPath}/"`, { async: true });
 	shell.exec(`cpx --watch "${conf.mediaPath}/**" "${conf.distMediaPath}/"`, { async: true });
 };
 
-presidium.develop = function(conf) {
+presidium.develop = function (conf) {
 	console.log('Watching Presidium...');
 	shell.exec(
 		`cpx --watch --verbose "node_modules/presidium-core/_includes/**" "${conf.distIncludesPath}/"`,
@@ -120,7 +120,7 @@ presidium.develop = function(conf) {
 	);
 };
 
-presidium.serve = function(conf) {
+presidium.serve = function (conf) {
 	console.log('Serving...');
 	shell.cd('.jekyll');
 	let resolvedDistSrcPath = path.isAbsolute(conf.distSrcPath) ? conf.distSrcPath : `../${conf.distSrcPath}`;
@@ -131,7 +131,7 @@ presidium.serve = function(conf) {
 	shell.cd('..');
 };
 
-presidium.ghPages = function(conf) {
+presidium.ghPages = function (conf) {
 	console.log('Publishing to Github Pages...');
 	const syncPath = path.join(version.path, conf.version);
 	if (!shell.test('-d', syncPath)) {
@@ -154,7 +154,7 @@ presidium.ghPages = function(conf) {
 	shell.cd('..');
 };
 
-presidium.pdf = function(conf) {
+presidium.pdf = function (conf) {
 	console.log('Generating PDF...');
 	console.log('Replacing internal Links and removing tooltips...');
 	links.replaceInternalLinks(conf);
@@ -173,7 +173,7 @@ presidium.pdf = function(conf) {
 		createCombinedHTML().then(() => {
 			const options = {
 				output: 'out.pdf',
-				cover: './cover/index.html',
+				// cover: './cover/index.html',
 				pageOffset: -1,
 				javascriptDelay: 1000,
 				footerCenter: '[page] of [toPage]',
