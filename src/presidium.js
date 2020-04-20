@@ -162,6 +162,7 @@ presidium.pdf = function (conf) {
 		const createCombinedHTML = () => {
 			return new Promise((resolve, reject) => {
 				try {
+					console.log('RUNNING FROM: ', shell.pwd());
 					shell.exec('./test.sh', function () {
 						return resolve();
 					});
