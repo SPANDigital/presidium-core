@@ -7,7 +7,6 @@ const linter = require('./linter');
 const version = require('./version');
 const argv = require('yargs').argv;
 const utils = require('./utils');
-const wkhtmltopdf = require('wkhtmltopdf');
 
 const presidium = module.exports;
 
@@ -163,7 +162,7 @@ presidium.pdf = function (conf) {
 			return new Promise((resolve, reject) => {
 				try {
 					console.log('RUNNING FROM: ', shell.pwd());
-					shell.exec('./test.sh', function () {
+					shell.exec('./pdf.py', function () {
 						return resolve();
 					});
 				} catch (e) {
@@ -171,17 +170,6 @@ presidium.pdf = function (conf) {
 				}
 			});
 		};
-		createCombinedHTML().then(() => {
-			const options = {
-				output: 'out.pdf',
-				// cover: './cover/index.html',
-				pageOffset: -1,
-				javascriptDelay: 1000,
-				footerCenter: '[page] of [toPage]',
-				footerFontSize: 8
-			};
-			const pwd = shell.pwd().toString();
-			wkhtmltopdf(`file:///${pwd}/${path.join(conf.distSitePath, 'uber.html')}`, options);
-		});
+		createCombinedHTML();
 	}, 10000);
 };

@@ -6,10 +6,9 @@
 // ==========================================================================
 
 @media print {
-    *,
+    *:not(a),
     *:before,
     *:after {
-        background: transparent !important;
         color: #000 !important; // Black prints faster: h5bp.com/s
         box-shadow: none !important;
         text-shadow: none !important;
@@ -97,5 +96,22 @@
         }
     }
 
+    table, tr, td, th, tbody, thead, tfoot {
+        page-break-inside: avoid !important;
+    }
+
+    #presidium-content {
+        page-break-after: always;
+        padding: 0px 100px !important;
+    }
+
+    article {
+        margin-top: 0px !important;
+        margin-bottom: 40px !important;
+    }
+
+    article + hr {
+        display: none;
+    }
     // Bootstrap specific changes end
 }
