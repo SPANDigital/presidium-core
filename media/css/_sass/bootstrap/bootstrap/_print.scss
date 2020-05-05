@@ -20,7 +20,12 @@
     }
 
     a[href]:after {
-        content: " (" attr(href) ")";
+        content: "";
+    }
+
+    a:link:after, a:visited:after
+    {
+        content: "";
     }
 
     abbr[title]:after {
