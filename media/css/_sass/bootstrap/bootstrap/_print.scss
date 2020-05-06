@@ -101,6 +101,10 @@
         }
     }
 
+    table th {
+        color: #666;
+    }
+
     table, tr, td, th, tbody, thead, tfoot {
         page-break-inside: avoid !important;
     }
@@ -118,5 +122,11 @@
     article + hr {
         display: none;
     }
+
+    span {
+        page-break-inside: avoid !important;
+    }
+
+    
     // Bootstrap specific changes end
 }
