@@ -3,13 +3,13 @@
         <div class="article-status">
         {% case article.status %}
         {% when 'draft' %}
-            <span title="Article Status" class="label label-default">Draft</span>
+            <span title="Article Status" class="label label-default status-draft">Draft</span>
         {% when 'review' %}
-            <span title="Article Status" class="label label-primary">Review</span>
+            <span title="Article Status" class="label label-primary status-review">Review</span>
         {% when 'published' %}
-            <span title="Article Status" class="label label-success">Published</span>
+            <span title="Article Status" class="label label-success status-published">Published</span>
         {% when 'retired' %}
-            <span title="Article Status" class="label label-warning">Retired</span>
+            <span title="Article Status" class="label label-warning status-retired">Retired</span>
         {% endcase %}
         </div>
     {% endif %}
