@@ -51,6 +51,7 @@ function addSection(node, props) {
 		title: props.title,
 		level: 1,
 		collapsed: props.collapsed,
+		alwaysExpanded: props.alwaysExpanded,
 		newTab: props.newTab,
 		path: props.path,
 		url: props.url,
