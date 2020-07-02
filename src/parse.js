@@ -44,6 +44,7 @@ parse.section = function (conf, section) {
 		path: sectionPath,
 		url: sectionUrl,
 		collection,
+		alwaysExpanded: section['always-expanded'] || false,
 		collapsed: section.collapsed || false,
 		newTab: newTab,
 		exportArticles: section['export-articles'] || false,
