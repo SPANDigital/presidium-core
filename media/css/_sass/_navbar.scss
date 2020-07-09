@@ -203,6 +203,8 @@ $navbar-default-border-level-5: darken($navbar-default-bg, 24%);
       padding: 0px 15px;
       margin-left: 0;
       margin-right: 0;
+      overflow-wrap: anywhere;
+      hyphens: auto;
 
       .filter {
         margin: 30px 5px 25px 5px;
