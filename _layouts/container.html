@@ -40,6 +40,11 @@
 
 {% include modal.html %}
 
+{% if site.enterprise.script %}
+<!-- Config -->
+<script src="/conf/config.js"></script>
+{% endif %}
+
 <!-- Components -->
 <script src="{{ site.baseurl | append: '/media/js/presidium.js' | replace: '//','/'}}"></script>
 <script>
