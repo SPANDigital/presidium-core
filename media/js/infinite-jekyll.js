@@ -3,19 +3,17 @@ $(function () {
 	var articleURLs,
 		isFetchingPosts = false,
 		shouldFetchPosts = true,
-		postsToLoad = $(".article-list").children().length,
+		postsToLoad = $(".article-list").children('.article').length,
 		loadNewPostsThreshold = 3000;
 
 	// Load the JSON file containing all URLs
-	$.getJSON('articles.json', function (data) {
-		const section = document.querySelector('section');
+	$.getJSON('http://dev.presidium.spandigital.io/docs/uploads-documentation/articles.json', function (data) { // this will be sent through once moved to presidium-js
+		const section = document.querySelector('.article-list');
 		if (!section || !section.dataset || !section.dataset.section) {
 			disableFetching();
 		}
-		articleURLs = data[section.dataset.section]; //load articles for active section
-
-		console.log('debug: articleURLs.length', articleURLs.length);
-		console.log('debug: postsToLoad', postsToLoad);
+		articleURLs = data[section.dataset.section]; // load articles for active section
+		console.log('postsToLoad: ', postsToLoad);
 		// If there aren't any more posts available to load than already visible, disable fetching
 		if (articleURLs.length <= postsToLoad)
 			disableFetching();
@@ -71,6 +69,7 @@ $(function () {
 	}
 
 	function fetchPostWithIndex(index, callback) {
+		console.log('fetchPostWithIndex: ', index);
 		var articleURL = articleURLs[index];
 
 		$.get(articleURL, function (data) {
