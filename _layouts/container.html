@@ -28,10 +28,11 @@
         <div id="presidium-content" class="col-lg-10 col-md-12">
             <h1 class="page-title">{{ page.title }}</h1>
             <hr/>
-            <section>
+            <section class="article-list" data-section="{{ page.section}}">
                 {% include info.html %}
                 {{ content }}
             </section>
+            <div class="infinite-spinner"></div>
             {% include footer.html %}
         </div>
         <div class="col-lg-2"></div>
@@ -41,7 +42,9 @@
 {% include modal.html %}
 
 <!-- Components -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="{{ site.baseurl | append: '/media/js/presidium.js' | replace: '//','/'}}"></script>
+<script src="{{ site.baseurl | append: '/media/js/infinite-jekyll.js' | replace: '//','/'}}"></script>
 <script>
     window.presidium.config = {
         name: "{{ site.name }}",
