@@ -42,9 +42,7 @@
 {% include modal.html %}
 
 <!-- Components -->
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="{{ site.baseurl | append: '/media/js/presidium.js' | replace: '//','/'}}"></script>
-<script src="{{ site.baseurl | append: '/media/js/infinite-jekyll.js' | replace: '//','/'}}"></script>
 <script>
     window.presidium.config = {
         name: "{{ site.name }}",
@@ -55,6 +53,7 @@
     window.presidium['versions'] = { siteroot: "{{ site.siteroot }}" };
     window.presidium.menu.load({% include menu.json %}, 'presidium-navigation');
     window.presidium.tooltips.load({ "baseurl": "{{ site.baseurl }}" });
+    window.presidium.articleLoader.load("{{ site.baseurl | append: '/articles.json' | replace: '//','/'}}");
 </script>
 
 {% if site.enterprise.script %}
