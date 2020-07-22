@@ -27,6 +27,9 @@
     <article>{{ article.content }}</article>
 
     <hr/>
+    {% if site.enterprise.script %}
+        {% include article-bar-placeholder.html %}
+    {% endif %}
     {% endif %}
     {% else %} Article not found: {{article-id}} <hr/> {% endif %}
 </div>
