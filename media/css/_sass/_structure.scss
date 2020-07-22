@@ -1,6 +1,7 @@
 //.presidium-container {
 //  @extend .container-fluid;
 //  margin-left: 0px;
+
 #presidium-container {
   @media (min-width: $grid-float-breakpoint) {
     margin-left: 260px;
@@ -100,6 +101,15 @@
         }
       }
       .article {
+        .placeholder {
+          width: 100%;
+          display: flex;
+
+          > .article-bar-placeholder {
+            height: 52px;
+            width: 100%;
+          }
+        }
         .article-edit-menu {
           display: flex;
           flex-direction: column;
