@@ -2,7 +2,7 @@
   "arrowParens": "always",
   "semi": true,
   "useTabs": true,
-  "tabWidth": 2,
+  "tabWidth": 4,
   "bracketSpacing": true,
   "singleQuote": true,
   "jsxBracketSameLine": false,

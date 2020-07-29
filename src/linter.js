@@ -50,14 +50,14 @@ SiteStruct.prototype.verifyAuthor = function(article) {
 function traverse(node, map) {
 	node.children.forEach((child) => {
 		switch (child.type) {
-		case structure.TYPE.CATEGORY:
-			if (child.children.length > 0) {
-				traverse(child, map);
-			}
-			break;
-		case structure.TYPE.ARTICLE:
-			map.verifyAuthor(child);
-			break;
+			case structure.TYPE.CATEGORY:
+				if (child.children.length > 0) {
+					traverse(child, map);
+				}
+				break;
+			case structure.TYPE.ARTICLE:
+				map.verifyAuthor(child);
+				break;
 		}
 	});
 }
@@ -65,8 +65,8 @@ function traverse(node, map) {
 function log(baseLink, type) {
 	results.missing_authors++;
 	if (type === 'MISSING') {
-		console.log(colours.red('MISSING AUTHOR: \t' + colours.underline(baseLink)));
+		console.log(colours.red('MISSING AUTHOR: \t' + colours.underline(baseLink))); // eslint-disable-line
 	} else if (type === 'INVALID') {
-		console.log(colours.red('INVALID USER: \t' + colours.underline(baseLink)));
+		console.log(colours.red('INVALID USER: \t' + colours.underline(baseLink))); // eslint-disable-line
 	}
 }

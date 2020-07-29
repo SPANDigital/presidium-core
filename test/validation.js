@@ -33,29 +33,29 @@ describe('Link Validation', () => {
 	});
 
 	describe('Testing Structure', function() {
-		st.sections.forEach(section => {
+		st.sections.forEach((section) => {
 			let groupedArticles = section.articles.reduce((x, article) => {
-				if(article.parent.id) {
+				if (article.parent.id) {
 					x[article.parent.id] = x[article.parent.id] || [];
 					x[article.parent.id].push(article);
 				}
 				return x;
 			}, {});
 
-			Object.keys(groupedArticles).forEach(child => {
-				let childrenPaths = groupedArticles[child].map(x => x.path);
+			Object.keys(groupedArticles).forEach((child) => {
+				let childrenPaths = groupedArticles[child].map((x) => x.path);
 				let indexPath = child + '/' + parse.INDEX_SOURCE;
 
 				it('Should have index as first article if exists', () => {
-					if(childrenPaths.includes(indexPath)) {
+					if (childrenPaths.includes(indexPath)) {
 						assert.equal(childrenPaths[0], indexPath);
 					}
 				});
 				it('Should be sorted (Excluding index)', () => {
-					if(childrenPaths.includes(indexPath)) childrenPaths.shift();
+					if (childrenPaths.includes(indexPath)) childrenPaths.shift();
 					let sorted = childrenPaths.length === 1;
-					for(let j = 0 ; j < childrenPaths.length - 1 ; j++){
-						if(childrenPaths[j] > childrenPaths[j+1]) {
+					for (let j = 0; j < childrenPaths.length - 1; j++) {
+						if (childrenPaths[j] > childrenPaths[j + 1]) {
 							sorted = false;
 							break;
 						}

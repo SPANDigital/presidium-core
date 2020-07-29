@@ -47,7 +47,7 @@ version.islocal = function(conf) {
 };
 
 version.updateVersionsJson = function(conf, outdir = '') {
-	console.log('Writing versions.json file...');
+	console.log('Writing versions.json file...'); // eslint-disable-line
 	fs.writeFileSync(
 		path.join(outdir || version.path, 'versions.json'),
 		JSON.stringify({
@@ -62,7 +62,8 @@ function listVersions(dir) {
 		.readdirSync(dir)
 		.filter((file) => {
 			return (
-				SEMANTIC_VERSION_REGEX.test(file) && fs.statSync(path.join(dir, '/', file)).isDirectory()
+				SEMANTIC_VERSION_REGEX.test(file) &&
+				fs.statSync(path.join(dir, '/', file)).isDirectory()
 			);
 		})
 		.concat(['latest'])

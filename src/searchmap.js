@@ -10,7 +10,7 @@ searchmap.generate = function(conf, struct) {
 	const map = new SearchMap(conf, struct);
 	fs.mkdirsSync(conf.distSrcPath);
 	const file = path.join(conf.distSrcPath, 'searchmap.json');
-	console.log(`Writing search map: ${file}...`);
+	console.log(`Writing search map: ${file}...`); // eslint-disable-line
 	fs.writeFileSync(file, JSON.stringify(map.articles));
 };
 
@@ -43,14 +43,14 @@ SearchMap.prototype.addArticle = function(article) {
 function traverse(node, map) {
 	node.children.forEach((child) => {
 		switch (child.type) {
-		case structure.TYPE.CATEGORY:
-			if (child.children.length > 0) {
-				traverse(child, map);
-			}
-			break;
-		case structure.TYPE.ARTICLE:
-			map.addArticle(child);
-			break;
+			case structure.TYPE.CATEGORY:
+				if (child.children.length > 0) {
+					traverse(child, map);
+				}
+				break;
+			case structure.TYPE.ARTICLE:
+				map.addArticle(child);
+				break;
 		}
 	});
 }
@@ -61,7 +61,9 @@ function category(node) {
 
 function section(node) {
 	if (node.parent) {
-		return node.parent.type === structure.TYPE.SECTION ? node.parent.title : section(node.parent);
+		return node.parent.type === structure.TYPE.SECTION
+			? node.parent.title
+			: section(node.parent);
 	}
 	return '';
 }
