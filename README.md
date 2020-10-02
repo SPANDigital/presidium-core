@@ -87,6 +87,9 @@ To publish your documentation to Github pages, run:
 ```sh
 $ npm run gh-pages
 ```
+
+> **Note**: Make sure the **baseurl** variable in `_config.yml` is set to match your repository's name (and path if applicable). For example, `#baseurl: /presidium-core`. 
+
 This pushes your site and to a gh-pages branch on your repo. To enable your site on Github, go to your repository settings and enable Github pages using your `gh-pages` branch. 
 
 Further details may be found on [Github](https://help.github.com/articles/about-github-pages-and-jekyll/)
