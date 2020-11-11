@@ -25,9 +25,9 @@ const SearchMap = function(conf, structure) {
 SearchMap.prototype.addArticle = function(article) {
 	let stripped = String(this.stripper.processSync(article.content));
 
-	// Clear the contents of any `if` and `comment` tags
+	// Clear the contents of any `if`, `for` and `comment` tags
 	// Remove other tags but leave their contents
-	const tagsRegExp = /{% if.*?endif %}|{% comment.*?endcomment %}|{%[^{}]*%}/gms;
+	const tagsRegExp = /{% if.*?endif %}|{% for.*?endfor %}|{% comment.*?endcomment %}|{%[^{}]*%}/gms;
 	stripped = stripped.replace(tagsRegExp, '');
 
 	this.articles.push({
