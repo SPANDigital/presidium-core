@@ -1,11 +1,11 @@
 {
   "name": "presidium-core",
-  "version": "0.1.54",
+  "version": "0.1.55",
   "description": "Presidium technical documentation template for Jekyll",
   "license": "Apache-2.0",
   "bin": {
-    "presidium": "./bin/presidium.js",
-    "presidium-requirements": "./bin/presidium-requirements.sh"
+    "presidium": "bin/presidium.js",
+    "presidium-requirements": "bin/presidium-requirements.sh"
   },
   "authors": [
     {
