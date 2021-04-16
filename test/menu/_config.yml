@@ -79,16 +79,6 @@ exclude: [
 ]
 
 #
-# System wide defaults
-#
-defaults:
-    -
-        scope:
-            path: ""
-        values:
-            layout: "container"
-
-#
 # Sass settings
 #
 sass:

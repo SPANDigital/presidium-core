@@ -122,9 +122,11 @@ presidium.develop = function(conf) {
 presidium.serve = function(conf) {
 	console.log('Serving...');
 	shell.cd('.jekyll');
-	let resolvedDistSrcPath = path.isAbsolute(conf.distSrcPath) ? conf.distSrcPath : `../${conf.distSrcPath}`;
-	let resolvedDistSitePath = path.isAbsolute(conf.distSitePath) ? conf.distSitePath : `../${conf.distSitePath}`;
-	shell.exec(`bundle exec jekyll serve -s ${resolvedDistSrcPath} -d ${resolvedDistSitePath}`, {
+
+	const resolvedDistSrcPath = path.isAbsolute(conf.distSrcPath) ? conf.distSrcPath : `../${conf.distSrcPath}`;
+	const resolvedDistSitePath = path.isAbsolute(conf.distSitePath) ? conf.distSitePath : `../${conf.distSitePath}`;
+	const portArg = conf.port ? `--port ${conf.port}` : '';
+	shell.exec(`bundle exec jekyll serve -s ${resolvedDistSrcPath} -d ${resolvedDistSitePath} ${portArg}`, {
 		async: true
 	});
 	shell.cd('..');

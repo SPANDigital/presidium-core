@@ -26,13 +26,9 @@ describe('Menu', function() {
 		});
 
 		it('Generated files contain alwaysOpen for menu load', function(done) {
-			const keyConceptsPath = path.join(
-				distSitePath,
-				'key-concepts'
-			);
-			const filePath = path.join(keyConceptsPath, 'index.html');
+			const filePath = path.join(distSitePath, 'media/js/init.js');
 			if(!fs.existsSync(filePath)) {
-				assert.fail('index.html file does not exist in key concepts diretory');
+				assert.fail('init.js file does not exist in key concepts diretory');
 				done();
 			}
 			const file = fs.readFileSync(filePath);
