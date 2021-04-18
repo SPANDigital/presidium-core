@@ -7,6 +7,9 @@ const linter = require('./linter');
 const version = require('./version');
 const argv = require('yargs').argv;
 const utils = require('./utils');
+const glob = require('glob');
+const sanitizeHtml = require('sanitize-html');
+const chalk = require('chalk');
 
 const presidium = module.exports;
 
@@ -61,6 +64,43 @@ presidium.generate = function(conf) {
 
 	console.log('Generate site structure...');
 	site.generate(conf);
+};
+
+
+/**
+ * This is called from the presidium-builder repo to clean out any potential
+ * XSS threads. This is a whitelist approach, only allowing certain tags and
+ * attributes. This is possibly too restrictive as is, but can be expanded upon.
+ */
+presidium.sanitize = function(conf) {
+	let sanitize = function(dirty) {
+		return sanitizeHtml(dirty, {
+			allowedTags: [ 'h3', 'h4', 'h5', 'h6', 'blockquote', 'p', 'a', 'ul', 'ol',
+				'nl', 'li', 'b', 'i', 'strong', 'em', 'strike', 'code', 'hr', 'br', 'div',
+				'table', 'thead', 'caption', 'tbody', 'tr', 'th', 'td', 'pre', 'img'],
+			allowedAttributes: {
+				'*': ['class', 'data-*', 'href', 'align', 'alt', 'center', 'bgcolor', 
+					'id', 'style', 'name', 'target' ],
+				'img': ['src']
+			}
+		});
+	};
+
+	let files = glob.sync(conf.contentPath + '/**/*');
+
+	files.forEach(function(file) {
+		if (fs.lstatSync(file).isDirectory()) {
+			return;
+		}
+
+		let buf = fs.readFileSync(file);
+		let originalLen = buf.toString().length;
+		let clean = sanitize(buf.toString());
+		if (clean.length !== originalLen) {
+			fs.writeFileSync(file, clean);
+			console.log(chalk.red('Sanitized file: ', file));
+		}
+	});
 };
 
 presidium.build = function(conf) {
