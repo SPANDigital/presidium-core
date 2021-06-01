@@ -122,6 +122,31 @@ const argv = yargs
 			presidium.ghPages(conf);
 		}
 	)
+	.command(
+		'update-author',
+		'Update Author',
+		function(yargs) {
+			return yargs
+				.option('o', {
+					alias: 'old',
+					describe: 'Old author, to be replaced',
+					string: 'old'
+				})
+				.option('n', {
+					alias: 'new',
+					describe: 'New author, to replace old',
+					string: 'new'
+				});
+		},
+		function(argv) {
+			conf = config.load('_config.yml', argv['v'] || '');
+			oldAuthor = argv['o'];
+			newAuthor = argv['n'];
+			let updatedArticles = presidium.updateAuthor(conf, oldAuthor, newAuthor)
+			presidium.build(conf);
+			console.log(updatedArticles);
+		}
+	)
 	.demand(1, 'must provide a valid command')
 	.help('h')
 	.alias('h', 'help').argv;

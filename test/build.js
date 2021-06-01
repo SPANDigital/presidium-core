@@ -1,6 +1,7 @@
 const mocha = require('mocha');
 const describe = mocha.describe;
 const it = mocha.it;
+const path = require('path');
 
 let config = require('../src/config');
 let presidium = require('../src/presidium');
@@ -52,6 +53,22 @@ describe('Build Site', function() {
 		fs.readdirSync(distSitePath, (err, files) => {
 			if (!files.length) {
 				assert.fail('Should have created dist site');
+			}
+		});
+	});
+
+	describe('Update Author', function() {
+		conf = config.load('./test/build/_config.yml');
+		presidium.updateAuthor(conf, 'Steve Jobs', 'Tim Cook');
+	});
+
+	it('Should update author for site', () => {
+		fs.readFileSync(path.join(distSitePath, 'key-concepts', 'index.html'), (err, data) => {
+			if (data.includes('author: Steve Jobs')) {
+				assert.fail('Old author not removed from dist site');
+			}
+			if (!data.includes('author: Tim Cook')) {
+				assert.fail('New author not added to dist site');
 			}
 		});
 	});
