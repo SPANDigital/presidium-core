@@ -1,6 +1,7 @@
 const shell = require('shelljs');
 const fs = require('fs-extra');
 const path = require('path');
+const replace = require('replace');
 const site = require('./site');
 const links = require('./links');
 const linter = require('./linter');
@@ -88,6 +89,18 @@ presidium.build = function(conf) {
 	console.log(`Executing: ${cmd}`);
 	shell.exec(cmd);
 	shell.cd(pwd);
+};
+
+presidium.updateAuthor = function(conf, oldAuthor, newAuthor) {
+	console.log(`Updating author for articles in: ${conf.distSectionsPath}`);
+	let articlePaths = site.traverse(conf);
+	replace({
+		regex: `\nauthor: ${oldAuthor}\n`,
+		replacement: `\nauthor: ${newAuthor}\n`,
+		paths: articlePaths,
+		silent: true,
+	});
+	return articlePaths;
 };
 
 presidium.validate = function(conf) {
