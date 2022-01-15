@@ -45,7 +45,7 @@
     "remark": "^7.0.1",
     "replace": "^1.2.1",
     "request": "^2.85.0",
-    "shelljs": "^0.7.7",
+    "shelljs": "^0.8.5",
     "slug": "^0.9.1",
     "strip-markdown": "^3.0.0",
     "yargs": "^12.0.1"
